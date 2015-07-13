@@ -1,4 +1,43 @@
 .search {
 	padding: 250px 0;
 	background: url('https://images.contentful.com/3xf6g0o5qdho/35WnK3xOKc2QqKksQSCuG8/08bca904f54b0d9c8f4c687c6ab0354a/header_ny_875.jpg') no-repeat center;
+	background-size: cover;
+}
+
+.search__bx {
+	padding: 0 20%;
+	h1 {
+		text-align: center;
+		color: #fff;
+
+		@extend %f-light;
+		@extend %f12;
+
+		span {
+			text-transform: uppercase;
+			line-height: 1.3em;
+			@extend %f-black;
+			@extend %f35;
+		}
+	}
+
+	form {
+		max-width: 1000px;
+		margin: 2em auto auto auto;
+	}
+
+	input {
+		width: 100%;
+		display: block;
+		padding: 1.5em;
+  		border: none;
+  		color: $dark;
+	
+		@extend %f-light;
+  		@extend %f9;
+
+  		&:focus {
+  			  outline: 0;
+  		}
+	}
 }

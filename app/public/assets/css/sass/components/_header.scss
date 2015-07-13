@@ -1,7 +1,37 @@
 header {
-	background-color: $master;
+	position: absolute;
+  	top: 0;
+  	width: 100%;
 }
 
 .header {
-	
+	@extend .clearfix;
+}
+
+.header__nav {
+	float: right;
+	padding-right: 2%;
+
+	.nav {
+
+	}
+
+	ul {
+		list-style: none;
+		@extend .clearfix;
+	}
+
+	li {
+		float: left;
+		margin-left: 1.5em;
+	}
+
+	a {
+		color: #fff;
+		text-decoration: none;
+		letter-spacing: 1px;
+
+		@extend %f8;
+		@extend %f-regular;
+	}
 }
