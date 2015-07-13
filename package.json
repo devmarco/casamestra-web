@@ -1,0 +1,43 @@
+{
+  "name": "casamestra",
+  "version": "1.0.0",
+  "description": "Casa Mestra Web",
+  "main": "server.js",
+  "scripts": {
+    "test": "lab -c",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/devmarco/casamestra-web.git"
+  },
+  "homepage": "http://api-casamestra.rhcloud.com/",
+  "keywords": [
+    "web",
+    "casamestra"
+  ],
+  "author": {
+    "name": "Marco Paulo",
+    "email": "markoskt@gmail.com"
+  },
+  "license": "ISC",
+  "engines": {
+    "node": ">= 0.12.2",
+    "npm": ">= 2.7.4"
+  },
+  "dependencies": {
+    "getconfig": "^2.1.0",
+    "hapi": "^8.8.0",
+    "jade": "^1.11.0",
+    "good": "^6.2.0",
+    "good-console": "^5.0.2"
+  },
+  "private": true,
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-concurrent": "^2.0.0",
+    "grunt-contrib-sass": "^0.9.2",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-nodemon": "^0.4.0"
+  }
+}
