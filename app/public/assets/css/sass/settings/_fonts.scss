@@ -5,86 +5,87 @@
 // Requires
 
 @font-face {
-	font-family: 'robotoblack';
-	src: url('../../fonts/Roboto-Black-webfont.eot');
-	src: url('../../fonts/Roboto-Black-webfont.eot?#iefix') format('embedded-opentype'),
-		 url('../../fonts/oboto-Black-webfont.woff') format('woff'),
-		 url('../../fonts/Roboto-Black-webfont.ttf') format('truetype'),
-		 url('../../fonts/Roboto-Black-webfont.svg#robotoblack') format('svg');
+	font-family: 'aileronbold';
+	src: url('../../fonts/aileron-bold-webfont.eot');
+	src: url('../../fonts/aileron-bold-webfont.eot?#iefix') format('embedded-opentype'),
+		 url('../../fonts/aileron-bold-webfont.woff2') format('woff2'),
+		 url('../../fonts/aileron-bold-webfont.woff') format('woff'),
+		 url('../../fonts/aileron-bold-webfont.ttf') format('truetype'),
+		 url('../../fonts/aileron-bold-webfont.svg#aileronbold') format('svg');
 	font-weight: normal;
 	font-style: normal;
+
 }
 
 @font-face {
-	font-family: 'robotobold';
-	src: url('../../fonts/Roboto-Bold-webfont.eot');
-	src: url('../../fonts/Roboto-Bold-webfont.eot?#iefix') format('embedded-opentype'),
-		 url('../../fonts/Roboto-Bold-webfont.woff') format('woff'),
-		 url('../../fonts/Roboto-Bold-webfont.ttf') format('truetype'),
-		 url('../../fonts/Roboto-Bold-webfont.svg#robotobold') format('svg');
+	font-family: 'aileronregular';
+	src: url('../../fonts/aileron-regular-webfont.eot');
+	src: url('../../fonts/aileron-regular-webfont.eot?#iefix') format('embedded-opentype'),
+		 url('../../fonts/aileron-regular-webfont.woff2') format('woff2'),
+		 url('../../fonts/aileron-regular-webfont.woff') format('woff'),
+		 url('../../fonts/aileron-regular-webfont.ttf') format('truetype'),
+		 url('../../fonts/aileron-regular-webfont.svg#aileronregular') format('svg');
 	font-weight: normal;
 	font-style: normal;
+
 }
 
 @font-face {
-	font-family: 'robotolight';
-	src: url('../../fonts/Roboto-Light-webfont.eot');
-	src: url('../../fonts/Roboto-Light-webfont.eot?#iefix') format('embedded-opentype'),
-		 url('../../fonts/Roboto-Light-webfont.woff') format('woff'),
-		 url('../../fonts/Roboto-Light-webfont.ttf') format('truetype'),
-		 url('../../fonts/Roboto-Light-webfont.svg#robotolight') format('svg');
+	font-family: 'aileronthin';
+	src: url('../../fonts/aileron-thin-webfont.eot');
+	src: url('../../fonts/aileron-thin-webfont.eot?#iefix') format('embedded-opentype'),
+		 url('../../fonts/aileron-thin-webfont.woff2') format('woff2'),
+		 url('../../fonts/aileron-thin-webfont.woff') format('woff'),
+		 url('../../fonts/aileron-thin-webfont.ttf') format('truetype'),
+		 url('../../fonts/aileron-thin-webfont.svg#aileronthin') format('svg');
 	font-weight: normal;
 	font-style: normal;
+
 }
 
 @font-face {
-	font-family: 'robotomedium';
-	src: url('../../fonts/Roboto-Medium-webfont.eot');
-	src: url('../../fonts/Roboto-Medium-webfont.eot?#iefix') format('embedded-opentype'),
-		 url('../../fonts/Roboto-Medium-webfont.woff') format('woff'),
-		 url('../../fonts/Roboto-Medium-webfont.ttf') format('truetype'),
-		 url('../../fonts/Roboto-Medium-webfont.svg#robotomedium') format('svg');
+	font-family: 'aileronultralight';
+	src: url('../../fonts/aileron-ultralight-webfont.eot');
+	src: url('../../fonts/aileron-ultralight-webfont.eot?#iefix') format('embedded-opentype'),
+		 url('../../fonts/aileron-ultralight-webfont.woff2') format('woff2'),
+		 url('../../fonts/aileron-ultralight-webfont.woff') format('woff'),
+		 url('../../fonts/aileron-ultralight-webfont.ttf') format('truetype'),
+		 url('../../fonts/aileron-ultralight-webfont.svg#aileronultralight') format('svg');
 	font-weight: normal;
 	font-style: normal;
-}
 
-@font-face {
-	font-family: 'robotoregular';
-	src: url('../../fonts/Roboto-Regular-webfont.eot');
-	src: url('../../fonts/Roboto-Regular-webfont.eot?#iefix') format('embedded-opentype'),
-		 url('../../fonts/Roboto-Regular-webfont.woff') format('woff'),
-		 url('../../fonts/Roboto-Regular-webfont.ttf') format('truetype'),
-		 url('../../fonts/Roboto-Regular-webfont.svg#robotoregular') format('svg');
-	font-weight: normal;
-	font-style: normal;
 }
 
 // SIZE
 
 @for $i from 1 through 100 {
   %f#{$i} { 
-    font-size: ($i/10)+em;
+	font-size: ($i/10)+em;
   };
 }
 
 // STYLES
 
+%f-thin {
+	font-family: 'aileronthin';
+	font-weight: normal;
+	font-style: normal;
+}
+
 %f-light {
-	font-family: 'robotolight';
+	font-family: 'aileronultralight';
+	font-weight: normal;
+	font-style: normal;
 }
 
 %f-regular {
-	font-family: 'robotoregular';
-}
-
-%f-medium {
-	font-family: 'robotomedium';
+	font-family: 'aileronregular';
+	font-weight: normal;
+	font-style: normal;
 }
 
 %f-bold {
-	font-family: 'robotobold';
-}
-
-%f-black {
-	font-family: 'robotoblack';
+	font-family: 'aileronbold';
+	font-weight: normal;
+	font-style: normal;
 }

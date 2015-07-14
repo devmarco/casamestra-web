@@ -1,0 +1,159 @@
+.estate-container {
+	@extend .row;
+}
+
+.estate {
+	@extend .columns;
+	@extend .small-4;
+	@extend .estate--featured;
+}
+
+.estate--big {
+	@extend .small-6;
+}
+
+.estate--horizontal {
+	.estate__image,
+	.estate__info {
+		float: left;
+		width: 50%;
+	}
+
+	.estate__image {
+		min-height: 196px;
+	}
+
+	.estate__info__actions {
+		width: 50%;
+	}
+}
+
+.estate--vertical {
+	color: #fff;
+	.details {
+		padding-bottom: 40px;
+	}
+}
+
+.estate--featured {
+	@extend .estate--vertical;
+	
+	.estate__info__actions {
+		background: $master;
+		background: rgba(42, 48, 56, 0.85);
+		border-top-color: transparent;
+	
+		.area {
+			border-color: $master;
+
+			.neighborhood,
+			.bed,
+			.bath {
+				display: block;
+				text-transform: uppercase;
+				letter-spacing: 1px;
+				margin-top: 7px;
+				
+				@extend %f7;
+				@extend %f-thin;
+			}
+
+			.neighborhood {
+				@include truncate(60px);
+			}
+		}
+	}
+}
+
+.estate__bx {
+	position: relative;
+	background: #fff;
+	@extend .clearfix;
+}
+
+.estate__image {
+	overflow: hidden;
+}
+
+.estate__info {
+	padding: 2.5%;
+	background: #fff;
+
+	span {
+		color: $master;
+		display: block;
+		margin-top: 5px;
+		@extend %f-regular;
+	}
+
+	span:first-child {
+		margin-top: 0;
+	}
+
+	.address {
+		@extend %f-regular;
+		@extend %f12;
+	}
+
+	.neighborhood {
+		min-height: 36px;
+		@extend %f10;
+		@extend %f-thin;
+	}
+
+	.price {
+		color: $green;
+		@extend %f10;
+		@extend %f-bold;
+	}
+
+	ul {
+		list-style: none;
+		margin: 20px 0 0 0;
+		padding: 0;
+		@extend .clearfix;
+	}
+
+	li {
+		text-transform: uppercase;
+		float: left;
+		margin-left: 10px;
+		color: $master;
+		@extend %f-regular;
+		@extend %f8;
+	}
+
+	li:first-child {
+		margin-left: 0;
+	}
+}
+
+.estate__info__actions {
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	width: 100%;
+	border-top: 1px solid #E4E3E3;
+
+	@extend .clearfix;
+
+	.area {
+		float: left;
+  		border-right: 1px solid #E4E3E3;
+  		padding: 1% 5%;
+	}
+
+	.area--right {
+		float: right;
+	}
+
+	.area--full {
+		border: none;
+	}
+}
+
+.favorite-btn {
+	border: none;
+	background-color: transparent;
+	@include sprite($favorite);
+}

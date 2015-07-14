@@ -13,13 +13,30 @@
 @import 'settings/fonts';
 
 /*------------------------------------*\
+	[TOOLS]
+\*------------------------------------*/
+
+@import 'tools/truncate';
+
+/*------------------------------------*\
+	[GENERIC]
+\*------------------------------------*/
+
+@import 'generic/icons';
+@import 'generic/divider';
+@import 'generic/estates';
+
+/*------------------------------------*\
 	[COMPONENTS]
 \*------------------------------------*/
 
+@import 'components/buttons';
 @import 'components/header';
 
 /*------------------------------------*\
-	[OBJECTS]
+	[SECTIONS]
 \*------------------------------------*/
 
-@import 'objects/search';
+@import 'sections/search';
+@import 'sections/exclusives';
+@import 'sections/about';

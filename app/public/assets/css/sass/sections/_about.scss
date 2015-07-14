@@ -1,0 +1,28 @@
+.about {
+	padding: 4% 0;
+	@extends .row;
+}
+
+.about__header {
+	max-width: 60%;
+	margin: 0 auto 50px auto;
+	
+	.title,
+	.subtitle {
+		margin: 0;
+		text-align: center;
+	}
+
+	.title {
+		margin-bottom: 10px;
+		color: $master;
+		@extend %f25;
+		@extend %f-bold;
+	}
+
+	.subtitle {
+		color: $grey;
+		@extend %f10;
+		@extend %f-thin;
+	}
+}
