@@ -36,10 +36,19 @@ module.exports = function(grunt) {
 			}
 		},
 
+		sprite:{
+			all: {
+				src: 'app/public/assets/imgs/sprites/png/*.png',
+				dest: 'app/public/assets/imgs/sprites/icons.png',
+				destCss: 'app/public/assets/css/sass/generic/_icons.scss',
+				imgPath: '../../imgs/sprites/icons.png'
+			}
+		},
+
 		watch: {
 			scripts: {
 				files: ['app/public/assets/css/sass/**/*.scss'],
-				tasks: ['sass'],
+				tasks: ['sass', 'sprite:all'],
 				options: {
 					spawn: false,
 				},
@@ -52,6 +61,7 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-sass');
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-concurrent');
+	grunt.loadNpmTasks('grunt-spritesmith');
 	grunt.loadNpmTasks('grunt-nodemon');
 
 	// Default task(s).
