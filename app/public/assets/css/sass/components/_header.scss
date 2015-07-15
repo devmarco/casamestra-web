@@ -25,28 +25,24 @@ header {
 .header__nav {
 	float: right;
 
-	.nav {
-
+	nav {
+		@extend .clearfix;
 	}
 
 	ul {
 		list-style: none;
 		padding: 0;
   		margin: 0;
+  		float: left;
 		@extend .clearfix;
 	}
+}
+
+.nav {
 
 	li {
-		position: relative;
-		padding: 3.5% 0;
-		border-top: 1px solid inherit;
-		float: left;
-		margin-left: 2em;
 		transition: border-color 0.3s ease 0s;
-
-		&:hover {
-			border-color: $green;
-		}
+		display: inline-block;
 	}
 
 	.no-grafism {
@@ -57,18 +53,46 @@ header {
 	}
 
 	a {
-		position: relative;
 		color: #fff;
 		text-decoration: none;
 		letter-spacing: 1px;
-		z-index: 1;
+		display: block;
+		padding: 2.5em 2em;
+		border-top: 2px solid transparent;
+		transition: border-color 0.5s ease;
 
 		@extend %f8;
 		@extend %f-regular;
+
+		&:hover {
+			border-color: $green;
+		}
+	}
+}
+
+ul.nav-signin {
+	margin-left: 2em;
+	padding-top: 1em;
+
+	li {
+		margin-left: 1em;
+		display: inline-block;
 	}
 
-	a.btn-rounded {
-		border-color: rgba(255,255,255,0.3);
-		@extend %f-bold;
+	li:first-child {
+		margin-left: 0;
+	}
+
+	a {
+		color: #fff;
+		text-decoration: none;
+		padding: 1em 2em;
+  		min-width: 130px;
+  		text-align: center;
+  		letter-spacing: 1px;
+		display: block;
+
+		@extend %f8;
+		@extend %f-regular;
 	}
 }

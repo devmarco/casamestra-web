@@ -39,12 +39,10 @@
 	@extend .estate--vertical;
 	
 	.estate__info__actions {
-		background: $master;
-		background: rgba(42, 48, 56, 0.85);
 		border-top-color: transparent;
 	
 		.area {
-			border-color: $master;
+			border-color: #fff;
 
 			.neighborhood,
 			.bed,
@@ -52,14 +50,16 @@
 				display: block;
 				text-transform: uppercase;
 				letter-spacing: 1px;
-				margin-top: 7px;
+				margin-top: 5px;
 				
 				@extend %f7;
-				@extend %f-thin;
+				@extend %f-bold;
 			}
 
-			.neighborhood {
-				@include truncate(60px);
+			.price {
+				color: $dark;
+				@extend %f10;
+				@extend %f-bold;
 			}
 		}
 	}
@@ -131,16 +131,14 @@
 .estate__info__actions {
 	position: absolute;
 	bottom: 0;
-	right: 0;
 	width: 100%;
-	border-top: 1px solid #E4E3E3;
 
 	@extend .clearfix;
 
 	.area {
 		float: left;
-  		border-right: 1px solid #E4E3E3;
-  		padding: 1% 5%;
+  		border-right: 1px solid #fff;
+  		padding: 1% 3.5%;
 	}
 
 	.area--right {
