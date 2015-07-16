@@ -4,12 +4,16 @@
 
 .estate {
 	@extend .columns;
-	@extend .small-4;
+	@extend .small-3;
 	@extend .estate--featured;
+
+	a {
+		text-decoration: none;
+	}
 }
 
 .estate--big {
-	@extend .small-6;
+	@extend .small-3;
 }
 
 .estate--horizontal {
@@ -36,7 +40,14 @@
 }
 
 .estate--featured {
-	@extend .estate--vertical;
+
+	.estate__image {
+		height: 400px;
+		background-size: cover;
+		background-position: center;
+		transition: -webkit-filter 0.5s ease;
+		-webkit-filter: grayscale(0.5);
+	}
 	
 	.estate__info__actions {
 		border-top-color: transparent;
@@ -57,17 +68,56 @@
 			}
 
 			.price {
-				color: $dark;
+				color: #737373;
 				@extend %f10;
 				@extend %f-bold;
 			}
+		}
+	}
+
+	.estate__info {
+		background: transparent;
+		padding-top: 15px;
+
+		.title {
+			color: $dark;
+			margin-bottom: 5px;
+			@extend %f10;
+			@extend %f-regular;
+
+			&:after {
+				content: '';
+				display: block;
+				width: 30%;
+				background: $dark;
+				height: 1px;
+				margin-top: 3px;
+				transition: width 0.5s ease;
+			}
+		}
+
+		.price {
+			color: $master;
+			@extend %f8;
+			@extend %f-bold;
+		}
+	}
+
+	&:hover {
+		.title {
+			&:after {
+				width: 50%;
+			}
+		}
+
+		.estate__image {
+			  -webkit-filter: grayscale(0);
 		}
 	}
 }
 
 .estate__bx {
 	position: relative;
-	background: #fff;
 	@extend .clearfix;
 }
 
@@ -76,9 +126,6 @@
 }
 
 .estate__info {
-	padding: 2.5%;
-	background: #fff;
-
 	span {
 		color: $master;
 		display: block;
@@ -129,8 +176,6 @@
 }
 
 .estate__info__actions {
-	position: absolute;
-	bottom: 0;
 	width: 100%;
 
 	@extend .clearfix;

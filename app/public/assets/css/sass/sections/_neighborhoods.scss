@@ -1,0 +1,84 @@
+.neighborhoods {
+	padding: 4% 0;
+	background-color: #F7F7F7;
+	@extends .row;
+}
+
+.neighborhoods__header {
+	max-width: 60%;
+	margin: 0 auto 50px auto;
+	
+	.title,
+	.subtitle {
+		margin: 0;
+		text-align: center;
+	}
+
+	.title {
+		margin-bottom: 10px;
+		color: $master;
+		@extend %f25;
+		@extend %f-bold;
+	}
+
+	.subtitle {
+		color: $grey;
+		@extend %f10;
+		@extend %f-thin;
+	}
+}
+
+.neighborhoods__bx {
+	@extend .row;
+}
+
+.neighborhoods__bx__city {
+	@extend .columns;
+	@extend .small-7;
+}
+
+.neighborhoods__bx__city__container {
+	background: url('../../imgs/neighborhoods/neighborhoods.jpg') no-repeat center;
+	background-size: cover;
+	height: 400px;
+	position: relative;
+}
+
+.neighborhoods__name {
+	width: 100%;
+	background: $master;
+	background: rgba(42, 48, 56, 0.96);
+	padding: 2.5% 5%;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+
+	span, a {
+		display: block;
+		text-decoration: none;
+	}
+
+	.name {
+		color: #fff;
+		text-transform: uppercase;
+		@extend %f15;
+		@extend %f-regular;
+	}
+
+	.link {
+		color: $green;
+		letter-spacing: 1px;
+		@extend %f9;
+		@extend %f-thin;
+	}
+}
+
+.neighborhoods__bx__map {
+	@extend .columns;
+	@extend .small-5;
+}
+
+.neighborhoods__bx__map__container {
+	height: 400px;
+	background: url('../../imgs/neighborhoods/map.jpg') no-repeat center;
+}

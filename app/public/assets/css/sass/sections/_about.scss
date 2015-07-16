@@ -26,3 +26,114 @@
 		@extend %f-thin;
 	}
 }
+
+.about__container {
+	border-top: 1px solid $dark;
+	border-top: 1px solid rgba(40, 40, 40, 0.15);
+	border-bottom: 1px solid $dark;
+	border-bottom: 1px solid rgba(40, 40, 40, 0.15);
+
+	@extend .clearfix;
+
+	.about__bx {
+		position: relative;
+		width: 50%;
+		float: left;
+		padding: 2.5%;
+		height: 450px;
+
+		&:first-child {
+			border-right: 1px solid $dark;
+			border-right: 1px solid rgba(40, 40, 40, 0.15);
+		}	
+	}
+}
+
+.about__bx__title {
+	text-align: center;
+	display: block;
+	text-transform: uppercase;
+	margin-bottom: 50px;
+	color: $green;
+	@extend %f7;
+	@extend %f-bold;
+}
+
+.about__bx__area {
+
+}
+
+.about__bx__area {
+	text-align: center;
+	.title {
+		max-width: 50%;
+		text-align: center;
+		margin: 0 auto 1em auto;
+		line-height: 1.2em;
+		@extend %f20;
+		@extend %f-bold;
+	}
+	.text {
+		max-width: 70%;
+		margin: 0 auto;
+		text-align: left;
+		@extend %f9;
+		@extend %f-regular;
+	}
+
+	.link {
+		padding: 10px 15px;
+		text-align: center;
+		display: inline-block;
+		border-color: $green;
+		text-decoration: none;
+		margin-top: 1.5em;
+		color: $green;
+		@extend %f9;
+		@extend %f-regular;
+
+		&:hover {
+			color: #fff;
+		}
+	}
+}
+
+.about__bx__action {
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	width: 100%;
+	border-top: 1px solid $dark;
+	border-top: 1px solid rgba(40, 40, 40, 0.15);
+	
+	@extend .clearfix;
+
+	.area {
+		float: right;
+		border-left: 1px solid $dark;
+		border-left: 1px solid rgba(40, 40, 40, 0.15);
+
+		button {
+			background-color: transparent;
+			border: none;
+			display: block;
+			padding: 10px 20px;
+
+			&:focus {
+				outline: 0;
+			}
+		}
+	}
+	
+	.next-icon,
+	.prev-icon {
+		display: block;
+	}
+	.next-icon {
+		@include sprite($arrow-next);
+	}
+
+	.prev-icon {
+		@include sprite($arrow-prev);
+	}
+}

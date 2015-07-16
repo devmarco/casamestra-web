@@ -11,6 +11,28 @@ $icon-home: x y offset_x offset_y width height total_width total_height image_pa
 At the bottom of this section, we provide information about the spritesheet itself
 $spritesheet: width height image $spritesheet-sprites;
 */
+$arrow-next-name: 'arrow-next';
+$arrow-next-x: 0px;
+$arrow-next-y: 30px;
+$arrow-next-offset-x: 0px;
+$arrow-next-offset-y: -30px;
+$arrow-next-width: 10px;
+$arrow-next-height: 21px;
+$arrow-next-total-width: 52px;
+$arrow-next-total-height: 51px;
+$arrow-next-image: '../../imgs/sprites/icons.png';
+$arrow-next: (0px, 30px, 0px, -30px, 10px, 21px, 52px, 51px, '../../imgs/sprites/icons.png', 'arrow-next', );
+$arrow-prev-name: 'arrow-prev';
+$arrow-prev-x: 10px;
+$arrow-prev-y: 30px;
+$arrow-prev-offset-x: -10px;
+$arrow-prev-offset-y: -30px;
+$arrow-prev-width: 10px;
+$arrow-prev-height: 21px;
+$arrow-prev-total-width: 52px;
+$arrow-prev-total-height: 51px;
+$arrow-prev-image: '../../imgs/sprites/icons.png';
+$arrow-prev: (10px, 30px, -10px, -30px, 10px, 21px, 52px, 51px, '../../imgs/sprites/icons.png', 'arrow-prev', );
 $favorite-name: 'favorite';
 $favorite-x: 30px;
 $favorite-y: 0px;
@@ -19,9 +41,9 @@ $favorite-offset-y: 0px;
 $favorite-width: 22px;
 $favorite-height: 18px;
 $favorite-total-width: 52px;
-$favorite-total-height: 30px;
+$favorite-total-height: 51px;
 $favorite-image: '../../imgs/sprites/icons.png';
-$favorite: (30px, 0px, -30px, 0px, 22px, 18px, 52px, 30px, '../../imgs/sprites/icons.png', 'favorite', );
+$favorite: (30px, 0px, -30px, 0px, 22px, 18px, 52px, 51px, '../../imgs/sprites/icons.png', 'favorite', );
 $search-name: 'search';
 $search-x: 0px;
 $search-y: 0px;
@@ -30,14 +52,14 @@ $search-offset-y: 0px;
 $search-width: 30px;
 $search-height: 30px;
 $search-total-width: 52px;
-$search-total-height: 30px;
+$search-total-height: 51px;
 $search-image: '../../imgs/sprites/icons.png';
-$search: (0px, 0px, 0px, 0px, 30px, 30px, 52px, 30px, '../../imgs/sprites/icons.png', 'search', );
+$search: (0px, 0px, 0px, 0px, 30px, 30px, 52px, 51px, '../../imgs/sprites/icons.png', 'search', );
 $spritesheet-width: 52px;
-$spritesheet-height: 30px;
+$spritesheet-height: 51px;
 $spritesheet-image: '../../imgs/sprites/icons.png';
-$spritesheet-sprites: ($favorite, $search, );
-$spritesheet: (52px, 30px, '../../imgs/sprites/icons.png', $spritesheet-sprites, );
+$spritesheet-sprites: ($arrow-next, $arrow-prev, $favorite, $search, );
+$spritesheet: (52px, 51px, '../../imgs/sprites/icons.png', $spritesheet-sprites, );
 
 /*
 The provided mixins are intended to be used with the array-like variables
