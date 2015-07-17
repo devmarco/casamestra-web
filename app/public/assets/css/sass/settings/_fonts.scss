@@ -56,6 +56,67 @@
 
 }
 
+@font-face {
+    font-family: 'vollkornbold';
+    src: url('../../fonts/vollkorn-bold-webfont.eot');
+    src: url('../../fonts/vollkorn-bold-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../../fonts/vollkorn-bold-webfont.woff2') format('woff2'),
+         url('../../fonts/vollkorn-bold-webfont.woff') format('woff'),
+         url('../../fonts/vollkorn-bold-webfont.ttf') format('truetype'),
+         url('../../fonts/vollkorn-bold-webfont.svg#vollkornbold') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+
+
+
+@font-face {
+    font-family: 'vollkornsemibold';
+    src: url('../../fonts/vollkorn-semibold-webfont.eot');
+    src: url('../../fonts/vollkorn-semibold-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../../fonts/vollkorn-semibold-webfont.woff2') format('woff2'),
+         url('../../fonts/vollkorn-semibold-webfont.woff') format('woff'),
+         url('../../fonts/vollkorn-semibold-webfont.ttf') format('truetype'),
+         url('../../fonts/vollkorn-semibold-webfont.svg#vollkornsemibold') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+
+
+
+@font-face {
+    font-family: 'vollkornmedium';
+    src: url('../../fonts/vollkorn-medium-webfont.eot');
+    src: url('../../fonts/vollkorn-medium-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../../fonts/vollkorn-medium-webfont.woff2') format('woff2'),
+         url('../../fonts/vollkorn-medium-webfont.woff') format('woff'),
+         url('../../fonts/vollkorn-medium-webfont.ttf') format('truetype'),
+         url('../../fonts/vollkorn-medium-webfont.svg#vollkornmedium') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+
+
+
+@font-face {
+    font-family: 'vollkornregular';
+    src: url('../../fonts/vollkorn-regular-webfont.eot');
+    src: url('../../fonts/vollkorn-regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../../fonts/vollkorn-regular-webfont.woff2') format('woff2'),
+         url('../../fonts/vollkorn-regular-webfont.woff') format('woff'),
+         url('../../fonts/vollkorn-regular-webfont.ttf') format('truetype'),
+         url('../../fonts/vollkorn-regular-webfont.svg#vollkornregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
 // SIZE
 
 @for $i from 1 through 100 {
@@ -86,6 +147,30 @@
 
 %f-bold {
 	font-family: 'aileronbold';
+	font-weight: normal;
+	font-style: normal;
+}
+
+%f-heading-medium {
+	font-family: 'vollkornmedium';
+	font-weight: normal;
+	font-style: normal;
+}
+
+%f-heading-regular {
+	font-family: 'vollkornregular';
+	font-weight: normal;
+	font-style: normal;
+}
+
+%f-heading-semibold {
+	font-family: 'vollkornsemibold';
+	font-weight: normal;
+	font-style: normal;
+}
+
+%f-heading-bold {
+	font-family: 'vollkornbold';
 	font-weight: normal;
 	font-style: normal;
 }

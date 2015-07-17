@@ -24,14 +24,14 @@
 		color: #fff;
 		letter-spacing: 1px;
 
-		@extend %f-light;
+		@extend %f-heading-regular;
 		@extend %f14;
 
 		span {
 			text-transform: uppercase;
 			line-height: 1.3em;
 			letter-spacing: 0;
-			@extend %f-bold;
+			@extend %f-heading-medium;
 			@extend %f27;
 		}
 	}
