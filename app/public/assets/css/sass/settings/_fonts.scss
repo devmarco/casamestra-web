@@ -2,120 +2,6 @@
 	[FONTS]
 \*------------------------------------*/
 
-// Requires
-
-@font-face {
-	font-family: 'aileronbold';
-	src: url('../../fonts/aileron-bold-webfont.eot');
-	src: url('../../fonts/aileron-bold-webfont.eot?#iefix') format('embedded-opentype'),
-		 url('../../fonts/aileron-bold-webfont.woff2') format('woff2'),
-		 url('../../fonts/aileron-bold-webfont.woff') format('woff'),
-		 url('../../fonts/aileron-bold-webfont.ttf') format('truetype'),
-		 url('../../fonts/aileron-bold-webfont.svg#aileronbold') format('svg');
-	font-weight: normal;
-	font-style: normal;
-
-}
-
-@font-face {
-	font-family: 'aileronregular';
-	src: url('../../fonts/aileron-regular-webfont.eot');
-	src: url('../../fonts/aileron-regular-webfont.eot?#iefix') format('embedded-opentype'),
-		 url('../../fonts/aileron-regular-webfont.woff2') format('woff2'),
-		 url('../../fonts/aileron-regular-webfont.woff') format('woff'),
-		 url('../../fonts/aileron-regular-webfont.ttf') format('truetype'),
-		 url('../../fonts/aileron-regular-webfont.svg#aileronregular') format('svg');
-	font-weight: normal;
-	font-style: normal;
-
-}
-
-@font-face {
-	font-family: 'aileronthin';
-	src: url('../../fonts/aileron-thin-webfont.eot');
-	src: url('../../fonts/aileron-thin-webfont.eot?#iefix') format('embedded-opentype'),
-		 url('../../fonts/aileron-thin-webfont.woff2') format('woff2'),
-		 url('../../fonts/aileron-thin-webfont.woff') format('woff'),
-		 url('../../fonts/aileron-thin-webfont.ttf') format('truetype'),
-		 url('../../fonts/aileron-thin-webfont.svg#aileronthin') format('svg');
-	font-weight: normal;
-	font-style: normal;
-
-}
-
-@font-face {
-	font-family: 'aileronultralight';
-	src: url('../../fonts/aileron-ultralight-webfont.eot');
-	src: url('../../fonts/aileron-ultralight-webfont.eot?#iefix') format('embedded-opentype'),
-		 url('../../fonts/aileron-ultralight-webfont.woff2') format('woff2'),
-		 url('../../fonts/aileron-ultralight-webfont.woff') format('woff'),
-		 url('../../fonts/aileron-ultralight-webfont.ttf') format('truetype'),
-		 url('../../fonts/aileron-ultralight-webfont.svg#aileronultralight') format('svg');
-	font-weight: normal;
-	font-style: normal;
-
-}
-
-@font-face {
-    font-family: 'vollkornbold';
-    src: url('../../fonts/vollkorn-bold-webfont.eot');
-    src: url('../../fonts/vollkorn-bold-webfont.eot?#iefix') format('embedded-opentype'),
-         url('../../fonts/vollkorn-bold-webfont.woff2') format('woff2'),
-         url('../../fonts/vollkorn-bold-webfont.woff') format('woff'),
-         url('../../fonts/vollkorn-bold-webfont.ttf') format('truetype'),
-         url('../../fonts/vollkorn-bold-webfont.svg#vollkornbold') format('svg');
-    font-weight: normal;
-    font-style: normal;
-
-}
-
-
-
-
-@font-face {
-    font-family: 'vollkornsemibold';
-    src: url('../../fonts/vollkorn-semibold-webfont.eot');
-    src: url('../../fonts/vollkorn-semibold-webfont.eot?#iefix') format('embedded-opentype'),
-         url('../../fonts/vollkorn-semibold-webfont.woff2') format('woff2'),
-         url('../../fonts/vollkorn-semibold-webfont.woff') format('woff'),
-         url('../../fonts/vollkorn-semibold-webfont.ttf') format('truetype'),
-         url('../../fonts/vollkorn-semibold-webfont.svg#vollkornsemibold') format('svg');
-    font-weight: normal;
-    font-style: normal;
-
-}
-
-
-
-
-@font-face {
-    font-family: 'vollkornmedium';
-    src: url('../../fonts/vollkorn-medium-webfont.eot');
-    src: url('../../fonts/vollkorn-medium-webfont.eot?#iefix') format('embedded-opentype'),
-         url('../../fonts/vollkorn-medium-webfont.woff2') format('woff2'),
-         url('../../fonts/vollkorn-medium-webfont.woff') format('woff'),
-         url('../../fonts/vollkorn-medium-webfont.ttf') format('truetype'),
-         url('../../fonts/vollkorn-medium-webfont.svg#vollkornmedium') format('svg');
-    font-weight: normal;
-    font-style: normal;
-
-}
-
-
-
-
-@font-face {
-    font-family: 'vollkornregular';
-    src: url('../../fonts/vollkorn-regular-webfont.eot');
-    src: url('../../fonts/vollkorn-regular-webfont.eot?#iefix') format('embedded-opentype'),
-         url('../../fonts/vollkorn-regular-webfont.woff2') format('woff2'),
-         url('../../fonts/vollkorn-regular-webfont.woff') format('woff'),
-         url('../../fonts/vollkorn-regular-webfont.ttf') format('truetype'),
-         url('../../fonts/vollkorn-regular-webfont.svg#vollkornregular') format('svg');
-    font-weight: normal;
-    font-style: normal;
-
-}
 
 // SIZE
 
@@ -127,16 +13,10 @@
 
 // STYLES
 
-%f-thin {
-	font-family: 'aileronthin';
-	font-weight: normal;
-	font-style: normal;
-}
-
 %f-light {
-	font-family: 'aileronultralight';
-	font-weight: normal;
-	font-style: normal;
+	font-family: 'Josefin Slab';
+  	font-style: normal;
+  	font-weight: 300;	
 }
 
 %f-regular {
@@ -145,32 +25,26 @@
 	font-style: normal;
 }
 
+%f-semibold {
+	font-family: 'Josefin Slab', serif;
+	font-style: normal;
+	font-weight: 600;
+}
+
+%f-regular {
+	font-family: 'Josefin Slab', serif;
+	font-style: normal;
+	font-weight: 400;
+}
+
+%f-light-italic {
+	font-family: 'Josefin Slab';
+  	font-style: italic;
+  	font-weight: 300;	
+}
+
 %f-bold {
-	font-family: 'aileronbold';
-	font-weight: normal;
+	font-family: 'Josefin Slab', serif;
 	font-style: normal;
-}
-
-%f-heading-medium {
-	font-family: 'vollkornmedium';
-	font-weight: normal;
-	font-style: normal;
-}
-
-%f-heading-regular {
-	font-family: 'vollkornregular';
-	font-weight: normal;
-	font-style: normal;
-}
-
-%f-heading-semibold {
-	font-family: 'vollkornsemibold';
-	font-weight: normal;
-	font-style: normal;
-}
-
-%f-heading-bold {
-	font-family: 'vollkornbold';
-	font-weight: normal;
-	font-style: normal;
+	font-weight: 700;
 }

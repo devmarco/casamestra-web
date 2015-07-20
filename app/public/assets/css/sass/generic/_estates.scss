@@ -82,8 +82,8 @@
 		.title {
 			color: $dark;
 			margin-bottom: 5px;
-			@extend %f10;
-			@extend %f-regular;
+			@extend %f12;
+			@extend %f-bold;
 
 			&:after {
 				content: '';
@@ -98,8 +98,9 @@
 
 		.price {
 			color: $master;
-			@extend %f8;
-			@extend %f-bold;
+			letter-spacing: 1px;
+			@extend %f10;
+			@extend %f-regular;
 		}
 	}
 
@@ -145,7 +146,7 @@
 	.neighborhood {
 		min-height: 36px;
 		@extend %f10;
-		@extend %f-thin;
+		@extend %f-regular;
 	}
 
 	.price {

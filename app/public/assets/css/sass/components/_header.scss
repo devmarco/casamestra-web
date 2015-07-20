@@ -57,14 +57,14 @@ header {
 		text-decoration: none;
 		letter-spacing: 1px;
 		display: block;
-		padding: 2.3em 2em;
+		padding: 1.8em 2em;
 		border-top: 2px solid transparent;
 		border-bottom: 2px solid transparent;
 		transition: border-color 0.5s ease;
-		line-height: 1.5em;
+		line-height: 1.4em;
 
-		@extend %f9;
-		@extend %f-regular;
+		@extend %f10;
+		@extend %f-semibold;
 
 		&:hover {
 			border-color: $green;
@@ -94,7 +94,7 @@ ul.nav-signin {
   		letter-spacing: 1px;
 		display: block;
 
-		@extend %f8;
-		@extend %f-regular;
+		@extend %f9;
+		@extend %f-bold;
 	}
 }
