@@ -13,38 +13,56 @@
 
 // STYLES
 
-%f-light {
+%f-heading-light {
 	font-family: 'Josefin Slab';
   	font-style: normal;
   	font-weight: 300;	
 }
 
-%f-regular {
+%f-heading-regular {
 	font-family: 'aileronregular';
 	font-weight: normal;
 	font-style: normal;
 }
 
-%f-semibold {
+%f-heading-semibold {
 	font-family: 'Josefin Slab', serif;
 	font-style: normal;
 	font-weight: 600;
 }
 
-%f-regular {
+%f-heading-regular {
 	font-family: 'Josefin Slab', serif;
 	font-style: normal;
 	font-weight: 400;
 }
 
-%f-light-italic {
+%f-heading-light-italic {
 	font-family: 'Josefin Slab';
   	font-style: italic;
   	font-weight: 300;	
 }
 
-%f-bold {
+%f-heading-bold {
 	font-family: 'Josefin Slab', serif;
 	font-style: normal;
 	font-weight: 700;
+}
+
+%f-regular {
+	font-family: 'Open Sans', sans-serif;
+	font-style: normal;
+	font-weight: 400;
+}
+
+%f-bold {
+	font-family: 'Open Sans', sans-serif;
+	font-style: normal;
+	font-weight: 700;
+}
+
+%f-light {
+	font-family: 'Open Sans', sans-serif;
+	font-style: normal;
+	font-weight: 300;
 }

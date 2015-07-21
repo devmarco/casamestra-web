@@ -3,15 +3,7 @@ extends base
 block content
 	include includes/header
 	main
-		section(class='search')
-			.search__bx
-				h1(class='title') 
-					| Trabalhe com os nossos corretores para encontrar
-					br
-					span A casa que voce ama
-				form
-					input(type='text' placeholder='Procure por endereços, vizinhanças e corretores')
-					button(type='button' class='search__button')
+		include sections/search
 		include sections/exclusives
 		include sections/about
 		include sections/neighborhoods
