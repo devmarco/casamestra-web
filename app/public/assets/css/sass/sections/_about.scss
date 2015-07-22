@@ -3,7 +3,7 @@
 }
 
 .about__header {
-	max-width: 65%;
+	max-width: 60%;
 	margin: 0 auto 50px auto;
 	
 	.title,
@@ -16,13 +16,13 @@
 		margin-bottom: 30px;
 		color: $master;
 		line-height: 1em;
-		@extend %f35;
+		@extend %f25;
 		@extend %f-bold;
 	}
 
 	.subtitle {
 		color: $grey;
-		@extend %f12;
+		@extend %f10;
 		@extend %f-regular;
 	}
 }

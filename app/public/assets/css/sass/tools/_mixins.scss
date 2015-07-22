@@ -1,0 +1,50 @@
+/*------------------------------------*\
+    $MIXINS
+\*------------------------------------*/
+
+
+
+/**
+ * Create vendor-prefixed CSS in one go, e.g.
+ *
+   `@include vendor(border-radius, 4px);`
+ *
+ */
+@mixin vendor($property, $value...){
+    -webkit-#{$property}:$value;
+       -moz-#{$property}:$value;
+        -ms-#{$property}:$value;
+         -o-#{$property}:$value;
+            #{$property}:$value;
+}
+
+/**
+ * Create opacity CSS in one go, e.g.
+ *
+   `@include opacity(4);`
+ *
+ */
+
+@mixin opacity($value) {
+    $calc: ($value*10);
+    zoom: 1;
+    filter: alpha(opacity=$calc);
+    opacity: ($value/10);
+}
+
+
+/**
+ * Media query mixin.
+*/
+@mixin breakpoint($size) {
+  //LG BREAKPOINT
+  @if $size == small {
+    @content;
+  }
+  @else if $size == medium {
+    @media (min-width: 40.0625em) { @content; }
+  }
+  @else if $size == large {
+    @media (min-width: 64.0625em) { @content; }
+  }
+}

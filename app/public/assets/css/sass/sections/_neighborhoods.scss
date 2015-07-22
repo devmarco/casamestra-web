@@ -16,13 +16,13 @@
 	.title {
 		margin-bottom: 10px;
 		color: $master;
-		@extend %f35;
+		@extend %f25;
 		@extend %f-bold;
 	}
 
 	.subtitle {
 		color: $grey;
-		@extend %f12;
+		@extend %f10;
 		@extend %f-regular;
 	}
 }

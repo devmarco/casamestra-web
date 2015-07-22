@@ -2,202 +2,143 @@
 	@extend .row;
 }
 
-.estate {
+.estate__column {
 	@extend .columns;
-	@extend .small-3;
-	@extend .estate--featured;
-
-	a {
-		text-decoration: none;
-	}
+	@extend .small-4;
 }
 
-.estate--big {
-	@extend .small-3;
-}
+.estate {
+	position: relative;
+	height: 200px;
+	background: #000;
+	background-size: cover;
+	text-decoration: none;
 
-.estate--horizontal {
-	.estate__image,
-	.estate__info {
-		float: left;
-		width: 50%;
-	}
+	@extend .columns;
+	@extend .small-12;
 
-	.estate__image {
-		min-height: 196px;
-	}
-
-	.estate__info__actions {
-		width: 50%;
-	}
-}
-
-.estate--vertical {
-	color: #fff;
-	.details {
-		padding-bottom: 40px;
-	}
-}
-
-.estate--featured {
-
-	.estate__image {
-		height: 400px;
-		background-size: cover;
-		background-position: center;
-		transition: -webkit-filter 0.5s ease;
-		-webkit-filter: grayscale(0.5);
-	}
-	
-	.estate__info__actions {
-		border-top-color: transparent;
-	
-		.area {
-			border-color: #fff;
-
-			.neighborhood,
-			.bed,
-			.bath {
-				display: block;
-				text-transform: uppercase;
-				letter-spacing: 1px;
-				margin-top: 5px;
-				
-				@extend %f7;
-				@extend %f-bold;
-			}
-
-			.price {
-				color: #737373;
-				@extend %f10;
-				@extend %f-bold;
-			}
-		}
-	}
-
-	.estate__info {
-		background: transparent;
-		padding-top: 15px;
-
-		.title {
-			color: $dark;
-			margin-bottom: 5px;
-			@extend %f12;
-			@extend %f-bold;
-
-			&:after {
-				content: '';
-				display: block;
-				width: 30%;
-				background: $dark;
-				height: 1px;
-				margin-top: 3px;
-				transition: width 0.5s ease;
-			}
-		}
-
-		.price {
-			color: $master;
-			letter-spacing: 1px;
-			@extend %f10;
-			@extend %f-regular;
-		}
+	&:before {
+		content: '';
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		background: #000;
+		background: rgba(0, 0, 0, 0.40);
+		top: 0;
+		left: 0;
+		z-index: 1;
+		@include opacity(0);
+		@include vendor(transition, opacity 0.2s ease);
 	}
 
 	&:hover {
-		.title {
-			&:after {
-				width: 50%;
-			}
+		&:before {
+			@include opacity(10);
 		}
 
-		.estate__image {
-			  -webkit-filter: grayscale(0);
+		.estate__address {
+			@include opacity(10);
 		}
 	}
 }
 
-.estate__bx {
-	position: relative;
-	@extend .clearfix;
+.estate + .estate {
+	margin-top: 30px;
 }
 
-.estate__image {
-	overflow: hidden;
+.estate--big {
+	height: 430px;
+
+	.estate__address {
+		margin: -50px 0 0 -35%;
+	}
 }
 
-.estate__info {
+.estate__address {
+	position: absolute;
+	width: 70%;
+	height: auto;
+	border: 1px solid #fff;
+	text-align: center;
+	top: 50%;
+	left: 50%;
+	margin: -65px 0 0 -35%;
+	padding: 1em;
+	z-index: 2;
+	@include opacity(0);
+	@include vendor(transition, opacity 0.5s ease-out);
+
 	span {
-		color: $master;
 		display: block;
-		margin-top: 5px;
-		@extend %f-regular;
-	}
-
-	span:first-child {
-		margin-top: 0;
-	}
-
-	.address {
-		@extend %f-regular;
-		@extend %f12;
+		color: #fff;
 	}
 
 	.neighborhood {
-		min-height: 36px;
-		@extend %f10;
-		@extend %f-regular;
+		text-transform: uppercase;
+		@extend %f-bold;
+		@extend %f13;
 	}
 
-	.price {
-		color: $green;
+	.address {
+		@extend %f-light;
 		@extend %f10;
-		@extend %f-bold;
 	}
+}
+
+.estate__info {
+	position: absolute;
+	width: 100%;
+	bottom: 0;
+	left: 0;
+	background: #fff;
+	z-index: 2;
 
 	ul {
-		list-style: none;
-		margin: 20px 0 0 0;
 		padding: 0;
+		margin: 0;
+		list-style: none;
+		border-bottom: 2px solid $master;
 		@extend .clearfix;
 	}
 
 	li {
-		text-transform: uppercase;
+		position: relative;
 		float: left;
-		margin-left: 10px;
-		color: $master;
-		@extend %f-regular;
-		@extend %f8;
+		padding: 0.7em 1em;
+		@extend .clearfix;
+
+		svg {
+			max-width: 15px;
+		}
+
+		span, svg {
+			color: $master;
+			float: left;
+			display: block;
+			fill: $master;
+		}
+
+		span {
+			margin-right: 10px;
+			@extend %f8;
+			@extend %f-bold;
+		}
+
+		&:before {
+			content: '';
+			display: block;
+			width: 2px;
+			position: absolute;
+			left: 0;
+			bottom: 0;
+			height: 10px;
+			background-color: $master;
+		}
+
+		&:first-child {
+			&:before {
+				display: none;
+			}
+		}
 	}
-
-	li:first-child {
-		margin-left: 0;
-	}
-}
-
-.estate__info__actions {
-	width: 100%;
-
-	@extend .clearfix;
-
-	.area {
-		float: left;
-  		border-right: 1px solid #fff;
-  		padding: 1% 3.5%;
-	}
-
-	.area--right {
-		float: right;
-	}
-
-	.area--full {
-		border: none;
-	}
-}
-
-.favorite-btn {
-	border: none;
-	background-color: transparent;
-	@include sprite($favorite);
 }
