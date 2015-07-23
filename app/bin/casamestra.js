@@ -25,7 +25,7 @@ internals.config = (function() {
 			jade: Jade
 		},
 		relativeTo: __dirname,
-		path: '../public/views',
+		path: '../views',
 		isCached: Config.getconfig.env === 'production'
 	});
 
