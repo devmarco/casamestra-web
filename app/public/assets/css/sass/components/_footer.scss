@@ -35,6 +35,11 @@ footer {
 		letter-spacing: 1px;
 		@extend %f-regular;
 		@extend %f9;
+
+		&:hover {
+			color: $green;
+			text-decoration: line-through;
+		}
 	}
 }
 
