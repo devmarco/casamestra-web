@@ -45,10 +45,28 @@ module.exports = function(grunt) {
 			}
 		},
 
+		concat: {
+			options: {
+				separator: ';',
+			},
+			dist: {
+				src: ['app/public/assets/js/core/jquery-2.1.4.min.js', 'app/public/assets/js/core/*.js'],
+				dest: 'app/public/assets/js/main.js',
+			},
+		},
+
+		uglify: {
+			my_target: {
+				files: {
+					'app/public/assets/js/main.js': ['app/public/assets/js/main.js']
+				}
+			}
+		},
+
 		watch: {
 			scripts: {
-				files: ['app/public/assets/css/sass/**/*.scss'],
-				tasks: ['sass', 'sprite:all'],
+				files: ['app/public/assets/css/sass/**/*.scss', 'app/public/assets/js/core/*.js'],
+				tasks: ['sass', 'sprite:all', 'concat', 'uglify'],
 				options: {
 					spawn: false,
 				},
@@ -63,6 +81,8 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-concurrent');
 	grunt.loadNpmTasks('grunt-spritesmith');
 	grunt.loadNpmTasks('grunt-nodemon');
+	grunt.loadNpmTasks('grunt-contrib-concat');
+	grunt.loadNpmTasks('grunt-contrib-uglify');
 
 	// Default task(s).
 	grunt.registerTask('default', ['sass']);

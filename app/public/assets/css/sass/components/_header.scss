@@ -1,8 +1,18 @@
 header {
+	background-color: $master;
+}
+
+header.absolute {
 	position: absolute;
   	top: 0;
   	width: 100%;
   	z-index: 1;
+  	background-color: transparent;
+}
+
+header.transparent {
+	background-color: rgba(42, 48, 56, 0.80);
+	box-shadow: inset 0 0 100px rgb(42, 48, 56);
 }
 
 .header {
@@ -15,7 +25,7 @@ header {
 
 .header__logo {
 	float: left;
-	padding: 1% 0;
+	padding: 15px 0 14px 0;
 
 	h1 {
 		margin: 0;
@@ -98,6 +108,6 @@ ul.nav-signin {
 		border-color: rgba(255, 255, 255, 0.40);
 
 		@extend %f9;
-		@extend %f-regular;
+		@extend %f-bold;
 	}
 }

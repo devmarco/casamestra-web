@@ -1,11 +1,11 @@
 extends base
 
 block content
-	include includes/header
+	header(class='absolute')
+		include includes/header
 	main
 		include sections/search
 		include sections/exclusives
-		include sections/about
 		include sections/neighborhoods
 		include sections/green-bar
 	include includes/footer

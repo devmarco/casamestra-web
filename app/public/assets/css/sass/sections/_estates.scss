@@ -1,0 +1,108 @@
+.estates-container {
+	position: relative;
+	width: 100%;
+	height: 100%;
+	padding-top: 80px;
+	overflow: hidden;
+}
+
+.filter-area {
+	position: relative;
+    z-index: 1;
+	padding: 1em 1em;
+	border-bottom: 1px solid #e1e1e1;
+	background: #fff;
+	background-color: rgba(255, 255, 255, 0.90);
+	@extend .clearfix;
+
+	.filter {
+		float: left;
+		margin-left: 1em;
+
+		&:first-child {
+			margin-left: 0;
+		}
+	}
+
+	.right {
+		float: right;
+	}
+
+	.select {
+		input,
+		select,
+		button,
+		a {
+			text-align: left;
+			min-width: 150px;
+			&:before {
+				content: '▾';
+				float: right;
+				margin-left: 15px;
+				color: $green;
+			}
+		}
+	}
+
+	input,
+	select,
+	button,
+	a {
+		border: 1px solid #e1e1e1;
+		background-color: transparent;
+		display: block;
+		padding: 10px 1.5em;
+		color: $master;
+		min-height: 46px;
+		@include vendor(transition, border-color 0.2s linear);
+
+		@extend %f-regular;
+		@extend %f9;
+
+		&:focus,
+		&:active,
+		&:hover {
+			outline: 0;
+			border-color: #AFAAAA;
+			color: $master;
+		}
+	}
+	
+	.map-icon,
+	.list-icon {
+		text-indent: -999em;
+
+		&:before {
+			content: '';
+			float: right;
+		}
+	}
+
+	.active {
+		outline: 0;
+		border-color: #AFAAAA;
+		color: $master;
+	}
+
+	.map-icon:before {
+		@include sprite($map-icon);
+	}
+
+	.list-icon:before {
+		@include sprite($list-icon);
+	}
+}
+
+.map-area {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	background: #000;
+	top: 0;
+	left: 0;
+}
+
+#map-canvas {
+	width: 100%;
+	height: 100%;
+}
