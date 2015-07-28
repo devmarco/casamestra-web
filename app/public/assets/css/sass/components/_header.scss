@@ -1,13 +1,17 @@
 header {
 	background-color: $master;
+	top: 0;
+  	width: 100%;
+  	z-index: 100;
+  	background-color: transparent;
 }
 
 header.absolute {
 	position: absolute;
-  	top: 0;
-  	width: 100%;
-  	z-index: 100;
-  	background-color: transparent;
+}
+
+header.fixed {
+	position: fixed;
 }
 
 header.transparent {

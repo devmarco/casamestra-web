@@ -29,10 +29,17 @@
 @import 'generic/estates';
 
 /*------------------------------------*\
+	[OBJECTS]
+\*------------------------------------*/
+
+@import 'objects/pagination';
+@import 'objects/buttons';
+@import 'objects/dropdown';
+
+/*------------------------------------*\
 	[COMPONENTS]
 \*------------------------------------*/
 
-@import 'components/buttons';
 @import 'components/header';
 @import 'components/footer';
 

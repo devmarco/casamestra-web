@@ -50,22 +50,36 @@ module.exports = function(grunt) {
 				separator: ';',
 			},
 			dist: {
-				src: ['app/public/assets/js/core/jquery-2.1.4.min.js', 'app/public/assets/js/core/*.js'],
-				dest: 'app/public/assets/js/main.js',
+				src: [
+					'app/public/assets/js/vendors/jquery-2.1.4.min.js', 
+					'app/public/assets/js/vendors/*.js',
+					'app/public/assets/js/app/**/*.js'
+				],
+				dest: 'app/public/assets/js/app.js',
 			},
 		},
 
 		uglify: {
 			my_target: {
+				options: {
+					sequences: true,
+					dead_code: true,
+					conditionals: true,
+					booleans: true,
+					unused: false,
+					if_return: true,
+					join_vars: true,
+					drop_console: true
+				},
 				files: {
-					'app/public/assets/js/main.js': ['app/public/assets/js/main.js']
+					'app/public/assets/js/compiled/app.min.js': ['app/public/assets/js/app.js']
 				}
 			}
 		},
 
 		watch: {
 			scripts: {
-				files: ['app/public/assets/css/sass/**/*.scss', 'app/public/assets/js/core/*.js'],
+				files: ['app/public/assets/css/sass/**/*.scss', 'app/public/assets/js/app/**/*.js'],
 				tasks: ['sass', 'sprite:all', 'concat', 'uglify'],
 				options: {
 					spawn: false,
@@ -83,6 +97,7 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-nodemon');
 	grunt.loadNpmTasks('grunt-contrib-concat');
 	grunt.loadNpmTasks('grunt-contrib-uglify');
+	grunt.loadNpmTasks('grunt-babel');
 
 	// Default task(s).
 	grunt.registerTask('default', ['sass']);

@@ -87,7 +87,7 @@
 
 	.address {
 		@extend %f-light;
-		@extend %f10;
+		@extend %f9;
 	}
 }
 
@@ -110,7 +110,7 @@
 	li {
 		position: relative;
 		float: left;
-		padding: 1em 0.9em;
+		padding: 0.8em 0.6em;
 		@extend .clearfix;
 
 		svg {
