@@ -28,5 +28,7 @@
 }
 
 .exclusives__estates {
-	
+	.estate + .estate {
+		margin-top: 30px;
+	}
 }
