@@ -1,3 +1,13 @@
 .dropdown {
+	position: relative;
+}
+
+.dropdown-content {
 	display: none;
+	position: absolute;
+    background-color: #fff;
+    width: 100%;
+    min-width: 295px;
+    border: 1px solid #e1e1e1;
+    margin-top: 10px;
 }

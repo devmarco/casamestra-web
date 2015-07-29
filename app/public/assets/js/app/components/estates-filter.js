@@ -2,8 +2,7 @@ Box.Application.addModule('cmFilter', function(context) {
 	'use strict';
 
 	return {
-
-		behaviors: ['item-menu'],
+		behaviors: ['dropdown'],
 
 		init: function() {
 			console.log('Initialized');

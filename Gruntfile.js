@@ -72,7 +72,7 @@ module.exports = function(grunt) {
 					drop_console: true
 				},
 				files: {
-					'app/public/assets/js/compiled/app.min.js': ['app/public/assets/js/app.js']
+					'app/public/assets/js/build/app.min.js': ['app/public/assets/js/app.js']
 				}
 			}
 		},
@@ -97,7 +97,6 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-nodemon');
 	grunt.loadNpmTasks('grunt-contrib-concat');
 	grunt.loadNpmTasks('grunt-contrib-uglify');
-	grunt.loadNpmTasks('grunt-babel');
 
 	// Default task(s).
 	grunt.registerTask('default', ['sass']);

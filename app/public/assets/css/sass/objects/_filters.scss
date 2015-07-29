@@ -1,0 +1,78 @@
+.filter-bedrooms {
+	ul {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+		padding: 1em;
+		@extend .clearfix;
+	}
+
+	li {
+		float: left;
+	}
+
+	button {
+		background-color: transparent;
+    	border: none;
+    	padding: 10px 20px;
+    	border-right: 1px solid rgba(42, 48, 56, 0.60);
+    	border-top: 1px solid rgba(42, 48, 56, 0.60);
+    	border-bottom: 1px solid rgba(42, 48, 56, 0.60);
+    	color: $master;
+
+    	&:focus,
+    	&:active {
+    		outline: 0;
+    	}
+
+    	&:hover {
+    		background: $green;
+    		color: #fff;
+    	}
+
+    	@extend %f-regular;
+    	@extend %f10;
+	}
+
+	li:first-child {
+		button {
+			border-left: 1px solid rgba(42, 48, 56, 0.60);
+			@include vendor(border-top-left-radius, 3px);
+			@include vendor(border-bottom-left-radius, 3px);
+		}	
+	}
+
+	li:last-child {
+		button {
+			@include vendor(border-top-right-radius, 3px);
+			@include vendor(border-bottom-right-radius, 3px);
+		}	
+	}
+}
+
+.filter-price {
+	padding: 1em;
+	@extend .clearfix;
+	input, span {
+		display: inline-block;
+		float: left;
+	}
+	
+	input {
+		width: 100px;
+		padding: 10px;
+
+		&:focus,
+		&:active {
+			outline: 0;
+		}
+	}
+
+	span {
+		display: inline-block;
+		margin: 10px 20px;
+		color: $master;
+		@extend %f-regular;
+		@extend %f8;
+	}
+}

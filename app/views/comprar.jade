@@ -7,13 +7,27 @@ block content
 		#teste
 		.estates__bx__filter(data-module='cmFilter')
 			.filter
-				input(type="text" placeholder="Selecione a vizinhança")
-			.filter(class='select')
-				button(data-type='dropdown' dropdown-area='.dropdown-area') Quartos
-				.dropdown-area(class='dropdown')
-					h2 Teste
-			.filter(class='select')
-				button Preço
+				input(type="text" placeholder='Selecione a vizinhança')
+			.filter(class='select dropdown')
+				button(data-type='dropdown' dropdown-content='.dropdown-content') Quartos
+				.dropdown-content(class='filter-bedrooms')
+					ul
+						li
+							button 1
+						li
+							button 2
+						li
+							button 3 
+						li
+							button 4
+						li
+							button 5+
+			.filter(class='select dropdown')
+				button(data-type='dropdown' dropdown-content='.dropdown-content') Preço
+				.dropdown-content(class='filter-price')
+					input(type='text' placeholder='Mínimo')
+					span Até
+					input(type='text' placeholder='Máximo')
 			.filter(class='select')
 				button Mais
 			.filter(class='right')
