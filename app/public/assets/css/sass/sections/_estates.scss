@@ -140,7 +140,7 @@
 
 .filter__container {
 	padding: 0 1em;
-    margin-bottom: 20px;
+    margin-top: 20px;
     @extend .clearfix;
 	
 	.filter {
@@ -150,9 +150,14 @@
     .filter + .filter {
     	float: right;
     }
+
+    &:first-child {
+		margin: 0 0 20px 0;
+    }
 }
 
 .list__container {
+	@extend .clearfix;
 }
 
 .estates__bx__list__map {

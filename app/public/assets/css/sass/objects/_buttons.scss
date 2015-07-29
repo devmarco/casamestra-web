@@ -14,7 +14,8 @@
 	display: inline-block;
 
 	select {
-		border: 1px solid #e1e1e1;
+		border: 1px solid $master;
+		border: 1px solid rgba(42, 48, 56, 0.40);
 		background-color: transparent;
 		display: block;
 		padding: 10px 3.5em 10px 1.5em;

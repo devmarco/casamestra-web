@@ -1,5 +1,10 @@
 Box.Application.addBehavior('dropdown', function(context) {
-	var documentClick;
+
+	$(document).on('click', function(e) {
+		if (!$(e.target).closest('.dropdown').length) {
+			$('.dropdown-content').hide();
+		}
+    });
 
 	return {
 		onclick: function(e, element, elementType) {
@@ -9,33 +14,14 @@ Box.Application.addBehavior('dropdown', function(context) {
 
 			if (elementType !== 'dropdown') return false;
 
-			if (!checkParent(e.target, area)) {
-				if (checkParent(e.target, button)) {
-					$('.dropdown-content').hide();
-					(!area.is(':visible')) ? area[0].style.display = 'block' : area[0].style.display = 'none';
-				} else {
-					area[0].style.display = 'none';
-				}
+			if (area.is(':visible')) {
+				$('.dropdown-content').hide();
+			} else {
+				$('.dropdown-content').hide();
+				area.toggle();
 			}
 
-			function checkParent(t, elm) {
-				while(t.parentNode) {
-					if( t == elm[0] ) {return true;}
-					t = t.parentNode;
-				}
-				return false;
-			}
-
-			e.stopPropagation();
-
-			$(document).on('click', function(e) {
-				e.stopImmediatePropagation();
-				
-				if (!checkParent(e.target, area)) {
-					area[0].style.display = "none";
-					$(document).off('click');
-				}
-			});
+			return false;			
 		}
 	};
 });
