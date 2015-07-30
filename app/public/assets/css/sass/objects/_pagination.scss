@@ -5,7 +5,7 @@
 .pagination--text {
 	@extend .clearfix;
 
-	span {
+	> span {
 		color: $master;
 		display: inline-block;
 		float: left;

@@ -78,12 +78,6 @@
 		}
 	}
 
-	.active {
-		outline: 0;
-		border-color: #AFAAAA;
-		color: $master;
-	}
-
 	.map-icon:before {
 		@include sprite($map-icon);
 	}
@@ -114,6 +108,11 @@
 }
 
 .estates__bx__list {
+	margin-top: 161px;
+	height: -webkit-calc(100% - 161px);
+	height: -moz-calc(100% - 161px);
+	height: -ms-calc(100% - 161px);
+	height: calc(100% - 161px);
 	@extend .clearfix;
 }
 
@@ -127,10 +126,9 @@
 	float: left;
     width: 75%;
     max-width: 100%;
-    padding: 176px 0 1em 0;
+    padding: 1em 0;
     border-right: 1px solid #C3C3C3;
     overflow-x: scroll;
-
 
 	.estate {
 		margin-bottom: 30px;
@@ -157,6 +155,7 @@
 }
 
 .list__container {
+	min-height: 600px;
 	@extend .clearfix;
 }
 

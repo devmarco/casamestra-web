@@ -19,7 +19,10 @@ html(lang='en')
 
 		script(type='text/javascript' src='https://maps.googleapis.com/maps/api/js?key=AIzaSyAtqDRHHavgN6gzR_EG25ZK3qhL0qaXVWQ')
 		script(type='text/javascript' src='/public/assets/js/app.js')
-		script Box.Application.init();
+		script.
+			Box.Application.init({
+				debug: true
+			});
 		script.
 			function initialize() {
 				var mapOptions,
