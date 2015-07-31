@@ -11,8 +11,7 @@ Box.Application.addModule('EstatesFilter', function(context) {
 			var value = $(el).data('value');
 
 			//Set active class
-			$(el).closest('ul').find('button').removeClass('active');
-			$(el).addClass('active');
+			$(el).toggleClass('active');
 
 			//Send message
 			filter.set({
@@ -39,7 +38,7 @@ Box.Application.addModule('EstatesFilter', function(context) {
 			//Send message
 			filter.set({
 				prop: 'price',
-				value: value,
+				value: value || 0,
 				amount: amount
 			});
 		}

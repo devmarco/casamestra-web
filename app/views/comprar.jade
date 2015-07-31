@@ -9,7 +9,7 @@ block content
 			.filter
 				input(type="text" placeholder='Selecione a vizinhança')
 			.filter(class='select dropdown')
-				button(data-type='dropdown' dropdown-content='.dropdown-content') Quartos
+				button(class='js-selected-beds' data-type='dropdown' dropdown-content='.dropdown-content') Quartos
 				.dropdown-content(class='filter-bedrooms')
 					ul
 						li
@@ -23,12 +23,12 @@ block content
 						li
 							button(data-type='f-bedrooms' data-value='5') 5+
 			.filter(class='select dropdown')
-				button(data-type='dropdown' dropdown-content='.dropdown-content') Preço
+				button(class='js-selected-price' data-type='dropdown' dropdown-content='.dropdown-content') Preço
 				.dropdown-content(class='filter-price')
 					input(type='text' placeholder='Mínimo' data-type='f-price' data-value='min')
 					input(type='text' placeholder='Máximo' data-type='f-price' data-value='max')
 			.filter(class='select dropdown')
-				button(data-type='dropdown' dropdown-content='.dropdown-content') Mais
+				button(class='js-selected-more' data-type='dropdown' dropdown-content='.dropdown-content') Mais
 				.dropdown-content(class='filter-more')
 					.filter__column
 						.filter__column__bx
@@ -65,15 +65,15 @@ block content
 							.filter-bedrooms
 								ul
 									li
-										button(data-type='f-bathrooms' data-value='1') 1
+										button(data-type='f-garages' data-value='1') 1
 									li
-										button(data-type='f-bathrooms' data-value='2') 2
+										button(data-type='f-garages' data-value='2') 2
 									li
-										button(data-type='f-bathrooms' data-value='3') 3 
+										button(data-type='f-garages' data-value='3') 3 
 									li
-										button(data-type='f-bathrooms' data-value='4') 4
+										button(data-type='f-garages' data-value='4') 4
 									li
-										button(data-type='f-bathrooms' data-value='5') 5+
+										button(data-type='f-garages' data-value='5') 5+
 					.filter__column
 						.filter__column__bx
 							span(class='title') Características
@@ -128,8 +128,8 @@ block content
 							span(class='total-result') 1
 							|  imóveis
 						.pagination__buttons
-							button(class='prev')
-							button(class='next')
+							button(class='prev' data-type='p-prev')
+							button(class='next' data-type='p-next')
 				.list__container(class='render-area')
 				.filter__container
 					.filter(class='select')

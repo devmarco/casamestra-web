@@ -1,0 +1,47 @@
+.sprite-arrow-left {
+	width: 10px;
+	height: 17px;
+	background-position: 0 0;
+}
+
+.sprite-arrow-right {
+	width: 10px;
+	height: 17px;
+	background-position: -15px 0;
+}
+
+.sprite-bath {
+	width: 15px;
+	height: 16px;
+	background-position: -30px 0;
+}
+
+.sprite-bed {
+	width: 16px;
+	height: 12px;
+	background-position: -50px 0;
+}
+
+.sprite-park {
+	width: 15px;
+	height: 15px;
+	background-position: -75px 0;
+}
+
+.sprite-square {
+	width: 15px;
+	height: 15px;
+	background-position: -95px 0;
+}
+
+.sprite-arrow-left, .sprite-arrow-right, .sprite-bath, .sprite-bed, .sprite-park, .sprite-square {
+	background-size: 115px 25px;
+}
+
+.no-svg .sprite-arrow-left, .no-svg .sprite-arrow-right, .no-svg .sprite-bath, .no-svg .sprite-bed, .no-svg .sprite-park, .no-svg .sprite-square {
+	background-image: url("../../../assets/imgs/sprites/sprite-all-sprite.png");
+}
+
+.svg .sprite-arrow-left, .svg .sprite-arrow-right, .svg .sprite-bath, .svg .sprite-bed, .svg .sprite-park, .svg .sprite-square {
+	background-image: url("../../../assets/imgs/sprites/sprite-all-sprite.svg");
+}

@@ -40,13 +40,13 @@
 		.next {
 			border-left: none;
 			&:before {
-    			@include sprite($arrow-next);
+    			@extend .sprite-arrow-right;
 			}
 		}
 
 		.prev {
 			&:before {
-    			@include sprite($arrow-prev);
+    			@extend .sprite-arrow-left;
 			}
 		}
 	}

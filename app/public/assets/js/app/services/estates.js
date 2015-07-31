@@ -1,6 +1,7 @@
 Box.Application.addService('estates', function(application) {
 
-	var cachedEstates;
+	var publicData,
+		privateData;
 
 	return {
 		get: function(config) {
@@ -21,11 +22,20 @@ Box.Application.addService('estates', function(application) {
 
 		},
 		cache: {
-			get: function() {
-				return cachedEstates;
+			get: function(config) {
+				if (config === 'private') {
+					return privateData;
+				}
+
+				return publicData || privateData;
 			},
-			set: function(data) {
-				cachedEstates = data;
+			set: function(data, config) {
+				if (config === 'private') {
+					privateData = data;
+					return false;
+				}
+
+				publicData = data;
 			}
 		}
 	}

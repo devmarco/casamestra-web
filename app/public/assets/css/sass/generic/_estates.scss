@@ -110,22 +110,19 @@
 	li {
 		position: relative;
 		float: left;
-		padding: 0.8em 0.6em;
+		padding: 0.8em 0.5em;
 		@extend .clearfix;
 
 		svg {
 			max-width: 15px;
 		}
 
-		span, svg {
+		span {
 			color: $master;
-			float: left;
 			display: block;
-			fill: $master;
 		}
 
 		span {
-			margin-right: 10px;
 			@extend %f8;
 			@extend %f-bold;
 		}
@@ -146,5 +143,28 @@
 				display: none;
 			}
 		}
+
+		&:last-child {
+			min-width: 130px;
+    		text-align: right;
+		}
 	}
+
+	.icon span:after {
+		content: '';
+		display: block;
+		float: right;
+    	margin-left: 10px;
+	}
+}
+
+.icon-area span:after { 
+	@extend .sprite-square; 
+}
+.icon-beds span:after { 
+	margin-top: 3px;
+	@extend .sprite-bed; 
+}
+.icon-bath span:after { 
+	@extend .sprite-bath; 
 }
