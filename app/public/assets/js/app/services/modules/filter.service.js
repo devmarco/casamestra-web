@@ -1,9 +1,7 @@
-Box.Application.addService('filterService', function(context) {
+Box.Application.addService('filter.service', function(application) {
 	'use strict';
 
-	var estates = context.getService('estates'),
-		render  = context.getService('render-estates'),
-
+	var _cache 	= application.getService('cache.service'),
 		filters = {};
 
 	return {
@@ -43,11 +41,16 @@ Box.Application.addService('filterService', function(context) {
 			this.filter();
 		},
 		filter: function() {
-			var data = estates.cache.get('private'),
+			var data = _cache.get('private'),
 				filteredObject = [];
 
 			if ($.isEmptyObject(filters)) {
-				render.update(data);
+
+				Box.Application.broadcast('newFilter', {
+					data: data,
+					filters: null
+				});
+
 				return false;
 			}
 
@@ -118,8 +121,11 @@ Box.Application.addService('filterService', function(context) {
 				}
 			}
 
-			function checkPrice(filter, item) {
-				if (item.price >= filter.min && item.price <= filter.max) return true;
+			function checkPrice(filter, price) {
+				var min = filter.min || 0,
+					max = filter.max || 100000000;
+
+				if (price >= min && price <= max) return true;
 				return false;
 			}
 

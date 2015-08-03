@@ -10,6 +10,7 @@
 .estate {
 	position: relative;
 	height: 250px;
+	overflow: hidden;
 	
 	@extend .columns;
 
@@ -20,6 +21,8 @@
 		text-decoration: none;
 		height: 100%;
 		background: #fff;
+		padding-top: 85px;
+		text-align: center;
 
 		&:before {
 			content: '';
@@ -31,17 +34,16 @@
 			top: 0;
 			left: 0;
 			z-index: 1;
-			@include opacity(0);
-			@include vendor(transition, opacity 0.2s ease);
+			visibility: hidden;
 		}
 
 		&:hover {
 			&:before {
-				@include opacity(10);
+				visibility: visible;
 			}
 
 			.estate__address {
-				@include opacity(10);
+				visibility: visible;
 			}
 		}
 	}
@@ -61,18 +63,15 @@
 }
 
 .estate__address {
-	position: absolute;
+	position: relative;
 	width: 70%;
 	height: auto;
 	border: 1px solid #fff;
 	text-align: center;
-	top: 50%;
-	left: 50%;
-	margin: -65px 0 0 -35%;
 	padding: 1em;
-	z-index: 2;
-	@include opacity(0);
-	@include vendor(transition, opacity 0.5s ease-out);
+	visibility: hidden;
+	display: inline-block;
+	z-index: 10;
 
 	span {
 		display: block;

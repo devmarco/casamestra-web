@@ -1,11 +1,10 @@
 extends base
 
 block content
-	header(class='fixed transparent')
+	header(class='transparent')
 		include includes/header
-	main(class='estates__bx')
-		#teste
-		.estates__bx__filter(data-module='EstatesFilter')
+	main
+		.estates__bx__filter(data-module='filter')
 			.filter
 				input(type="text" placeholder='Selecione a vizinhança')
 			.filter(class='select dropdown')
@@ -114,7 +113,7 @@ block content
 				button(class='list-icon')
 		.estates__bx__map
 			#map-canvas1
-		.estates__bx__list(data-module='EstatesList' class='active')
+		.estates__bx__list(data-module='list' class='active')
 			.estates__bx__list__container
 				.filter__container
 					.filter(class='select')
@@ -124,9 +123,7 @@ block content
 								option Filtrar por preço - Menor para Maior
 								option Filtrar por preço - Maior para Menor
 					.filter(class='pagination pagination--text')
-						span 1 — 12 de 
-							span(class='total-result') 1
-							|  imóveis
+						span(class='js-result-stats') 1 - 12 de 1000 imóveis
 						.pagination__buttons
 							button(class='prev' data-type='p-prev')
 							button(class='next' data-type='p-next')
@@ -139,9 +136,9 @@ block content
 								option Filtrar por preço - Menor para Maior
 								option Filtrar por preço - Maior para Menor
 					.filter(class='pagination pagination--text')
-						span 1 — 12 de 5670 imóveis
+						span(class='js-result-stats') 1 - 12 de 1000 imóveis
 						.pagination__buttons
-							button(class='prev')
-							button(class='next')
+							button(class='prev' data-type='p-prev')
+							button(class='next' data-type='p-next')
 			.estates__bx__list__map
 				#map-canvas

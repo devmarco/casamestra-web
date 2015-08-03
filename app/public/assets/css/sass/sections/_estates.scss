@@ -1,13 +1,8 @@
-.estates__bx {
-	position: fixed;
-	width: 100%;
-	height: 100%;
-	padding-top: 80px;
-	overflow: hidden;
-}
+.estates__bx {}
 
 .estates__bx__filter {
 	position: relative;
+	width: 100%;
     z-index: 100;
 	padding: 1em 1em;
 	border-bottom: 1px solid #e1e1e1;
@@ -87,15 +82,15 @@
 	}
 }
 
+.estates__bx__filter.scroll-active {
+	position: fixed;
+	top: 0;
+}
 .estates__bx__map,
 .estates__bx__list {
-	display: none;
-	position: absolute;
-	width: 100%;
-	height: 100%;
-	background: #fff;
-	top: 0;
-	left: 0;
+	position: relative;
+	min-height: 100%;
+	height: auto;
 }
 
 .active {
@@ -108,16 +103,17 @@
 }
 
 .estates__bx__list {
-	margin-top: 161px;
-	height: -webkit-calc(100% - 161px);
-	height: -moz-calc(100% - 161px);
-	height: -ms-calc(100% - 161px);
-	height: calc(100% - 161px);
+	position: absolute;
+    top: 81px;
+    width: 100%;
 	@extend .clearfix;
 }
 
-.estates__bx__list__container,
 .estates__bx__list__map {
+	position: fixed;
+	bottom: 0;
+	right: 0;
+	overflow: hidden;
 	height: 100%;
 }
 

@@ -119,14 +119,18 @@ limitations under the License.
 */
 !function(e){var n={};if(n.EventTarget=function(){"use strict";function e(){this._handlers={}}return e.prototype={constructor:e,on:function(e,n){var t,r,o=this._handlers[e];for("undefined"==typeof o&&(o=this._handlers[e]=[]),t=0,r=o.length;r>t;t++)if(o[t]===n)return;o.push(n)},fire:function(e,n){var t,r,o,i={type:e,data:n};if(t=this._handlers[i.type],t instanceof Array)for(t=t.concat(),r=0,o=t.length;o>r;r++)t[r].call(this,i)},off:function(e,n){var t,r,o=this._handlers[e];if(o instanceof Array)for(t=0,r=o.length;r>t;t++)if(o[t]===n){o.splice(t,1);break}}},e}(),n.JQueryDOM=function(){"use strict";return{type:"jquery",query:function(e,n){return $(e).find(n)[0]||null},queryAll:function(e,n){return $.makeArray($(e).find(n))},on:function(e,n,t){$(e).on(n,t)},off:function(e,n,t){$(e).off(n,t)}}}(),n.DOM=n.JQueryDOM,n.Context=function(){"use strict";function e(e,n){this.application=e,this.element=n}return e.prototype={broadcast:function(e,n){this.application.broadcast(e,n)},getService:function(e){return this.application.getService(e)},getConfig:function(e){return this.application.getModuleConfig(this.element,e)},getGlobal:function(e){return this.application.getGlobal(e)},getGlobalConfig:function(e){return this.application.getGlobalConfig(e)},reportError:function(e){this.application.reportError(e)},getElement:function(){return this.element}},e}(),n.Application=function(){"use strict";function t(e,n){for(var t in n)n.hasOwnProperty(t)&&(e[t]=n[t]);return e}function r(e,n){return function(){return e.apply(n,arguments)}}function o(e,n){for(var t=0,r=e.length;r>t;t++)if(e[t]===n)return t;return-1}function i(){x={},E={},C={},A=[],M={},O={},S=!1;for(var e=0;e<D.length;e++)delete j[D[e]],delete n.Context.prototype[D[e]];D=[]}function a(e){for(var n=0,t=A.length;t>n;n++)if(A[n]===e)return!0;return!1}function u(e){if(x.debug)throw e;j.fire("error",{exception:e})}function f(e,n){var t,r;for(t in e)r=e[t],"function"==typeof r&&(e[t]=function(e,t){return function(){var r=n+"."+e+"() - ";try{return t.apply(this,arguments)}catch(o){o.methodName=e,o.objectName=n,o.name=r+o.name,o.message=r+o.message,u(o)}}}(t,r))}function s(e){var n=e.getAttribute("data-module");return n?n.split(" ")[0]:""}function c(e){return e&&e.hasAttribute("data-module")}function l(e){return e&&e.hasAttribute("data-type")}function d(e,n){"function"==typeof e[n]&&e[n].apply(e,Array.prototype.slice.call(arguments,2))}function p(e){var n=C[e];return n?a(e)?(u(new ReferenceError("Circular service dependency: "+A.join(" -> ")+" -> "+e)),null):(A.push(e),n.instance||(n.instance=n.creator(j)),A.pop(),n.instance):null}function h(e){var n,t,r,o,i=[];for(t=e.instance.behaviors||[],n=0;n<t.length;n++)"behaviorInstances"in e||(e.behaviorInstances={}),o=e.behaviorInstances,r=M[t[n]],r?(o[t[n]]||(o[t[n]]=r.creator(e.context)),i.push(o[t[n]])):u(new Error('Behavior "'+t[n]+'" not found'));return i}function g(e){for(var n=l(e);!n&&e&&!c(e);)e=e.parentNode,n=l(e);return n?e:null}function v(e,t,r){function o(e){for(var n=g(e.target),t=n?n.getAttribute("data-type"):"",o=0;o<r.length;o++)r[o](e,n,t);return!0}return n.DOM.on(e,t,o),o}function y(e){var n,t,o,i,a,u=h(e);for(n=0;n<G.length;n++){for(a=[],o=G[n],i="on"+o,e.instance[i]&&a.push(r(e.instance[i],e.instance)),t=0;t<u.length;t++)u[t][i]&&a.push(r(u[t][i],u[t]));a.length&&(e.eventHandlers[o]=v(e.element,o,a))}}function m(e){for(var t in e.eventHandlers)e.eventHandlers.hasOwnProperty(t)&&n.DOM.off(e.element,t,e.eventHandlers[t]);e.eventHandlers={}}function b(e){return O[e.id]}var w="[data-module]",x={},E={},A=[],C={},M={},O={},D=[],S=!1,j=new n.EventTarget,G=["click","mouseover","mouseout","mousedown","mouseup","mouseenter","mouseleave","keydown","keyup","submit","change","contextmenu","dblclick","input","focusin","focusout"];return t(j,{init:function(e){t(x,e||{}),this.startAll(document.documentElement),this.fire("init"),S=!0},destroy:function(){this.stopAll(document.documentElement),i()},isStarted:function(e){var n=b(e);return"object"==typeof n},start:function(e){var t,r,o,i=s(e),a=E[i];if(!a)return void u(new Error('Module type "'+i+'" is not defined.'));if(!this.isStarted(e)){e.id||(e.id="mod-"+i+"-"+a.counter),a.counter++,r=new n.Context(this,e),o=a.creator(r),x.debug||f(o,i),t={moduleName:i,instance:o,context:r,element:e,eventHandlers:{}},y(t),O[e.id]=t,d(t.instance,"init");for(var c,l=h(t),p=0,g=l.length;g>p;p++)c=l[p],d(c,"init")}},stop:function(e){var n=b(e);if(n){m(n);for(var t,r=h(n),o=r.length-1;o>=0;o--)t=r[o],d(t,"destroy");d(n.instance,"destroy"),delete O[e.id]}else if(x.debug)return void u(new Error("Unable to stop module associated with element: "+e.id))},startAll:function(e){for(var t=n.DOM.queryAll(e,w),r=0,o=t.length;o>r;r++)this.start(t[r])},stopAll:function(e){for(var t=n.DOM.queryAll(e,w),r=0,o=t.length;o>r;r++)this.stop(t[r])},addModule:function(e,n){return"undefined"!=typeof E[e]?void u(new Error("Module "+e+" has already been added.")):void(E[e]={creator:n,counter:1})},getModuleConfig:function(e,t){var r,o=b(e);return o?(o.config||(r=n.DOM.query(e,'script[type="text/x-config"]'),r&&(o.config=JSON.parse(r.text))),o.config?"undefined"==typeof t?o.config:t in o.config?o.config[t]:null:null):null},addService:function(e,t,r){if("undefined"!=typeof C[e])return void u(new Error("Service "+e+" has already been added."));if(r=r||{},C[e]={creator:t,instance:null},r.exports){var o,i=r.exports.length;for(o=0;i>o;o++){var a=r.exports[o],f=function(n){return function(){var t=p(e);return t[n].apply(t,arguments)}}(a);if(a in this)return void u(new Error(a+" already exists on Application object"));if(this[a]=f,a in n.Context.prototype)return void u(new Error(a+" already exists on Context prototype"));n.Context.prototype[a]=f,D.push(a)}}},getService:p,addBehavior:function(e,n){return"undefined"!=typeof M[e]?void u(new Error("Behavior "+e+" has already been added.")):void(M[e]={creator:n,instance:null})},broadcast:function(e,n){var t,i,a,u,f,s;for(i in O)if(O.hasOwnProperty(i)){for(s=[],a=O[i],-1!==o(a.instance.messages||[],e)&&s.push(r(a.instance.onmessage,a.instance)),f=h(a),t=0;t<f.length;t++)u=f[t],-1!==o(u.messages||[],e)&&s.push(r(u.onmessage,u));for(t=0;t<s.length;t++)s[t](e,n)}this.fire("message",{message:e,messageData:n})},getGlobal:function(n){return n in e?e[n]:null},getGlobalConfig:function(e){return"undefined"==typeof e?x:e in x?x[e]:null},setGlobalConfig:function(e){return S?void u(new Error("Cannot set global configuration after application initialization")):void t(x,e)},reportError:u})}(),"function"==typeof define&&define.amd)define("t3",[],function(){return n});else if("object"==typeof module&&"object"==typeof module.exports)module.exports=n;else{e.Box=e.Box||{};for(var t in n)n.hasOwnProperty(t)&&(e.Box[t]=n[t])}}("undefined"!=typeof window?window:this);
 ;Box.Application.addBehavior('dropdown', function(context) {
+	'use strict';
 
-	$(document).on('click', function(e) {
-		if (!$(e.target).closest('.dropdown').length) {
-			$('.dropdown-content').hide();
-		}
-    });
+	var $ = context.getGlobal('jQuery');
 
 	return {
+		init: function() {
+			$(document).on('click', function(e) {
+				if (!$(e.target).closest('.dropdown').length) {
+					$('.dropdown-content').hide();
+				}
+		    });
+		},
 		onclick: function(e, element, elementType) {
 			var el 		= $(element),
 				area 	= el.parent().find(el.attr('dropdown-content')),
@@ -134,53 +138,80 @@ limitations under the License.
 
 			if (elementType !== 'dropdown') return false;
 
-			if (area.is(':visible')) {
-				$('.dropdown-content').hide();
-			} else {
-				$('.dropdown-content').hide();
-				area.toggle();
-			}
+			$('.dropdown-content').hide();
+			
+			area.toggle();
 
 			return false;			
 		}
 	};
 });;Box.Application.addBehavior('pagination', function(context) {
 
-	var _service = context.getService('estates'),
-		_render  = context.getService('render-estates')
-		nextItem = 12;
+	var _cache 		= context.getService('cache.service'),
+		_render  	= context.getService('render.service');
 
 	return {
+		init: function() {
+			this.nextItem = 0;
+			this.prevItem = 0;
+			this.itemsDisplay = 12;
+		},
 		onclick: function(e, element, elementType) {
+			var _this = this;
 
 			if (elementType === 'p-next') next();
 			if (elementType === 'p-prev') prev();
 
 			function prev() {
+				var data = _cache.get();
 
+				if (_this.nextItem !== 0) {
+					
+					if (_this.prevItem <= 0) _this.prevItem = 0;
+					
+					_render.update({
+						data: _.slice(data, _this.prevItem, _this.nextItem),
+						pages: {
+							from: (_this.prevItem+1),
+							to: _this.nextItem
+						}
+					});
+					
+					_this.nextItem = (_this.nextItem-_this.itemsDisplay);
+					_this.prevItem = (_this.prevItem-_this.itemsDisplay);
+				} 
 			}
 
 			function next() {
-				var data = _service.cache.get(),
-					dataPagined = _.slice(data, (nextItem-1), (nextItem+12));
+				var data = _cache.get(),
+					dataPagined;
 
-				console.log(nextItem, data.length, dataPagined);
-
-				if (nextItem <= data.length) {
-					_render.update(dataPagined);
+				if ((_this.nextItem+_this.itemsDisplay) > data.length) {
+					return false;
 				}
-				
-				nextItem = (nextItem+12);
+
+				_this.prevItem = (_this.nextItem-1 < 0) ? 0 : (_this.nextItem-1);
+				_this.nextItem = (_this.nextItem+_this.itemsDisplay);
+
+				console.log((_this.nextItem), (_this.nextItem+_this.itemsDisplay));
+
+				_render.update({
+					data: _.slice(data, (_this.nextItem), (_this.nextItem+_this.itemsDisplay)),
+					pages: {
+						from: _this.nextItem,
+						to: ((_this.nextItem+_this.itemsDisplay >= data.length) ? data.length : _this.nextItem+_this.itemsDisplay)
+					}
+				});
 			}
 
 			return false;			
 		}
 	};
-});
-;Box.Application.addModule('EstatesFilter', function(context) {
+});;Box.Application.addModule('filter', function(context) {
 	'use strict';
 
-	var filter 	= context.getService('filterService');
+	var $ 			= context.getGlobal('jQuery'),
+		_filter 	= context.getService('filter.service');
 
 	var actions = {
 		filterByNeighborhood: function() {
@@ -193,7 +224,7 @@ limitations under the License.
 			$(el).toggleClass('active');
 
 			//Send message
-			filter.set({
+			_filter.set({
 				prop: 'bathrooms',
 				value: value
 			});
@@ -205,7 +236,7 @@ limitations under the License.
 			$(el).toggleClass('active');
 
 			//Send message
-			filter.set({
+			_filter.set({
 				prop: 'bedrooms',
 				value: value
 			});
@@ -215,11 +246,14 @@ limitations under the License.
 				value = $(el).val();
 
 			//Send message
-			filter.set({
+			_filter.set({
 				prop: 'price',
 				value: value || 0,
 				amount: amount
 			});
+		},
+		filterByOrder: function() {
+			
 		}
 	};
 
@@ -231,33 +265,47 @@ limitations under the License.
 		},
 		onchange: function(event, element, elementType) {
 			if (elementType === 'f-price') actions.filterByPrice(element);
+		},
+		init: function() {
+			//Get the element
+			var element = context.getElement();			
+
+			$(window).scroll(function() {
+				($(window).scrollTop() >= 80) ? $(element).addClass('scroll-active') : $(element).removeClass('scroll-active');
+			});
 		}
 	}
-});;Box.Application.addModule('EstatesList', function(context) {
+});;Box.Application.addModule('list', function(context) {
 	'use strict';
 
-	var _render = context.getService('render-estates'),
-		_estates = context.getService('estates');
+	var _render  = context.getService('render.service'),
+		_estates = context.getService('estates.service'),
+		_cache	 = context.getService('cache.service');
 
 	return {
 		behaviors: ['pagination'],
 		messages: ['newFilter'],
 		onmessage: function(name, value) {
-			_render.update(_.slice(value.data, 0, 12), value.filters);
+			_cache.set(value.data);
+			_render.update({
+				data: _.slice(value.data, 0, 12),
+				filters: value.filters
+			});
         },
 		init: function() {
 			_estates.get({
 				fields: 'cover,price,neighborhood,address,bathrooms,bedrooms,area'
 			}).then(function(data) {
-				_render.render(data);
-				_estates.cache.set(data, 'private');
+				_cache.set(data, 'private');
+				_render.render({
+					data: data,
+					elementClass: '.render-area'
+				});
 			});
 		}
 	}
-});;Box.Application.addService('estates', function(application) {
-
-	var publicData,
-		privateData;
+});;;Box.Application.addService('estates.service', function(application) {
+	'use strict';
 
 	return {
 		get: function(config) {
@@ -276,31 +324,35 @@ limitations under the License.
 		},
 		delete: function() {
 
-		},
-		cache: {
-			get: function(config) {
-				if (config === 'private') {
-					return privateData;
-				}
-
-				return publicData || privateData;
-			},
-			set: function(data, config) {
-				if (config === 'private') {
-					privateData = data;
-					return false;
-				}
-
-				publicData = data;
-			}
 		}
 	}
-});;Box.Application.addService('filterService', function(context) {
+});;Box.Application.addService('cache.service', function(application) {
 	'use strict';
 
-	var estates = context.getService('estates'),
-		render  = context.getService('render-estates'),
+	var publicData,
+		privateData;
 
+	return {
+		get: function(config) {
+			if (config === 'private') {
+				return privateData;
+			}
+
+			return publicData || privateData;
+		},
+		set: function(data, config) {
+			if (config === 'private') {
+				privateData = data;
+				return false;
+			}
+
+			publicData = data;
+		}
+	}
+});;Box.Application.addService('filter.service', function(application) {
+	'use strict';
+
+	var _cache 	= application.getService('cache.service'),
 		filters = {};
 
 	return {
@@ -340,11 +392,16 @@ limitations under the License.
 			this.filter();
 		},
 		filter: function() {
-			var data = estates.cache.get('private'),
+			var data = _cache.get('private'),
 				filteredObject = [];
 
 			if ($.isEmptyObject(filters)) {
-				render.update(data);
+
+				Box.Application.broadcast('newFilter', {
+					data: data,
+					filters: null
+				});
+
 				return false;
 			}
 
@@ -415,8 +472,11 @@ limitations under the License.
 				}
 			}
 
-			function checkPrice(filter, item) {
-				if (item.price >= filter.min && item.price <= filter.max) return true;
+			function checkPrice(filter, price) {
+				var min = filter.min || 0,
+					max = filter.max || 100000000;
+
+				if (price >= min && price <= max) return true;
 				return false;
 			}
 
@@ -430,15 +490,14 @@ limitations under the License.
 			});
 		}
 	}
-});;Box.Application.addService('render-estates', function(context) {
+});;Box.Application.addService('render.service', function(application) {
 	'use strict';
 
-	var _estates 	= context.getService('estates'),
-		_utils 		= context.getService('utils'),
-		view, estatesTpl;
-
-	estatesTpl = 
-	"<repeat each='{{ estates }}' as='e'>"+
+	var _utils = application.getService('utils.service'),
+		estatesTpl,
+		template;
+	
+	estatesTpl =  "<repeat each='{{ estates }}' as='e'>"+
 	"<div class='estate estate--medium'>"+
 	"    <a style='background-image: url({{ e.cover }})'>"+
 	"        <div class='estate__address'><span class='neighborhood'>{{ e.neighborhood }}</span><span class='address'>{{ e.address }}</span></div>"+
@@ -454,35 +513,41 @@ limitations under the License.
 	"</div>"+
 	"</repeat>";
 
+	//Define the template
+	var template = paperclip.template(estatesTpl);
+
+	//Instance formatMoney to paperclip
+	paperclip.modifiers.formatMoney = _utils.formatMoney;
 
 	return {
-		update: function(data, filters) {
-			this.view.set('estates', data);
-			
-			(filters) ? this.updateTexts(data, filters) : false;
-
-			//Set the filtered data to cache
-			_estates.cache.set(data);
+		update: function(config) {
+			this.view.set('estates', config.data);
+			_utils.updateTexts(config);
 		},
-		render: function(data) {
-			var template = paperclip.template(estatesTpl);
-
-			paperclip.modifiers.formatMoney = _utils.formatMoney;
-
+		render: function(config) {
 			this.view = template.view({
-				estates: _.slice(data, 0, 12)
+				estates: _.slice(config.data, 0, 12)
 			});
 
-			document.querySelector('.render-area').appendChild(this.view.render());
+			document.querySelector(config.elementClass).appendChild(this.view.render());
 
-			this.updateTexts(data);
+			_utils.updateTexts({
+				data: config.data
+			});
+		}
+	};
+});;Box.Application.addService('utils.service', function(context) {
+	'use strict';
+
+	var $ 		= context.getGlobal('jQuery'),
+		_cache 	= context.getService('cache.service');
+
+	return {
+		formatMoney: function(number) {
+			return "R$ " + number.toFixed(2).replace('.', ',').replace(/(\d)(?=(\d{3})+\,)/g, "$1.");
 		},
-		updateTexts: function(data, filters) {
-			var elMore 	= $('.js-selected-more'),
-				elBeds 	= $('.js-selected-beds'),
-				elPrice = $('.js-selected-price'),
-				count 	= 0,
-				i;
+		updateTexts: function(config) {
+			var filters = config.filters || {};
 
 			function createText(value) {
 				var items,
@@ -502,22 +567,75 @@ limitations under the License.
 				return text;
 			}
 
-			//Set filter
-			(!filters) ? filters = {} : false;
+			(function updateBedrooms() {
+				var elBeds 	= $('.js-selected-beds');
 
-			(!filters['bedrooms']) 		? elBeds.text('Quartos') : elBeds.text(createText(filters['bedrooms'])+' '+'Quartos');
-			(!filters['price']) 		? elPrice.text('Preço')  : elPrice.text((filters['price'].min || '')+' até '+(filters['price'].max || '-'));	
-			($.isEmptyObject(filters)) 	? elMore.text('Mais') 	 : elMore.text('('+count+') Mais');
+				if (!filters['bedrooms']) {
+					elBeds.text('Quartos');
+				} else {
+					elBeds.text(createText(filters['bedrooms'])+' '+'Quartos')
+				}
+			});
 
-			document.querySelector('.total-result').innerHTML = data.length;
+			(function updatePrice() {
+				var elPrice = $('.js-selected-price'),
+					formatMin,
+					formatMax;
+
+
+				if (!filters['price']) {
+					elPrice.text('Preço');
+				} else {
+
+					var min = filters['price'].min || 0,
+						max = filters['price'].max || 0,
+						str = '';
+
+					formatMin = this.formatMoney(parseInt(min));
+					formatMax = this.formatMoney(parseInt(max));
+
+					if (min && max) {
+						elPrice.text(formatMin+' até '+formatMax);
+					} else if (min) {
+						elPrice.text('Acima de: '+formatMin);
+					} else {
+						elPrice.text('Até: '+formatMax);
+					}
+				}
+			}());
+
+			(function updateMore() {
+				var elMore 	= $('.js-selected-more'),
+					keys = Object.keys(filters),
+					count = 0,
+					m = 0;
+
+				for (m; m < keys.length; m++) {
+					if (m !== 'bedrooms' && m !== 'price') {
+						count++;
+					}
+				}
+
+				if (count !== 0) {
+					elMore.text('('+count+') Mais');
+				} else {
+					elMore.text('Mais');
+				}
+			}());
+
+			(function updatePagination() {
+				var totalData = _cache.get().length,
+					pages = {};
+
+				if (config.pages) {
+					pages = config.pages;
+				} else {
+					pages.from = 1;
+					pages.to = 12;
+				}
+
+				$('.js-result-stats').text(''+pages.from+' — '+pages.to+' de '+totalData+' imóveis');
+			}());
 		}
-	};
-});;Box.Application.addService('utils', function(context) {
-	'use strict';
-
-	return {
-		formatMoney: function(number) {
-			return "R$ " + number.toFixed(2).replace('.', ',').replace(/(\d)(?=(\d{3})+\,)/g, "$1.");
-		}
-	};
+	}
 });

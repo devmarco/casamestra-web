@@ -1,7 +1,8 @@
-Box.Application.addModule('EstatesFilter', function(context) {
+Box.Application.addModule('filter', function(context) {
 	'use strict';
 
-	var filter 	= context.getService('filterService');
+	var $ 			= context.getGlobal('jQuery'),
+		_filter 	= context.getService('filter.service');
 
 	var actions = {
 		filterByNeighborhood: function() {
@@ -14,7 +15,7 @@ Box.Application.addModule('EstatesFilter', function(context) {
 			$(el).toggleClass('active');
 
 			//Send message
-			filter.set({
+			_filter.set({
 				prop: 'bathrooms',
 				value: value
 			});
@@ -26,7 +27,7 @@ Box.Application.addModule('EstatesFilter', function(context) {
 			$(el).toggleClass('active');
 
 			//Send message
-			filter.set({
+			_filter.set({
 				prop: 'bedrooms',
 				value: value
 			});
@@ -36,11 +37,14 @@ Box.Application.addModule('EstatesFilter', function(context) {
 				value = $(el).val();
 
 			//Send message
-			filter.set({
+			_filter.set({
 				prop: 'price',
 				value: value || 0,
 				amount: amount
 			});
+		},
+		filterByOrder: function() {
+			
 		}
 	};
 
@@ -52,6 +56,14 @@ Box.Application.addModule('EstatesFilter', function(context) {
 		},
 		onchange: function(event, element, elementType) {
 			if (elementType === 'f-price') actions.filterByPrice(element);
+		},
+		init: function() {
+			//Get the element
+			var element = context.getElement();			
+
+			$(window).scroll(function() {
+				($(window).scrollTop() >= 80) ? $(element).addClass('scroll-active') : $(element).removeClass('scroll-active');
+			});
 		}
 	}
 });

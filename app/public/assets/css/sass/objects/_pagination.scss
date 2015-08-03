@@ -9,7 +9,7 @@
 		color: $master;
 		display: inline-block;
 		float: left;
-		margin: 15px 39px 0 0;
+		margin: 12px 35px 0 0;
 		@extend %f-regular;
 		@extend %f10;
 	}
@@ -20,7 +20,7 @@
 		button {
 			float: left;
 			border: 1px solid $master;
-			border: 1px solid rgba(42, 48, 56, 0.25);
+			border: 1px solid rgba(42, 48, 56, 0.40);
 			background-color: transparent;
 			min-height: 46px;
     		padding: 0 1.2em;
@@ -30,9 +30,13 @@
 				display: block;
 			}
 
-			&:focus,
-			&:active,
-			&:hover {
+			&:active {
+				outline: 0;
+				@include vendor(box-shadow, inset 0 0 10px rgba(42, 48, 56, 0.16));
+			}
+			
+			&:hover,
+			&:focus {
 				outline: 0;
 			}
 		}

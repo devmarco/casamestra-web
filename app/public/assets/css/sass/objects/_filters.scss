@@ -1,5 +1,5 @@
 .filter-bedrooms {
-	min-width: 260px;
+	min-width: 263px;
 
 	ul {
 		list-style: none;
@@ -46,7 +46,6 @@
 
 .filter-price {
 	padding: 0.5em;
-	min-width: 277px;
 	@extend .clearfix;
 	input, span {
 		display: inline-block;
