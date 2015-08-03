@@ -7,22 +7,28 @@ Box.Application.addModule('list', function(context) {
 
 	return {
 		behaviors: ['pagination'],
-		messages: ['newFilter'],
+		messages: ['newFilter', 'markerHover'],
 		onmessage: function(name, value) {
-			_cache.set(value.data);
-			_render.update({
-				data: _.slice(value.data, 0, 12),
-				filters: value.filters
-			});
+
+			if (name === 'newFilter') filterEstates();
+			
+			function filterEstates() {
+				_cache.set(value.data);
+				_render.update({
+					data: _.slice(value.data, 0, 12),
+					filters: value.filters
+				});
+			}
         },
 		init: function() {
 			_estates.get({
-				fields: 'cover,price,neighborhood,address,bathrooms,bedrooms,area'
+				fields: 'cover,price,neighborhood,address,bathrooms,bedrooms,area,location,title'
 			}).then(function(data) {
 				_cache.set(data, 'private');
 				_render.render({
 					data: data,
-					elementClass: '.render-area'
+					listClass: '.render-area',
+					mapClass: '#map-canvas'
 				});
 			});
 		}

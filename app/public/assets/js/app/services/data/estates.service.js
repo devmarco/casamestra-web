@@ -7,7 +7,7 @@ Box.Application.addService('estates.service', function(application) {
 				fields 	= (config.fields) ? '&fields='+config.fields+'' : '';
 
 			return $.ajax({
-				url: 'http://0.0.0.0:8000/estates?'+limit+fields+''
+				url: 'http://0.0.0.0:8090/estates?'+limit+fields+''
 			});
 		},
 		create: function() {

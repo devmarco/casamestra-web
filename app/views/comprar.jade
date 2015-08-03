@@ -108,12 +108,12 @@ block content
 									input(type='checkbox' id='a')
 									label(for='a') Churrasqueira
 			.filter(class='right')
-				button(class='map-icon active')
+				button(data-type='f-render' data-content='.estates__bx__map' data-option="map" class='map-icon active js-chose-type')
 			.filter(class='right')
-				button(class='list-icon')
-		.estates__bx__map
+				button(data-type='f-render' data-content='.estates__bx__list' data-option="list" class='list-icon js-chose-type')
+		.estates__bx__map(class='js-render-option active')
 			#map-canvas1
-		.estates__bx__list(data-module='list' class='active')
+		.estates__bx__list(data-module='list' class='js-render-option')
 			.estates__bx__list__container
 				.filter__container
 					.filter(class='select')

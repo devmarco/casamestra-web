@@ -66,6 +66,7 @@
 	.map-icon,
 	.list-icon {
 		text-indent: -999em;
+		@include opacity(4);
 
 		&:before {
 			content: '';
@@ -74,11 +75,16 @@
 	}
 
 	.map-icon:before {
-		@include sprite($map-icon);
+		@extend .sprite-map-icon;
 	}
 
 	.list-icon:before {
-		@include sprite($list-icon);
+		@extend .sprite-list-icon;
+	}
+
+	.map-icon.active,
+	.list-icon.active {
+		@include opacity(10);
 	}
 }
 
@@ -91,6 +97,7 @@
 	position: relative;
 	min-height: 100%;
 	height: auto;
+	display: none;
 }
 
 .active {

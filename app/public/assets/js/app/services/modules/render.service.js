@@ -1,11 +1,15 @@
 Box.Application.addService('render.service', function(application) {
 	'use strict';
 
-	var _utils = application.getService('utils.service'),
-		estatesTpl,
-		template;
+	var _utils 		= application.getService('utils.service'),
+		_map 		= application.getService('map.service'),
+		template,
+		t;
+
+		//Globals
+		paperclip 	= application.getGlobal('paperclip');
 	
-	estatesTpl =  "<repeat each='{{ estates }}' as='e'>"+
+	t = "<repeat each='{{ estates }}' as='e'>"+
 	"<div class='estate estate--medium'>"+
 	"    <a style='background-image: url({{ e.cover }})'>"+
 	"        <div class='estate__address'><span class='neighborhood'>{{ e.neighborhood }}</span><span class='address'>{{ e.address }}</span></div>"+
@@ -21,23 +25,37 @@ Box.Application.addService('render.service', function(application) {
 	"</div>"+
 	"</repeat>";
 
-	//Define the template
-	var template = paperclip.template(estatesTpl);
-
-	//Instance formatMoney to paperclip
-	paperclip.modifiers.formatMoney = _utils.formatMoney;
-
 	return {
 		update: function(config) {
+			//Update view
 			this.view.set('estates', config.data);
+
+			//Update map
+			_map.update(config.data);
+
 			_utils.updateTexts(config);
 		},
 		render: function(config) {
+			var data = _.slice(config.data, 0, 12);
+
+			//Define the template
+			var template = paperclip.template(t);
+
+			//Instance formatMoney to paperclip
+			paperclip.modifiers.formatMoney = _utils.formatMoney;
+
 			this.view = template.view({
-				estates: _.slice(config.data, 0, 12)
+				estates: data
 			});
 
-			document.querySelector(config.elementClass).appendChild(this.view.render());
+			//Render
+			document.querySelector(config.listClass).appendChild(this.view.render());
+
+			//Render map
+			_map.render({
+				mapClass: config.mapClass,
+				markers: data
+			});
 
 			_utils.updateTexts({
 				data: config.data

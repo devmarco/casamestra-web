@@ -254,14 +254,27 @@ limitations under the License.
 		},
 		filterByOrder: function() {
 			
+		},
+		displayRender: function(el) {
+			var content = $(el).data('content'),
+				option = $(el).data('option');
+
+			if ($(el).hasClass('active')) return false;
+
+			$('.js-chose-type').removeClass('active');
+			$('.js-render-option').removeClass('active');
+
+			$(el).addClass('active');
+			$(content).addClass('active');	
 		}
 	};
 
 	return {
 		behaviors: ['dropdown'],
 		onclick: function(event, element, elementType) {
-			if (elementType === 'f-bedrooms') actions.filterByBedrooms(element);
-			if (elementType === 'f-bathrooms') actions.filterByBathrooms(element);
+			if (elementType === 'f-bedrooms') 	actions.filterByBedrooms(element);
+			if (elementType === 'f-bathrooms') 	actions.filterByBathrooms(element);
+			if (elementType === 'f-render') 	actions.displayRender(element);
 		},
 		onchange: function(event, element, elementType) {
 			if (elementType === 'f-price') actions.filterByPrice(element);
@@ -284,22 +297,28 @@ limitations under the License.
 
 	return {
 		behaviors: ['pagination'],
-		messages: ['newFilter'],
+		messages: ['newFilter', 'markerHover'],
 		onmessage: function(name, value) {
-			_cache.set(value.data);
-			_render.update({
-				data: _.slice(value.data, 0, 12),
-				filters: value.filters
-			});
+
+			if (name === 'newFilter') filterEstates();
+			
+			function filterEstates() {
+				_cache.set(value.data);
+				_render.update({
+					data: _.slice(value.data, 0, 12),
+					filters: value.filters
+				});
+			}
         },
 		init: function() {
 			_estates.get({
-				fields: 'cover,price,neighborhood,address,bathrooms,bedrooms,area'
+				fields: 'cover,price,neighborhood,address,bathrooms,bedrooms,area,location,title'
 			}).then(function(data) {
 				_cache.set(data, 'private');
 				_render.render({
 					data: data,
-					elementClass: '.render-area'
+					listClass: '.render-area',
+					mapClass: '#map-canvas'
 				});
 			});
 		}
@@ -313,7 +332,7 @@ limitations under the License.
 				fields 	= (config.fields) ? '&fields='+config.fields+'' : '';
 
 			return $.ajax({
-				url: 'http://0.0.0.0:8000/estates?'+limit+fields+''
+				url: 'http://0.0.0.0:8090/estates?'+limit+fields+''
 			});
 		},
 		create: function() {
@@ -490,14 +509,132 @@ limitations under the License.
 			});
 		}
 	}
+});;Box.Application.addService('map.service', function(application) {
+	'use strict';
+
+	var google = application.getGlobal('google');
+
+	function onHover() {
+		Box.Application.broadcast('markerHover', this.index);
+	}
+
+	function onClick() {
+		console.log(this);
+	}
+
+	return {
+		render: function(config) {
+			var _this = this,
+				mapOptions = config.options || {},
+				styles,
+				marker,
+				currentMarker,
+				position,
+				m = 0;
+
+			if (!config.options) {
+				mapOptions = {
+					center: { lat: -19.916681, lng: -43.934493 },
+					zoom: 4,
+					disableDefaultUI: true
+				};
+			}
+
+			if (!config.mapClass) return false;
+
+			//Instance the map
+			this.map = new google.maps.Map(document.querySelector(config.mapClass), mapOptions);
+			this.markers = [];
+
+			//Change the style of the map
+			styles = [{"featureType":"water","elementType":"geometry.fill","stylers":[{"color":"#d3d3d3"}]},{"featureType":"transit","stylers":[{"color":"#808080"},{"visibility":"off"}]},{"featureType":"road.highway","elementType":"geometry.stroke","stylers":[{"visibility":"on"},{"color":"#b3b3b3"}]},{"featureType":"road.highway","elementType":"geometry.fill","stylers":[{"color":"#ffffff"}]},{"featureType":"road.local","elementType":"geometry.fill","stylers":[{"visibility":"on"},{"color":"#ffffff"},{"weight":1.8}]},{"featureType":"road.local","elementType":"geometry.stroke","stylers":[{"color":"#d7d7d7"}]},{"featureType":"poi","elementType":"geometry.fill","stylers":[{"visibility":"on"},{"color":"#ebebeb"}]},{"featureType":"administrative","elementType":"geometry","stylers":[{"color":"#a7a7a7"}]},{"featureType":"road.arterial","elementType":"geometry.fill","stylers":[{"color":"#ffffff"}]},{"featureType":"road.arterial","elementType":"geometry.fill","stylers":[{"color":"#ffffff"}]},{"featureType":"landscape","elementType":"geometry.fill","stylers":[{"visibility":"on"},{"color":"#efefef"}]},{"featureType":"road","elementType":"labels.text.fill","stylers":[{"color":"#696969"}]},{"featureType":"administrative","elementType":"labels.text.fill","stylers":[{"visibility":"on"},{"color":"#737373"}]},{"featureType":"poi","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"poi","elementType":"labels","stylers":[{"visibility":"off"}]},{"featureType":"road.arterial","elementType":"geometry.stroke","stylers":[{"color":"#d6d6d6"}]},{"featureType":"road","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{},{"featureType":"poi","elementType":"geometry.fill","stylers":[{"color":"#dadada"}]}];
+
+			this.map.setOptions({styles: styles});
+
+			if (config.markers) {
+
+				this.bounds = new google.maps.LatLngBounds();
+
+				for(m; m < config.markers.length; m++) {
+					currentMarker = config.markers[m],
+					position = new google.maps.LatLng(currentMarker.location.lat, currentMarker.location.lng);
+
+					this.bounds.extend(position);
+
+					marker = new google.maps.Marker({
+						position: position,
+						map: _this.map,
+						title: currentMarker.title,
+						icon: 'public/assets/imgs/svg/marker-icon.svg',
+						animation: google.maps.Animation.DROP,
+						index: m,
+					});
+
+					this.markers.push(marker);
+
+					// Allow each marker to have an info window    
+					// google.maps.event.addListener(marker, 'click', (function(marker, i) {
+					// 	return function() {
+					// 		infoWindow.setContent(infoWindowContent[i][0]);
+					// 		infoWindow.open(map, marker);
+					// 	}
+					// })(marker, i));
+
+					// Automatically center the map fitting all markers on the screen
+					//this.map.fitBounds(this.bounds);
+
+					google.maps.event.addListener(marker, 'mouseover', onHover);
+				}
+			} 
+
+			return this.map;
+		},
+		update: function(markers) {
+			var _this = this,
+				i = 0;
+
+			//Clear the markers
+			this.clear();
+
+			for (i; i < markers.length; i++) {
+				addMarkers(markers[i], i*200, i);
+			}
+
+			function addMarkers(marker, time, index) {
+				window.setTimeout(function() {
+					_this.markers.push(new google.maps.Marker({
+						position: new google.maps.LatLng(marker.location.lat, marker.location.lng),
+						map: _this.map,
+						title: marker.title,
+						icon: 'public/assets/imgs/svg/marker-icon.svg',
+						animation: google.maps.Animation.DROP,
+						index: index
+					}));
+				}, time);
+			}
+		},
+		clear: function() {
+			var i = 0;
+
+			for (i; i < this.markers.length; i++) {
+				this.markers[i].setMap(null);
+			}
+
+			this.markers = [];
+		}
+	}
 });;Box.Application.addService('render.service', function(application) {
 	'use strict';
 
-	var _utils = application.getService('utils.service'),
-		estatesTpl,
-		template;
+	var _utils 		= application.getService('utils.service'),
+		_map 		= application.getService('map.service'),
+		template,
+		t;
+
+		//Globals
+		paperclip 	= application.getGlobal('paperclip');
 	
-	estatesTpl =  "<repeat each='{{ estates }}' as='e'>"+
+	t = "<repeat each='{{ estates }}' as='e'>"+
 	"<div class='estate estate--medium'>"+
 	"    <a style='background-image: url({{ e.cover }})'>"+
 	"        <div class='estate__address'><span class='neighborhood'>{{ e.neighborhood }}</span><span class='address'>{{ e.address }}</span></div>"+
@@ -513,23 +650,37 @@ limitations under the License.
 	"</div>"+
 	"</repeat>";
 
-	//Define the template
-	var template = paperclip.template(estatesTpl);
-
-	//Instance formatMoney to paperclip
-	paperclip.modifiers.formatMoney = _utils.formatMoney;
-
 	return {
 		update: function(config) {
+			//Update view
 			this.view.set('estates', config.data);
+
+			//Update map
+			_map.update(config.data);
+
 			_utils.updateTexts(config);
 		},
 		render: function(config) {
+			var data = _.slice(config.data, 0, 12);
+
+			//Define the template
+			var template = paperclip.template(t);
+
+			//Instance formatMoney to paperclip
+			paperclip.modifiers.formatMoney = _utils.formatMoney;
+
 			this.view = template.view({
-				estates: _.slice(config.data, 0, 12)
+				estates: data
 			});
 
-			document.querySelector(config.elementClass).appendChild(this.view.render());
+			//Render
+			document.querySelector(config.listClass).appendChild(this.view.render());
+
+			//Render map
+			_map.render({
+				mapClass: config.mapClass,
+				markers: data
+			});
 
 			_utils.updateTexts({
 				data: config.data
