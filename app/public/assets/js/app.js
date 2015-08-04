@@ -193,8 +193,6 @@ limitations under the License.
 				_this.prevItem = (_this.nextItem-1 < 0) ? 0 : (_this.nextItem-1);
 				_this.nextItem = (_this.nextItem+_this.itemsDisplay);
 
-				console.log((_this.nextItem), (_this.nextItem+_this.itemsDisplay));
-
 				_render.update({
 					data: _.slice(data, (_this.nextItem), (_this.nextItem+_this.itemsDisplay)),
 					pages: {
@@ -213,80 +211,83 @@ limitations under the License.
 	var $ 			= context.getGlobal('jQuery'),
 		_filter 	= context.getService('filter.service');
 
-	var actions = {
-		filterByNeighborhood: function() {
-
-		},
-		filterByBathrooms: function(el) {
-			var value = $(el).data('value');
-
-			//Set active class
-			$(el).toggleClass('active');
-
-			//Send message
-			_filter.set({
-				prop: 'bathrooms',
-				value: value
-			});
-		},
-		filterByBedrooms: function(el) {
-			var value = $(el).data('value');
-
-			//Set active class
-			$(el).toggleClass('active');
-
-			//Send message
-			_filter.set({
-				prop: 'bedrooms',
-				value: value
-			});
-		},
-		filterByPrice: function(el) {
-			var amount = $(el).data('value'),
-				value = $(el).val();
-
-			//Send message
-			_filter.set({
-				prop: 'price',
-				value: value || 0,
-				amount: amount
-			});
-		},
-		filterByOrder: function() {
-			
-		},
-		displayRender: function(el) {
-			var content = $(el).data('content'),
-				option = $(el).data('option');
-
-			if ($(el).hasClass('active')) return false;
-
-			$('.js-chose-type').removeClass('active');
-			$('.js-render-option').removeClass('active');
-
-			$(el).addClass('active');
-			$(content).addClass('active');	
-		}
-	};
-
 	return {
 		behaviors: ['dropdown'],
 		onclick: function(event, element, elementType) {
-			if (elementType === 'f-bedrooms') 	actions.filterByBedrooms(element);
-			if (elementType === 'f-bathrooms') 	actions.filterByBathrooms(element);
-			if (elementType === 'f-render') 	actions.displayRender(element);
+			if (elementType === 'f-bedrooms') filterByBedrooms(element);
+			if (elementType === 'f-bathrooms') filterByBathrooms(element);
+			if (elementType === 'f-render') displayRender(element);
 		},
 		onchange: function(event, element, elementType) {
-			if (elementType === 'f-price') actions.filterByPrice(element);
+			if (elementType === 'f-price') filterByPrice(element);
 		},
 		init: function() {
 			//Get the element
-			var element = context.getElement();			
+			var element = context.getElement();		
 
-			$(window).scroll(function() {
-				($(window).scrollTop() >= 80) ? $(element).addClass('scroll-active') : $(element).removeClass('scroll-active');
-			});
+			window.onscroll = function(e) {
+				(e.target.scrollingElement.scrollTop >= 80) ? $(element).addClass('scroll-active') : $(element).removeClass('scroll-active');
+			}	
 		}
+	}
+
+	function filterByNeighborhood() {
+
+	}
+
+	function filterByBathrooms(el) {
+		var value = $(el).data('value');
+
+		//Set active class
+		$(el).toggleClass('active');
+
+		//Send message
+		_filter.set({
+			prop: 'bathrooms',
+			value: value
+		});
+	}
+
+	function filterByBedrooms(el) {
+		var value = $(el).data('value');
+
+		//Set active class
+		$(el).toggleClass('active');
+
+		//Send message
+		_filter.set({
+			prop: 'bedrooms',
+			value: value
+		});
+	}
+
+	function filterByPrice(el) {
+		var amount = $(el).data('value'),
+			value = $(el).val();
+
+		//Send message
+		_filter.set({
+			prop: 'price',
+			value: value || 0,
+			amount: amount
+		});
+	}
+
+	function filterByOrder() {
+		
+	}
+
+	function displayRender(el) {
+		var content = $(el).data('content'),
+			option = $(el).data('option');
+
+		if ($(el).hasClass('active')) return false;
+
+		$('.js-chose-type').removeClass('active');
+		$('.js-render-option').removeClass('active');
+
+		$(el).addClass('active');
+		$(content).addClass('active');	
 	}
 });;Box.Application.addModule('list', function(context) {
 	'use strict';
@@ -326,13 +327,15 @@ limitations under the License.
 });;;Box.Application.addService('estates.service', function(application) {
 	'use strict';
 
+	var $ = application.getGlobal('jQuery');
+
 	return {
 		get: function(config) {
 			var limit 	= (config.limit) ? 'limit='+config.limit || 10+'' : '',
 				fields 	= (config.fields) ? '&fields='+config.fields+'' : '';
 
 			return $.ajax({
-				url: 'http://0.0.0.0:8090/estates?'+limit+fields+''
+				url: 'http://0.0.0.0:8000/estates?'+limit+fields+''
 			});
 		},
 		create: function() {
@@ -514,14 +517,6 @@ limitations under the License.
 
 	var google = application.getGlobal('google');
 
-	function onHover() {
-		Box.Application.broadcast('markerHover', this.index);
-	}
-
-	function onClick() {
-		console.log(this);
-	}
-
 	return {
 		render: function(config) {
 			var _this = this,
@@ -540,7 +535,7 @@ limitations under the License.
 				};
 			}
 
-			if (!config.mapClass) return false;
+			if (!google || !config.mapClass) return false;
 
 			//Instance the map
 			this.map = new google.maps.Map(document.querySelector(config.mapClass), mapOptions);
@@ -593,6 +588,8 @@ limitations under the License.
 			var _this = this,
 				i = 0;
 
+			if (!this.markers) return false;
+
 			//Clear the markers
 			this.clear();
 
@@ -616,6 +613,8 @@ limitations under the License.
 		clear: function() {
 			var i = 0;
 
+			if (!this.markers) return false;
+
 			for (i; i < this.markers.length; i++) {
 				this.markers[i].setMap(null);
 			}
@@ -623,17 +622,28 @@ limitations under the License.
 			this.markers = [];
 		}
 	}
+
+	function onHover() {
+		Box.Application.broadcast('markerHover', this.index);
+	}
+
+	function onClick() {
+		console.log(this);
+	}
 });;Box.Application.addService('render.service', function(application) {
 	'use strict';
 
 	var _utils 		= application.getService('utils.service'),
 		_map 		= application.getService('map.service'),
-		template,
-		t;
+		t,
 
 		//Globals
 		paperclip 	= application.getGlobal('paperclip');
-	
+
+	/**
+	 * Estates Template
+	 */
+
 	t = "<repeat each='{{ estates }}' as='e'>"+
 	"<div class='estate estate--medium'>"+
 	"    <a style='background-image: url({{ e.cover }})'>"+
@@ -686,7 +696,7 @@ limitations under the License.
 				data: config.data
 			});
 		}
-	};
+	}
 });;Box.Application.addService('utils.service', function(context) {
 	'use strict';
 
@@ -698,7 +708,8 @@ limitations under the License.
 			return "R$ " + number.toFixed(2).replace('.', ',').replace(/(\d)(?=(\d{3})+\,)/g, "$1.");
 		},
 		updateTexts: function(config) {
-			var filters = config.filters || {};
+			var filters = config.filters || {},
+				_this = this;
 
 			function createText(value) {
 				var items,
@@ -726,7 +737,7 @@ limitations under the License.
 				} else {
 					elBeds.text(createText(filters['bedrooms'])+' '+'Quartos')
 				}
-			});
+			}());
 
 			(function updatePrice() {
 				var elPrice = $('.js-selected-price'),
@@ -742,8 +753,8 @@ limitations under the License.
 						max = filters['price'].max || 0,
 						str = '';
 
-					formatMin = this.formatMoney(parseInt(min));
-					formatMax = this.formatMoney(parseInt(max));
+					formatMin = _this.formatMoney(parseInt(min));
+					formatMax = _this.formatMoney(parseInt(max));
 
 					if (min && max) {
 						elPrice.text(formatMin+' até '+formatMax);
@@ -762,7 +773,7 @@ limitations under the License.
 					m = 0;
 
 				for (m; m < keys.length; m++) {
-					if (m !== 'bedrooms' && m !== 'price') {
+					if (keys[m] !== 'bedrooms' && keys[m] !== 'price') {
 						count++;
 					}
 				}

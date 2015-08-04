@@ -3,8 +3,13 @@ html, body {
 	-moz-osx-font-smoothing: grayscale;
 	font-smoothing: antialiased;
 	text-rendering: optimizeLegibility;
+	height: 100%;
 }
 
-main {
+.wrapper, main {
 	position: relative;
+}
+
+.wrapper {
+	height: 100%;
 }

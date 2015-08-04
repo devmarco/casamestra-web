@@ -9,7 +9,8 @@ Box.Application.addService('utils.service', function(context) {
 			return "R$ " + number.toFixed(2).replace('.', ',').replace(/(\d)(?=(\d{3})+\,)/g, "$1.");
 		},
 		updateTexts: function(config) {
-			var filters = config.filters || {};
+			var filters = config.filters || {},
+				_this = this;
 
 			function createText(value) {
 				var items,
@@ -37,7 +38,7 @@ Box.Application.addService('utils.service', function(context) {
 				} else {
 					elBeds.text(createText(filters['bedrooms'])+' '+'Quartos')
 				}
-			});
+			}());
 
 			(function updatePrice() {
 				var elPrice = $('.js-selected-price'),
@@ -53,8 +54,8 @@ Box.Application.addService('utils.service', function(context) {
 						max = filters['price'].max || 0,
 						str = '';
 
-					formatMin = this.formatMoney(parseInt(min));
-					formatMax = this.formatMoney(parseInt(max));
+					formatMin = _this.formatMoney(parseInt(min));
+					formatMax = _this.formatMoney(parseInt(max));
 
 					if (min && max) {
 						elPrice.text(formatMin+' até '+formatMax);
@@ -73,7 +74,7 @@ Box.Application.addService('utils.service', function(context) {
 					m = 0;
 
 				for (m; m < keys.length; m++) {
-					if (m !== 'bedrooms' && m !== 'price') {
+					if (keys[m] !== 'bedrooms' && keys[m] !== 'price') {
 						count++;
 					}
 				}

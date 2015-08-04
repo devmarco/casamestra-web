@@ -3,7 +3,7 @@ extends base
 block content
 	header(class='transparent')
 		include includes/header
-	main
+	main(class='estates__bx')
 		.estates__bx__filter(data-module='filter')
 			.filter
 				input(type="text" placeholder='Selecione a vizinhança')
@@ -112,7 +112,7 @@ block content
 			.filter(class='right')
 				button(data-type='f-render' data-content='.estates__bx__list' data-option="list" class='list-icon js-chose-type')
 		.estates__bx__map(class='js-render-option active')
-			#map-canvas1
+			#map-canvas
 		.estates__bx__list(data-module='list' class='js-render-option')
 			.estates__bx__list__container
 				.filter__container

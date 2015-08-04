@@ -3,14 +3,6 @@ Box.Application.addService('map.service', function(application) {
 
 	var google = application.getGlobal('google');
 
-	function onHover() {
-		Box.Application.broadcast('markerHover', this.index);
-	}
-
-	function onClick() {
-		console.log(this);
-	}
-
 	return {
 		render: function(config) {
 			var _this = this,
@@ -29,7 +21,7 @@ Box.Application.addService('map.service', function(application) {
 				};
 			}
 
-			if (!config.mapClass) return false;
+			if (!google || !config.mapClass) return false;
 
 			//Instance the map
 			this.map = new google.maps.Map(document.querySelector(config.mapClass), mapOptions);
@@ -82,6 +74,8 @@ Box.Application.addService('map.service', function(application) {
 			var _this = this,
 				i = 0;
 
+			if (!this.markers) return false;
+
 			//Clear the markers
 			this.clear();
 
@@ -105,11 +99,21 @@ Box.Application.addService('map.service', function(application) {
 		clear: function() {
 			var i = 0;
 
+			if (!this.markers) return false;
+
 			for (i; i < this.markers.length; i++) {
 				this.markers[i].setMap(null);
 			}
 
 			this.markers = [];
 		}
+	}
+
+	function onHover() {
+		Box.Application.broadcast('markerHover', this.index);
+	}
+
+	function onClick() {
+		console.log(this);
 	}
 });

@@ -3,12 +3,15 @@ Box.Application.addService('render.service', function(application) {
 
 	var _utils 		= application.getService('utils.service'),
 		_map 		= application.getService('map.service'),
-		template,
-		t;
+		t,
 
 		//Globals
 		paperclip 	= application.getGlobal('paperclip');
-	
+
+	/**
+	 * Estates Template
+	 */
+
 	t = "<repeat each='{{ estates }}' as='e'>"+
 	"<div class='estate estate--medium'>"+
 	"    <a style='background-image: url({{ e.cover }})'>"+
@@ -61,5 +64,5 @@ Box.Application.addService('render.service', function(application) {
 				data: config.data
 			});
 		}
-	};
+	}
 });

@@ -46,8 +46,6 @@ Box.Application.addBehavior('pagination', function(context) {
 				_this.prevItem = (_this.nextItem-1 < 0) ? 0 : (_this.nextItem-1);
 				_this.nextItem = (_this.nextItem+_this.itemsDisplay);
 
-				console.log((_this.nextItem), (_this.nextItem+_this.itemsDisplay));
-
 				_render.update({
 					data: _.slice(data, (_this.nextItem), (_this.nextItem+_this.itemsDisplay)),
 					pages: {
