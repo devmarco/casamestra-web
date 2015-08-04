@@ -1,12 +1,12 @@
 Box.Application.addService('render.service', function(application) {
 	'use strict';
 
-	var _utils 		= application.getService('utils.service'),
-		_map 		= application.getService('map.service'),
+	var _utils 	  = application.getService('utils.service'),
+		_map 	  = application.getService('map.service'),
 		t,
 
 		//Globals
-		paperclip 	= application.getGlobal('paperclip');
+		paperclip = application.getGlobal('paperclip');
 
 	/**
 	 * Estates Template
@@ -39,8 +39,6 @@ Box.Application.addService('render.service', function(application) {
 			_utils.updateTexts(config);
 		},
 		render: function(config) {
-			var data = _.slice(config.data, 0, 12);
-
 			//Define the template
 			var template = paperclip.template(t);
 
@@ -48,7 +46,7 @@ Box.Application.addService('render.service', function(application) {
 			paperclip.modifiers.formatMoney = _utils.formatMoney;
 
 			this.view = template.view({
-				estates: data
+				estates: config.data
 			});
 
 			//Render
@@ -57,12 +55,11 @@ Box.Application.addService('render.service', function(application) {
 			//Render map
 			_map.render({
 				mapClass: config.mapClass,
-				markers: data
+				markers: config.data,
+				bounds: config.bounds || false
 			});
 
-			_utils.updateTexts({
-				data: config.data
-			});
+			_utils.updateTexts({});
 		}
 	}
 });

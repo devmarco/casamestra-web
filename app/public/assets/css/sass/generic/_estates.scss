@@ -8,6 +8,7 @@
 }
 
 .estate {
+	width: 100%;
 	position: relative;
 	height: 250px;
 	overflow: hidden;
@@ -60,6 +61,26 @@
 
 .estate.estate--medium {
 	@extend .small-4;
+}
+
+.estate.estate--map {
+	float: none;
+	width: 325px;
+	padding: 0;
+
+	.estate__address {
+		.address {
+			@extend %f11;
+		}
+	}
+
+	.estate__info {
+		li {
+			span {
+				@extend %f10;
+			}
+		}
+	}
 }
 
 .estate__address {

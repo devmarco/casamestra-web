@@ -1,6 +1,6 @@
 Box.Application.addBehavior('pagination', function(context) {
 
-	var _cache 		= context.getService('cache.service'),
+	var _storage 	= context.getService('storage.service'),
 		_render  	= context.getService('render.service');
 
 	return {
@@ -16,7 +16,7 @@ Box.Application.addBehavior('pagination', function(context) {
 			if (elementType === 'p-prev') prev();
 
 			function prev() {
-				var data = _cache.get();
+				var data = _storage.get();
 
 				if (_this.nextItem !== 0) {
 					
@@ -36,7 +36,7 @@ Box.Application.addBehavior('pagination', function(context) {
 			}
 
 			function next() {
-				var data = _cache.get(),
+				var data = _storage.get(),
 					dataPagined;
 
 				if ((_this.nextItem+_this.itemsDisplay) > data.length) {

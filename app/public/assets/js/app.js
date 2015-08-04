@@ -100,7 +100,1638 @@ Sn[X]=Sn[H]=Sn[Q]=Sn[nn]=Sn[tn]=Sn[rn]=Sn[en]=Sn[un]=Sn[on]=true,Sn[B]=Sn[D]=Sn[
 "\xe3":"a","\xe4":"a","\xe5":"a","\xc7":"C","\xe7":"c","\xd0":"D","\xf0":"d","\xc8":"E","\xc9":"E","\xca":"E","\xcb":"E","\xe8":"e","\xe9":"e","\xea":"e","\xeb":"e","\xcc":"I","\xcd":"I","\xce":"I","\xcf":"I","\xec":"i","\xed":"i","\xee":"i","\xef":"i","\xd1":"N","\xf1":"n","\xd2":"O","\xd3":"O","\xd4":"O","\xd5":"O","\xd6":"O","\xd8":"O","\xf2":"o","\xf3":"o","\xf4":"o","\xf5":"o","\xf6":"o","\xf8":"o","\xd9":"U","\xda":"U","\xdb":"U","\xdc":"U","\xf9":"u","\xfa":"u","\xfb":"u","\xfc":"u","\xdd":"Y",
 "\xfd":"y","\xff":"y","\xc6":"Ae","\xe6":"ae","\xde":"Th","\xfe":"th","\xdf":"ss"},Tn={"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;","`":"&#96;"},Ln={"&amp;":"&","&lt;":"<","&gt;":">","&quot;":'"',"&#39;":"'","&#96;":"`"},zn={"function":true,object:true},Bn={0:"x30",1:"x31",2:"x32",3:"x33",4:"x34",5:"x35",6:"x36",7:"x37",8:"x38",9:"x39",A:"x41",B:"x42",C:"x43",D:"x44",E:"x45",F:"x46",a:"x61",b:"x62",c:"x63",d:"x64",e:"x65",f:"x66",n:"x6e",r:"x72",t:"x74",u:"x75",v:"x76",x:"x78"},Dn={"\\":"\\",
 "'":"'","\n":"n","\r":"r","\u2028":"u2028","\u2029":"u2029"},Mn=zn[typeof exports]&&exports&&!exports.nodeType&&exports,qn=zn[typeof module]&&module&&!module.nodeType&&module,Pn=zn[typeof self]&&self&&self.Object&&self,Kn=zn[typeof window]&&window&&window.Object&&window,Vn=qn&&qn.exports===Mn&&Mn,Zn=Mn&&qn&&typeof global=="object"&&global&&global.Object&&global||Kn!==(this&&this.window)&&Kn||Pn||this,Yn=m();typeof define=="function"&&typeof define.amd=="object"&&define.amd?(Zn._=Yn, define(function(){
-return Yn})):Mn&&qn?Vn?(qn.exports=Yn)._=Yn:Mn._=Yn:Zn._=Yn}).call(this);;!function t(e,n,i){function r(o,a){if(!n[o]){if(!e[o]){var u="function"==typeof require&&require;if(!a&&u)return u(o,!0);if(s)return s(o,!0);var c=new Error("Cannot find module '"+o+"'");throw c.code="MODULE_NOT_FOUND",c}var l=n[o]={exports:{}};e[o][0].call(l.exports,function(t){var n=e[o][1][t];return r(n?n:t)},l,l.exports,t,e,n,i)}return n[o].exports}for(var s="function"==typeof require&&require,o=0;o<i.length;o++)r(i[o]);return r}({1:[function(t,e,n){var i=t("nofactor"),r=t("./defaults"),s=t("./template"),o=t("./parser");s.parser=o;var a=e.exports={accessors:r.accessors,runloop:r.runloop,document:i,Component:t("./components/base"),Attribute:t("./attributes/script"),template:s,components:r.components,attributes:r.attributes,modifiers:r.modifiers,parse:o.parse};"undefined"!=typeof window&&(window.paperclip=a,window.paperclip.noConflict=function(){return delete window.paperclip,a})},{"./attributes/script":16,"./components/base":19,"./defaults":25,"./parser":47,"./template":54,nofactor:79}],2:[function(t,e,n){function i(){}var r=t("protoclass");e.exports=r(i,{__isScope:!0})},{protoclass:80}],3:[function(t,e,n){function i(){r.call(this),this._getters={},this._callers={},this._watchers=[]}var r=t("./base"),s=t("../utils/set");e.exports=r.extend(i,{castObject:function(t){return t},call:function(t,e,n){var i;if(!(i=this._callers[e])){var r=["this"].concat(e.split("."));r.pop(),r=r.join("."),i=this._callers[e]=new Function("params","return this."+e+".apply("+r+", params);")}try{var s=i.call(t,n);return this.applyChanges(),s}catch(o){return void 0}},get:function(t,e){var n,i="string"!=typeof e?e.join("."):e;(n=this._getters[i])||(n=this._getters[i]=new Function("return this."+i));try{return n.call(t)}catch(r){return void 0}},set:function(t,e,n){"string"==typeof e&&(e=e.split("."));var i=s(t,e,n);return this.applyChanges(),i},watchProperty:function(t,e,n){var i,r=this,s=!0;return this._addWatcher(function(){var o=r.get(t,e);if(s||o!==i||"function"==typeof o){s=!1;i=o,n(o,i)}})},_addWatcher:function(t){var e=this,n={apply:t,trigger:t,dispose:function(){var t=e._watchers.indexOf(n);~t&&e._watchers.splice(t,1)}};return this._watchers.push(n),n},watchEvent:function(t,e,n){return"[object Array]"===Object.prototype.toString.call(t)&&"change"===e?this._watchArrayChangeEvent(t,n):{dispose:function(){}}},_watchArrayChangeEvent:function(t,e){var n=t.concat();return this._addWatcher(function(){var i=t.length!==n.length;if(!i)for(var r=0,s=n.length;s>r&&!(i=n[r]!==t[r]);r++);i&&(n=t.concat(),e())})},normalizeCollection:function(t){return t},normalizeObject:function(t){return t},apply:function(){this.applyChanges()},applyChanges:function(){for(var t=0,e=this._watchers.length;e>t;t++)this._watchers[t].apply()}})},{"../utils/set":74,"./base":2}],4:[function(t,e,n){function i(t){this.view=t.view,this.node=t.node,this.section=t.section,this.key=t.key,this.value=t.value,this.document=this.view.template.document,this.initialize()}var r=t("protoclass");e.exports=r(i,{initialize:function(){},bind:function(){},unbind:function(){}})},{protoclass:80}],5:[function(t,e,n){var i=t("./script");e.exports=i.extend({update:function(){var t=this.currentValue;if("string"==typeof t)return this.node.setAttribute("class",t);if(!t)return this.node.removeAttribute("class");var e=this.node.getAttribute("class");e=e?e.split(" "):[];for(var n in t)for(var i=t[n],r=n.split(/[,\s]+/g),s=0,o=r.length;o>s;s++){var a=r[s],u=e.indexOf(a);i?~u||e.push(a):~u&&e.splice(u,1)}this.node.setAttribute("class",e.join(" "))}}),e.exports.test=function(t){return"object"==typeof t&&!t.buffered}},{"./script":16}],6:[function(t,e,n){function i(t){this._onEvent=r(this._onEvent,this),s.call(this,t)}var r=(t("protoclass"),t("../utils/bind")),s=t("./base");s.extend(i,{initialize:function(){var t=this.event||(this.event=this.key.toLowerCase().replace(/^on/,""));this.node.addEventListener(t,this._onEvent)},bind:function(){s.prototype.bind.call(this),this.bound=!0},_onEvent:function(t){this.bound&&(this.view.set("event",t),this.value.evaluate(this.view))},unbind:function(){this.bound=!1}}),e.exports=i},{"../utils/bind":71,"./base":4,protoclass:80}],7:[function(t,e,n){var i=t("./keyCodedEvent");e.exports=i.extend({keyCodes:[8]})},{"./keyCodedEvent":15}],8:[function(t,e,n){var i=t("./base");e.exports=i.extend({initialize:function(){this.view.transitions.push(this)},enter:function(){var t=this.value;(t=t.evaluate(this.view))(this.node,function(){})}})},{"./base":4}],9:[function(t,e,n){var i=t("./base");e.exports=i.extend({initialize:function(){this.view.transitions.push(this)},exit:function(t){var e=this.value;(e=e.evaluate(this.view))(this.node,t)}})},{"./base":4}],10:[function(t,e,n){var i=t("./script");e.exports=i.extend({update:function(){this.currentValue?this.node.removeAttribute("disabled"):this.node.setAttribute("disabled","disabled")}})},{"./script":16}],11:[function(t,e,n){var i=t("./keyCodedEvent");e.exports=i.extend({keyCodes:[13]})},{"./keyCodedEvent":15}],12:[function(t,e,n){var i=t("./keyCodedEvent");e.exports=i.extend({keyCodes:[27]})},{"./keyCodedEvent":15}],13:[function(t,e,n){var i=t("./defaultEvent");e.exports=i.extend({_onEvent:function(t){t.preventDefault(),i.prototype._onEvent.apply(this,arguments)}})},{"./defaultEvent":6}],14:[function(t,e,n){(function(n){var i=t("./script");e.exports=i.extend({update:function(){if(this.currentValue&&this.node.focus){var t=this;if(!n.browser)return this.node.focus();setTimeout(function(){t.node.focus()},1)}}})}).call(this,t("_process"))},{"./script":16,_process:77}],15:[function(t,e,n){var i=t("./event");e.exports=i.extend({event:"keydown",keyCodes:[],_onEvent:function(t){~this.keyCodes.indexOf(t.keyCode)&&i.prototype._onEvent.apply(this,arguments)}})},{"./event":13}],16:[function(t,e,n){var i=t("./base");e.exports=i.extend({bind:function(){i.prototype.bind.call(this);var t=this;this.value.watch&&(this._binding=this.value.watch(this.view,function(e){e!==t.currentValue&&(t.currentValue=e,t.view.runloop.deferOnce(t))}),this.currentValue=this.value.evaluate(this.view)),null!=this.currentValue&&this.update()},update:function(){},unbind:function(){this._binding&&this._binding.dispose()}})},{"./base":4}],17:[function(t,e,n){var i=t("./script");e.exports=i.extend({bind:function(){this._currentStyles={},i.prototype.bind.call(this)},update:function(){var t=this.currentValue,e={};for(var n in t){var i=t[n];i!==this._currentStyles[n]&&(e[n]=this._currentStyles[n]=i||"")}if(this.node.__isNode)this.node.style.setProperties(e);else for(var r in e)this.node.style[r]=e[r]}}),e.exports.test=function(t){return"object"==typeof t&&!t.buffered}},{"./script":16}],18:[function(t,e,n){(function(n){function i(t){this._onInput=s(this._onInput,this),r.call(this,t)}var r=t("./script"),s=t("../utils/bind");r.extend(i,{_events:["change","keyup","input"],initialize:function(){var t=this;this._events.forEach(function(e){t.node.addEventListener(e,t._onInput)})},bind:function(){r.prototype.bind.call(this);var t=this;/^(text|password|email)$/.test(this.node.getAttribute("type"))&&(this._autocompleteCheckInterval=setInterval(function(){t._onInput()},n.browser?500:10))},unbind:function(){r.prototype.unbind.call(this),clearInterval(this._autocompleteCheckInterval)},update:function(){var t=this.model=this.currentValue;if(this._modelBindings&&this._modelBindings.dispose(),!t||!t.__isReference)throw new Error("input value must be a reference. Make sure you have <~> defined");var e=this;t.gettable&&(this._modelBindings=this.view.watch(t.path,function(t){e._elementValue(e._parseValue(t))}),this._modelBindings.trigger())},_parseValue:function(t){return null==t||""===t?void 0:t},_onInput:function(t){clearInterval(this._autocompleteCheckInterval),!t||t.keyCode&&~[27].indexOf(t.keyCode)||t.stopPropagation();var e=this._parseValue(this._elementValue());this.model&&String(this.model.value())!=String(e)&&this.model.value(e)},_elementValue:function(t){var e=/checkbox/.test(this.node.type),n=/radio/.test(this.node.type),i=e||n,r=Object.prototype.hasOwnProperty.call(this.node,"value"),s=r||/input|textarea|checkbox/.test(this.node.nodeName.toLowerCase());return arguments.length?(null==t?t="":clearInterval(this._autocompleteCheckInterval),void(i?n?String(t)===String(this.node.value)&&(this.node.checked=!0):this.node.checked=t:String(t)!==this._elementValue()&&(s?this.node.value=t:this.node.innerHTML=t))):e?Boolean(this.node.checked):s?this.node.value||"":this.node.innerHTML||""}}),i.test=function(t){return"object"==typeof t&&!t.buffered},e.exports=i}).call(this,t("_process"))},{"../utils/bind":71,"./script":16,_process:77}],19:[function(t,e,n){function i(t){this.attributes=t.attributes,this.childTemplate=t.childTemplate,this.view=t.view,this.section=t.section,this.document=this.view.template.document,this.didChange=s(this.didChange,this),this.initialize()}var r=t("protoclass"),s=t("../utils/bind");e.exports=r(i,{initialize:function(){},bind:function(){this.update()},didChange:function(){this.view.runloop.deferOnce(this)},unbind:function(){this._changeListener&&this._changeListener.dispose()},update:function(){}})},{"../utils/bind":71,protoclass:80}],20:[function(t,e,n){function i(t,e){if("[object Array]"===Object.prototype.toString.call(t))for(var n=0,i=t.length;i>n;n++)e(t[n],n);else for(var r in t)e(t[r],r)}var r=t("./base");e.exports=r.extend({update:function(){this._updateListener&&this._updateListener.dispose();var t=this.attributes.as,e=this.attributes.key||"index",n=this.attributes.each,r=this.view.accessor;n||(n=[]),this._updateListener=r.watchEvent(n,"change",function(){o.view.runloop.deferOnce(o)}),n=r.normalizeCollection(n),this._children||(this._children=[]);var s,o=this,a=0;i(n,function(n,i){if(t?(s={},s[e]=i,s[t]=n):s=n,i<o._children.length){var r=o._children[i];(r.context===n||r.context[t]!==n)&&r.bind(s)}else{var u=o.childTemplate.view(s,{parent:o.view});o._children.push(u),o.section.appendChild(u.render())}a++}),this._children.splice(a).forEach(function(t){t.dispose()})}})},{"./base":19}],21:[function(t,e,n){function i(t){r.call(this,t)}var r=t("./base");e.exports=r.extend(i,{update:function(){var t=!!this.attributes.when;this._show!==t&&(this._show=t,t?(this._view=this.childTemplate.view(this.view.context),this.section.appendChild(this._view.render())):(this._view&&this._view.dispose(),this._view=void 0))}})},{"./base":19}],22:[function(t,e,n){function i(t){r.call(this,t);var e=this;this.childTemplates=this.childTemplate.vnode.children.map(function(t){return e.childTemplate.child(t)})}var r=t("./base");e.exports=r.extend(i,{update:function(){var t,e=this.attributes.state;if("number"==typeof e)t=this.childTemplates[e];else for(var n=this.childTemplates.length;n--;){var i=this.childTemplates[n];if(i.vnode.attributes.name===e){t=i;break}}this.currentTemplate!==t&&(this.currentTemplate=t,this.currentView&&this.currentView.dispose(),t&&(this.currentView=t.view(this.view.context,{parent:this.view}),this.currentTemplate=t,this.section.appendChild(this.currentView.render())))}})},{"./base":19}],23:[function(t,e,n){function i(t){r.call(this,t);var e=this;this.childTemplates=this.childTemplate.vnode.children.map(function(t){return e.childTemplate.child(t)})}var r=t("./base"),s=t("../utils/bind");e.exports=r.extend(i,{bind:function(){r.prototype.bind.call(this),this.bindings=[];for(var t=(s(this.update,this),0),e=this.childTemplates.length;e>t;t++){var n=this.childTemplates[t].vnode.attributes.when;n&&this.bindings.push(n.watch(this.view,this.didChange))}},unbind:function(){for(var t=this.bindings.length;t--;)this.bindings[t].dispose()},update:function(){for(var t,e=0,n=this.childTemplates.length;n>e;e++){t=this.childTemplates[e];var i=t.vnode.attributes.when;if(!i||i.evaluate(this.view))break}if(this.currentChild==t)return void(this._view&&this._view.context!==this.context&&this._view.bind(this.view.context));if(this._view&&this._view.dispose(),e!=n){this.currentChild=t;var r=t.child(t.vnode.children,{accessor:this.view.accessor});this._view=r.view(this.view.context),this.section.appendChild(this._view.render())}}})},{"../utils/bind":71,"./base":19}],24:[function(t,e,n){(function(n){function i(t){r.call(this,t)}var r=t("./base");e.exports=r.extend(i,{update:function(){var t=this.attributes.html;if("object"==typeof t&&t.evaluate&&(t=void 0),this.currentValue&&this.currentValue.remove&&this.currentValue.remove(),this.currentValue=t,!t)return this.section.removeAll();var e;if(t.render)t.remove(),e=t.render();else if(null!=t.nodeType)e=t;else if(this.document!==n.document)e=this.document.createTextNode(String(t));else{var i=this.document.createElement("div");i.innerHTML=String(t),e=this.document.createDocumentFragment();for(var r=Array.prototype.slice.call(i.childNodes),s=0,o=r.length;o>s;s++)e.appendChild(r[s])}this.section.replaceChildNodes(e)}})}).call(this,"undefined"!=typeof global?global:"undefined"!=typeof self?self:"undefined"!=typeof window?window:{})},{"./base":19}],25:[function(t,e,n){(function(n){var i=t("./runloop"),r=t("./accessors/pojo");e.exports={accessorClass:r,accessors:{pojo:t("./accessors/pojo")},components:{repeat:t("./components/repeat"),stack:t("./components/stack"),"switch":t("./components/switch"),show:t("./components/show"),unsafe:t("./components/unsafe")},attributes:{value:t("./attributes/value"),checked:t("./attributes/value"),enable:t("./attributes/enable"),focus:t("./attributes/focus"),style:t("./attributes/style"),"class":t("./attributes/class"),easein:t("./attributes/easeIn"),easeout:t("./attributes/easeOut"),onclick:t("./attributes/event"),ondoubleclick:t("./attributes/event"),onfocus:t("./attributes/event"),onload:t("./attributes/event"),onsubmit:t("./attributes/event"),onmousedown:t("./attributes/event"),onchange:t("./attributes/event"),onmouseup:t("./attributes/event"),onmouseover:t("./attributes/event"),onmouseout:t("./attributes/event"),onfocusin:t("./attributes/event"),onfocusout:t("./attributes/event"),onmousemove:t("./attributes/event"),onkeydown:t("./attributes/event"),onkeyup:t("./attributes/event"),ondragover:t("./attributes/event"),ondragenter:t("./attributes/event"),ondragleave:t("./attributes/event"),onselectstart:t("./attributes/event"),ondrop:t("./attributes/event"),onenter:t("./attributes/enter"),ondelete:t("./attributes/delete"),onescape:t("./attributes/escape"),ondragstart:t("./attributes/defaultEvent"),ondragend:t("./attributes/defaultEvent")},runloop:new i({tick:n.env.PC_DEBUG?n.nextTick:(n.env.browser,void 0)}),modifiers:{uppercase:function(t){return String(t).toUpperCase()},lowercase:function(t){return String(t).toLowerCase()},titlecase:function(t){var e;return e=String(t),e.substr(0,1).toUpperCase()+e.substr(1)},json:function(t,e,n){return JSON.stringify.apply(JSON,arguments)},isNaN:function(t){return isNaN(t)},round:Math.round}}}).call(this,t("_process"))},{"./accessors/pojo":3,"./attributes/class":5,"./attributes/defaultEvent":6,"./attributes/delete":7,"./attributes/easeIn":8,"./attributes/easeOut":9,"./attributes/enable":10,"./attributes/enter":11,"./attributes/escape":12,"./attributes/event":13,"./attributes/focus":14,"./attributes/style":17,"./attributes/value":18,"./components/repeat":20,"./components/show":21,"./components/stack":22,"./components/switch":23,"./components/unsafe":24,"./runloop":49,_process:77}],26:[function(t,e,n){function i(t){this.expressions=t||new s,r.apply(this,arguments)}var r=t("./base"),s=t("./parameters");r.extend(i,{type:"array",toJavaScript:function(){return"["+this.expressions.toJavaScript()+"]"}}),e.exports=i},{"./base":28,"./parameters":40}],27:[function(t,e,n){function i(t,e){r.apply(this,arguments),this.reference=t,this.value=e}var r=t("./base");r.extend(i,{type:"assignment",toJavaScript:function(){var t=this.reference.path.join(".");return"this.set('"+t+"', "+this.value.toJavaScript()+")"}}),e.exports=i},{"./base":28}],28:[function(t,e,n){function i(){this._children=[],this._addChildren(Array.prototype.slice.call(arguments,0))}var r=t("protoclass");r(i,{__isExpression:!0,_addChildren:function(t){for(var e=t.length;e--;){var n=t[e];if(n)if(n.__isExpression)this._children.push(n);else if("object"==typeof n)for(var i in n)this._addChildren([n[i]])}},filterAllChildren:function(t){var e=[];return this.traverseChildren(function(n){t(n)&&e.push(n)}),e},traverseChildren:function(t){t(this);for(var e=this._children.length;e--;){var n=this._children[e];n.traverseChildren(t)}}}),e.exports=i},{protoclass:80}],29:[function(t,e,n){function i(t,e,n){this.scripts=t,this.contentTemplate=e,this.childBlock=n,r.apply(this,arguments)}var r=t("./base");r.extend(i,{type:"blockBinding",toJavaScript:function(){var t="block("+this.scripts.value.value.toJavaScript()+", ";return t+=this.contentTemplate?this.contentTemplate.toJavaScript():"void 0",this.childBlock&&(t+=", "+this.childBlock.toJavaScript()),t+")"}}),e.exports=i},{"./base":28}],30:[function(t,e,n){function i(t,e){this.reference=t,this.parameters=e,r.apply(this,arguments)}var r=t("./base");r.extend(i,{type:"call",toJavaScript:function(){var t=this.reference.path.concat(),e="this.call(";return e+="'"+t.join(".")+"'",e+=", ["+this.parameters.toJavaScript()+"]",e+")"}}),e.exports=i},{"./base":28}],31:[function(t,e,n){function i(t){this.value=t,r.apply(this,arguments)}var r=t("./base");r.extend(i,{type:"commentNode",toJavaScript:function(){return'comment("'+this.value.replace(/["]/g,'\\"')+'")'}}),e.exports=i},{"./base":28}],32:[function(t,e,n){function i(t){this.value=t,r.apply(this,arguments)}var r=t("./base");r.extend(i,{type:"doctype",toJavaScript:function(){return"text('<!DOCTYPE "+this.value+">')"}}),e.exports=i},{"./base":28}],33:[function(t,e,n){function i(t,e,n){this.name=t,this.attributes=e,this.childNodes=n||new s,r.apply(this,arguments)}var r=t("./base"),s=t("./array");r.extend(i,{type:"elementNode",toJavaScript:function(){return'element("'+this.name+'", '+this.attributes.toJavaScript()+", "+this.childNodes.toJavaScript()+")"}}),e.exports=i},{"./array":26,"./base":28}],34:[function(t,e,n){function i(t){this.expression=t,r.apply(this,arguments)}var r=t("./base");r.extend(i,{type:"call",toJavaScript:function(){return"("+this.expression.toJavaScript()+")"}}),e.exports=i},{"./base":28}],35:[function(t,e,n){function i(t){this.value=t,r.apply(this,arguments)}var r=t("./base");r.extend(i,{type:"hash",toJavaScript:function(){var t=[];for(var e in this.value){var n=this.value[e];t.push("'"+e+"':"+n.toJavaScript())}return"{"+t.join(", ")+"}"}}),e.exports=i},{"./base":28}],36:[function(t,e,n){function i(t){this.value=t,r.apply(this,arguments)}var r=t("./base");r.extend(i,{type:"literal",toJavaScript:function(){return String(this.value)}}),e.exports=i},{"./base":28}],37:[function(t,e,n){function i(t,e){this.name=t,this.parameters=e,r.apply(this,arguments)}var r=t("./base");r.extend(i,{type:"modifier",toJavaScript:function(){var t="modifiers."+this.name+".call(this",e=this.parameters.toJavaScript();return e.length&&(t+=", "+e),t+")"}}),e.exports=i},{"./base":28}],38:[function(t,e,n){function i(t,e){this.operator=t,this.expression=e,r.apply(this,arguments)}var r=t("./base");r.extend(i,{type:"!",toJavaScript:function(){return this.operator+this.expression.toJavaScript()}}),e.exports=i},{"./base":28}],39:[function(t,e,n){function i(t,e,n){this.operator=t,this.left=e,this.right=n,r.apply(this,arguments)}var r=t("./base");r.extend(i,{type:"operator",toJavaScript:function(){return this.left.toJavaScript()+this.operator+this.right.toJavaScript()}}),e.exports=i},{"./base":28}],40:[function(t,e,n){function i(t){this.expressions=t||[],r.apply(this,arguments)}var r=t("./base");r.extend(i,{type:"parameters",toJavaScript:function(){return this.expressions.map(function(t){return t.toJavaScript()}).join(", ")}}),e.exports=i},{"./base":28}],41:[function(t,e,n){function i(t,e){this.path=t,this.bindingType=e,this.fast="^"===e,this.unbound=-1!==["~","~>"].indexOf(e),this._isBoundTo=~["<~","<~>","~>"].indexOf(this.bindingType),r.apply(this,arguments)}var r=t("./base");r.extend(i,{type:"reference",toJavaScript:function(){if(!this._isBoundTo&&this.fast)return"this.context."+this.path.join(".");var t=this.path.join(".");return this._isBoundTo?"this.reference('"+t+"', "+("<~"!==this.bindingType)+", "+("~>"!==this.bindingType)+")":"this.get('"+t+"')"}}),e.exports=i},{"./base":28}],42:[function(t,e,n){function i(t){this.childNodes=t,r.apply(this,arguments)}var r=t("./base");r.extend(i,{type:"rootNode",toJavaScript:function(){var t,e="(function(fragment, block, element, text, comment, parser, modifiers) { ";if("array"===this.childNodes.type)if(this.childNodes.expressions.expressions.length>1)t="fragment("+this.childNodes.toJavaScript()+")";else{if(!this.childNodes.expressions.expressions.length)return e+"})";t=this.childNodes.expressions.expressions[0].toJavaScript()}else t=this.childNodes.toJavaScript();return e+"return "+t+"; })"}}),e.exports=i},{"./base":28}],43:[function(t,e,n){function i(t){this.value=t,r.apply(this,arguments)}var r=t("./base"),s=t("../../utils/uniq");r.extend(i,{type:"script",toJavaScript:function(){var t=this.filterAllChildren(function(t){return"reference"===t.type}).filter(function(t){return!t.unbound&&t.path}).map(function(t){return t.path});t=s(t.map(function(t){return t.join(".")}));var e="{";return e+="run: function() { return "+this.value.toJavaScript()+"; }",e+=", refs: "+JSON.stringify(t),e+"}"}}),e.exports=i},{"../../utils/uniq":76,"./base":28}],44:[function(t,e,n){function i(t){this.value=t,r.apply(this,arguments)}var r=t("./base");r.extend(i,{type:"string",toJavaScript:function(){return'"'+this.value.replace(/"/g,'\\"')+'"'}}),e.exports=i},{"./base":28}],45:[function(t,e,n){function i(t,e,n){this.condition=t,this.tExpression=e,this.fExpression=n,r.apply(this,arguments)}var r=t("./base");r.extend(i,{type:"ternaryCondition",toJavaScript:function(){return this.condition.toJavaScript()+"?"+this.tExpression.toJavaScript()+":"+this.fExpression.toJavaScript()}}),e.exports=i},{"./base":28}],46:[function(t,e,n){(function(n){function i(t){if(n.paperclip&&n.paperclip.he)this.value=n.paperclip.he.decode(t);else if("undefined"!=typeof window){var e=document.createElement("div");e.innerHTML=t,this.value=e.textContent}else this.value=t;this.decoded=this.value!==t,r.apply(this,arguments)}var r=t("./base");r.extend(i,{type:"textNode",toJavaScript:function(){return'text("'+this.value.replace(/["]/g,'\\"')+'")'}}),e.exports=i}).call(this,"undefined"!=typeof global?global:"undefined"!=typeof self?self:"undefined"!=typeof window?window:{})},{"./base":28}],47:[function(t,e,n){(function(n){var i,r=t("./parser"),s={};e.exports={parse:i=function(t){return'"use strict";module.exports = '+r.parse(t).toJavaScript()},compile:function(t){var e;if(s[t])return s[t];e||(e=t);var n='"use strict";return '+r.parse(e).toJavaScript();return s[t]=new Function(n)()}},n.paperclip&&(n.paperclip.parse=e.exports.parse,n.paperclip.template.parser=e.exports)}).call(this,"undefined"!=typeof global?global:"undefined"!=typeof self?self:"undefined"!=typeof window?window:{})},{"./parser":48}],48:[function(t,e,n){e.exports=function(){function e(t,e){function n(){this.constructor=t}n.prototype=e.prototype,t.prototype=new n}function n(t,e,n,i,r,s){this.message=t,this.expected=e,this.found=n,this.offset=i,this.line=r,this.column=s,this.name="SyntaxError"}function i(e){function i(){return e.substring(x,$)}function r(t){throw a(null,[{type:"other",description:t}],x)}function s(t){function n(t,n,i){var r,s;for(r=n;i>r;r++)s=e.charAt(r),"\n"===s?(t.seenCR||t.line++,t.column=1,t.seenCR=!1):"\r"===s||"\u2028"===s||"\u2029"===s?(t.line++,t.column=1,t.seenCR=!0):(t.column++,t.seenCR=!1)}return _!==t&&(_>t&&(_=0,C={line:1,column:1,seenCR:!1}),n(C,_,t),_=t),C}function o(t){k>$||($>k&&(k=$,N=[]),N.push(t))}function a(t,i,r){function o(t){var e=1;for(t.sort(function(t,e){return t.description<e.description?-1:t.description>e.description?1:0});e<t.length;)t[e-1]===t[e]?t.splice(e,1):e++}function a(t,e){function n(t){function e(t){return t.charCodeAt(0).toString(16).toUpperCase()}return t.replace(/\\/g,"\\\\").replace(/"/g,'\\"').replace(/\x08/g,"\\b").replace(/\t/g,"\\t").replace(/\n/g,"\\n").replace(/\f/g,"\\f").replace(/\r/g,"\\r").replace(/[\x00-\x07\x0B\x0E\x0F]/g,function(t){return"\\x0"+e(t)}).replace(/[\x10-\x1F\x80-\xFF]/g,function(t){return"\\x"+e(t)}).replace(/[\u0180-\u0FFF]/g,function(t){return"\\u0"+e(t)}).replace(/[\u1080-\uFFFF]/g,function(t){return"\\u"+e(t)})}var i,r,s,o=new Array(t.length);for(s=0;s<t.length;s++)o[s]=t[s].description;return i=t.length>1?o.slice(0,-1).join(", ")+" or "+o[t.length-1]:o[0],r=e?'"'+n(e)+'"':"end of input","Expected "+i+" but "+r+" found."}var u=s(r),c=r<e.length?e.charAt(r):null;return null!==i&&o(i),new n(null!==t?t:a(i,c),i,c,r,u.line,u.column)}function u(t){var e,n=new Array(t.length);for(e=0;e<t.length;e++)n[e]=t.charCodeAt(e)-32;return n}function c(t){function n(t){return"[object Array]"===Object.prototype.toString.apply(t)?[]:t}for(var i,r,s=w[t],a=0,u=[],l=s.length,h=[],p=[];;){for(;l>a;)switch(s[a]){case 0:p.push(n(y[s[a+1]])),a+=2;break;case 1:p.push($),a++;break;case 2:p.pop(),a++;break;case 3:$=p.pop(),a++;break;case 4:p.length-=s[a+1],a+=2;break;case 5:p.splice(-2,1),a++;break;case 6:p[p.length-2].push(p.pop()),a++;break;case 7:p.push(p.splice(p.length-s[a+1],s[a+1])),a+=2;break;case 8:p.pop(),p.push(e.substring(p[p.length-1],$)),a++;break;case 9:h.push(l),u.push(a+3+s[a+1]+s[a+2]),p[p.length-1]?(l=a+3+s[a+1],a+=3):(l=a+3+s[a+1]+s[a+2],a+=3+s[a+1]);break;case 10:h.push(l),u.push(a+3+s[a+1]+s[a+2]),p[p.length-1]===b?(l=a+3+s[a+1],a+=3):(l=a+3+s[a+1]+s[a+2],a+=3+s[a+1]);break;case 11:h.push(l),u.push(a+3+s[a+1]+s[a+2]),p[p.length-1]!==b?(l=a+3+s[a+1],a+=3):(l=a+3+s[a+1]+s[a+2],a+=3+s[a+1]);break;case 12:p[p.length-1]!==b?(h.push(l),u.push(a),l=a+2+s[a+1],a+=2):a+=2+s[a+1];break;case 13:h.push(l),u.push(a+3+s[a+1]+s[a+2]),e.length>$?(l=a+3+s[a+1],a+=3):(l=a+3+s[a+1]+s[a+2],a+=3+s[a+1]);break;case 14:h.push(l),u.push(a+4+s[a+2]+s[a+3]),e.substr($,y[s[a+1]].length)===y[s[a+1]]?(l=a+4+s[a+2],a+=4):(l=a+4+s[a+2]+s[a+3],a+=4+s[a+2]);break;case 15:h.push(l),u.push(a+4+s[a+2]+s[a+3]),e.substr($,y[s[a+1]].length).toLowerCase()===y[s[a+1]]?(l=a+4+s[a+2],a+=4):(l=a+4+s[a+2]+s[a+3],a+=4+s[a+2]);break;case 16:h.push(l),u.push(a+4+s[a+2]+s[a+3]),y[s[a+1]].test(e.charAt($))?(l=a+4+s[a+2],a+=4):(l=a+4+s[a+2]+s[a+3],a+=4+s[a+2]);break;case 17:p.push(e.substr($,s[a+1])),$+=s[a+1],a+=2;break;case 18:p.push(y[s[a+1]]),$+=y[s[a+1]].length,a+=2;break;case 19:p.push(b),0===S&&o(y[s[a+1]]),a+=2;break;case 20:x=p[p.length-1-s[a+1]],a+=2;break;case 21:x=$,a++;break;case 22:for(i=s.slice(a+4,a+4+s[a+3]),r=0;r<s[a+3];r++)i[r]=p[p.length-1-i[r]];p.splice(p.length-s[a+2],s[a+2],y[s[a+1]].apply(null,i)),a+=4+s[a+3];break;case 23:p.push(c(s[a+1])),a+=2;break;case 24:S++,a++;break;case 25:S--,a++;break;default:throw new Error("Invalid opcode: "+s[a]+".")}if(!(h.length>0))break;l=h.pop(),a=u.pop()}return p[0]}function l(t){return t.replace(/(^\s+)|(\s+$)/,"").replace(/[\r\n]/g,"\\n")}function h(t){return t.replace(/[ \r\n\t]+/g," ")}function p(t){return t=t.filter(function(t){return!/^[\n\t\r]+$/.test(t.value)}),t.length?1===t.length&&"string"===t[0].type?t[0]:new D(new U(t)):new P(!0)}function d(t){function e(t){for(var e,n=t.length;n--&&(e=t[n],"textNode"==e.type&&!/\S/.test(e.value)&&!e.decoded);)t.splice(n,1);return t}return e(e(t.reverse()).reverse())}var f,v=arguments.length>1?arguments[1]:{},b={},g={Start:0},m=0,y=[function(t){return new T(t)},b,"<!DOCTYPE",{type:"literal",value:"<!DOCTYPE",description:'"<!DOCTYPE"'},[],/^[^>]/,{type:"class",value:"[^>]",description:"[^>]"},">",{type:"literal",value:">",description:'">"'},function(t){return new V(t.join(""))},function(t){return new D(new U(d(t)))},"<!--",{type:"literal",value:"<!--",description:'"<!--"'},void 0,"-->",{type:"literal",value:"-->",description:'"-->"'},function(t){return t},function(t){return new E(l(t.join("")))},"<",{type:"literal",value:"<",description:'"<"'},"area",{type:"literal",value:"area",description:'"area"'},"base",{type:"literal",value:"base",description:'"base"'},"br",{type:"literal",value:"br",description:'"br"'},"col",{type:"literal",value:"col",description:'"col"'},"command",{type:"literal",value:"command",description:'"command"'},"embed",{type:"literal",value:"embed",description:'"embed"'},"hr",{type:"literal",value:"hr",description:'"hr"'},"img",{type:"literal",value:"img",description:'"img"'},"input",{type:"literal",value:"input",description:'"input"'},"keygen",{type:"literal",value:"keygen",description:'"keygen"'},"link",{type:"literal",value:"link",description:'"link"'},"meta",{type:"literal",value:"meta",description:'"meta"'},"param",{type:"literal",value:"param",description:'"param"'},"source",{type:"literal",value:"source",description:'"source"'},"track",{type:"literal",value:"track",description:'"track"'},"wbr",{type:"literal",value:"wbr",description:'"wbr"'},null,"/>",{type:"literal",value:"/>",description:'"/>"'},function(t,e,n){return n&&t!=n.name&&r("</"+t+">"),new J(t,e)},"</",{type:"literal",value:"</",description:'"</"'},function(t){return{name:t}},function(t,e,n){return t.name!=n.name&&r("</"+t.name+">"),new J(t.name,t.attributes,e)},function(t){return new A(h(t.join("")))},"{{",{type:"literal",value:"{{",description:'"{{"'},function(){return i()},function(t){return t},function(t){return new J(t.name,t.attributes)},function(t,e){return{name:t,attributes:e}},function(t){for(var e={},n=0,i=t.length;i>n;n++){var r=t[n];e[r.name]=r.value||!0}return new q(e)},/^[a-zA-Z0-9:_.\-]/,{type:"class",value:"[a-zA-Z0-9:_.\\-]",description:"[a-zA-Z0-9:_.\\-]"},function(t){return t.join("")},"=",{type:"literal",value:"=",description:'"="'},function(t,e){return{name:t,value:e}},function(t){return{name:t,value:new P(!0)}},'"',{type:"literal",value:'"',description:'"\\""'},/^[^"]/,{type:"class",value:'[^"]',description:'[^"]'},function(){return new z(h(i()))},function(t){return p(t)},"'",{type:"literal",value:"'",description:'"\'"'},/^[^']/,{type:"class",value:"[^']",description:"[^']"},function(t){return p([t])},"{{#",{type:"literal",value:"{{#",description:'"{{#"'},function(t){return t},function(t,e,n){return new O(t,e,n)},"{{/",{type:"literal",value:"{{/",description:'"{{/"'},function(t){return new T(t)},"{{/}}",{type:"literal",value:"{{/}}",description:'"{{/}}"'},function(){return void 0},"}}",{type:"literal",value:"}}",description:'"}}"'},function(t){return new O(t)},function(t){return t},function(t){var e={};return e[t]=new R(new P(!0)),new q(e)},function(t){for(var e in t)t[e]=new R(t[e]);return new q(t)},",",{type:"literal",value:",",description:'","'},function(t,e){var n={value:new R(t)};e=e.length?e[0][1]:[];for(var i=0,r=e.length;r>i;i++)n[e[i].key]=new R(e[i].value);return new q(n)},"?",{type:"literal",value:"?",description:'"?"'},":",{type:"literal",value:":",description:'":"'},function(t,e,n){return new Z(t,e,n)},"(",{type:"literal",value:"(",description:'"("'},")",{type:"literal",value:")",description:'")"'},function(t){return t},"()",{type:"literal",value:"()",description:'"()"'},function(){return[]},function(t,e){return[t].concat(e.map(function(t){return t[1]}))},function(t,e){return new j(t,e)},"&&",{type:"literal",value:"&&",description:'"&&"'},"||",{type:"literal",value:"||",description:'"||"'},"===",{type:"literal",value:"===",description:'"==="'},"==",{type:"literal",value:"==",description:'"=="'},"!==",{type:"literal",value:"!==",description:'"!=="'},"!=",{type:"literal",value:"!=",description:'"!="'},">==",{type:"literal",value:">==",description:'">=="'},">=",{type:"literal",value:">=",description:'">="'},"<==",{type:"literal",value:"<==",description:'"<=="'},"<=",{type:"literal",value:"<=",description:'"<="'},"+",{type:"literal",value:"+",description:'"+"'},"-",{type:"literal",value:"-",description:'"-"'},"%",{type:"literal",value:"%",description:'"%"'},"*",{type:"literal",value:"*",description:'"*"'},"/",{type:"literal",value:"/",description:'"/"'},function(t,e,n){
+return Yn})):Mn&&qn?Vn?(qn.exports=Yn)._=Yn:Mn._=Yn:Zn._=Yn}).call(this);;/**
+ * @name MarkerClustererPlus for Google Maps V3
+ * @version 2.1.2 [May 28, 2014]
+ * @author Gary Little
+ * @fileoverview
+ * The library creates and manages per-zoom-level clusters for large amounts of markers.
+ * <p>
+ * This is an enhanced V3 implementation of the
+ * <a href="http://gmaps-utility-library-dev.googlecode.com/svn/tags/markerclusterer/"
+ * >V2 MarkerClusterer</a> by Xiaoxi Wu. It is based on the
+ * <a href="http://google-maps-utility-library-v3.googlecode.com/svn/tags/markerclusterer/"
+ * >V3 MarkerClusterer</a> port by Luke Mahe. MarkerClustererPlus was created by Gary Little.
+ * <p>
+ * v2.0 release: MarkerClustererPlus v2.0 is backward compatible with MarkerClusterer v1.0. It
+ *  adds support for the <code>ignoreHidden</code>, <code>title</code>, <code>batchSizeIE</code>,
+ *  and <code>calculator</code> properties as well as support for four more events. It also allows
+ *  greater control over the styling of the text that appears on the cluster marker. The
+ *  documentation has been significantly improved and the overall code has been simplified and
+ *  polished. Very large numbers of markers can now be managed without causing Javascript timeout
+ *  errors on Internet Explorer. Note that the name of the <code>clusterclick</code> event has been
+ *  deprecated. The new name is <code>click</code>, so please change your application code now.
+ */
+
+/**
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+
+/**
+ * @name ClusterIconStyle
+ * @class This class represents the object for values in the <code>styles</code> array passed
+ *  to the {@link MarkerClusterer} constructor. The element in this array that is used to
+ *  style the cluster icon is determined by calling the <code>calculator</code> function.
+ *
+ * @property {string} url The URL of the cluster icon image file. Required.
+ * @property {number} height The display height (in pixels) of the cluster icon. Required.
+ * @property {number} width The display width (in pixels) of the cluster icon. Required.
+ * @property {Array} [anchorText] The position (in pixels) from the center of the cluster icon to
+ *  where the text label is to be centered and drawn. The format is <code>[yoffset, xoffset]</code>
+ *  where <code>yoffset</code> increases as you go down from center and <code>xoffset</code>
+ *  increases to the right of center. The default is <code>[0, 0]</code>.
+ * @property {Array} [anchorIcon] The anchor position (in pixels) of the cluster icon. This is the
+ *  spot on the cluster icon that is to be aligned with the cluster position. The format is
+ *  <code>[yoffset, xoffset]</code> where <code>yoffset</code> increases as you go down and
+ *  <code>xoffset</code> increases to the right of the top-left corner of the icon. The default
+ *  anchor position is the center of the cluster icon.
+ * @property {string} [textColor="black"] The color of the label text shown on the
+ *  cluster icon.
+ * @property {number} [textSize=11] The size (in pixels) of the label text shown on the
+ *  cluster icon.
+ * @property {string} [textDecoration="none"] The value of the CSS <code>text-decoration</code>
+ *  property for the label text shown on the cluster icon.
+ * @property {string} [fontWeight="bold"] The value of the CSS <code>font-weight</code>
+ *  property for the label text shown on the cluster icon.
+ * @property {string} [fontStyle="normal"] The value of the CSS <code>font-style</code>
+ *  property for the label text shown on the cluster icon.
+ * @property {string} [fontFamily="Arial,sans-serif"] The value of the CSS <code>font-family</code>
+ *  property for the label text shown on the cluster icon.
+ * @property {string} [backgroundPosition="0 0"] The position of the cluster icon image
+ *  within the image defined by <code>url</code>. The format is <code>"xpos ypos"</code>
+ *  (the same format as for the CSS <code>background-position</code> property). You must set
+ *  this property appropriately when the image defined by <code>url</code> represents a sprite
+ *  containing multiple images. Note that the position <i>must</i> be specified in px units.
+ */
+/**
+ * @name ClusterIconInfo
+ * @class This class is an object containing general information about a cluster icon. This is
+ *  the object that a <code>calculator</code> function returns.
+ *
+ * @property {string} text The text of the label to be shown on the cluster icon.
+ * @property {number} index The index plus 1 of the element in the <code>styles</code>
+ *  array to be used to style the cluster icon.
+ * @property {string} title The tooltip to display when the mouse moves over the cluster icon.
+ *  If this value is <code>undefined</code> or <code>""</code>, <code>title</code> is set to the
+ *  value of the <code>title</code> property passed to the MarkerClusterer.
+ */
+/**
+ * A cluster icon.
+ *
+ * @constructor
+ * @extends google.maps.OverlayView
+ * @param {Cluster} cluster The cluster with which the icon is to be associated.
+ * @param {Array} [styles] An array of {@link ClusterIconStyle} defining the cluster icons
+ *  to use for various cluster sizes.
+ * @private
+ */
+function ClusterIcon(cluster, styles) {
+  cluster.getMarkerClusterer().extend(ClusterIcon, google.maps.OverlayView);
+
+  this.cluster_ = cluster;
+  this.className_ = cluster.getMarkerClusterer().getClusterClass();
+  this.styles_ = styles;
+  this.center_ = null;
+  this.div_ = null;
+  this.sums_ = null;
+  this.visible_ = false;
+
+  this.setMap(cluster.getMap()); // Note: this causes onAdd to be called
+}
+
+
+/**
+ * Adds the icon to the DOM.
+ */
+ClusterIcon.prototype.onAdd = function () {
+  var cClusterIcon = this;
+  var cMouseDownInCluster;
+  var cDraggingMapByCluster;
+
+  this.div_ = document.createElement("div");
+  this.div_.className = this.className_;
+  if (this.visible_) {
+    this.show();
+  }
+
+  this.getPanes().overlayMouseTarget.appendChild(this.div_);
+
+  // Fix for Issue 157
+  this.boundsChangedListener_ = google.maps.event.addListener(this.getMap(), "bounds_changed", function () {
+    cDraggingMapByCluster = cMouseDownInCluster;
+  });
+
+  google.maps.event.addDomListener(this.div_, "mousedown", function () {
+    cMouseDownInCluster = true;
+    cDraggingMapByCluster = false;
+  });
+
+  google.maps.event.addDomListener(this.div_, "click", function (e) {
+    cMouseDownInCluster = false;
+    if (!cDraggingMapByCluster) {
+      var theBounds;
+      var mz;
+      var mc = cClusterIcon.cluster_.getMarkerClusterer();
+      /**
+       * This event is fired when a cluster marker is clicked.
+       * @name MarkerClusterer#click
+       * @param {Cluster} c The cluster that was clicked.
+       * @event
+       */
+      google.maps.event.trigger(mc, "click", cClusterIcon.cluster_);
+      google.maps.event.trigger(mc, "clusterclick", cClusterIcon.cluster_); // deprecated name
+
+      // The default click handler follows. Disable it by setting
+      // the zoomOnClick property to false.
+      if (mc.getZoomOnClick()) {
+        // Zoom into the cluster.
+        mz = mc.getMaxZoom();
+        theBounds = cClusterIcon.cluster_.getBounds();
+        mc.getMap().fitBounds(theBounds);
+        // There is a fix for Issue 170 here:
+        setTimeout(function () {
+          mc.getMap().fitBounds(theBounds);
+          // Don't zoom beyond the max zoom level
+          if (mz !== null && (mc.getMap().getZoom() > mz)) {
+            mc.getMap().setZoom(mz + 1);
+          }
+        }, 100);
+      }
+
+      // Prevent event propagation to the map:
+      e.cancelBubble = true;
+      if (e.stopPropagation) {
+        e.stopPropagation();
+      }
+    }
+  });
+
+  google.maps.event.addDomListener(this.div_, "mouseover", function () {
+    var mc = cClusterIcon.cluster_.getMarkerClusterer();
+    /**
+     * This event is fired when the mouse moves over a cluster marker.
+     * @name MarkerClusterer#mouseover
+     * @param {Cluster} c The cluster that the mouse moved over.
+     * @event
+     */
+    google.maps.event.trigger(mc, "mouseover", cClusterIcon.cluster_);
+  });
+
+  google.maps.event.addDomListener(this.div_, "mouseout", function () {
+    var mc = cClusterIcon.cluster_.getMarkerClusterer();
+    /**
+     * This event is fired when the mouse moves out of a cluster marker.
+     * @name MarkerClusterer#mouseout
+     * @param {Cluster} c The cluster that the mouse moved out of.
+     * @event
+     */
+    google.maps.event.trigger(mc, "mouseout", cClusterIcon.cluster_);
+  });
+};
+
+
+/**
+ * Removes the icon from the DOM.
+ */
+ClusterIcon.prototype.onRemove = function () {
+  if (this.div_ && this.div_.parentNode) {
+    this.hide();
+    google.maps.event.removeListener(this.boundsChangedListener_);
+    google.maps.event.clearInstanceListeners(this.div_);
+    this.div_.parentNode.removeChild(this.div_);
+    this.div_ = null;
+  }
+};
+
+
+/**
+ * Draws the icon.
+ */
+ClusterIcon.prototype.draw = function () {
+  if (this.visible_) {
+    var pos = this.getPosFromLatLng_(this.center_);
+    this.div_.style.top = pos.y + "px";
+    this.div_.style.left = pos.x + "px";
+  }
+};
+
+
+/**
+ * Hides the icon.
+ */
+ClusterIcon.prototype.hide = function () {
+  if (this.div_) {
+    this.div_.style.display = "none";
+  }
+  this.visible_ = false;
+};
+
+
+/**
+ * Positions and shows the icon.
+ */
+ClusterIcon.prototype.show = function () {
+  if (this.div_) {
+    var img = "";
+    // NOTE: values must be specified in px units
+    var bp = this.backgroundPosition_.split(" ");
+    var spriteH = parseInt(bp[0].replace(/^\s+|\s+$/g, ""), 10);
+    var spriteV = parseInt(bp[1].replace(/^\s+|\s+$/g, ""), 10);
+    var pos = this.getPosFromLatLng_(this.center_);
+    this.div_.style.cssText = this.createCss(pos);
+    img = "<img src='" + this.url_ + "' style='position: absolute; top: " + spriteV + "px; left: " + spriteH + "px; ";
+    if (!this.cluster_.getMarkerClusterer().enableRetinaIcons_) {
+      img += "clip: rect(" + (-1 * spriteV) + "px, " + ((-1 * spriteH) + this.width_) + "px, " +
+          ((-1 * spriteV) + this.height_) + "px, " + (-1 * spriteH) + "px);";
+    }
+    img += "'>";
+    this.div_.innerHTML = img + "<div style='" +
+        "position: absolute;" +
+        "top: " + this.anchorText_[0] + "px;" +
+        "left: " + this.anchorText_[1] + "px;" +
+        "color: " + this.textColor_ + ";" +
+        "font-size: " + this.textSize_ + "px;" +
+        "font-family: " + this.fontFamily_ + ";" +
+        "font-weight: " + this.fontWeight_ + ";" +
+        "font-style: " + this.fontStyle_ + ";" +
+        "text-decoration: " + this.textDecoration_ + ";" +
+        "text-align: center;" +
+        "width: " + this.width_ + "px;" +
+        "line-height:" + this.height_ + "px;" +
+        "'>" + this.sums_.text + "</div>";
+    if (typeof this.sums_.title === "undefined" || this.sums_.title === "") {
+      this.div_.title = this.cluster_.getMarkerClusterer().getTitle();
+    } else {
+      this.div_.title = this.sums_.title;
+    }
+    this.div_.style.display = "";
+  }
+  this.visible_ = true;
+};
+
+
+/**
+ * Sets the icon styles to the appropriate element in the styles array.
+ *
+ * @param {ClusterIconInfo} sums The icon label text and styles index.
+ */
+ClusterIcon.prototype.useStyle = function (sums) {
+  this.sums_ = sums;
+  var index = Math.max(0, sums.index - 1);
+  index = Math.min(this.styles_.length - 1, index);
+  var style = this.styles_[index];
+  this.url_ = style.url;
+  this.height_ = style.height;
+  this.width_ = style.width;
+  this.anchorText_ = style.anchorText || [0, 0];
+  this.anchorIcon_ = style.anchorIcon || [parseInt(this.height_ / 2, 10), parseInt(this.width_ / 2, 10)];
+  this.textColor_ = style.textColor || "black";
+  this.textSize_ = style.textSize || 11;
+  this.textDecoration_ = style.textDecoration || "none";
+  this.fontWeight_ = style.fontWeight || "bold";
+  this.fontStyle_ = style.fontStyle || "normal";
+  this.fontFamily_ = style.fontFamily || "Arial,sans-serif";
+  this.backgroundPosition_ = style.backgroundPosition || "0 0";
+};
+
+
+/**
+ * Sets the position at which to center the icon.
+ *
+ * @param {google.maps.LatLng} center The latlng to set as the center.
+ */
+ClusterIcon.prototype.setCenter = function (center) {
+  this.center_ = center;
+};
+
+
+/**
+ * Creates the cssText style parameter based on the position of the icon.
+ *
+ * @param {google.maps.Point} pos The position of the icon.
+ * @return {string} The CSS style text.
+ */
+ClusterIcon.prototype.createCss = function (pos) {
+  var style = [];
+  style.push("cursor: pointer;");
+  style.push("position: absolute; top: " + pos.y + "px; left: " + pos.x + "px;");
+  style.push("width: " + this.width_ + "px; height: " + this.height_ + "px;");
+  return style.join("");
+};
+
+
+/**
+ * Returns the position at which to place the DIV depending on the latlng.
+ *
+ * @param {google.maps.LatLng} latlng The position in latlng.
+ * @return {google.maps.Point} The position in pixels.
+ */
+ClusterIcon.prototype.getPosFromLatLng_ = function (latlng) {
+  var pos = this.getProjection().fromLatLngToDivPixel(latlng);
+  pos.x -= this.anchorIcon_[1];
+  pos.y -= this.anchorIcon_[0];
+  pos.x = parseInt(pos.x, 10);
+  pos.y = parseInt(pos.y, 10);
+  return pos;
+};
+
+
+/**
+ * Creates a single cluster that manages a group of proximate markers.
+ *  Used internally, do not call this constructor directly.
+ * @constructor
+ * @param {MarkerClusterer} mc The <code>MarkerClusterer</code> object with which this
+ *  cluster is associated.
+ */
+function Cluster(mc) {
+  this.markerClusterer_ = mc;
+  this.map_ = mc.getMap();
+  this.gridSize_ = mc.getGridSize();
+  this.minClusterSize_ = mc.getMinimumClusterSize();
+  this.averageCenter_ = mc.getAverageCenter();
+  this.markers_ = [];
+  this.center_ = null;
+  this.bounds_ = null;
+  this.clusterIcon_ = new ClusterIcon(this, mc.getStyles());
+}
+
+
+/**
+ * Returns the number of markers managed by the cluster. You can call this from
+ * a <code>click</code>, <code>mouseover</code>, or <code>mouseout</code> event handler
+ * for the <code>MarkerClusterer</code> object.
+ *
+ * @return {number} The number of markers in the cluster.
+ */
+Cluster.prototype.getSize = function () {
+  return this.markers_.length;
+};
+
+
+/**
+ * Returns the array of markers managed by the cluster. You can call this from
+ * a <code>click</code>, <code>mouseover</code>, or <code>mouseout</code> event handler
+ * for the <code>MarkerClusterer</code> object.
+ *
+ * @return {Array} The array of markers in the cluster.
+ */
+Cluster.prototype.getMarkers = function () {
+  return this.markers_;
+};
+
+
+/**
+ * Returns the center of the cluster. You can call this from
+ * a <code>click</code>, <code>mouseover</code>, or <code>mouseout</code> event handler
+ * for the <code>MarkerClusterer</code> object.
+ *
+ * @return {google.maps.LatLng} The center of the cluster.
+ */
+Cluster.prototype.getCenter = function () {
+  return this.center_;
+};
+
+
+/**
+ * Returns the map with which the cluster is associated.
+ *
+ * @return {google.maps.Map} The map.
+ * @ignore
+ */
+Cluster.prototype.getMap = function () {
+  return this.map_;
+};
+
+
+/**
+ * Returns the <code>MarkerClusterer</code> object with which the cluster is associated.
+ *
+ * @return {MarkerClusterer} The associated marker clusterer.
+ * @ignore
+ */
+Cluster.prototype.getMarkerClusterer = function () {
+  return this.markerClusterer_;
+};
+
+
+/**
+ * Returns the bounds of the cluster.
+ *
+ * @return {google.maps.LatLngBounds} the cluster bounds.
+ * @ignore
+ */
+Cluster.prototype.getBounds = function () {
+  var i;
+  var bounds = new google.maps.LatLngBounds(this.center_, this.center_);
+  var markers = this.getMarkers();
+  for (i = 0; i < markers.length; i++) {
+    bounds.extend(markers[i].getPosition());
+  }
+  return bounds;
+};
+
+
+/**
+ * Removes the cluster from the map.
+ *
+ * @ignore
+ */
+Cluster.prototype.remove = function () {
+  this.clusterIcon_.setMap(null);
+  this.markers_ = [];
+  delete this.markers_;
+};
+
+
+/**
+ * Adds a marker to the cluster.
+ *
+ * @param {google.maps.Marker} marker The marker to be added.
+ * @return {boolean} True if the marker was added.
+ * @ignore
+ */
+Cluster.prototype.addMarker = function (marker) {
+  var i;
+  var mCount;
+  var mz;
+
+  if (this.isMarkerAlreadyAdded_(marker)) {
+    return false;
+  }
+
+  if (!this.center_) {
+    this.center_ = marker.getPosition();
+    this.calculateBounds_();
+  } else {
+    if (this.averageCenter_) {
+      var l = this.markers_.length + 1;
+      var lat = (this.center_.lat() * (l - 1) + marker.getPosition().lat()) / l;
+      var lng = (this.center_.lng() * (l - 1) + marker.getPosition().lng()) / l;
+      this.center_ = new google.maps.LatLng(lat, lng);
+      this.calculateBounds_();
+    }
+  }
+
+  marker.isAdded = true;
+  this.markers_.push(marker);
+
+  mCount = this.markers_.length;
+  mz = this.markerClusterer_.getMaxZoom();
+  if (mz !== null && this.map_.getZoom() > mz) {
+    // Zoomed in past max zoom, so show the marker.
+    if (marker.getMap() !== this.map_) {
+      marker.setMap(this.map_);
+    }
+  } else if (mCount < this.minClusterSize_) {
+    // Min cluster size not reached so show the marker.
+    if (marker.getMap() !== this.map_) {
+      marker.setMap(this.map_);
+    }
+  } else if (mCount === this.minClusterSize_) {
+    // Hide the markers that were showing.
+    for (i = 0; i < mCount; i++) {
+      this.markers_[i].setMap(null);
+    }
+  } else {
+    marker.setMap(null);
+  }
+
+  this.updateIcon_();
+  return true;
+};
+
+
+/**
+ * Determines if a marker lies within the cluster's bounds.
+ *
+ * @param {google.maps.Marker} marker The marker to check.
+ * @return {boolean} True if the marker lies in the bounds.
+ * @ignore
+ */
+Cluster.prototype.isMarkerInClusterBounds = function (marker) {
+  return this.bounds_.contains(marker.getPosition());
+};
+
+
+/**
+ * Calculates the extended bounds of the cluster with the grid.
+ */
+Cluster.prototype.calculateBounds_ = function () {
+  var bounds = new google.maps.LatLngBounds(this.center_, this.center_);
+  this.bounds_ = this.markerClusterer_.getExtendedBounds(bounds);
+};
+
+
+/**
+ * Updates the cluster icon.
+ */
+Cluster.prototype.updateIcon_ = function () {
+  var mCount = this.markers_.length;
+  var mz = this.markerClusterer_.getMaxZoom();
+
+  if (mz !== null && this.map_.getZoom() > mz) {
+    this.clusterIcon_.hide();
+    return;
+  }
+
+  if (mCount < this.minClusterSize_) {
+    // Min cluster size not yet reached.
+    this.clusterIcon_.hide();
+    return;
+  }
+
+  var numStyles = this.markerClusterer_.getStyles().length;
+  var sums = this.markerClusterer_.getCalculator()(this.markers_, numStyles);
+  this.clusterIcon_.setCenter(this.center_);
+  this.clusterIcon_.useStyle(sums);
+  this.clusterIcon_.show();
+};
+
+
+/**
+ * Determines if a marker has already been added to the cluster.
+ *
+ * @param {google.maps.Marker} marker The marker to check.
+ * @return {boolean} True if the marker has already been added.
+ */
+Cluster.prototype.isMarkerAlreadyAdded_ = function (marker) {
+  var i;
+  if (this.markers_.indexOf) {
+    return this.markers_.indexOf(marker) !== -1;
+  } else {
+    for (i = 0; i < this.markers_.length; i++) {
+      if (marker === this.markers_[i]) {
+        return true;
+      }
+    }
+  }
+  return false;
+};
+
+
+/**
+ * @name MarkerClustererOptions
+ * @class This class represents the optional parameter passed to
+ *  the {@link MarkerClusterer} constructor.
+ * @property {number} [gridSize=60] The grid size of a cluster in pixels. The grid is a square.
+ * @property {number} [maxZoom=null] The maximum zoom level at which clustering is enabled or
+ *  <code>null</code> if clustering is to be enabled at all zoom levels.
+ * @property {boolean} [zoomOnClick=true] Whether to zoom the map when a cluster marker is
+ *  clicked. You may want to set this to <code>false</code> if you have installed a handler
+ *  for the <code>click</code> event and it deals with zooming on its own.
+ * @property {boolean} [averageCenter=false] Whether the position of a cluster marker should be
+ *  the average position of all markers in the cluster. If set to <code>false</code>, the
+ *  cluster marker is positioned at the location of the first marker added to the cluster.
+ * @property {number} [minimumClusterSize=2] The minimum number of markers needed in a cluster
+ *  before the markers are hidden and a cluster marker appears.
+ * @property {boolean} [ignoreHidden=false] Whether to ignore hidden markers in clusters. You
+ *  may want to set this to <code>true</code> to ensure that hidden markers are not included
+ *  in the marker count that appears on a cluster marker (this count is the value of the
+ *  <code>text</code> property of the result returned by the default <code>calculator</code>).
+ *  If set to <code>true</code> and you change the visibility of a marker being clustered, be
+ *  sure to also call <code>MarkerClusterer.repaint()</code>.
+ * @property {string} [title=""] The tooltip to display when the mouse moves over a cluster
+ *  marker. (Alternatively, you can use a custom <code>calculator</code> function to specify a
+ *  different tooltip for each cluster marker.)
+ * @property {function} [calculator=MarkerClusterer.CALCULATOR] The function used to determine
+ *  the text to be displayed on a cluster marker and the index indicating which style to use
+ *  for the cluster marker. The input parameters for the function are (1) the array of markers
+ *  represented by a cluster marker and (2) the number of cluster icon styles. It returns a
+ *  {@link ClusterIconInfo} object. The default <code>calculator</code> returns a
+ *  <code>text</code> property which is the number of markers in the cluster and an
+ *  <code>index</code> property which is one higher than the lowest integer such that
+ *  <code>10^i</code> exceeds the number of markers in the cluster, or the size of the styles
+ *  array, whichever is less. The <code>styles</code> array element used has an index of
+ *  <code>index</code> minus 1. For example, the default <code>calculator</code> returns a
+ *  <code>text</code> value of <code>"125"</code> and an <code>index</code> of <code>3</code>
+ *  for a cluster icon representing 125 markers so the element used in the <code>styles</code>
+ *  array is <code>2</code>. A <code>calculator</code> may also return a <code>title</code>
+ *  property that contains the text of the tooltip to be used for the cluster marker. If
+ *   <code>title</code> is not defined, the tooltip is set to the value of the <code>title</code>
+ *   property for the MarkerClusterer.
+ * @property {string} [clusterClass="cluster"] The name of the CSS class defining general styles
+ *  for the cluster markers. Use this class to define CSS styles that are not set up by the code
+ *  that processes the <code>styles</code> array.
+ * @property {Array} [styles] An array of {@link ClusterIconStyle} elements defining the styles
+ *  of the cluster markers to be used. The element to be used to style a given cluster marker
+ *  is determined by the function defined by the <code>calculator</code> property.
+ *  The default is an array of {@link ClusterIconStyle} elements whose properties are derived
+ *  from the values for <code>imagePath</code>, <code>imageExtension</code>, and
+ *  <code>imageSizes</code>.
+ * @property {boolean} [enableRetinaIcons=false] Whether to allow the use of cluster icons that
+ * have sizes that are some multiple (typically double) of their actual display size. Icons such
+ * as these look better when viewed on high-resolution monitors such as Apple's Retina displays.
+ * Note: if this property is <code>true</code>, sprites cannot be used as cluster icons.
+ * @property {number} [batchSize=MarkerClusterer.BATCH_SIZE] Set this property to the
+ *  number of markers to be processed in a single batch when using a browser other than
+ *  Internet Explorer (for Internet Explorer, use the batchSizeIE property instead).
+ * @property {number} [batchSizeIE=MarkerClusterer.BATCH_SIZE_IE] When Internet Explorer is
+ *  being used, markers are processed in several batches with a small delay inserted between
+ *  each batch in an attempt to avoid Javascript timeout errors. Set this property to the
+ *  number of markers to be processed in a single batch; select as high a number as you can
+ *  without causing a timeout error in the browser. This number might need to be as low as 100
+ *  if 15,000 markers are being managed, for example.
+ * @property {string} [imagePath=MarkerClusterer.IMAGE_PATH]
+ *  The full URL of the root name of the group of image files to use for cluster icons.
+ *  The complete file name is of the form <code>imagePath</code>n.<code>imageExtension</code>
+ *  where n is the image file number (1, 2, etc.).
+ * @property {string} [imageExtension=MarkerClusterer.IMAGE_EXTENSION]
+ *  The extension name for the cluster icon image files (e.g., <code>"png"</code> or
+ *  <code>"jpg"</code>).
+ * @property {Array} [imageSizes=MarkerClusterer.IMAGE_SIZES]
+ *  An array of numbers containing the widths of the group of
+ *  <code>imagePath</code>n.<code>imageExtension</code> image files.
+ *  (The images are assumed to be square.)
+ */
+/**
+ * Creates a MarkerClusterer object with the options specified in {@link MarkerClustererOptions}.
+ * @constructor
+ * @extends google.maps.OverlayView
+ * @param {google.maps.Map} map The Google map to attach to.
+ * @param {Array.<google.maps.Marker>} [opt_markers] The markers to be added to the cluster.
+ * @param {MarkerClustererOptions} [opt_options] The optional parameters.
+ */
+function MarkerClusterer(map, opt_markers, opt_options) {
+  // MarkerClusterer implements google.maps.OverlayView interface. We use the
+  // extend function to extend MarkerClusterer with google.maps.OverlayView
+  // because it might not always be available when the code is defined so we
+  // look for it at the last possible moment. If it doesn't exist now then
+  // there is no point going ahead :)
+  this.extend(MarkerClusterer, google.maps.OverlayView);
+
+  opt_markers = opt_markers || [];
+  opt_options = opt_options || {};
+
+  this.markers_ = [];
+  this.clusters_ = [];
+  this.listeners_ = [];
+  this.activeMap_ = null;
+  this.ready_ = false;
+
+  this.gridSize_ = opt_options.gridSize || 60;
+  this.minClusterSize_ = opt_options.minimumClusterSize || 2;
+  this.maxZoom_ = opt_options.maxZoom || null;
+  this.styles_ = opt_options.styles || [];
+  this.title_ = opt_options.title || "";
+  this.zoomOnClick_ = true;
+  if (opt_options.zoomOnClick !== undefined) {
+    this.zoomOnClick_ = opt_options.zoomOnClick;
+  }
+  this.averageCenter_ = false;
+  if (opt_options.averageCenter !== undefined) {
+    this.averageCenter_ = opt_options.averageCenter;
+  }
+  this.ignoreHidden_ = false;
+  if (opt_options.ignoreHidden !== undefined) {
+    this.ignoreHidden_ = opt_options.ignoreHidden;
+  }
+  this.enableRetinaIcons_ = false;
+  if (opt_options.enableRetinaIcons !== undefined) {
+    this.enableRetinaIcons_ = opt_options.enableRetinaIcons;
+  }
+  this.imagePath_ = opt_options.imagePath || MarkerClusterer.IMAGE_PATH;
+  this.imageExtension_ = opt_options.imageExtension || MarkerClusterer.IMAGE_EXTENSION;
+  this.imageSizes_ = opt_options.imageSizes || MarkerClusterer.IMAGE_SIZES;
+  this.calculator_ = opt_options.calculator || MarkerClusterer.CALCULATOR;
+  this.batchSize_ = opt_options.batchSize || MarkerClusterer.BATCH_SIZE;
+  this.batchSizeIE_ = opt_options.batchSizeIE || MarkerClusterer.BATCH_SIZE_IE;
+  this.clusterClass_ = opt_options.clusterClass || "cluster";
+
+  if (navigator.userAgent.toLowerCase().indexOf("msie") !== -1) {
+    // Try to avoid IE timeout when processing a huge number of markers:
+    this.batchSize_ = this.batchSizeIE_;
+  }
+
+  this.setupStyles_();
+
+  this.addMarkers(opt_markers, true);
+  this.setMap(map); // Note: this causes onAdd to be called
+}
+
+
+/**
+ * Implementation of the onAdd interface method.
+ * @ignore
+ */
+MarkerClusterer.prototype.onAdd = function () {
+  var cMarkerClusterer = this;
+
+  this.activeMap_ = this.getMap();
+  this.ready_ = true;
+
+  this.repaint();
+
+  // Add the map event listeners
+  this.listeners_ = [
+    google.maps.event.addListener(this.getMap(), "zoom_changed", function () {
+      cMarkerClusterer.resetViewport_(false);
+      // Workaround for this Google bug: when map is at level 0 and "-" of
+      // zoom slider is clicked, a "zoom_changed" event is fired even though
+      // the map doesn't zoom out any further. In this situation, no "idle"
+      // event is triggered so the cluster markers that have been removed
+      // do not get redrawn. Same goes for a zoom in at maxZoom.
+      if (this.getZoom() === (this.get("minZoom") || 0) || this.getZoom() === this.get("maxZoom")) {
+        google.maps.event.trigger(this, "idle");
+      }
+    }),
+    google.maps.event.addListener(this.getMap(), "idle", function () {
+      cMarkerClusterer.redraw_();
+    })
+  ];
+};
+
+
+/**
+ * Implementation of the onRemove interface method.
+ * Removes map event listeners and all cluster icons from the DOM.
+ * All managed markers are also put back on the map.
+ * @ignore
+ */
+MarkerClusterer.prototype.onRemove = function () {
+  var i;
+
+  // Put all the managed markers back on the map:
+  for (i = 0; i < this.markers_.length; i++) {
+    if (this.markers_[i].getMap() !== this.activeMap_) {
+      this.markers_[i].setMap(this.activeMap_);
+    }
+  }
+
+  // Remove all clusters:
+  for (i = 0; i < this.clusters_.length; i++) {
+    this.clusters_[i].remove();
+  }
+  this.clusters_ = [];
+
+  // Remove map event listeners:
+  for (i = 0; i < this.listeners_.length; i++) {
+    google.maps.event.removeListener(this.listeners_[i]);
+  }
+  this.listeners_ = [];
+
+  this.activeMap_ = null;
+  this.ready_ = false;
+};
+
+
+/**
+ * Implementation of the draw interface method.
+ * @ignore
+ */
+MarkerClusterer.prototype.draw = function () {};
+
+
+/**
+ * Sets up the styles object.
+ */
+MarkerClusterer.prototype.setupStyles_ = function () {
+  var i, size;
+  if (this.styles_.length > 0) {
+    return;
+  }
+
+  for (i = 0; i < this.imageSizes_.length; i++) {
+    size = this.imageSizes_[i];
+    this.styles_.push({
+      url: this.imagePath_ + (i + 1) + "." + this.imageExtension_,
+      height: size,
+      width: size
+    });
+  }
+};
+
+
+/**
+ *  Fits the map to the bounds of the markers managed by the clusterer.
+ */
+MarkerClusterer.prototype.fitMapToMarkers = function () {
+  var i;
+  var markers = this.getMarkers();
+  var bounds = new google.maps.LatLngBounds();
+  for (i = 0; i < markers.length; i++) {
+    bounds.extend(markers[i].getPosition());
+  }
+
+  this.getMap().fitBounds(bounds);
+};
+
+
+/**
+ * Returns the value of the <code>gridSize</code> property.
+ *
+ * @return {number} The grid size.
+ */
+MarkerClusterer.prototype.getGridSize = function () {
+  return this.gridSize_;
+};
+
+
+/**
+ * Sets the value of the <code>gridSize</code> property.
+ *
+ * @param {number} gridSize The grid size.
+ */
+MarkerClusterer.prototype.setGridSize = function (gridSize) {
+  this.gridSize_ = gridSize;
+};
+
+
+/**
+ * Returns the value of the <code>minimumClusterSize</code> property.
+ *
+ * @return {number} The minimum cluster size.
+ */
+MarkerClusterer.prototype.getMinimumClusterSize = function () {
+  return this.minClusterSize_;
+};
+
+/**
+ * Sets the value of the <code>minimumClusterSize</code> property.
+ *
+ * @param {number} minimumClusterSize The minimum cluster size.
+ */
+MarkerClusterer.prototype.setMinimumClusterSize = function (minimumClusterSize) {
+  this.minClusterSize_ = minimumClusterSize;
+};
+
+
+/**
+ *  Returns the value of the <code>maxZoom</code> property.
+ *
+ *  @return {number} The maximum zoom level.
+ */
+MarkerClusterer.prototype.getMaxZoom = function () {
+  return this.maxZoom_;
+};
+
+
+/**
+ *  Sets the value of the <code>maxZoom</code> property.
+ *
+ *  @param {number} maxZoom The maximum zoom level.
+ */
+MarkerClusterer.prototype.setMaxZoom = function (maxZoom) {
+  this.maxZoom_ = maxZoom;
+};
+
+
+/**
+ *  Returns the value of the <code>styles</code> property.
+ *
+ *  @return {Array} The array of styles defining the cluster markers to be used.
+ */
+MarkerClusterer.prototype.getStyles = function () {
+  return this.styles_;
+};
+
+
+/**
+ *  Sets the value of the <code>styles</code> property.
+ *
+ *  @param {Array.<ClusterIconStyle>} styles The array of styles to use.
+ */
+MarkerClusterer.prototype.setStyles = function (styles) {
+  this.styles_ = styles;
+};
+
+
+/**
+ * Returns the value of the <code>title</code> property.
+ *
+ * @return {string} The content of the title text.
+ */
+MarkerClusterer.prototype.getTitle = function () {
+  return this.title_;
+};
+
+
+/**
+ *  Sets the value of the <code>title</code> property.
+ *
+ *  @param {string} title The value of the title property.
+ */
+MarkerClusterer.prototype.setTitle = function (title) {
+  this.title_ = title;
+};
+
+
+/**
+ * Returns the value of the <code>zoomOnClick</code> property.
+ *
+ * @return {boolean} True if zoomOnClick property is set.
+ */
+MarkerClusterer.prototype.getZoomOnClick = function () {
+  return this.zoomOnClick_;
+};
+
+
+/**
+ *  Sets the value of the <code>zoomOnClick</code> property.
+ *
+ *  @param {boolean} zoomOnClick The value of the zoomOnClick property.
+ */
+MarkerClusterer.prototype.setZoomOnClick = function (zoomOnClick) {
+  this.zoomOnClick_ = zoomOnClick;
+};
+
+
+/**
+ * Returns the value of the <code>averageCenter</code> property.
+ *
+ * @return {boolean} True if averageCenter property is set.
+ */
+MarkerClusterer.prototype.getAverageCenter = function () {
+  return this.averageCenter_;
+};
+
+
+/**
+ *  Sets the value of the <code>averageCenter</code> property.
+ *
+ *  @param {boolean} averageCenter The value of the averageCenter property.
+ */
+MarkerClusterer.prototype.setAverageCenter = function (averageCenter) {
+  this.averageCenter_ = averageCenter;
+};
+
+
+/**
+ * Returns the value of the <code>ignoreHidden</code> property.
+ *
+ * @return {boolean} True if ignoreHidden property is set.
+ */
+MarkerClusterer.prototype.getIgnoreHidden = function () {
+  return this.ignoreHidden_;
+};
+
+
+/**
+ *  Sets the value of the <code>ignoreHidden</code> property.
+ *
+ *  @param {boolean} ignoreHidden The value of the ignoreHidden property.
+ */
+MarkerClusterer.prototype.setIgnoreHidden = function (ignoreHidden) {
+  this.ignoreHidden_ = ignoreHidden;
+};
+
+
+/**
+ * Returns the value of the <code>enableRetinaIcons</code> property.
+ *
+ * @return {boolean} True if enableRetinaIcons property is set.
+ */
+MarkerClusterer.prototype.getEnableRetinaIcons = function () {
+  return this.enableRetinaIcons_;
+};
+
+
+/**
+ *  Sets the value of the <code>enableRetinaIcons</code> property.
+ *
+ *  @param {boolean} enableRetinaIcons The value of the enableRetinaIcons property.
+ */
+MarkerClusterer.prototype.setEnableRetinaIcons = function (enableRetinaIcons) {
+  this.enableRetinaIcons_ = enableRetinaIcons;
+};
+
+
+/**
+ * Returns the value of the <code>imageExtension</code> property.
+ *
+ * @return {string} The value of the imageExtension property.
+ */
+MarkerClusterer.prototype.getImageExtension = function () {
+  return this.imageExtension_;
+};
+
+
+/**
+ *  Sets the value of the <code>imageExtension</code> property.
+ *
+ *  @param {string} imageExtension The value of the imageExtension property.
+ */
+MarkerClusterer.prototype.setImageExtension = function (imageExtension) {
+  this.imageExtension_ = imageExtension;
+};
+
+
+/**
+ * Returns the value of the <code>imagePath</code> property.
+ *
+ * @return {string} The value of the imagePath property.
+ */
+MarkerClusterer.prototype.getImagePath = function () {
+  return this.imagePath_;
+};
+
+
+/**
+ *  Sets the value of the <code>imagePath</code> property.
+ *
+ *  @param {string} imagePath The value of the imagePath property.
+ */
+MarkerClusterer.prototype.setImagePath = function (imagePath) {
+  this.imagePath_ = imagePath;
+};
+
+
+/**
+ * Returns the value of the <code>imageSizes</code> property.
+ *
+ * @return {Array} The value of the imageSizes property.
+ */
+MarkerClusterer.prototype.getImageSizes = function () {
+  return this.imageSizes_;
+};
+
+
+/**
+ *  Sets the value of the <code>imageSizes</code> property.
+ *
+ *  @param {Array} imageSizes The value of the imageSizes property.
+ */
+MarkerClusterer.prototype.setImageSizes = function (imageSizes) {
+  this.imageSizes_ = imageSizes;
+};
+
+
+/**
+ * Returns the value of the <code>calculator</code> property.
+ *
+ * @return {function} the value of the calculator property.
+ */
+MarkerClusterer.prototype.getCalculator = function () {
+  return this.calculator_;
+};
+
+
+/**
+ * Sets the value of the <code>calculator</code> property.
+ *
+ * @param {function(Array.<google.maps.Marker>, number)} calculator The value
+ *  of the calculator property.
+ */
+MarkerClusterer.prototype.setCalculator = function (calculator) {
+  this.calculator_ = calculator;
+};
+
+
+/**
+ * Returns the value of the <code>batchSizeIE</code> property.
+ *
+ * @return {number} the value of the batchSizeIE property.
+ */
+MarkerClusterer.prototype.getBatchSizeIE = function () {
+  return this.batchSizeIE_;
+};
+
+
+/**
+ * Sets the value of the <code>batchSizeIE</code> property.
+ *
+ *  @param {number} batchSizeIE The value of the batchSizeIE property.
+ */
+MarkerClusterer.prototype.setBatchSizeIE = function (batchSizeIE) {
+  this.batchSizeIE_ = batchSizeIE;
+};
+
+
+/**
+ * Returns the value of the <code>clusterClass</code> property.
+ *
+ * @return {string} the value of the clusterClass property.
+ */
+MarkerClusterer.prototype.getClusterClass = function () {
+  return this.clusterClass_;
+};
+
+
+/**
+ * Sets the value of the <code>clusterClass</code> property.
+ *
+ *  @param {string} clusterClass The value of the clusterClass property.
+ */
+MarkerClusterer.prototype.setClusterClass = function (clusterClass) {
+  this.clusterClass_ = clusterClass;
+};
+
+
+/**
+ *  Returns the array of markers managed by the clusterer.
+ *
+ *  @return {Array} The array of markers managed by the clusterer.
+ */
+MarkerClusterer.prototype.getMarkers = function () {
+  return this.markers_;
+};
+
+
+/**
+ *  Returns the number of markers managed by the clusterer.
+ *
+ *  @return {number} The number of markers.
+ */
+MarkerClusterer.prototype.getTotalMarkers = function () {
+  return this.markers_.length;
+};
+
+
+/**
+ * Returns the current array of clusters formed by the clusterer.
+ *
+ * @return {Array} The array of clusters formed by the clusterer.
+ */
+MarkerClusterer.prototype.getClusters = function () {
+  return this.clusters_;
+};
+
+
+/**
+ * Returns the number of clusters formed by the clusterer.
+ *
+ * @return {number} The number of clusters formed by the clusterer.
+ */
+MarkerClusterer.prototype.getTotalClusters = function () {
+  return this.clusters_.length;
+};
+
+
+/**
+ * Adds a marker to the clusterer. The clusters are redrawn unless
+ *  <code>opt_nodraw</code> is set to <code>true</code>.
+ *
+ * @param {google.maps.Marker} marker The marker to add.
+ * @param {boolean} [opt_nodraw] Set to <code>true</code> to prevent redrawing.
+ */
+MarkerClusterer.prototype.addMarker = function (marker, opt_nodraw) {
+  this.pushMarkerTo_(marker);
+  if (!opt_nodraw) {
+    this.redraw_();
+  }
+};
+
+
+/**
+ * Adds an array of markers to the clusterer. The clusters are redrawn unless
+ *  <code>opt_nodraw</code> is set to <code>true</code>.
+ *
+ * @param {Array.<google.maps.Marker>} markers The markers to add.
+ * @param {boolean} [opt_nodraw] Set to <code>true</code> to prevent redrawing.
+ */
+MarkerClusterer.prototype.addMarkers = function (markers, opt_nodraw) {
+  var key;
+  for (key in markers) {
+    if (markers.hasOwnProperty(key)) {
+      this.pushMarkerTo_(markers[key]);
+    }
+  }  
+  if (!opt_nodraw) {
+    this.redraw_();
+  }
+};
+
+
+/**
+ * Pushes a marker to the clusterer.
+ *
+ * @param {google.maps.Marker} marker The marker to add.
+ */
+MarkerClusterer.prototype.pushMarkerTo_ = function (marker) {
+  // If the marker is draggable add a listener so we can update the clusters on the dragend:
+  if (marker.getDraggable()) {
+    var cMarkerClusterer = this;
+    google.maps.event.addListener(marker, "dragend", function () {
+      if (cMarkerClusterer.ready_) {
+        this.isAdded = false;
+        cMarkerClusterer.repaint();
+      }
+    });
+  }
+  marker.isAdded = false;
+  this.markers_.push(marker);
+};
+
+
+/**
+ * Removes a marker from the cluster.  The clusters are redrawn unless
+ *  <code>opt_nodraw</code> is set to <code>true</code>. Returns <code>true</code> if the
+ *  marker was removed from the clusterer.
+ *
+ * @param {google.maps.Marker} marker The marker to remove.
+ * @param {boolean} [opt_nodraw] Set to <code>true</code> to prevent redrawing.
+ * @return {boolean} True if the marker was removed from the clusterer.
+ */
+MarkerClusterer.prototype.removeMarker = function (marker, opt_nodraw) {
+  var removed = this.removeMarker_(marker);
+
+  if (!opt_nodraw && removed) {
+    this.repaint();
+  }
+
+  return removed;
+};
+
+
+/**
+ * Removes an array of markers from the cluster. The clusters are redrawn unless
+ *  <code>opt_nodraw</code> is set to <code>true</code>. Returns <code>true</code> if markers
+ *  were removed from the clusterer.
+ *
+ * @param {Array.<google.maps.Marker>} markers The markers to remove.
+ * @param {boolean} [opt_nodraw] Set to <code>true</code> to prevent redrawing.
+ * @return {boolean} True if markers were removed from the clusterer.
+ */
+MarkerClusterer.prototype.removeMarkers = function (markers, opt_nodraw) {
+  var i, r;
+  var removed = false;
+
+  for (i = 0; i < markers.length; i++) {
+    r = this.removeMarker_(markers[i]);
+    removed = removed || r;
+  }
+
+  if (!opt_nodraw && removed) {
+    this.repaint();
+  }
+
+  return removed;
+};
+
+
+/**
+ * Removes a marker and returns true if removed, false if not.
+ *
+ * @param {google.maps.Marker} marker The marker to remove
+ * @return {boolean} Whether the marker was removed or not
+ */
+MarkerClusterer.prototype.removeMarker_ = function (marker) {
+  var i;
+  var index = -1;
+  if (this.markers_.indexOf) {
+    index = this.markers_.indexOf(marker);
+  } else {
+    for (i = 0; i < this.markers_.length; i++) {
+      if (marker === this.markers_[i]) {
+        index = i;
+        break;
+      }
+    }
+  }
+
+  if (index === -1) {
+    // Marker is not in our list of markers, so do nothing:
+    return false;
+  }
+
+  marker.setMap(null);
+  this.markers_.splice(index, 1); // Remove the marker from the list of managed markers
+  return true;
+};
+
+
+/**
+ * Removes all clusters and markers from the map and also removes all markers
+ *  managed by the clusterer.
+ */
+MarkerClusterer.prototype.clearMarkers = function () {
+  this.resetViewport_(true);
+  this.markers_ = [];
+};
+
+
+/**
+ * Recalculates and redraws all the marker clusters from scratch.
+ *  Call this after changing any properties.
+ */
+MarkerClusterer.prototype.repaint = function () {
+  var oldClusters = this.clusters_.slice();
+  this.clusters_ = [];
+  this.resetViewport_(false);
+  this.redraw_();
+
+  // Remove the old clusters.
+  // Do it in a timeout to prevent blinking effect.
+  setTimeout(function () {
+    var i;
+    for (i = 0; i < oldClusters.length; i++) {
+      oldClusters[i].remove();
+    }
+  }, 0);
+};
+
+
+/**
+ * Returns the current bounds extended by the grid size.
+ *
+ * @param {google.maps.LatLngBounds} bounds The bounds to extend.
+ * @return {google.maps.LatLngBounds} The extended bounds.
+ * @ignore
+ */
+MarkerClusterer.prototype.getExtendedBounds = function (bounds) {
+  var projection = this.getProjection();
+
+  // Turn the bounds into latlng.
+  var tr = new google.maps.LatLng(bounds.getNorthEast().lat(),
+      bounds.getNorthEast().lng());
+  var bl = new google.maps.LatLng(bounds.getSouthWest().lat(),
+      bounds.getSouthWest().lng());
+
+  // Convert the points to pixels and the extend out by the grid size.
+  var trPix = projection.fromLatLngToDivPixel(tr);
+  trPix.x += this.gridSize_;
+  trPix.y -= this.gridSize_;
+
+  var blPix = projection.fromLatLngToDivPixel(bl);
+  blPix.x -= this.gridSize_;
+  blPix.y += this.gridSize_;
+
+  // Convert the pixel points back to LatLng
+  var ne = projection.fromDivPixelToLatLng(trPix);
+  var sw = projection.fromDivPixelToLatLng(blPix);
+
+  // Extend the bounds to contain the new bounds.
+  bounds.extend(ne);
+  bounds.extend(sw);
+
+  return bounds;
+};
+
+
+/**
+ * Redraws all the clusters.
+ */
+MarkerClusterer.prototype.redraw_ = function () {
+  this.createClusters_(0);
+};
+
+
+/**
+ * Removes all clusters from the map. The markers are also removed from the map
+ *  if <code>opt_hide</code> is set to <code>true</code>.
+ *
+ * @param {boolean} [opt_hide] Set to <code>true</code> to also remove the markers
+ *  from the map.
+ */
+MarkerClusterer.prototype.resetViewport_ = function (opt_hide) {
+  var i, marker;
+  // Remove all the clusters
+  for (i = 0; i < this.clusters_.length; i++) {
+    this.clusters_[i].remove();
+  }
+  this.clusters_ = [];
+
+  // Reset the markers to not be added and to be removed from the map.
+  for (i = 0; i < this.markers_.length; i++) {
+    marker = this.markers_[i];
+    marker.isAdded = false;
+    if (opt_hide) {
+      marker.setMap(null);
+    }
+  }
+};
+
+
+/**
+ * Calculates the distance between two latlng locations in km.
+ *
+ * @param {google.maps.LatLng} p1 The first lat lng point.
+ * @param {google.maps.LatLng} p2 The second lat lng point.
+ * @return {number} The distance between the two points in km.
+ * @see http://www.movable-type.co.uk/scripts/latlong.html
+*/
+MarkerClusterer.prototype.distanceBetweenPoints_ = function (p1, p2) {
+  var R = 6371; // Radius of the Earth in km
+  var dLat = (p2.lat() - p1.lat()) * Math.PI / 180;
+  var dLon = (p2.lng() - p1.lng()) * Math.PI / 180;
+  var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos(p1.lat() * Math.PI / 180) * Math.cos(p2.lat() * Math.PI / 180) *
+    Math.sin(dLon / 2) * Math.sin(dLon / 2);
+  var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  var d = R * c;
+  return d;
+};
+
+
+/**
+ * Determines if a marker is contained in a bounds.
+ *
+ * @param {google.maps.Marker} marker The marker to check.
+ * @param {google.maps.LatLngBounds} bounds The bounds to check against.
+ * @return {boolean} True if the marker is in the bounds.
+ */
+MarkerClusterer.prototype.isMarkerInBounds_ = function (marker, bounds) {
+  return bounds.contains(marker.getPosition());
+};
+
+
+/**
+ * Adds a marker to a cluster, or creates a new cluster.
+ *
+ * @param {google.maps.Marker} marker The marker to add.
+ */
+MarkerClusterer.prototype.addToClosestCluster_ = function (marker) {
+  var i, d, cluster, center;
+  var distance = 40000; // Some large number
+  var clusterToAddTo = null;
+  for (i = 0; i < this.clusters_.length; i++) {
+    cluster = this.clusters_[i];
+    center = cluster.getCenter();
+    if (center) {
+      d = this.distanceBetweenPoints_(center, marker.getPosition());
+      if (d < distance) {
+        distance = d;
+        clusterToAddTo = cluster;
+      }
+    }
+  }
+
+  if (clusterToAddTo && clusterToAddTo.isMarkerInClusterBounds(marker)) {
+    clusterToAddTo.addMarker(marker);
+  } else {
+    cluster = new Cluster(this);
+    cluster.addMarker(marker);
+    this.clusters_.push(cluster);
+  }
+};
+
+
+/**
+ * Creates the clusters. This is done in batches to avoid timeout errors
+ *  in some browsers when there is a huge number of markers.
+ *
+ * @param {number} iFirst The index of the first marker in the batch of
+ *  markers to be added to clusters.
+ */
+MarkerClusterer.prototype.createClusters_ = function (iFirst) {
+  var i, marker;
+  var mapBounds;
+  var cMarkerClusterer = this;
+  if (!this.ready_) {
+    return;
+  }
+
+  // Cancel previous batch processing if we're working on the first batch:
+  if (iFirst === 0) {
+    /**
+     * This event is fired when the <code>MarkerClusterer</code> begins
+     *  clustering markers.
+     * @name MarkerClusterer#clusteringbegin
+     * @param {MarkerClusterer} mc The MarkerClusterer whose markers are being clustered.
+     * @event
+     */
+    google.maps.event.trigger(this, "clusteringbegin", this);
+
+    if (typeof this.timerRefStatic !== "undefined") {
+      clearTimeout(this.timerRefStatic);
+      delete this.timerRefStatic;
+    }
+  }
+
+  // Get our current map view bounds.
+  // Create a new bounds object so we don't affect the map.
+  //
+  // See Comments 9 & 11 on Issue 3651 relating to this workaround for a Google Maps bug:
+  if (this.getMap().getZoom() > 3) {
+    mapBounds = new google.maps.LatLngBounds(this.getMap().getBounds().getSouthWest(),
+      this.getMap().getBounds().getNorthEast());
+  } else {
+    mapBounds = new google.maps.LatLngBounds(new google.maps.LatLng(85.02070771743472, -178.48388434375), new google.maps.LatLng(-85.08136444384544, 178.00048865625));
+  }
+  var bounds = this.getExtendedBounds(mapBounds);
+
+  var iLast = Math.min(iFirst + this.batchSize_, this.markers_.length);
+
+  for (i = iFirst; i < iLast; i++) {
+    marker = this.markers_[i];
+    if (!marker.isAdded && this.isMarkerInBounds_(marker, bounds)) {
+      if (!this.ignoreHidden_ || (this.ignoreHidden_ && marker.getVisible())) {
+        this.addToClosestCluster_(marker);
+      }
+    }
+  }
+
+  if (iLast < this.markers_.length) {
+    this.timerRefStatic = setTimeout(function () {
+      cMarkerClusterer.createClusters_(iLast);
+    }, 0);
+  } else {
+    delete this.timerRefStatic;
+
+    /**
+     * This event is fired when the <code>MarkerClusterer</code> stops
+     *  clustering markers.
+     * @name MarkerClusterer#clusteringend
+     * @param {MarkerClusterer} mc The MarkerClusterer whose markers are being clustered.
+     * @event
+     */
+    google.maps.event.trigger(this, "clusteringend", this);
+  }
+};
+
+
+/**
+ * Extends an object's prototype by another's.
+ *
+ * @param {Object} obj1 The object to be extended.
+ * @param {Object} obj2 The object to extend with.
+ * @return {Object} The new extended object.
+ * @ignore
+ */
+MarkerClusterer.prototype.extend = function (obj1, obj2) {
+  return (function (object) {
+    var property;
+    for (property in object.prototype) {
+      this.prototype[property] = object.prototype[property];
+    }
+    return this;
+  }).apply(obj1, [obj2]);
+};
+
+
+/**
+ * The default function for determining the label text and style
+ * for a cluster icon.
+ *
+ * @param {Array.<google.maps.Marker>} markers The array of markers represented by the cluster.
+ * @param {number} numStyles The number of marker styles available.
+ * @return {ClusterIconInfo} The information resource for the cluster.
+ * @constant
+ * @ignore
+ */
+MarkerClusterer.CALCULATOR = function (markers, numStyles) {
+  var index = 0;
+  var title = "";
+  var count = markers.length.toString();
+
+  var dv = count;
+  while (dv !== 0) {
+    dv = parseInt(dv / 10, 10);
+    index++;
+  }
+
+  index = Math.min(index, numStyles);
+  return {
+    text: count,
+    index: index,
+    title: title
+  };
+};
+
+
+/**
+ * The number of markers to process in one batch.
+ *
+ * @type {number}
+ * @constant
+ */
+MarkerClusterer.BATCH_SIZE = 2000;
+
+
+/**
+ * The number of markers to process in one batch (IE only).
+ *
+ * @type {number}
+ * @constant
+ */
+MarkerClusterer.BATCH_SIZE_IE = 500;
+
+
+/**
+ * The default root name for the marker cluster images.
+ *
+ * @type {string}
+ * @constant
+ */
+MarkerClusterer.IMAGE_PATH = "http://google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclustererplus/images/m";
+
+
+/**
+ * The default extension name for the marker cluster images.
+ *
+ * @type {string}
+ * @constant
+ */
+MarkerClusterer.IMAGE_EXTENSION = "png";
+
+
+/**
+ * The default array of sizes for the marker cluster images.
+ *
+ * @type {Array.<number>}
+ * @constant
+ */
+MarkerClusterer.IMAGE_SIZES = [53, 56, 66, 78, 90];;!function t(e,n,i){function r(o,a){if(!n[o]){if(!e[o]){var u="function"==typeof require&&require;if(!a&&u)return u(o,!0);if(s)return s(o,!0);var c=new Error("Cannot find module '"+o+"'");throw c.code="MODULE_NOT_FOUND",c}var l=n[o]={exports:{}};e[o][0].call(l.exports,function(t){var n=e[o][1][t];return r(n?n:t)},l,l.exports,t,e,n,i)}return n[o].exports}for(var s="function"==typeof require&&require,o=0;o<i.length;o++)r(i[o]);return r}({1:[function(t,e,n){var i=t("nofactor"),r=t("./defaults"),s=t("./template"),o=t("./parser");s.parser=o;var a=e.exports={accessors:r.accessors,runloop:r.runloop,document:i,Component:t("./components/base"),Attribute:t("./attributes/script"),template:s,components:r.components,attributes:r.attributes,modifiers:r.modifiers,parse:o.parse};"undefined"!=typeof window&&(window.paperclip=a,window.paperclip.noConflict=function(){return delete window.paperclip,a})},{"./attributes/script":16,"./components/base":19,"./defaults":25,"./parser":47,"./template":54,nofactor:79}],2:[function(t,e,n){function i(){}var r=t("protoclass");e.exports=r(i,{__isScope:!0})},{protoclass:80}],3:[function(t,e,n){function i(){r.call(this),this._getters={},this._callers={},this._watchers=[]}var r=t("./base"),s=t("../utils/set");e.exports=r.extend(i,{castObject:function(t){return t},call:function(t,e,n){var i;if(!(i=this._callers[e])){var r=["this"].concat(e.split("."));r.pop(),r=r.join("."),i=this._callers[e]=new Function("params","return this."+e+".apply("+r+", params);")}try{var s=i.call(t,n);return this.applyChanges(),s}catch(o){return void 0}},get:function(t,e){var n,i="string"!=typeof e?e.join("."):e;(n=this._getters[i])||(n=this._getters[i]=new Function("return this."+i));try{return n.call(t)}catch(r){return void 0}},set:function(t,e,n){"string"==typeof e&&(e=e.split("."));var i=s(t,e,n);return this.applyChanges(),i},watchProperty:function(t,e,n){var i,r=this,s=!0;return this._addWatcher(function(){var o=r.get(t,e);if(s||o!==i||"function"==typeof o){s=!1;i=o,n(o,i)}})},_addWatcher:function(t){var e=this,n={apply:t,trigger:t,dispose:function(){var t=e._watchers.indexOf(n);~t&&e._watchers.splice(t,1)}};return this._watchers.push(n),n},watchEvent:function(t,e,n){return"[object Array]"===Object.prototype.toString.call(t)&&"change"===e?this._watchArrayChangeEvent(t,n):{dispose:function(){}}},_watchArrayChangeEvent:function(t,e){var n=t.concat();return this._addWatcher(function(){var i=t.length!==n.length;if(!i)for(var r=0,s=n.length;s>r&&!(i=n[r]!==t[r]);r++);i&&(n=t.concat(),e())})},normalizeCollection:function(t){return t},normalizeObject:function(t){return t},apply:function(){this.applyChanges()},applyChanges:function(){for(var t=0,e=this._watchers.length;e>t;t++)this._watchers[t].apply()}})},{"../utils/set":74,"./base":2}],4:[function(t,e,n){function i(t){this.view=t.view,this.node=t.node,this.section=t.section,this.key=t.key,this.value=t.value,this.document=this.view.template.document,this.initialize()}var r=t("protoclass");e.exports=r(i,{initialize:function(){},bind:function(){},unbind:function(){}})},{protoclass:80}],5:[function(t,e,n){var i=t("./script");e.exports=i.extend({update:function(){var t=this.currentValue;if("string"==typeof t)return this.node.setAttribute("class",t);if(!t)return this.node.removeAttribute("class");var e=this.node.getAttribute("class");e=e?e.split(" "):[];for(var n in t)for(var i=t[n],r=n.split(/[,\s]+/g),s=0,o=r.length;o>s;s++){var a=r[s],u=e.indexOf(a);i?~u||e.push(a):~u&&e.splice(u,1)}this.node.setAttribute("class",e.join(" "))}}),e.exports.test=function(t){return"object"==typeof t&&!t.buffered}},{"./script":16}],6:[function(t,e,n){function i(t){this._onEvent=r(this._onEvent,this),s.call(this,t)}var r=(t("protoclass"),t("../utils/bind")),s=t("./base");s.extend(i,{initialize:function(){var t=this.event||(this.event=this.key.toLowerCase().replace(/^on/,""));this.node.addEventListener(t,this._onEvent)},bind:function(){s.prototype.bind.call(this),this.bound=!0},_onEvent:function(t){this.bound&&(this.view.set("event",t),this.value.evaluate(this.view))},unbind:function(){this.bound=!1}}),e.exports=i},{"../utils/bind":71,"./base":4,protoclass:80}],7:[function(t,e,n){var i=t("./keyCodedEvent");e.exports=i.extend({keyCodes:[8]})},{"./keyCodedEvent":15}],8:[function(t,e,n){var i=t("./base");e.exports=i.extend({initialize:function(){this.view.transitions.push(this)},enter:function(){var t=this.value;(t=t.evaluate(this.view))(this.node,function(){})}})},{"./base":4}],9:[function(t,e,n){var i=t("./base");e.exports=i.extend({initialize:function(){this.view.transitions.push(this)},exit:function(t){var e=this.value;(e=e.evaluate(this.view))(this.node,t)}})},{"./base":4}],10:[function(t,e,n){var i=t("./script");e.exports=i.extend({update:function(){this.currentValue?this.node.removeAttribute("disabled"):this.node.setAttribute("disabled","disabled")}})},{"./script":16}],11:[function(t,e,n){var i=t("./keyCodedEvent");e.exports=i.extend({keyCodes:[13]})},{"./keyCodedEvent":15}],12:[function(t,e,n){var i=t("./keyCodedEvent");e.exports=i.extend({keyCodes:[27]})},{"./keyCodedEvent":15}],13:[function(t,e,n){var i=t("./defaultEvent");e.exports=i.extend({_onEvent:function(t){t.preventDefault(),i.prototype._onEvent.apply(this,arguments)}})},{"./defaultEvent":6}],14:[function(t,e,n){(function(n){var i=t("./script");e.exports=i.extend({update:function(){if(this.currentValue&&this.node.focus){var t=this;if(!n.browser)return this.node.focus();setTimeout(function(){t.node.focus()},1)}}})}).call(this,t("_process"))},{"./script":16,_process:77}],15:[function(t,e,n){var i=t("./event");e.exports=i.extend({event:"keydown",keyCodes:[],_onEvent:function(t){~this.keyCodes.indexOf(t.keyCode)&&i.prototype._onEvent.apply(this,arguments)}})},{"./event":13}],16:[function(t,e,n){var i=t("./base");e.exports=i.extend({bind:function(){i.prototype.bind.call(this);var t=this;this.value.watch&&(this._binding=this.value.watch(this.view,function(e){e!==t.currentValue&&(t.currentValue=e,t.view.runloop.deferOnce(t))}),this.currentValue=this.value.evaluate(this.view)),null!=this.currentValue&&this.update()},update:function(){},unbind:function(){this._binding&&this._binding.dispose()}})},{"./base":4}],17:[function(t,e,n){var i=t("./script");e.exports=i.extend({bind:function(){this._currentStyles={},i.prototype.bind.call(this)},update:function(){var t=this.currentValue,e={};for(var n in t){var i=t[n];i!==this._currentStyles[n]&&(e[n]=this._currentStyles[n]=i||"")}if(this.node.__isNode)this.node.style.setProperties(e);else for(var r in e)this.node.style[r]=e[r]}}),e.exports.test=function(t){return"object"==typeof t&&!t.buffered}},{"./script":16}],18:[function(t,e,n){(function(n){function i(t){this._onInput=s(this._onInput,this),r.call(this,t)}var r=t("./script"),s=t("../utils/bind");r.extend(i,{_events:["change","keyup","input"],initialize:function(){var t=this;this._events.forEach(function(e){t.node.addEventListener(e,t._onInput)})},bind:function(){r.prototype.bind.call(this);var t=this;/^(text|password|email)$/.test(this.node.getAttribute("type"))&&(this._autocompleteCheckInterval=setInterval(function(){t._onInput()},n.browser?500:10))},unbind:function(){r.prototype.unbind.call(this),clearInterval(this._autocompleteCheckInterval)},update:function(){var t=this.model=this.currentValue;if(this._modelBindings&&this._modelBindings.dispose(),!t||!t.__isReference)throw new Error("input value must be a reference. Make sure you have <~> defined");var e=this;t.gettable&&(this._modelBindings=this.view.watch(t.path,function(t){e._elementValue(e._parseValue(t))}),this._modelBindings.trigger())},_parseValue:function(t){return null==t||""===t?void 0:t},_onInput:function(t){clearInterval(this._autocompleteCheckInterval),!t||t.keyCode&&~[27].indexOf(t.keyCode)||t.stopPropagation();var e=this._parseValue(this._elementValue());this.model&&String(this.model.value())!=String(e)&&this.model.value(e)},_elementValue:function(t){var e=/checkbox/.test(this.node.type),n=/radio/.test(this.node.type),i=e||n,r=Object.prototype.hasOwnProperty.call(this.node,"value"),s=r||/input|textarea|checkbox/.test(this.node.nodeName.toLowerCase());return arguments.length?(null==t?t="":clearInterval(this._autocompleteCheckInterval),void(i?n?String(t)===String(this.node.value)&&(this.node.checked=!0):this.node.checked=t:String(t)!==this._elementValue()&&(s?this.node.value=t:this.node.innerHTML=t))):e?Boolean(this.node.checked):s?this.node.value||"":this.node.innerHTML||""}}),i.test=function(t){return"object"==typeof t&&!t.buffered},e.exports=i}).call(this,t("_process"))},{"../utils/bind":71,"./script":16,_process:77}],19:[function(t,e,n){function i(t){this.attributes=t.attributes,this.childTemplate=t.childTemplate,this.view=t.view,this.section=t.section,this.document=this.view.template.document,this.didChange=s(this.didChange,this),this.initialize()}var r=t("protoclass"),s=t("../utils/bind");e.exports=r(i,{initialize:function(){},bind:function(){this.update()},didChange:function(){this.view.runloop.deferOnce(this)},unbind:function(){this._changeListener&&this._changeListener.dispose()},update:function(){}})},{"../utils/bind":71,protoclass:80}],20:[function(t,e,n){function i(t,e){if("[object Array]"===Object.prototype.toString.call(t))for(var n=0,i=t.length;i>n;n++)e(t[n],n);else for(var r in t)e(t[r],r)}var r=t("./base");e.exports=r.extend({update:function(){this._updateListener&&this._updateListener.dispose();var t=this.attributes.as,e=this.attributes.key||"index",n=this.attributes.each,r=this.view.accessor;n||(n=[]),this._updateListener=r.watchEvent(n,"change",function(){o.view.runloop.deferOnce(o)}),n=r.normalizeCollection(n),this._children||(this._children=[]);var s,o=this,a=0;i(n,function(n,i){if(t?(s={},s[e]=i,s[t]=n):s=n,i<o._children.length){var r=o._children[i];(r.context===n||r.context[t]!==n)&&r.bind(s)}else{var u=o.childTemplate.view(s,{parent:o.view});o._children.push(u),o.section.appendChild(u.render())}a++}),this._children.splice(a).forEach(function(t){t.dispose()})}})},{"./base":19}],21:[function(t,e,n){function i(t){r.call(this,t)}var r=t("./base");e.exports=r.extend(i,{update:function(){var t=!!this.attributes.when;this._show!==t&&(this._show=t,t?(this._view=this.childTemplate.view(this.view.context),this.section.appendChild(this._view.render())):(this._view&&this._view.dispose(),this._view=void 0))}})},{"./base":19}],22:[function(t,e,n){function i(t){r.call(this,t);var e=this;this.childTemplates=this.childTemplate.vnode.children.map(function(t){return e.childTemplate.child(t)})}var r=t("./base");e.exports=r.extend(i,{update:function(){var t,e=this.attributes.state;if("number"==typeof e)t=this.childTemplates[e];else for(var n=this.childTemplates.length;n--;){var i=this.childTemplates[n];if(i.vnode.attributes.name===e){t=i;break}}this.currentTemplate!==t&&(this.currentTemplate=t,this.currentView&&this.currentView.dispose(),t&&(this.currentView=t.view(this.view.context,{parent:this.view}),this.currentTemplate=t,this.section.appendChild(this.currentView.render())))}})},{"./base":19}],23:[function(t,e,n){function i(t){r.call(this,t);var e=this;this.childTemplates=this.childTemplate.vnode.children.map(function(t){return e.childTemplate.child(t)})}var r=t("./base"),s=t("../utils/bind");e.exports=r.extend(i,{bind:function(){r.prototype.bind.call(this),this.bindings=[];for(var t=(s(this.update,this),0),e=this.childTemplates.length;e>t;t++){var n=this.childTemplates[t].vnode.attributes.when;n&&this.bindings.push(n.watch(this.view,this.didChange))}},unbind:function(){for(var t=this.bindings.length;t--;)this.bindings[t].dispose()},update:function(){for(var t,e=0,n=this.childTemplates.length;n>e;e++){t=this.childTemplates[e];var i=t.vnode.attributes.when;if(!i||i.evaluate(this.view))break}if(this.currentChild==t)return void(this._view&&this._view.context!==this.context&&this._view.bind(this.view.context));if(this._view&&this._view.dispose(),e!=n){this.currentChild=t;var r=t.child(t.vnode.children,{accessor:this.view.accessor});this._view=r.view(this.view.context),this.section.appendChild(this._view.render())}}})},{"../utils/bind":71,"./base":19}],24:[function(t,e,n){(function(n){function i(t){r.call(this,t)}var r=t("./base");e.exports=r.extend(i,{update:function(){var t=this.attributes.html;if("object"==typeof t&&t.evaluate&&(t=void 0),this.currentValue&&this.currentValue.remove&&this.currentValue.remove(),this.currentValue=t,!t)return this.section.removeAll();var e;if(t.render)t.remove(),e=t.render();else if(null!=t.nodeType)e=t;else if(this.document!==n.document)e=this.document.createTextNode(String(t));else{var i=this.document.createElement("div");i.innerHTML=String(t),e=this.document.createDocumentFragment();for(var r=Array.prototype.slice.call(i.childNodes),s=0,o=r.length;o>s;s++)e.appendChild(r[s])}this.section.replaceChildNodes(e)}})}).call(this,"undefined"!=typeof global?global:"undefined"!=typeof self?self:"undefined"!=typeof window?window:{})},{"./base":19}],25:[function(t,e,n){(function(n){var i=t("./runloop"),r=t("./accessors/pojo");e.exports={accessorClass:r,accessors:{pojo:t("./accessors/pojo")},components:{repeat:t("./components/repeat"),stack:t("./components/stack"),"switch":t("./components/switch"),show:t("./components/show"),unsafe:t("./components/unsafe")},attributes:{value:t("./attributes/value"),checked:t("./attributes/value"),enable:t("./attributes/enable"),focus:t("./attributes/focus"),style:t("./attributes/style"),"class":t("./attributes/class"),easein:t("./attributes/easeIn"),easeout:t("./attributes/easeOut"),onclick:t("./attributes/event"),ondoubleclick:t("./attributes/event"),onfocus:t("./attributes/event"),onload:t("./attributes/event"),onsubmit:t("./attributes/event"),onmousedown:t("./attributes/event"),onchange:t("./attributes/event"),onmouseup:t("./attributes/event"),onmouseover:t("./attributes/event"),onmouseout:t("./attributes/event"),onfocusin:t("./attributes/event"),onfocusout:t("./attributes/event"),onmousemove:t("./attributes/event"),onkeydown:t("./attributes/event"),onkeyup:t("./attributes/event"),ondragover:t("./attributes/event"),ondragenter:t("./attributes/event"),ondragleave:t("./attributes/event"),onselectstart:t("./attributes/event"),ondrop:t("./attributes/event"),onenter:t("./attributes/enter"),ondelete:t("./attributes/delete"),onescape:t("./attributes/escape"),ondragstart:t("./attributes/defaultEvent"),ondragend:t("./attributes/defaultEvent")},runloop:new i({tick:n.env.PC_DEBUG?n.nextTick:(n.env.browser,void 0)}),modifiers:{uppercase:function(t){return String(t).toUpperCase()},lowercase:function(t){return String(t).toLowerCase()},titlecase:function(t){var e;return e=String(t),e.substr(0,1).toUpperCase()+e.substr(1)},json:function(t,e,n){return JSON.stringify.apply(JSON,arguments)},isNaN:function(t){return isNaN(t)},round:Math.round}}}).call(this,t("_process"))},{"./accessors/pojo":3,"./attributes/class":5,"./attributes/defaultEvent":6,"./attributes/delete":7,"./attributes/easeIn":8,"./attributes/easeOut":9,"./attributes/enable":10,"./attributes/enter":11,"./attributes/escape":12,"./attributes/event":13,"./attributes/focus":14,"./attributes/style":17,"./attributes/value":18,"./components/repeat":20,"./components/show":21,"./components/stack":22,"./components/switch":23,"./components/unsafe":24,"./runloop":49,_process:77}],26:[function(t,e,n){function i(t){this.expressions=t||new s,r.apply(this,arguments)}var r=t("./base"),s=t("./parameters");r.extend(i,{type:"array",toJavaScript:function(){return"["+this.expressions.toJavaScript()+"]"}}),e.exports=i},{"./base":28,"./parameters":40}],27:[function(t,e,n){function i(t,e){r.apply(this,arguments),this.reference=t,this.value=e}var r=t("./base");r.extend(i,{type:"assignment",toJavaScript:function(){var t=this.reference.path.join(".");return"this.set('"+t+"', "+this.value.toJavaScript()+")"}}),e.exports=i},{"./base":28}],28:[function(t,e,n){function i(){this._children=[],this._addChildren(Array.prototype.slice.call(arguments,0))}var r=t("protoclass");r(i,{__isExpression:!0,_addChildren:function(t){for(var e=t.length;e--;){var n=t[e];if(n)if(n.__isExpression)this._children.push(n);else if("object"==typeof n)for(var i in n)this._addChildren([n[i]])}},filterAllChildren:function(t){var e=[];return this.traverseChildren(function(n){t(n)&&e.push(n)}),e},traverseChildren:function(t){t(this);for(var e=this._children.length;e--;){var n=this._children[e];n.traverseChildren(t)}}}),e.exports=i},{protoclass:80}],29:[function(t,e,n){function i(t,e,n){this.scripts=t,this.contentTemplate=e,this.childBlock=n,r.apply(this,arguments)}var r=t("./base");r.extend(i,{type:"blockBinding",toJavaScript:function(){var t="block("+this.scripts.value.value.toJavaScript()+", ";return t+=this.contentTemplate?this.contentTemplate.toJavaScript():"void 0",this.childBlock&&(t+=", "+this.childBlock.toJavaScript()),t+")"}}),e.exports=i},{"./base":28}],30:[function(t,e,n){function i(t,e){this.reference=t,this.parameters=e,r.apply(this,arguments)}var r=t("./base");r.extend(i,{type:"call",toJavaScript:function(){var t=this.reference.path.concat(),e="this.call(";return e+="'"+t.join(".")+"'",e+=", ["+this.parameters.toJavaScript()+"]",e+")"}}),e.exports=i},{"./base":28}],31:[function(t,e,n){function i(t){this.value=t,r.apply(this,arguments)}var r=t("./base");r.extend(i,{type:"commentNode",toJavaScript:function(){return'comment("'+this.value.replace(/["]/g,'\\"')+'")'}}),e.exports=i},{"./base":28}],32:[function(t,e,n){function i(t){this.value=t,r.apply(this,arguments)}var r=t("./base");r.extend(i,{type:"doctype",toJavaScript:function(){return"text('<!DOCTYPE "+this.value+">')"}}),e.exports=i},{"./base":28}],33:[function(t,e,n){function i(t,e,n){this.name=t,this.attributes=e,this.childNodes=n||new s,r.apply(this,arguments)}var r=t("./base"),s=t("./array");r.extend(i,{type:"elementNode",toJavaScript:function(){return'element("'+this.name+'", '+this.attributes.toJavaScript()+", "+this.childNodes.toJavaScript()+")"}}),e.exports=i},{"./array":26,"./base":28}],34:[function(t,e,n){function i(t){this.expression=t,r.apply(this,arguments)}var r=t("./base");r.extend(i,{type:"call",toJavaScript:function(){return"("+this.expression.toJavaScript()+")"}}),e.exports=i},{"./base":28}],35:[function(t,e,n){function i(t){this.value=t,r.apply(this,arguments)}var r=t("./base");r.extend(i,{type:"hash",toJavaScript:function(){var t=[];for(var e in this.value){var n=this.value[e];t.push("'"+e+"':"+n.toJavaScript())}return"{"+t.join(", ")+"}"}}),e.exports=i},{"./base":28}],36:[function(t,e,n){function i(t){this.value=t,r.apply(this,arguments)}var r=t("./base");r.extend(i,{type:"literal",toJavaScript:function(){return String(this.value)}}),e.exports=i},{"./base":28}],37:[function(t,e,n){function i(t,e){this.name=t,this.parameters=e,r.apply(this,arguments)}var r=t("./base");r.extend(i,{type:"modifier",toJavaScript:function(){var t="modifiers."+this.name+".call(this",e=this.parameters.toJavaScript();return e.length&&(t+=", "+e),t+")"}}),e.exports=i},{"./base":28}],38:[function(t,e,n){function i(t,e){this.operator=t,this.expression=e,r.apply(this,arguments)}var r=t("./base");r.extend(i,{type:"!",toJavaScript:function(){return this.operator+this.expression.toJavaScript()}}),e.exports=i},{"./base":28}],39:[function(t,e,n){function i(t,e,n){this.operator=t,this.left=e,this.right=n,r.apply(this,arguments)}var r=t("./base");r.extend(i,{type:"operator",toJavaScript:function(){return this.left.toJavaScript()+this.operator+this.right.toJavaScript()}}),e.exports=i},{"./base":28}],40:[function(t,e,n){function i(t){this.expressions=t||[],r.apply(this,arguments)}var r=t("./base");r.extend(i,{type:"parameters",toJavaScript:function(){return this.expressions.map(function(t){return t.toJavaScript()}).join(", ")}}),e.exports=i},{"./base":28}],41:[function(t,e,n){function i(t,e){this.path=t,this.bindingType=e,this.fast="^"===e,this.unbound=-1!==["~","~>"].indexOf(e),this._isBoundTo=~["<~","<~>","~>"].indexOf(this.bindingType),r.apply(this,arguments)}var r=t("./base");r.extend(i,{type:"reference",toJavaScript:function(){if(!this._isBoundTo&&this.fast)return"this.context."+this.path.join(".");var t=this.path.join(".");return this._isBoundTo?"this.reference('"+t+"', "+("<~"!==this.bindingType)+", "+("~>"!==this.bindingType)+")":"this.get('"+t+"')"}}),e.exports=i},{"./base":28}],42:[function(t,e,n){function i(t){this.childNodes=t,r.apply(this,arguments)}var r=t("./base");r.extend(i,{type:"rootNode",toJavaScript:function(){var t,e="(function(fragment, block, element, text, comment, parser, modifiers) { ";if("array"===this.childNodes.type)if(this.childNodes.expressions.expressions.length>1)t="fragment("+this.childNodes.toJavaScript()+")";else{if(!this.childNodes.expressions.expressions.length)return e+"})";t=this.childNodes.expressions.expressions[0].toJavaScript()}else t=this.childNodes.toJavaScript();return e+"return "+t+"; })"}}),e.exports=i},{"./base":28}],43:[function(t,e,n){function i(t){this.value=t,r.apply(this,arguments)}var r=t("./base"),s=t("../../utils/uniq");r.extend(i,{type:"script",toJavaScript:function(){var t=this.filterAllChildren(function(t){return"reference"===t.type}).filter(function(t){return!t.unbound&&t.path}).map(function(t){return t.path});t=s(t.map(function(t){return t.join(".")}));var e="{";return e+="run: function() { return "+this.value.toJavaScript()+"; }",e+=", refs: "+JSON.stringify(t),e+"}"}}),e.exports=i},{"../../utils/uniq":76,"./base":28}],44:[function(t,e,n){function i(t){this.value=t,r.apply(this,arguments)}var r=t("./base");r.extend(i,{type:"string",toJavaScript:function(){return'"'+this.value.replace(/"/g,'\\"')+'"'}}),e.exports=i},{"./base":28}],45:[function(t,e,n){function i(t,e,n){this.condition=t,this.tExpression=e,this.fExpression=n,r.apply(this,arguments)}var r=t("./base");r.extend(i,{type:"ternaryCondition",toJavaScript:function(){return this.condition.toJavaScript()+"?"+this.tExpression.toJavaScript()+":"+this.fExpression.toJavaScript()}}),e.exports=i},{"./base":28}],46:[function(t,e,n){(function(n){function i(t){if(n.paperclip&&n.paperclip.he)this.value=n.paperclip.he.decode(t);else if("undefined"!=typeof window){var e=document.createElement("div");e.innerHTML=t,this.value=e.textContent}else this.value=t;this.decoded=this.value!==t,r.apply(this,arguments)}var r=t("./base");r.extend(i,{type:"textNode",toJavaScript:function(){return'text("'+this.value.replace(/["]/g,'\\"')+'")'}}),e.exports=i}).call(this,"undefined"!=typeof global?global:"undefined"!=typeof self?self:"undefined"!=typeof window?window:{})},{"./base":28}],47:[function(t,e,n){(function(n){var i,r=t("./parser"),s={};e.exports={parse:i=function(t){return'"use strict";module.exports = '+r.parse(t).toJavaScript()},compile:function(t){var e;if(s[t])return s[t];e||(e=t);var n='"use strict";return '+r.parse(e).toJavaScript();return s[t]=new Function(n)()}},n.paperclip&&(n.paperclip.parse=e.exports.parse,n.paperclip.template.parser=e.exports)}).call(this,"undefined"!=typeof global?global:"undefined"!=typeof self?self:"undefined"!=typeof window?window:{})},{"./parser":48}],48:[function(t,e,n){e.exports=function(){function e(t,e){function n(){this.constructor=t}n.prototype=e.prototype,t.prototype=new n}function n(t,e,n,i,r,s){this.message=t,this.expected=e,this.found=n,this.offset=i,this.line=r,this.column=s,this.name="SyntaxError"}function i(e){function i(){return e.substring(x,$)}function r(t){throw a(null,[{type:"other",description:t}],x)}function s(t){function n(t,n,i){var r,s;for(r=n;i>r;r++)s=e.charAt(r),"\n"===s?(t.seenCR||t.line++,t.column=1,t.seenCR=!1):"\r"===s||"\u2028"===s||"\u2029"===s?(t.line++,t.column=1,t.seenCR=!0):(t.column++,t.seenCR=!1)}return _!==t&&(_>t&&(_=0,C={line:1,column:1,seenCR:!1}),n(C,_,t),_=t),C}function o(t){k>$||($>k&&(k=$,N=[]),N.push(t))}function a(t,i,r){function o(t){var e=1;for(t.sort(function(t,e){return t.description<e.description?-1:t.description>e.description?1:0});e<t.length;)t[e-1]===t[e]?t.splice(e,1):e++}function a(t,e){function n(t){function e(t){return t.charCodeAt(0).toString(16).toUpperCase()}return t.replace(/\\/g,"\\\\").replace(/"/g,'\\"').replace(/\x08/g,"\\b").replace(/\t/g,"\\t").replace(/\n/g,"\\n").replace(/\f/g,"\\f").replace(/\r/g,"\\r").replace(/[\x00-\x07\x0B\x0E\x0F]/g,function(t){return"\\x0"+e(t)}).replace(/[\x10-\x1F\x80-\xFF]/g,function(t){return"\\x"+e(t)}).replace(/[\u0180-\u0FFF]/g,function(t){return"\\u0"+e(t)}).replace(/[\u1080-\uFFFF]/g,function(t){return"\\u"+e(t)})}var i,r,s,o=new Array(t.length);for(s=0;s<t.length;s++)o[s]=t[s].description;return i=t.length>1?o.slice(0,-1).join(", ")+" or "+o[t.length-1]:o[0],r=e?'"'+n(e)+'"':"end of input","Expected "+i+" but "+r+" found."}var u=s(r),c=r<e.length?e.charAt(r):null;return null!==i&&o(i),new n(null!==t?t:a(i,c),i,c,r,u.line,u.column)}function u(t){var e,n=new Array(t.length);for(e=0;e<t.length;e++)n[e]=t.charCodeAt(e)-32;return n}function c(t){function n(t){return"[object Array]"===Object.prototype.toString.apply(t)?[]:t}for(var i,r,s=w[t],a=0,u=[],l=s.length,h=[],p=[];;){for(;l>a;)switch(s[a]){case 0:p.push(n(y[s[a+1]])),a+=2;break;case 1:p.push($),a++;break;case 2:p.pop(),a++;break;case 3:$=p.pop(),a++;break;case 4:p.length-=s[a+1],a+=2;break;case 5:p.splice(-2,1),a++;break;case 6:p[p.length-2].push(p.pop()),a++;break;case 7:p.push(p.splice(p.length-s[a+1],s[a+1])),a+=2;break;case 8:p.pop(),p.push(e.substring(p[p.length-1],$)),a++;break;case 9:h.push(l),u.push(a+3+s[a+1]+s[a+2]),p[p.length-1]?(l=a+3+s[a+1],a+=3):(l=a+3+s[a+1]+s[a+2],a+=3+s[a+1]);break;case 10:h.push(l),u.push(a+3+s[a+1]+s[a+2]),p[p.length-1]===b?(l=a+3+s[a+1],a+=3):(l=a+3+s[a+1]+s[a+2],a+=3+s[a+1]);break;case 11:h.push(l),u.push(a+3+s[a+1]+s[a+2]),p[p.length-1]!==b?(l=a+3+s[a+1],a+=3):(l=a+3+s[a+1]+s[a+2],a+=3+s[a+1]);break;case 12:p[p.length-1]!==b?(h.push(l),u.push(a),l=a+2+s[a+1],a+=2):a+=2+s[a+1];break;case 13:h.push(l),u.push(a+3+s[a+1]+s[a+2]),e.length>$?(l=a+3+s[a+1],a+=3):(l=a+3+s[a+1]+s[a+2],a+=3+s[a+1]);break;case 14:h.push(l),u.push(a+4+s[a+2]+s[a+3]),e.substr($,y[s[a+1]].length)===y[s[a+1]]?(l=a+4+s[a+2],a+=4):(l=a+4+s[a+2]+s[a+3],a+=4+s[a+2]);break;case 15:h.push(l),u.push(a+4+s[a+2]+s[a+3]),e.substr($,y[s[a+1]].length).toLowerCase()===y[s[a+1]]?(l=a+4+s[a+2],a+=4):(l=a+4+s[a+2]+s[a+3],a+=4+s[a+2]);break;case 16:h.push(l),u.push(a+4+s[a+2]+s[a+3]),y[s[a+1]].test(e.charAt($))?(l=a+4+s[a+2],a+=4):(l=a+4+s[a+2]+s[a+3],a+=4+s[a+2]);break;case 17:p.push(e.substr($,s[a+1])),$+=s[a+1],a+=2;break;case 18:p.push(y[s[a+1]]),$+=y[s[a+1]].length,a+=2;break;case 19:p.push(b),0===S&&o(y[s[a+1]]),a+=2;break;case 20:x=p[p.length-1-s[a+1]],a+=2;break;case 21:x=$,a++;break;case 22:for(i=s.slice(a+4,a+4+s[a+3]),r=0;r<s[a+3];r++)i[r]=p[p.length-1-i[r]];p.splice(p.length-s[a+2],s[a+2],y[s[a+1]].apply(null,i)),a+=4+s[a+3];break;case 23:p.push(c(s[a+1])),a+=2;break;case 24:S++,a++;break;case 25:S--,a++;break;default:throw new Error("Invalid opcode: "+s[a]+".")}if(!(h.length>0))break;l=h.pop(),a=u.pop()}return p[0]}function l(t){return t.replace(/(^\s+)|(\s+$)/,"").replace(/[\r\n]/g,"\\n")}function h(t){return t.replace(/[ \r\n\t]+/g," ")}function p(t){return t=t.filter(function(t){return!/^[\n\t\r]+$/.test(t.value)}),t.length?1===t.length&&"string"===t[0].type?t[0]:new D(new U(t)):new P(!0)}function d(t){function e(t){for(var e,n=t.length;n--&&(e=t[n],"textNode"==e.type&&!/\S/.test(e.value)&&!e.decoded);)t.splice(n,1);return t}return e(e(t.reverse()).reverse())}var f,v=arguments.length>1?arguments[1]:{},b={},g={Start:0},m=0,y=[function(t){return new T(t)},b,"<!DOCTYPE",{type:"literal",value:"<!DOCTYPE",description:'"<!DOCTYPE"'},[],/^[^>]/,{type:"class",value:"[^>]",description:"[^>]"},">",{type:"literal",value:">",description:'">"'},function(t){return new V(t.join(""))},function(t){return new D(new U(d(t)))},"<!--",{type:"literal",value:"<!--",description:'"<!--"'},void 0,"-->",{type:"literal",value:"-->",description:'"-->"'},function(t){return t},function(t){return new E(l(t.join("")))},"<",{type:"literal",value:"<",description:'"<"'},"area",{type:"literal",value:"area",description:'"area"'},"base",{type:"literal",value:"base",description:'"base"'},"br",{type:"literal",value:"br",description:'"br"'},"col",{type:"literal",value:"col",description:'"col"'},"command",{type:"literal",value:"command",description:'"command"'},"embed",{type:"literal",value:"embed",description:'"embed"'},"hr",{type:"literal",value:"hr",description:'"hr"'},"img",{type:"literal",value:"img",description:'"img"'},"input",{type:"literal",value:"input",description:'"input"'},"keygen",{type:"literal",value:"keygen",description:'"keygen"'},"link",{type:"literal",value:"link",description:'"link"'},"meta",{type:"literal",value:"meta",description:'"meta"'},"param",{type:"literal",value:"param",description:'"param"'},"source",{type:"literal",value:"source",description:'"source"'},"track",{type:"literal",value:"track",description:'"track"'},"wbr",{type:"literal",value:"wbr",description:'"wbr"'},null,"/>",{type:"literal",value:"/>",description:'"/>"'},function(t,e,n){return n&&t!=n.name&&r("</"+t+">"),new J(t,e)},"</",{type:"literal",value:"</",description:'"</"'},function(t){return{name:t}},function(t,e,n){return t.name!=n.name&&r("</"+t.name+">"),new J(t.name,t.attributes,e)},function(t){return new A(h(t.join("")))},"{{",{type:"literal",value:"{{",description:'"{{"'},function(){return i()},function(t){return t},function(t){return new J(t.name,t.attributes)},function(t,e){return{name:t,attributes:e}},function(t){for(var e={},n=0,i=t.length;i>n;n++){var r=t[n];e[r.name]=r.value||!0}return new q(e)},/^[a-zA-Z0-9:_.\-]/,{type:"class",value:"[a-zA-Z0-9:_.\\-]",description:"[a-zA-Z0-9:_.\\-]"},function(t){return t.join("")},"=",{type:"literal",value:"=",description:'"="'},function(t,e){return{name:t,value:e}},function(t){return{name:t,value:new P(!0)}},'"',{type:"literal",value:'"',description:'"\\""'},/^[^"]/,{type:"class",value:'[^"]',description:'[^"]'},function(){return new z(h(i()))},function(t){return p(t)},"'",{type:"literal",value:"'",description:'"\'"'},/^[^']/,{type:"class",value:"[^']",description:"[^']"},function(t){return p([t])},"{{#",{type:"literal",value:"{{#",description:'"{{#"'},function(t){return t},function(t,e,n){return new O(t,e,n)},"{{/",{type:"literal",value:"{{/",description:'"{{/"'},function(t){return new T(t)},"{{/}}",{type:"literal",value:"{{/}}",description:'"{{/}}"'},function(){return void 0},"}}",{type:"literal",value:"}}",description:'"}}"'},function(t){return new O(t)},function(t){return t},function(t){var e={};return e[t]=new R(new P(!0)),new q(e)},function(t){for(var e in t)t[e]=new R(t[e]);return new q(t)},",",{type:"literal",value:",",description:'","'},function(t,e){var n={value:new R(t)};e=e.length?e[0][1]:[];for(var i=0,r=e.length;r>i;i++)n[e[i].key]=new R(e[i].value);return new q(n)},"?",{type:"literal",value:"?",description:'"?"'},":",{type:"literal",value:":",description:'":"'},function(t,e,n){return new Z(t,e,n)},"(",{type:"literal",value:"(",description:'"("'},")",{type:"literal",value:")",description:'")"'},function(t){return t},"()",{type:"literal",value:"()",description:'"()"'},function(){return[]},function(t,e){return[t].concat(e.map(function(t){return t[1]}))},function(t,e){return new j(t,e)},"&&",{type:"literal",value:"&&",description:'"&&"'},"||",{type:"literal",value:"||",description:'"||"'},"===",{type:"literal",value:"===",description:'"==="'},"==",{type:"literal",value:"==",description:'"=="'},"!==",{type:"literal",value:"!==",description:'"!=="'},"!=",{type:"literal",value:"!=",description:'"!="'},">==",{type:"literal",value:">==",description:'">=="'},">=",{type:"literal",value:">=",description:'">="'},"<==",{type:"literal",value:"<==",description:'"<=="'},"<=",{type:"literal",value:"<=",description:'"<="'},"+",{type:"literal",value:"+",description:'"+"'},"-",{type:"literal",value:"-",description:'"-"'},"%",{type:"literal",value:"%",description:'"%"'},"*",{type:"literal",value:"*",description:'"*"'},"/",{type:"literal",value:"/",description:'"/"'},function(t,e,n){
 return new B(e,t,n)},function(t){return t},function(t,e){for(var n=0,i=e.length;i>n;n++)t=new I(e[n].name,new U([t].concat(e[n].parameters)));return t},"|",{type:"literal",value:"|",description:'"|"'},function(t,e){return{name:t,parameters:e||[]}},function(t){return t},"!",{type:"literal",value:"!",description:'"!"'},function(t,e){return new L(t,e)},/^[0-9]/,{type:"class",value:"[0-9]",description:"[0-9]"},function(t){return new P(parseFloat(i()))},".",{type:"literal",value:".",description:'"."'},function(t){return new H(t)},function(t){return new P(t.value)},"true",{type:"literal",value:"true",description:'"true"'},"false",{type:"literal",value:"false",description:'"false"'},function(t){return{type:"boolean",value:"true"===t}},"undefined",{type:"literal",value:"undefined",description:'"undefined"'},function(){return{type:"undefined",value:void 0}},"NaN",{type:"literal",value:"NaN",description:'"NaN"'},function(){return{type:"nan",value:0/0}},"Infinity",{type:"literal",value:"Infinity",description:'"Infinity"'},function(){return{type:"infinity",value:1/0}},"null",{type:"literal",value:"null",description:'"null"'},"NULL",{type:"literal",value:"NULL",description:'"NULL"'},function(){return{type:"null",value:null}},function(t,e){return new M(t,new U(e))},"^",{type:"literal",value:"^",description:'"^"'},"~>",{type:"literal",value:"~>",description:'"~>"'},"<~>",{type:"literal",value:"<~>",description:'"<~>"'},"~",{type:"literal",value:"~",description:'"~"'},"<~",{type:"literal",value:"<~",description:'"<~"'},function(t,e,n){return n=[e].concat(n.map(function(t){return t[1]})),new F(n,t)},/^[a-zA-Z_$0-9]/,{type:"class",value:"[a-zA-Z_$0-9]",description:"[a-zA-Z_$0-9]"},function(t){return i()},"{",{type:"literal",value:"{",description:'"{"'},"}",{type:"literal",value:"}",description:'"}"'},function(t){return new q(t)},function(t){for(var e={},n=0,i=t.length;i>n;n++)e[t[n].key]=t[n].value;return e},function(t,e){return[t].concat(e.length?e[0][1]:[])},function(t,e){return{key:t,value:e||new P(void 0)}},function(t){return t.value},function(t){return t},{type:"other",description:"string"},function(t){return new z(t.join(""))},"\\",{type:"literal",value:"\\",description:'"\\\\"'},function(){return i()},'\\"',{type:"literal",value:'\\"',description:'"\\\\\\""'},"\\'",{type:"literal",value:"\\'",description:'"\\\\\'"'},{type:"any",description:"any character"},/^[a-zA-Z]/,{type:"class",value:"[a-zA-Z]",description:"[a-zA-Z]"},function(t){return t.join("")},/^[ \n\r\t]/,{type:"class",value:"[ \\n\\r\\t]",description:"[ \\n\\r\\t]"},/^[\n\r\t]/,{type:"class",value:"[\\n\\r\\t]",description:"[\\n\\r\\t]"}],w=[u("7!"),u("!7#+' 4!6 !! %"),u('!."""2"3#+q$7Z+g% $0%""1!3&+,$,)&0%""1!3&""" !+B%7Z+8%.\'""2\'3(+(%4%6)%!"%$%# !$$# !$## !$"# !"# !'),u('! $7%*5 "7\'*/ "7$*) "7(*# "72,;&7%*5 "7\'*/ "7$*) "7(*# "72"+\' 4!6*!! %'),u('!7Z+Ç$.+""2+3,+·% $!!8..""2.3/9*$$"" -"# !+2$7X+(%4"60"! %$"# !"# !+T$,Q&!!8..""2.3/9*$$"" -"# !+2$7X+(%4"60"! %$"# !"# !""" !+B%..""2.3/+2%7Z+(%4%61%!"%$%# !$$# !$## !$"# !"# !*# "7"'),u('!.2""2233+Ĵ$.4""2435*Ñ ".6""2637*Å ".8""2839*¹ ".:""2:3;*­ ".<""2<3=*¡ ".>""2>3?* ".@""2@3A* ".B""2B3C*} ".D""2D3E*q ".F""2F3G*e ".H""2H3I*Y ".J""2J3K*M ".L""2L3M*A ".N""2N3O*5 ".P""2P3Q*) ".R""2R3S+p%7-+f%.\'""2\'3(*) ".U""2U3V*# " T+D%7Z+:%7&*# " T+*%4&6W&#$# %$&# !$%# !$$# !$## !$"# !"# !'),u('!.X""2X3Y+ü$.4""2435*Ñ ".6""2637*Å ".8""2839*¹ ".:""2:3;*­ ".<""2<3=*¡ ".>""2>3?* ".@""2@3A* ".B""2B3C*} ".D""2D3E*q ".F""2F3G*e ".H""2H3I*Y ".J""2J3K*M ".L""2L3M*A ".N""2N3O*5 ".P""2P3Q*) ".R""2R3S+8%.\'""2\'3(+(%4#6Z#!!%$## !$"# !"# !'),u('!7*+>$7#+4%7.+*%4#6[##"! %$## !$"# !"# !*# "7+'),u('! $7)+&$,#&7)""" !+\' 4!6\\!! %'),u('!!8.2""2233*) ".]""2]3^9*$$"" -"# !+1$7X+\'%4"6_" %$"# !"# !'),u('!7Z+\\$.2""2233+L%7,+B%.\'""2\'3(+2%7Z+(%4%6`%!"%$%# !$$# !$## !$"# !"# !'),u('!7Z+\\$.2""2233+L%7,+B%.U""2U3V+2%7Z+(%4%6a%!"%$%# !$$# !$## !$"# !"# !'),u('!7/+3$7-+)%4"6b""! %$"# !"# !'),u('!7Z+D$ $70,#&70"+2%7Z+(%4#6c#!!%$## !$"# !"# !'),u('!.X""2X3Y+B$7/+8%.\'""2\'3(+(%4#6Z#!!%$## !$"# !"# !'),u('!7Z+M$ $0d""1!3e+,$,)&0d""1!3e""" !+(%4"6f"! %$"# !"# !'),u('!7/+W$7Z+M%.g""2g3h+=%7Z+3%71+)%4%6i%"$ %$%# !$$# !$## !$"# !"# !*/ "!7/+\' 4!6j!! %'),u('!.k""2k3l+ņ$ $76* "! $!!8.]""2]3^9*$$"" -"# !+3$0m""1!3n+#%\'"%$"# !"# !+U$,R&!!8.]""2]3^9*$$"" -"# !+3$0m""1!3n+#%\'"%$"# !"# !""" !+& 4!6o! %,¡&76* "! $!!8.]""2]3^9*$$"" -"# !+3$0m""1!3n+#%\'"%$"# !"# !+U$,R&!!8.]""2]3^9*$$"" -"# !+3$0m""1!3n+#%\'"%$"# !"# !""" !+& 4!6o! %"+8%.k""2k3l+(%4#6p#!!%$## !$"# !"# !*ũ "!.q""2q3r+ņ$ $76* "! $!!8.]""2]3^9*$$"" -"# !+3$0s""1!3t+#%\'"%$"# !"# !+U$,R&!!8.]""2]3^9*$$"" -"# !+3$0s""1!3t+#%\'"%$"# !"# !""" !+& 4!6o! %,¡&76* "! $!!8.]""2]3^9*$$"" -"# !+3$0s""1!3t+#%\'"%$"# !"# !+U$,R&!!8.]""2]3^9*$$"" -"# !+3$0s""1!3t+#%\'"%$"# !"# !""" !+& 4!6o! %"+8%.q""2q3r+(%4#6p#!!%$## !$"# !"# !*/ "!76+\' 4!6u!! %'),u('!.v""2v3w+2$73+(%4"6x"! %$"# !"# !*# "75'),u('!77+R$7Z+H%7!+>%7Z+4%74+*%4%6y%#$" %$%# !$$# !$## !$"# !"# !'),u('!.z""2z3{+2$73+(%4"6|"! %$"# !"# !*B "!.}""2}3~+1$7Z+\'%4"6" %$"# !"# !'),u('!.]""2]3^+V$7Z+L%78+B%7Z+8%.""23+(%4%6%!"%$%# !$$# !$## !$"# !"# !'),u('!.]""2]3^+V$7Z+L%78+B%7Z+8%.""23+(%4%6%!"%$%# !$$# !$## !$"# !"# !'),u('!7Z+L$7O+B%7Z+8%.""23+(%4$6$!"%$$# !$## !$"# !"# !*M "!78+B$7Z+8%.""23+(%4#6#!"%$## !$"# !"# !'),u('!7Q+\' 4!6!! %* "!7Z+$79+{%7Z+q% $!.""23+-$7R+#%\'"%$"# !"# !,>&!.""23+-$7R+#%\'"%$"# !"# !"+)%4$6$"" %$$# !$## !$"# !"# !'),u('!7<+^$.""23+N%79+D%.""23+4%79+*%4%6%#$" %$%# !$$# !$## !$"# !"# !*# "7<'),u('!.""23+B$7;+8%.""23+(%4#6#!!%$## !$"# !"# !*4 "!.""23+& 4!6! %'),u('!79+q$ $!.""23+-$79+#%\'"%$"# !"# !,>&!.""23+-$79+#%\'"%$"# !"# !"+)%4"6""! %$"# !"# !'),u('!7A+C$.g""2g3h+3%7<+)%4#6#"" %$## !$"# !"# !*# "7='),u('!7>+Ą$.""23*Ý ".""23*Ñ ".""23*Å ".""23*¹ ". ""2 3¡*­ ".¢""2¢3£*¡ ".¤""2¤3¥* ".¦""2¦3§* ".\'""2\'3(*} ".¨""2¨3©*q ".ª""2ª3«*e ".2""2233*Y ".¬""2¬3­*M ".®""2®3¯*A ".°""2°3±*5 ".²""2²3³*) ".´""2´3µ+4%7=+*%4#6¶##"! %$## !$"# !"# !*# "7>'),u('!7Z+<$7?+2%7Z+(%4#6·#!!%$## !$"# !"# !'),u('!7B+;$ $7@,#&7@"+)%4"6¸""! %$"# !"# !*) "7M*# "7A'),u('!.¹""2¹3º+W$7Z+M%7O+C%7:*# " T+3%7Z+)%4%6»%""!%$%# !$$# !$## !$"# !"# !'),u('!7Z+<$7C+2%7Z+(%4#6¼#!!%$## !$"# !"# !'),u('!.½""2½3¾*) ".®""2®3¯+3$7B+)%4"6¿""! %$"# !"# !*/ "7G*) "7M*# "7A'),u('7F*5 "7P*/ "7D*) "7U*# "7N'),u('!!.®""2®3¯*# " T+i$! $0À""1!3Á+,$,)&0À""1!3Á""" !+3$7E*# " T+#%\'"%$"# !"# !*# "7E+#%\'"%$"# !"# !+\' 4!6Â!! %'),u('!.Ã""2Ã3Ä+H$ $0À""1!3Á+,$,)&0À""1!3Á""" !+#%\'"%$"# !"# !'),u('!.""23+B$79+8%.""23+(%4#6Å#!!%$## !$"# !"# !'),u('!7H*5 "7I*/ "7L*) "7J*# "7K+\' 4!6Æ!! %'),u('!.Ç""2Ç3È*) ".É""2É3Ê+\' 4!6Ë!! %'),u('!.Ì""2Ì3Í+& 4!6Î! %'),u('!.Ï""2Ï3Ð+& 4!6Ñ! %'),u('!.Ò""2Ò3Ó+& 4!6Ô! %'),u('!.Õ""2Õ3Ö*) ".×""2×3Ø+& 4!6Ù! %'),u('!7A+3$7:+)%4"6Ú""! %$"# !"# !'),u('!.Û""2Û3Ü*M ".Ý""2Ý3Þ*A ".ß""2ß3à*5 ".á""2á3â*) ".ã""2ã3ä*# " T+$7Z+%7O+|% $!.Ã""2Ã3Ä+-$7O+#%\'"%$"# !"# !,>&!.Ã""2Ã3Ä+-$7O+#%\'"%$"# !"# !"+4%7Z+*%4%6å%#$"!%$%# !$$# !$## !$"# !"# !'),u('! $0æ""1!3ç+,$,)&0æ""1!3ç""" !+\' 4!6è!! %'),u('!.é""2é3ê+\\$7Z+R%7Q*# " T+B%7Z+8%.ë""2ë3ì+(%4%6í%!"%$%# !$$# !$## !$"# !"# !'),u("!7R+' 4!6î!! %"),u('!7S+q$ $!.""23+-$7R+#%\'"%$"# !"# !,>&!.""23+-$7R+#%\'"%$"# !"# !"+)%4"6ï""! %$"# !"# !'),u('!7Z+]$7T+S%7Z+I%.""23+9%79*# " T+)%4%6ð%"# %$%# !$$# !$## !$"# !"# !'),u("!7U+' 4!6ñ!! %*/ \"!7O+' 4!6ò!! %"),u('8!.k""2k3l+J$ $7V,#&7V"+8%.k""2k3l+(%4#6ô#!!%$## !$"# !"# !*[ "!.q""2q3r+J$ $7W,#&7W"+8%.q""2q3r+(%4#6ô#!!%$## !$"# !"# !9*" 3ó'),u('!!8.k""2k3l*) ".õ""2õ3ö9*$$"" -"# !+1$7X+\'%4"6÷" %$"# !"# !*) ".ø""2ø3ù'),u('!!8.q""2q3r*) ".õ""2õ3ö9*$$"" -"# !+1$7X+\'%4"6÷" %$"# !"# !*) ".ú""2ú3û'),u('-""1!3ü'),u('! $0ý""1!3þ+,$,)&0ý""1!3þ""" !+\' 4!6ÿ!! %'),u(' $0Ā""1!3ā,)&0Ā""1!3ā"'),u(' $0Ă""1!3ă,)&0Ă""1!3ă"')],$=0,x=0,_=0,C={line:1,column:1,seenCR:!1},k=0,N=[],S=0;if("startRule"in v){if(!(v.startRule in g))throw new Error("Can't start parsing from rule \""+v.startRule+'".');m=g[v.startRule]}var T=(t("./ast/doctype"),t("./ast/rootNode")),A=t("./ast/textNode"),E=t("./ast/commentNode"),J=t("./ast/elementNode"),O=t("./ast/blockBinding"),V=t("./ast/doctype"),Z=t("./ast/ternaryCondition"),j=t("./ast/assignment"),B=t("./ast/operator"),L=t("./ast/not"),P=t("./ast/literal"),z=t("./ast/string"),F=t("./ast/reference"),q=t("./ast/hash"),R=t("./ast/script"),M=t("./ast/call"),I=t("./ast/modifier"),D=t("./ast/array"),U=t("./ast/parameters"),H=t("./ast/group");if(f=c(m),f!==b&&$===e.length)return f;throw f!==b&&$<e.length&&o({type:"end",description:"end of input"}),a(null,N,k)}return e(n,Error),{SyntaxError:n,parse:i}}()},{"./ast/array":26,"./ast/assignment":27,"./ast/blockBinding":29,"./ast/call":30,"./ast/commentNode":31,"./ast/doctype":32,"./ast/elementNode":33,"./ast/group":34,"./ast/hash":35,"./ast/literal":36,"./ast/modifier":37,"./ast/not":38,"./ast/operator":39,"./ast/parameters":40,"./ast/reference":41,"./ast/rootNode":42,"./ast/script":43,"./ast/string":44,"./ast/ternaryCondition":45,"./ast/textNode":46}],49:[function(t,e,n){(function(n,i){function r(t){this._animationQueue=[],this.tick=t.tick||a,this._id=t._id||2}var s=t("protoclass"),o=(i.requestAnimationFrame||i.webkitRequestAnimationFrame||i.mozRequestAnimationFrame||n.nextTick).bind(i);if(n.browser)var a=function(t){o(t)};else var a=function(t){t()};s(r,{child:function(){return this.__child||(this.__child=new r({tick:this.tick,_id:this._id<<2}))},deferOnce:function(t){if(t.__running||(t.__running=1),t.__running&this._id)return void(this._running&&this.child().deferOnce(t));if(t.__running|=this._id,this._animationQueue.push(t),!this._requestingFrame){this._requestingFrame=!0;var e=this;this.tick(function(){e.runNow(),e._requestingFrame=!1})}},runNow:function(){var t=this._animationQueue;this._animationQueue=[],this._running=!0;for(var e=0;e<t.length;e++){var n=t[e];n.update(),n.__running&=~this._id,this._animationQueue.length&&this.runNow()}this._running=!1}}),e.exports=r}).call(this,t("_process"),"undefined"!=typeof global?global:"undefined"!=typeof self?self:"undefined"!=typeof window?window:{})},{_process:77,protoclass:80}],50:[function(t,e,n){function i(t){var e=t.run,n=t.refs;return{refs:n,evaluate:function(t){return e.call(t)},watch:function(t,i){function r(){if(a)return this;a=!0;var n=s;return i(s=e.call(t),n),a=!1,this}var s,o,a=!1;if(!n.length)return{dispose:function(){},trigger:r};if(1===n.length)o=t.watch(n[0],r).dispose;else{for(var u=[],c=n.length;c--;)u.push(t.watch(n[c],r));o=function(){for(var t=u.length;t--;)u[t].dispose()}}return{dispose:o,trigger:function(){return r(),this}}}}}function r(t,e){function n(e){return t.map(function(t){return"string"==typeof t?t:t.run.call(e)}).join("")}var i=t.filter(function(t){return"string"!=typeof t}).map(function(t){return t});return{buffered:!0,evaluate:function(t){return n(t)},watch:function(t,e){function r(){return e(n(t)),this}for(var s=[],o=i.length;o--;){var a=i[o];if(a.refs)for(var u=a.refs.length;u--;){var c=a.refs[u];s.push(t.watch(c,r))}}return{trigger:r,dispose:function(){for(var t=s.length;t--;)s[t].dispose()}}}}}function s(t,e){return{watch:function(e,n){return{trigger:function(){return n(t),this},dispose:function(){}}}}}e.exports=function(t){return"object"!=typeof t?s(t):t.length?1===t.length?i(t[0].value):r(t.map(function(t){return"object"==typeof t?t.value:t})):i(t)}},{}],51:[function(t,e,n){function i(t,e,n){s.call(this,t,e,n)}function r(t,e,n){this.document=t,this.startPath=e,this.endPath=n}var s=t("document-section").Section,o=t("protoclass"),a=t("../utils");s.extend(i,{rootNode:function(){return this.start.parentNode},createMarker:function(){return new r(this.document,a.getNodePath(this.start),a.getNodePath(this.end))},clone:function(){var t=s.prototype.clone.call(this);return new i(this.document,t.start,t.end)}}),o(r,{getSection:function(t){var e=a.getNodeByPath(t,this.startPath),n=a.getNodeByPath(t,this.endPath);return new i(this.document,e,n)}}),e.exports=i},{"../utils":73,"document-section":78,protoclass:80}],52:[function(t,e,n){function i(t,e,n){this.node=e,this.document=t}function r(t,e){this.nodePath=e,this.document=t}var s=(t("document-section").Section,t("protoclass")),o=t("../utils");s(i,{rootNode:function(){return this.node},createMarker:function(){return new r(this.document,o.getNodePath(this.node))},appendChild:function(t){this.node.appendChild(t)},removeAll:function(){this.node.innerHTML=""},render:function(){return this.node},remove:function(){this.node.parentNode&&this.node.parentNode.removeChild(this.node)},clone:function(){return new i(this.document,this.node.cloneNode(!0))}}),s(r,{getSection:function(t){var e=o.getNodeByPath(t,this.nodePath);return new i(this.document,e)}}),e.exports=i},{"../utils":73,"document-section":78,protoclass:80}],53:[function(t,e,n){function i(t){r.call(this,t)}{var r=t("../components/base");t("../utils/bind"),t("../utils/extend")}e.exports=r.extend(i,{bind:function(){this._bindings=[],this.childContext=new this.contextClass(this.attributes),this.childView?(this.childView.setOptions({parent:this.view}),this.childView.bind(this.childContext)):(this.childView=this.template.view(this.childContext,{parent:this.view}),this.section.appendChild(this.childView.render())),r.prototype.bind.call(this)},unbind:function(){this.childView&&this.childView.unbind()}})},{"../components/base":19,"../utils/bind":71,"../utils/extend":72}],54:[function(t,e,n){(function(n){function i(t,e){this.options=e,this.accessor=e.accessor,this.useCloneNode=void 0!=e.useCloneNode?!!e.useCloneNode:!g,this.accessorClass=e.accessorClass||v.accessorClass,this.components=e.components||v.components,this.modifiers=e.modifiers||v.modifiers,this.attributes=e.attributes||v.attributes,this.runloop=e.runloop||v.runloop,this.document=e.document||s,this.vnode="function"==typeof t?t(u.create,o.create,a.create,c.create,l.create,void 0,this.modifiers):t,this._viewPool=[],this.initialize()}var r=t("protoclass"),s=t("nofactor"),o=t("./vnode/block"),a=t("./vnode/element"),u=t("./vnode/fragment"),c=t("./vnode/text"),l=t("./vnode/comment"),h=t("./view"),p=t("../section/fragment"),d=t("../section/node"),f=t("./component"),v=t("../defaults"),b=t("../utils/extend"),g=!1;if(n.browser){var m=~navigator.userAgent.toLowerCase().indexOf("msie"),y=~navigator.userAgent.toLowerCase().indexOf("trident");g=!(!m&&!y)}e.exports=r(i,{initialize:function(){this.hydrators=[],this.section=new p(this.document);var t=this.vnode.initialize(this);11===t.nodeType?(this.section=new p(this.document),this.section.appendChild(t)):this.section=new d(this.document,t);for(var e=this.hydrators.length;e--;)this.hydrators[e].initialize()},createComponentClass:function(t){return f.extend({template:this,contextClass:t||Object})},child:function(t,e){return new i(t,b(e,{},this.options))},view:function(t,e){var n;this.useCloneNode?n=this.section.clone():(this.initialize(),n=this.section);var i=this._viewPool.pop();return i?i.setOptions(e||{}):i=new h(this,this._viewPool,n,this.hydrators,e||{}),i.setOptions(e||{}),t&&i.bind(t),i}}),e.exports=function(t,n){var r,s=typeof t;if("string"===s){if(!e.exports.parser)throw new Error("paperclip parser does not exist");r=e.exports.parser.compile(t)}else{if("function"!==s)throw new Error("source must either be type 'string' or 'function'");r=t}return new i(r,n||v)}}).call(this,t("_process"))},{"../defaults":25,"../section/fragment":51,"../section/node":52,"../utils/extend":72,"./component":53,"./view":55,"./vnode/block":60,"./vnode/comment":62,"./vnode/element":66,"./vnode/fragment":68,"./vnode/text":69,_process:77,nofactor:79,protoclass:80}],55:[function(t,e,n){(function(n){function i(t,e,n,i,r){this.template=t,this.section=n,this.bindings=[],this._pool=e,this.parent=r.parent,this.accessor=this.parent?this.parent.accessor:t.accessor||new t.accessorClass,this.rootNode=n.rootNode(),this.transitions=new s,this.runloop=t.runloop,this._watchers=[];for(var a=0,u=i.length;u>a;a++)i[a].hydrate(this);this._dispose=o(this._dispose,this)}var r=t("protoclass"),s=t("./transitions"),o=t("../../utils/bind"),a=t("../../utils/stringifyNode"),u=t("./reference");r(i,{setOptions:function(t){this.parent=t.parent,t.parent&&(this.accessor=this.parent.accessor)},get:function(t){var e=this.accessor.get(this.context,t);return null!=e?e:this.parent?this.parent.get(t):void 0},set:function(t,e){return this.accessor.set(this.context,t,e)},reference:function(t,e,n){return new u(this,t,e,n)},call:function(t,e){var n=this.accessor.get(this.context,t);return n?this.accessor.call(this.context,t,e):this.parent?this.parent.call(t,e):void 0},setProperties:function(t){for(var e in t)this.set(e,t[e])},watch:function(t,e){return this.accessor.watchProperty(this.context,t,e)},watchEvent:function(t,e,n){return this.accessor.watchEvent(t,e,n)},bind:function(t){this.context&&this.unbind(),t||(t={}),this.context=this.accessor.castObject(t);for(var e=0,n=this.bindings.length;n>e;e++)this.bindings[e].bind()},unbind:function(){for(var t=this.bindings.length;t--;)this.bindings[t].unbind()},render:function(){return this.context||this.bind({}),this.transitions.enter(),this.section.render()},remove:function(){return this.section.remove(),this},dispose:function(){return this.transitions.exit(this._dispose)?void 0:(this._dispose(),this)},_dispose:function(){this.unbind(),this.section.remove(),this._pool.push(this)},toString:function(){var t=this.render();return this.template.document===n.document?a(t):t.toString()}}),e.exports=i}).call(this,"undefined"!=typeof global?global:"undefined"!=typeof self?self:"undefined"!=typeof window?window:{})},{"../../utils/bind":71,"../../utils/stringifyNode":75,"./reference":56,"./transitions":57,protoclass:80}],56:[function(t,e,n){function i(t,e,n,i){this.view=t,this.path=e,this.settable=n!==!1,this.gettable=i!==!1}var r=t("protoclass");r(i,{__isReference:!0,value:function(t){return arguments.length?void(this.settable&&this.view.set(this.path,t)):this.gettable?this.view.get(this.path):void 0},toString:function(){return this.view.get(this.path)}}),e.exports=i},{protoclass:80}],57:[function(t,e,n){(function(n){function i(){this._enter=[],this._exit=[]}var r=t("protoclass"),s=t("../../utils/async");e.exports=r(i,{push:function(t){t.enter&&this._enter.push(t),t.exit&&this._exit.push(t)},enter:function(){if(!this._enter.length)return!1;for(var t=0,e=this._enter.length;e>t;t++)this._enter[t].enter()},exit:function(t){if(!this._exit.length)return!1;var e=this;return n.nextTick(function(){s.each(e._exit,function(t,e){t.exit(e)},t)}),!0}})}).call(this,t("_process"))},{"../../utils/async":70,_process:77,protoclass:80}],58:[function(t,e,n){(function(n){function i(t,e,n){this.view=n,this.document=n.template.document,this.script=e,this.node=t,this.didChange=s(this.didChange,this)}var r=t("protoclass"),s=(t("../../../utils"),t("../../../utils/bind"));e.exports=r(i,{bind:function(){var t=this;this.binding=this.script.watch(this.view,function(e,n){e!==t.currentValue&&(t.currentValue=e,t.didChange())}),this.currentValue=this.script.evaluate(this.view),null!=this.currentValue&&this.update()},didChange:function(){this.view.runloop.deferOnce(this)},update:function(){var t=String(null==this.currentValue?"":this.currentValue);this.document!==n.document?this.node.replaceText(t,!0):this.node.nodeValue=String(t)},unbind:function(){this.binding&&(this.binding.dispose(),this.binding=void 0)}})}).call(this,"undefined"!=typeof global?global:"undefined"!=typeof self?self:"undefined"!=typeof window?window:{})},{"../../../utils":73,"../../../utils/bind":71,protoclass:80}],59:[function(t,e,n){function i(t,e,n){this.node=t,this.script=e,this.bindingClass=n}{var r=t("protoclass"),s=t("../../../utils");t("./binding")}e.exports=r(i,{initialize:function(){this.nodePath=s.getNodePath(this.node)},hydrate:function(t){var e=s.getNodeByPath(t.rootNode,this.nodePath);t.bindings.push(new this.bindingClass(e,this.script,t))}})},{"../../../utils":73,"./binding":58,protoclass:80}],60:[function(t,e,n){function i(t){this.script=s(t)}var r=t("protoclass"),s=(t("../../../utils"),t("../../../script")),o=t("./hydrator"),a=t("./binding"),u=t("./unbound");e.exports=r(i,{initialize:function(t){var e=t.document.createTextNode(""),n=this.script.refs.length?a:u;return t.hydrators.push(new o(e,this.script,n)),e}}),e.exports.create=function(t){return new i(t)}},{"../../../script":50,"../../../utils":73,"./binding":58,"./hydrator":59,"./unbound":61,protoclass:80}],61:[function(t,e,n){(function(n){function i(t,e,n){this.view=n,this.document=n.template.document,this.script=e,this.node=t}{var r=t("protoclass");t("../../../utils")}e.exports=r(i,{bind:function(){var t=this.script.evaluate(this.view);if(this.value!==t){this.value=t;var e=String(null==t?"":t);this.document!==n.document?this.node.replaceText(e,!0):this.node.nodeValue=String(e)}},unbind:function(){}})}).call(this,"undefined"!=typeof global?global:"undefined"!=typeof self?self:"undefined"!=typeof window?window:{})},{"../../../utils":73,protoclass:80}],62:[function(t,e,n){function i(t){this.value=t}var r=t("protoclass");e.exports=r(i,{initialize:function(t){return t.document.createComment(this.value)}}),e.exports.create=function(t){return new i(t)}},{protoclass:80}],63:[function(t,e,n){function i(t,e,n,i){this.node=i,this.key=e,this.value=n,this.attrClass=t}{var r=t("protoclass"),s=t("../../../utils");t("./attributesBinding")}e.exports=r(i,{initialize:function(){this.nodePath=s.getNodePath(this.node)},hydrate:function(t){var e=new this.attrClass({node:s.getNodeByPath(t.rootNode,this.nodePath),view:t,key:this.key,value:this.value});t.bindings.push(e)}})},{"../../../utils":73,"./attributesBinding":64,protoclass:80}],64:[function(t,e,n){function i(t,e,n,i){this.attributes=t,this.rawAttributes=e,this.component=n,this.view=i}{var r=t("protoclass");t("../../../utils")}e.exports=r(i,{bind:function(){this.bindings=[];for(var t in this.rawAttributes){var e=this.rawAttributes[t];e.watch&&e.evaluate?this._bindAttr(t,e):this.attributes[t]=e}},_bindAttr:function(t,e){var n=this;this.bindings.push(e.watch(this.view,function(e,i){n.attributes[t]=e,n.view.runloop.deferOnce(n.component)})),n.attributes[t]=e.evaluate(this.view)},unbind:function(){if(this.bindings){for(var t=this.bindings.length;t--;)this.bindings[t].dispose();this.bindings=[]}}})},{"../../../utils":73,protoclass:80}],65:[function(t,e,n){function i(t,e,n,i,r){this.name=t,this.attributes=e,this.childTemplate=n,this.section=i,this.componentClass=r}var r=t("protoclass"),s=t("./attributesBinding"),o=t("../../../utils/extend");e.exports=r(i,{initialize:function(){this.sectionMarker=this.section.createMarker()},hydrate:function(t){this.childTemplate.accessor=t.accessor;var e=this.sectionMarker.getSection(t.rootNode),n=o({},this.attributes),i=new this.componentClass({name:this.name,section:e,attributes:n,view:t,childTemplate:this.childTemplate});t.bindings.push(new s(n,this.attributes,i,t)),i.bind&&t.bindings.push(i)}})},{"../../../utils/extend":72,"./attributesBinding":64,protoclass:80}],66:[function(t,e,n){function i(t){return t.replace(/\-./,function(t){return t.substr(1).toUpperCase()})}function r(t,e,n){this.name=t,this.attributes=e,this.children=n}var s=t("protoclass"),o=t("../../../section/fragment"),a=t("../../../section/node"),u=t("../fragment"),c=(t("../../../utils"),t("../../../script")),l=t("./componentHydrator"),h=t("./attributeHydrator"),p=t("./valueAttribute"),d=t("../../../utils/set");e.exports=s(r,{initialize:function(t){var e=i(this.name),n=t.components[e];if(n){var r=new o(t.document);return t.hydrators.push(new l(e,this.attributes,t.child(this.children),r,n)),r.render()}var s,u,c=t.document.createElement(this.name),d=!1,f={};for(var v in this.attributes){var b=i(v);u=this.attributes[v];var g=typeof u,m=t.components[b],y=t.attributes[b];d=!!m||d,m?(s||(s=new a(t.document,c)),t.hydrators.push(new l(this.name,"object"==typeof u?u:this.attributes,t.child(this.children),s,m))):!y||y.test&&!y.test(u)?"object"!==g?f[v]=u:t.hydrators.push(new h(p,v,u,c)):t.hydrators.push(new h(y,v,u,c))}for(v in f)u=f[v],"object"!=typeof u&&c.setAttribute(v,f[v]);return d||c.appendChild(this.children.initialize(t)),c}}),e.exports.create=function(t,e,n){var i={};for(var s in e){var o=e[s];d(i,s.toLowerCase(),"object"==typeof o?c(o):o)}return new r(t,i,new u(n))}},{"../../../script":50,"../../../section/fragment":51,"../../../section/node":52,"../../../utils":73,"../../../utils/set":74,"../fragment":68,"./attributeHydrator":63,"./componentHydrator":65,"./valueAttribute":67,protoclass:80}],67:[function(t,e,n){var i=t("../../../attributes/script");e.exports=i.extend({update:function(){return null==this.currentValue?this.node.removeAttribute(this.key):void this.node.setAttribute(this.key,this.currentValue)}})},{"../../../attributes/script":16}],68:[function(t,e,n){function i(t){this.children=t}var r=t("protoclass");e.exports=r(i,{initialize:function(t){if(1===this.children.length)return this.children[0].initialize(t);var e=t.document.createDocumentFragment();return this.children.forEach(function(n){e.appendChild(n.initialize(t))}),e}}),e.exports.create=function(t){return new i(t)}},{protoclass:80}],69:[function(t,e,n){function i(t){this.value=t}var r=t("protoclass");e.exports=r(i,{initialize:function(t){return t.document.createTextNode(/^\s+$/.test(this.value)?" ":this.value)}}),e.exports.create=function(t){return new i(t)}},{protoclass:80}],70:[function(t,e,n){e.exports={each:function(t,e,n){var i=t.length,r=0;t.forEach(function(t){var s=!1;e(t,function(){if(s)throw new Error("callback called twice");s=!0,++r===i&&n&&n()})})}}},{}],71:[function(t,e,n){e.exports=function(t,e){return t.bind?t.bind.apply(t,[e].concat(Array.prototype.slice.call(arguments,2))):function(){return t.apply(e,arguments)}}},{}],72:[function(t,e,n){e.exports=function(t){t||(t={});for(var e=Array.prototype.slice.call(arguments,1),n=0,i=e.length;i>n;n++){var r=e[n];for(var s in r)t[s]=r[s]}return t}},{}],73:[function(t,e,n){t("document-section");e.exports={getNodePath:function(t){for(var e=[],n=t.parentNode,i=t;n;)e.unshift(Array.prototype.slice.call(n.childNodes).indexOf(i)),i=n,n=n.parentNode;return e},getNodeByPath:function(t,e){for(var n=t,i=0,r=e.length;r>i;i++)n=n.childNodes[e[i]];return n}}},{"document-section":78}],74:[function(t,e,n){e.exports=function(t,e,n){for(var i,r="string"==typeof e?e.split("."):e,s=t,o=0,a=r.length-1;a>o;o++)i=r[o],s[i]||(s[i]={}),s=s[i];return s[r[r.length-1]]=n,n}},{}],75:[function(t,e,n){function i(t){var e="";if(11===t.nodeType){for(var n=0,r=t.childNodes.length;r>n;n++)e+=i(t.childNodes[n]);return e}return e=t.nodeValue||t.outerHTML||"",8===t.nodeType&&(e="<!--"+e+"-->"),e}e.exports=i},{}],76:[function(t,e,n){e.exports=function(t){for(var e={},n=t.concat(),i=n.length;i--;){var r=n[i];e[r]||(e[r]=0),++e[r]>1&&n.splice(i,1)}return n}},{}],77:[function(t,e,n){function i(){if(!a){a=!0;for(var t,e=o.length;e;){t=o,o=[];for(var n=-1;++n<e;)t[n]();e=o.length}a=!1}}function r(){}var s=e.exports={},o=[],a=!1;s.nextTick=function(t){o.push(t),a||setTimeout(i,0)},s.title="browser",s.browser=!0,s.env={},s.argv=[],s.version="",s.versions={},s.on=r,s.addListener=r,s.once=r,s.off=r,s.removeListener=r,s.removeAllListeners=r,s.emit=r,s.binding=function(t){throw new Error("process.binding is not supported")},s.cwd=function(){return"/"},s.chdir=function(t){throw new Error("process.chdir is not supported")},s.umask=function(){return 0}},{}],78:[function(t,e,n){var i=t("protoclass"),r=t("nofactor"),s=function(t,e,n){if(this.document=t=t||r,this.start=e||t.createTextNode(""),this.end=n||t.createTextNode(""),this.visible=!0,!this.start.parentNode){var i=t.createDocumentFragment();i.appendChild(this.start),i.appendChild(this.end)}};s=i(s,{__isLoafSection:!0,render:function(){return this.start.parentNode},clone:function(){var t;return 11===this.start.parentNode.nodeType?t=this.start.parentNode.cloneNode(!0):(t=this.document.createDocumentFragment(),this.getChildNodes().forEach(function(e){t.appendChild(e.cloneNode(!0))})),new s(this.document,t.childNodes[0],t.childNodes[t.childNodes.length-1])},remove:function(){return this._createFragment(this.getChildNodes())},_createFragment:function(t){var e=this.document.createDocumentFragment();return t.forEach(function(t){e.appendChild(t)}),e},show:function(){return this._detached?(this.append.apply(this,this._detached.getInnerChildNodes()),this._detached=void 0,this.visible=!0,this):this},hide:function(){return this._detached=this.removeAll(),this.visible=!1,this},removeAll:function(){return this._section(this._removeAll())},_removeAll:function(){for(var t=this.start,e=this.end,n=t.nextSibling,i=[];n!=e;)n.parentNode.removeChild(n),i.push(n),n=this.start.nextSibling;return i},append:function(){var t=Array.prototype.slice.call(arguments);t.length&&(t=t.length>1?this._createFragment(t):t[0],this.end.parentNode.insertBefore(t,this.end))},appendChild:function(){this.append.apply(this,arguments)},prepend:function(){var t=Array.prototype.slice.call(arguments);t.length&&(t=t.length>1?this._createFragment(t):t[0],this.start.parentNode.insertBefore(t,this.start.nextSibling))},prependChild:function(){this.prepend.apply(this,arguments)},replaceChildNodes:function(){this.removeAll(),this.append.apply(this,arguments)},toString:function(){var t=this.getChildNodes().map(function(t){return t.outerHTML||(void 0!=t.nodeValue&&3==t.nodeType?t.nodeValue:String(t))});return t.join("")},dispose:function(){this._disposed||(this._disposed=!0,this.removeAll(),this.start.parentNode.removeChild(this.start),this.end.parentNode.removeChild(this.end))},getChildNodes:function(){for(var t=this.start,e=this.end.nextSibling,n=[];t!=e;)n.push(t),t=t.nextSibling;return n},getInnerChildNodes:function(){var t=this.getChildNodes();return t.shift(),t.pop(),t},_section:function(t){var e=new s(this.document);return e.append.apply(e,t),e}}),e.exports=function(t,e,n){return new s(t,e,n)},e.exports.Section=s},{nofactor:79,protoclass:80}],79:[function(t,e,n){e.exports=document},{}],80:[function(t,e,n){function i(t,e){for(var n=0,i=e.length;i>n;n++){var r=e[n];for(var s in r)t[s]=r[s]}return t}function r(t,e){function n(){this.constructor=e}var s=Array.prototype.slice.call(arguments,2);return"function"!=typeof e&&(e&&s.unshift(e),e=t,t=function(){}),i(e,t),n.prototype=t.prototype,e.prototype=new n,e.__super__=t.prototype,e.parent=e.superclass=t,i(e.prototype,s),r.setup(e),e}r.setup=function(t){return t.extend||(t.extend=function(t){var e=Array.prototype.slice.call(arguments,0);return"function"!=typeof t&&e.unshift(t=function(){t.parent.apply(this,arguments)}),r.apply(this,[this].concat(e))},t.mixin=function(t){i(this.prototype,arguments)},t.create=function(){var e=Object.create(t.prototype);return t.apply(e,arguments),e}),t},e.exports=r},{}]},{},[1]);;/*! t3 v 1.4.1*/
 /*!
 Copyright 2015 Box, Inc. All rights reserved.
@@ -147,7 +1778,7 @@ limitations under the License.
 	};
 });;Box.Application.addBehavior('pagination', function(context) {
 
-	var _cache 		= context.getService('cache.service'),
+	var _storage 	= context.getService('storage.service'),
 		_render  	= context.getService('render.service');
 
 	return {
@@ -163,7 +1794,7 @@ limitations under the License.
 			if (elementType === 'p-prev') prev();
 
 			function prev() {
-				var data = _cache.get();
+				var data = _storage.get();
 
 				if (_this.nextItem !== 0) {
 					
@@ -183,7 +1814,7 @@ limitations under the License.
 			}
 
 			function next() {
-				var data = _cache.get(),
+				var data = _storage.get(),
 					dataPagined;
 
 				if ((_this.nextItem+_this.itemsDisplay) > data.length) {
@@ -205,7 +1836,7 @@ limitations under the License.
 			return false;			
 		}
 	};
-});;Box.Application.addModule('filter', function(context) {
+});;Box.Application.addModule('estates.filter', function(context) {
 	'use strict';
 
 	var $ 			= context.getGlobal('jQuery'),
@@ -278,23 +1909,23 @@ limitations under the License.
 	}
 
 	function displayRender(el) {
-		var content = $(el).data('content'),
-			option = $(el).data('option');
+		// var content = $(el).data('content'),
+		// 	option = $(el).data('option');
 
-		if ($(el).hasClass('active')) return false;
+		// if ($(el).hasClass('active')) return false;
 
-		$('.js-chose-type').removeClass('active');
-		$('.js-render-option').removeClass('active');
+		// $('.js-chose-type').removeClass('active');
+		// $('.js-render-option').removeClass('active');
 
-		$(el).addClass('active');
-		$(content).addClass('active');	
+		// $(el).addClass('active');
+		// $(content).addClass('active');	
 	}
-});;Box.Application.addModule('list', function(context) {
+});;Box.Application.addModule('estates.list', function(context) {
 	'use strict';
 
 	var _render  = context.getService('render.service'),
 		_estates = context.getService('estates.service'),
-		_cache	 = context.getService('cache.service');
+		_storage = context.getService('storage.service');
 
 	return {
 		behaviors: ['pagination'],
@@ -304,7 +1935,7 @@ limitations under the License.
 			if (name === 'newFilter') filterEstates();
 			
 			function filterEstates() {
-				_cache.set(value.data);
+				_storage.set(value.data);
 				_render.update({
 					data: _.slice(value.data, 0, 12),
 					filters: value.filters
@@ -312,19 +1943,91 @@ limitations under the License.
 			}
         },
 		init: function() {
-			_estates.get({
-				fields: 'cover,price,neighborhood,address,bathrooms,bedrooms,area,location,title'
-			}).then(function(data) {
-				_cache.set(data, 'private');
-				_render.render({
-					data: data,
-					listClass: '.render-area',
-					mapClass: '#map-canvas'
+			if (_storage.userPreferences.list()) {
+
+				//Set map as active
+				$('main').addClass('list-active');
+
+				_estates.get({
+					fields: 'cover,price,neighborhood,address,bathrooms,bedrooms,area,location,title'
+				}).then(function(data) {
+					_storage.set(data, 'private');
+					_render.render({
+						data: _.slice(data, 0, 12),
+						listClass: '.render-area',
+						mapClass: '#map-canvas'
+					});
 				});
-			});
+			}
 		}
 	}
-});;;Box.Application.addService('estates.service', function(application) {
+});;Box.Application.addModule('estates', function(context) {
+	'use strict';
+
+	var $ = context.getGlobal('jQuery');
+
+	return {
+		init: function() {
+			// var buttonMap 	= document.querySelector('#b-map'),
+			// 	buttonList 	= document.querySelector('#b-list'),
+			// 	mapModule 	= document.querySelector('.estates__bx__map'),
+			// 	listModule	= document.querySelector('.estates__bx__list');	
+
+			// if (window.localStorage.getItem('cmview')) {
+
+			// } else {
+			// 	$(buttonMap).closest('main').addClass('map-active');
+
+			// 	console.log(Box.Application);
+
+			// 	var a = Box.Application.start(mapModule);
+
+			// 	console.log(a);
+			// }
+		}
+	}
+});;Box.Application.addModule('estates.map', function(context) {
+	'use strict';
+
+	var _render  = context.getService('render.service'),
+		_estates = context.getService('estates.service'),
+		_storage = context.getService('storage.service');
+
+	return {
+		behaviors: ['pagination'],
+		messages: ['newFilter', 'markerHover'],
+		onmessage: function(name, value) {
+
+			if (name === 'newFilter') filterEstates();
+			
+			function filterEstates() {
+				_storage.set(value.data);
+				_render.update({
+					data: _.slice(value.data, 0, 12),
+					filters: value.filters
+				});
+			}
+        },
+		init: function() {
+			if (_storage.userPreferences.map()) {
+				//Set map as active
+				$('main').addClass('map-active');
+
+				_estates.get({
+					fields: 'cover,price,neighborhood,address,bathrooms,bedrooms,area,location,title'
+				}).then(function(data) {
+					_storage.set(data, 'private');
+					_render.render({
+						data: data,
+						listClass: '.render-area',
+						mapClass: '#map-canvas',
+						bounds: true
+					});
+				});
+			}
+		}
+	}
+});;Box.Application.addService('estates.service', function(application) {
 	'use strict';
 
 	var $ = application.getGlobal('jQuery');
@@ -348,33 +2051,10 @@ limitations under the License.
 
 		}
 	}
-});;Box.Application.addService('cache.service', function(application) {
-	'use strict';
-
-	var publicData,
-		privateData;
-
-	return {
-		get: function(config) {
-			if (config === 'private') {
-				return privateData;
-			}
-
-			return publicData || privateData;
-		},
-		set: function(data, config) {
-			if (config === 'private') {
-				privateData = data;
-				return false;
-			}
-
-			publicData = data;
-		}
-	}
 });;Box.Application.addService('filter.service', function(application) {
 	'use strict';
 
-	var _cache 	= application.getService('cache.service'),
+	var _storage = application.getService('storage.service'),
 		filters = {};
 
 	return {
@@ -414,7 +2094,7 @@ limitations under the License.
 			this.filter();
 		},
 		filter: function() {
-			var data = _cache.get('private'),
+			var data = _storage.get('private'),
 				filteredObject = [];
 
 			if ($.isEmptyObject(filters)) {
@@ -515,130 +2195,98 @@ limitations under the License.
 });;Box.Application.addService('map.service', function(application) {
 	'use strict';
 
-	var google = application.getGlobal('google');
+	var _util 	= application.getService('utils.service'),
+		L 		= application.getGlobal('L');
+
+	//Private Key
+	L.mapbox.accessToken = 'pk.eyJ1IjoibWFya29za3QiLCJhIjoiOTVmMjE4NTdmNDJjNWVkNTA0MDZlNDE0MWI1ZTdiZDUifQ.DJCF768JpbwaSuT5Ye0Xwg';
 
 	return {
 		render: function(config) {
-			var _this = this,
-				mapOptions = config.options || {},
-				styles,
-				marker,
-				currentMarker,
-				position,
-				m = 0;
+			this.map = L.mapbox.map('map-canvas', 'markoskt.n3860n3a', {
+				minZoom: 5
+			}).setView([40.73, -74.011], 5);
 
-			if (!config.options) {
-				mapOptions = {
-					center: { lat: -19.916681, lng: -43.934493 },
-					zoom: 4,
-					disableDefaultUI: true
-				};
-			}
-
-			if (!google || !config.mapClass) return false;
-
-			//Instance the map
-			this.map = new google.maps.Map(document.querySelector(config.mapClass), mapOptions);
-			this.markers = [];
-
-			//Change the style of the map
-			styles = [{"featureType":"water","elementType":"geometry.fill","stylers":[{"color":"#d3d3d3"}]},{"featureType":"transit","stylers":[{"color":"#808080"},{"visibility":"off"}]},{"featureType":"road.highway","elementType":"geometry.stroke","stylers":[{"visibility":"on"},{"color":"#b3b3b3"}]},{"featureType":"road.highway","elementType":"geometry.fill","stylers":[{"color":"#ffffff"}]},{"featureType":"road.local","elementType":"geometry.fill","stylers":[{"visibility":"on"},{"color":"#ffffff"},{"weight":1.8}]},{"featureType":"road.local","elementType":"geometry.stroke","stylers":[{"color":"#d7d7d7"}]},{"featureType":"poi","elementType":"geometry.fill","stylers":[{"visibility":"on"},{"color":"#ebebeb"}]},{"featureType":"administrative","elementType":"geometry","stylers":[{"color":"#a7a7a7"}]},{"featureType":"road.arterial","elementType":"geometry.fill","stylers":[{"color":"#ffffff"}]},{"featureType":"road.arterial","elementType":"geometry.fill","stylers":[{"color":"#ffffff"}]},{"featureType":"landscape","elementType":"geometry.fill","stylers":[{"visibility":"on"},{"color":"#efefef"}]},{"featureType":"road","elementType":"labels.text.fill","stylers":[{"color":"#696969"}]},{"featureType":"administrative","elementType":"labels.text.fill","stylers":[{"visibility":"on"},{"color":"#737373"}]},{"featureType":"poi","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"poi","elementType":"labels","stylers":[{"visibility":"off"}]},{"featureType":"road.arterial","elementType":"geometry.stroke","stylers":[{"color":"#d6d6d6"}]},{"featureType":"road","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{},{"featureType":"poi","elementType":"geometry.fill","stylers":[{"color":"#dadada"}]}];
-
-			this.map.setOptions({styles: styles});
-
-			if (config.markers) {
-
-				this.bounds = new google.maps.LatLngBounds();
-
-				for(m; m < config.markers.length; m++) {
-					currentMarker = config.markers[m],
-					position = new google.maps.LatLng(currentMarker.location.lat, currentMarker.location.lng);
-
-					this.bounds.extend(position);
-
-					marker = new google.maps.Marker({
-						position: position,
-						map: _this.map,
-						title: currentMarker.title,
-						icon: 'public/assets/imgs/svg/marker-icon.svg',
-						animation: google.maps.Animation.DROP,
-						index: m,
-					});
-
-					this.markers.push(marker);
-
-					// Allow each marker to have an info window    
-					// google.maps.event.addListener(marker, 'click', (function(marker, i) {
-					// 	return function() {
-					// 		infoWindow.setContent(infoWindowContent[i][0]);
-					// 		infoWindow.open(map, marker);
-					// 	}
-					// })(marker, i));
-
-					// Automatically center the map fitting all markers on the screen
-					//this.map.fitBounds(this.bounds);
-
-					google.maps.event.addListener(marker, 'mouseover', onHover);
-				}
-			} 
-
-			return this.map;
+			this.createMarkers(config);
 		},
-		update: function(markers) {
-			var _this = this,
+		createMarkers: function(config, callback) {
+			var clusterGroup,
+				markers,
+				marker,
+				_this,
 				i = 0;
 
-			if (!this.markers) return false;
+			_this = this;
 
-			//Clear the markers
-			this.clear();
+			clusterGroup = new L.MarkerClusterGroup({
+				polygonOptions: {
+					fillColor: '#3887be',
+					color: '#3887be',
+					weight: 2,
+					opacity: 1,
+					fillOpacity: 0.5
+				},
+				iconCreateFunction: function(cluster) {
+					return L.mapbox.marker.icon({
+						'marker-symbol': cluster.getChildCount(),
+						'marker-color': '#2a3038',
+					});
+				}
+			});
+
+			markers = config.markers;
 
 			for (i; i < markers.length; i++) {
-				addMarkers(markers[i], i*200, i);
+		
+				marker = L.marker(new L.LatLng(markers[i].location.lat, markers[i].location.lng), {
+					icon: L.icon({
+						iconUrl: 'public/assets/imgs/svg/marker-icon.svg',
+						iconSize:     [36, 50]
+					}),
+					title: markers[i].title
+				});
+
+				marker.bindPopup(_this.template(markers[i]));
+
+				marker.on('mouseover', function (e) {
+            		this.openPopup();
+        		});
+
+				clusterGroup.addLayer(marker);
 			}
 
-			function addMarkers(marker, time, index) {
-				window.setTimeout(function() {
-					_this.markers.push(new google.maps.Marker({
-						position: new google.maps.LatLng(marker.location.lat, marker.location.lng),
-						map: _this.map,
-						title: marker.title,
-						icon: 'public/assets/imgs/svg/marker-icon.svg',
-						animation: google.maps.Animation.DROP,
-						index: index
-					}));
-				}, time);
-			}
+			this.map.addLayer(clusterGroup);	
 		},
-		clear: function() {
-			var i = 0;
+		update: function(markers) {
+		
+		},
+		template: function(estate) {
+			var t = "<div class='estate estate--map'>"+
+			"    <a style='background-image: url("+estate.cover+")'>"+
+			"        <div class='estate__address'><span class='neighborhood'>"+estate.neighborhood+"</span><span class='address'>"+estate.address+"</span></div>"+
+			"        <div class='estate__info'>"+
+			"            <ul>"+
+			"                <li class='icon icon-area'><span>"+estate.area+"m² </span></li>"+
+			"                <li class='icon icon-beds'><span>"+estate.bedrooms+"</span></li>"+
+			"                <li class='icon icon-bath'><span>"+estate.bathrooms+"</span></li>"+
+			"                <li><span>"+_util.formatMoney(estate.price)+"</span></li>"+
+			"            </ul>"+
+			"        </div>"+
+			"    </a>"+
+			"</div>";
 
-			if (!this.markers) return false;
-
-			for (i; i < this.markers.length; i++) {
-				this.markers[i].setMap(null);
-			}
-
-			this.markers = [];
+			return t;
 		}
-	}
-
-	function onHover() {
-		Box.Application.broadcast('markerHover', this.index);
-	}
-
-	function onClick() {
-		console.log(this);
 	}
 });;Box.Application.addService('render.service', function(application) {
 	'use strict';
 
-	var _utils 		= application.getService('utils.service'),
-		_map 		= application.getService('map.service'),
+	var _utils 	  = application.getService('utils.service'),
+		_map 	  = application.getService('map.service'),
 		t,
 
 		//Globals
-		paperclip 	= application.getGlobal('paperclip');
+		paperclip = application.getGlobal('paperclip');
 
 	/**
 	 * Estates Template
@@ -671,8 +2319,6 @@ limitations under the License.
 			_utils.updateTexts(config);
 		},
 		render: function(config) {
-			var data = _.slice(config.data, 0, 12);
-
 			//Define the template
 			var template = paperclip.template(t);
 
@@ -680,7 +2326,7 @@ limitations under the License.
 			paperclip.modifiers.formatMoney = _utils.formatMoney;
 
 			this.view = template.view({
-				estates: data
+				estates: config.data
 			});
 
 			//Render
@@ -689,19 +2335,62 @@ limitations under the License.
 			//Render map
 			_map.render({
 				mapClass: config.mapClass,
-				markers: data
+				markers: config.data,
+				bounds: config.bounds || false
 			});
 
-			_utils.updateTexts({
-				data: config.data
-			});
+			_utils.updateTexts({});
+		}
+	}
+});;Box.Application.addService('storage.service', function(application) {
+	'use strict';
+
+	var publicData,
+		privateData;
+
+	return {
+		get: function(config) {
+			if (config === 'private') {
+				return privateData;
+			}
+
+			return publicData || privateData;
+		},
+		set: function(data, config) {
+			if (config === 'private') {
+				privateData = data;
+				return false;
+			}
+
+			publicData = data;
+		},
+		userPreferences: {
+			map: function() {
+				if (window.localStorage.getItem('cmview')) {
+					if (window.localStorage.getItem('cmview') === 'map') return true;
+					return false;
+				} else {
+					return true;
+				}
+			},
+			list: function() {
+				if (window.localStorage.getItem('cmview') === 'list') return true;
+				return false;
+			},
+			set: function(option) {
+				if (option && option === 'map' || option === 'list') {
+					window.localStorage.setItem('cmview', option);
+				}
+
+				return false;
+			}
 		}
 	}
 });;Box.Application.addService('utils.service', function(context) {
 	'use strict';
 
-	var $ 		= context.getGlobal('jQuery'),
-		_cache 	= context.getService('cache.service');
+	var $ 		 = context.getGlobal('jQuery'),
+		_storage = context.getService('storage.service');
 
 	return {
 		formatMoney: function(number) {
@@ -786,7 +2475,7 @@ limitations under the License.
 			}());
 
 			(function updatePagination() {
-				var totalData = _cache.get().length,
+				var totalData = _storage.get().length,
 					pages = {};
 
 				if (config.pages) {

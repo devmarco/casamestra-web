@@ -1,8 +1,8 @@
 Box.Application.addService('utils.service', function(context) {
 	'use strict';
 
-	var $ 		= context.getGlobal('jQuery'),
-		_cache 	= context.getService('cache.service');
+	var $ 		 = context.getGlobal('jQuery'),
+		_storage = context.getService('storage.service');
 
 	return {
 		formatMoney: function(number) {
@@ -87,7 +87,7 @@ Box.Application.addService('utils.service', function(context) {
 			}());
 
 			(function updatePagination() {
-				var totalData = _cache.get().length,
+				var totalData = _storage.get().length,
 					pages = {};
 
 				if (config.pages) {

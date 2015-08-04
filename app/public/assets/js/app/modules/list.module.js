@@ -1,9 +1,9 @@
-Box.Application.addModule('list', function(context) {
+Box.Application.addModule('estates.list', function(context) {
 	'use strict';
 
 	var _render  = context.getService('render.service'),
 		_estates = context.getService('estates.service'),
-		_cache	 = context.getService('cache.service');
+		_storage = context.getService('storage.service');
 
 	return {
 		behaviors: ['pagination'],
@@ -13,7 +13,7 @@ Box.Application.addModule('list', function(context) {
 			if (name === 'newFilter') filterEstates();
 			
 			function filterEstates() {
-				_cache.set(value.data);
+				_storage.set(value.data);
 				_render.update({
 					data: _.slice(value.data, 0, 12),
 					filters: value.filters
@@ -21,16 +21,22 @@ Box.Application.addModule('list', function(context) {
 			}
         },
 		init: function() {
-			_estates.get({
-				fields: 'cover,price,neighborhood,address,bathrooms,bedrooms,area,location,title'
-			}).then(function(data) {
-				_cache.set(data, 'private');
-				_render.render({
-					data: data,
-					listClass: '.render-area',
-					mapClass: '#map-canvas'
+			if (_storage.userPreferences.list()) {
+
+				//Set map as active
+				$('main').addClass('list-active');
+
+				_estates.get({
+					fields: 'cover,price,neighborhood,address,bathrooms,bedrooms,area,location,title'
+				}).then(function(data) {
+					_storage.set(data, 'private');
+					_render.render({
+						data: _.slice(data, 0, 12),
+						listClass: '.render-area',
+						mapClass: '#map-canvas'
+					});
 				});
-			});
+			}
 		}
 	}
 });

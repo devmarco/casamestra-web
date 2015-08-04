@@ -6,7 +6,7 @@ var buyView = {
 	method: 'GET',
 	path: '/comprar',
 	handler: function(req, reply) {
-		reply.view('comprar');
+		reply.view('estates');
 	}
 }	
 

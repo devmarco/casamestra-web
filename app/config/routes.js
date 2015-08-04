@@ -5,7 +5,7 @@
 var routes = [
 	require('../../app/routes/files'),
 	require('../../app/routes/home'),
-	require('../../app/routes/buy')
+	require('../../app/routes/estates')
 	//require('../../app/routes/agents/get-one'),
 	//require('../../app/routes/agents/create'),
 	//require('../../app/routes/agents/update'),

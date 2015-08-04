@@ -1,7 +1,7 @@
 Box.Application.addService('filter.service', function(application) {
 	'use strict';
 
-	var _cache 	= application.getService('cache.service'),
+	var _storage = application.getService('storage.service'),
 		filters = {};
 
 	return {
@@ -41,7 +41,7 @@ Box.Application.addService('filter.service', function(application) {
 			this.filter();
 		},
 		filter: function() {
-			var data = _cache.get('private'),
+			var data = _storage.get('private'),
 				filteredObject = [];
 
 			if ($.isEmptyObject(filters)) {

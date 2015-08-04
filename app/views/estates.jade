@@ -3,8 +3,8 @@ extends base
 block content
 	header(class='transparent')
 		include includes/header
-	main(class='estates__bx')
-		.estates__bx__filter(data-module='filter')
+	main(data-module='estates' class='estates__bx')
+		.estates__bx__filter(data-module='estates.filter')
 			.filter
 				input(type="text" placeholder='Selecione a vizinhança')
 			.filter(class='select dropdown')
@@ -108,12 +108,12 @@ block content
 									input(type='checkbox' id='a')
 									label(for='a') Churrasqueira
 			.filter(class='right')
-				button(data-type='f-render' data-content='.estates__bx__map' data-option="map" class='map-icon active js-chose-type')
+				button(data-type='f-render' data-content='.estates__bx__map' data-option="map" id="b-map" class='map-icon')
 			.filter(class='right')
-				button(data-type='f-render' data-content='.estates__bx__list' data-option="list" class='list-icon js-chose-type')
-		.estates__bx__map(class='js-render-option active')
+				button(data-type='f-render' data-content='.estates__bx__list' data-option="list" id="b-list" class='list-icon')
+		.estates__bx__map(data-module='estates.map')
 			#map-canvas
-		.estates__bx__list(data-module='list' class='js-render-option')
+		.estates__bx__list(data-module='estates.list')
 			.estates__bx__list__container
 				.filter__container
 					.filter(class='select')

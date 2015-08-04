@@ -1,4 +1,4 @@
-Box.Application.addModule('filter', function(context) {
+Box.Application.addModule('estates.filter', function(context) {
 	'use strict';
 
 	var $ 			= context.getGlobal('jQuery'),
@@ -71,15 +71,15 @@ Box.Application.addModule('filter', function(context) {
 	}
 
 	function displayRender(el) {
-		var content = $(el).data('content'),
-			option = $(el).data('option');
+		// var content = $(el).data('content'),
+		// 	option = $(el).data('option');
 
-		if ($(el).hasClass('active')) return false;
+		// if ($(el).hasClass('active')) return false;
 
-		$('.js-chose-type').removeClass('active');
-		$('.js-render-option').removeClass('active');
+		// $('.js-chose-type').removeClass('active');
+		// $('.js-render-option').removeClass('active');
 
-		$(el).addClass('active');
-		$(content).addClass('active');	
+		// $(el).addClass('active');
+		// $(content).addClass('active');	
 	}
 });
