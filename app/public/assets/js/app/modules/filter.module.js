@@ -9,7 +9,6 @@ Box.Application.addModule('estates.filter', function(context) {
 		onclick: function(event, element, elementType) {
 			if (elementType === 'f-bedrooms') filterByBedrooms(element);
 			if (elementType === 'f-bathrooms') filterByBathrooms(element);
-			if (elementType === 'f-render') displayRender(element);
 		},
 		onchange: function(event, element, elementType) {
 			if (elementType === 'f-price') filterByPrice(element);
@@ -64,22 +63,5 @@ Box.Application.addModule('estates.filter', function(context) {
 			value: value || 0,
 			amount: amount
 		});
-	}
-
-	function filterByOrder() {
-		
-	}
-
-	function displayRender(el) {
-		// var content = $(el).data('content'),
-		// 	option = $(el).data('option');
-
-		// if ($(el).hasClass('active')) return false;
-
-		// $('.js-chose-type').removeClass('active');
-		// $('.js-render-option').removeClass('active');
-
-		// $(el).addClass('active');
-		// $(content).addClass('active');	
 	}
 });

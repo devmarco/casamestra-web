@@ -2,8 +2,8 @@ Box.Application.addModule('estates.map', function(context) {
 	'use strict';
 
 	var _render  = context.getService('render.service'),
-		_estates = context.getService('estates.service'),
-		_storage = context.getService('storage.service');
+		_storage = context.getService('storage.service'),
+		_view 	 = context.getService('view.service');
 
 	return {
 		behaviors: ['pagination'],
@@ -15,27 +15,14 @@ Box.Application.addModule('estates.map', function(context) {
 			function filterEstates() {
 				_storage.set(value.data);
 				_render.update({
-					data: _.slice(value.data, 0, 12),
+					data: value.data,
 					filters: value.filters
 				});
 			}
         },
 		init: function() {
 			if (_storage.userPreferences.map()) {
-				//Set map as active
-				$('main').addClass('map-active');
-
-				_estates.get({
-					fields: 'cover,price,neighborhood,address,bathrooms,bedrooms,area,location,title'
-				}).then(function(data) {
-					_storage.set(data, 'private');
-					_render.render({
-						data: data,
-						listClass: '.render-area',
-						mapClass: '#map-canvas',
-						bounds: true
-					});
-				});
+				_view.map();
 			}
 		}
 	}

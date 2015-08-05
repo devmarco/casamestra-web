@@ -107,12 +107,13 @@ block content
 								li
 									input(type='checkbox' id='a')
 									label(for='a') Churrasqueira
-			.filter(class='right')
-				button(data-type='f-render' data-content='.estates__bx__map' data-option="map" id="b-map" class='map-icon')
-			.filter(class='right')
-				button(data-type='f-render' data-content='.estates__bx__list' data-option="list" id="b-list" class='list-icon')
+			.filter-content(data-module='estates.view')
+				.filter(class='right')
+					button(data-type='map' class='map-icon')
+				.filter(class='right')
+					button(data-type='list' class='list-icon')
 		.estates__bx__map(data-module='estates.map')
-			#map-canvas
+			#map--big
 		.estates__bx__list(data-module='estates.list')
 			.estates__bx__list__container
 				.filter__container
@@ -141,4 +142,4 @@ block content
 							button(class='prev' data-type='p-prev')
 							button(class='next' data-type='p-next')
 			.estates__bx__list__map
-				#map-canvas
+				#map--small

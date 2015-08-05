@@ -1847,7 +1847,6 @@ limitations under the License.
 		onclick: function(event, element, elementType) {
 			if (elementType === 'f-bedrooms') filterByBedrooms(element);
 			if (elementType === 'f-bathrooms') filterByBathrooms(element);
-			if (elementType === 'f-render') displayRender(element);
 		},
 		onchange: function(event, element, elementType) {
 			if (elementType === 'f-price') filterByPrice(element);
@@ -1903,35 +1902,18 @@ limitations under the License.
 			amount: amount
 		});
 	}
-
-	function filterByOrder() {
-		
-	}
-
-	function displayRender(el) {
-		// var content = $(el).data('content'),
-		// 	option = $(el).data('option');
-
-		// if ($(el).hasClass('active')) return false;
-
-		// $('.js-chose-type').removeClass('active');
-		// $('.js-render-option').removeClass('active');
-
-		// $(el).addClass('active');
-		// $(content).addClass('active');	
-	}
 });;Box.Application.addModule('estates.list', function(context) {
 	'use strict';
 
 	var _render  = context.getService('render.service'),
-		_estates = context.getService('estates.service'),
-		_storage = context.getService('storage.service');
+		_storage = context.getService('storage.service'),
+		_view 	 = context.getService('view.service');
 
 	return {
 		behaviors: ['pagination'],
 		messages: ['newFilter', 'markerHover'],
 		onmessage: function(name, value) {
-
+			
 			if (name === 'newFilter') filterEstates();
 			
 			function filterEstates() {
@@ -1944,20 +1926,7 @@ limitations under the License.
         },
 		init: function() {
 			if (_storage.userPreferences.list()) {
-
-				//Set map as active
-				$('main').addClass('list-active');
-
-				_estates.get({
-					fields: 'cover,price,neighborhood,address,bathrooms,bedrooms,area,location,title'
-				}).then(function(data) {
-					_storage.set(data, 'private');
-					_render.render({
-						data: _.slice(data, 0, 12),
-						listClass: '.render-area',
-						mapClass: '#map-canvas'
-					});
-				});
+				_view.list();
 			}
 		}
 	}
@@ -1990,8 +1959,8 @@ limitations under the License.
 	'use strict';
 
 	var _render  = context.getService('render.service'),
-		_estates = context.getService('estates.service'),
-		_storage = context.getService('storage.service');
+		_storage = context.getService('storage.service'),
+		_view 	 = context.getService('view.service');
 
 	return {
 		behaviors: ['pagination'],
@@ -2003,28 +1972,37 @@ limitations under the License.
 			function filterEstates() {
 				_storage.set(value.data);
 				_render.update({
-					data: _.slice(value.data, 0, 12),
+					data: value.data,
 					filters: value.filters
 				});
 			}
         },
 		init: function() {
 			if (_storage.userPreferences.map()) {
-				//Set map as active
-				$('main').addClass('map-active');
-
-				_estates.get({
-					fields: 'cover,price,neighborhood,address,bathrooms,bedrooms,area,location,title'
-				}).then(function(data) {
-					_storage.set(data, 'private');
-					_render.render({
-						data: data,
-						listClass: '.render-area',
-						mapClass: '#map-canvas',
-						bounds: true
-					});
-				});
+				_view.map();
 			}
+		}
+	}
+});;Box.Application.addModule('estates.view', function(context) {
+	'use strict';
+
+	var _view = context.getService('view.service');
+
+	return {
+		init: function() {
+			console.log('View initialized');
+		},
+		onclick: function(event, element, elementType) {
+			if (elementType === 'map') this.renderMap(element);
+			if (elementType === 'list') this.renderList(element);
+		},
+		renderMap: function(element) {
+			$(element).closest('main').removeClass('list-active').addClass('map-active');
+			_view.map();
+		},
+		renderList: function(element) {
+			$(element).closest('main').removeClass('map-active').addClass('list-active');
+			_view.list();
 		}
 	}
 });;Box.Application.addService('estates.service', function(application) {
@@ -2038,7 +2016,7 @@ limitations under the License.
 				fields 	= (config.fields) ? '&fields='+config.fields+'' : '';
 
 			return $.ajax({
-				url: 'http://0.0.0.0:8000/estates?'+limit+fields+''
+				url: 'http://0.0.0.0:8081/estates?'+limit+fields+''
 			});
 		},
 		create: function() {
@@ -2206,19 +2184,25 @@ limitations under the License.
 			//Private Key
 			L.mapbox.accessToken = 'pk.eyJ1IjoibWFya29za3QiLCJhIjoiOTVmMjE4NTdmNDJjNWVkNTA0MDZlNDE0MWI1ZTdiZDUifQ.DJCF768JpbwaSuT5Ye0Xwg';
 
-			this.map = L.mapbox.map('map-canvas', 'markoskt.n3860n3a', {
-				minZoom: 5
+			this.map = L.mapbox.map(config.mapClass, 'markoskt.n3860n3a', {
+				minZoom: 4
 			}).setView([40.73, -74.011], 5);
 
-			this.createMarkers(config);
+			this.createMarkers(config.markers);
 		},
-		createMarkers: function(config, callback) {
-			var markers,
-				marker,
-				_this,
+		update: function(markers) {
+			var marker,
 				i = 0;
 
-			_this = this;
+			//Remove markers
+			this.map.removeLayer(this.clusterGroup);
+
+			//Create the markers
+			this.createMarkers(markers);
+		},
+		createMarkers: function(markers) {
+			var marker,
+				i = 0;
 
 			this.clusterGroup = new L.MarkerClusterGroup({
 				polygonOptions: {
@@ -2236,8 +2220,6 @@ limitations under the License.
 				}
 			});
 
-			markers = config.markers;
-
 			for (i; i < markers.length; i++) {
 		
 				marker = L.marker(new L.LatLng(markers[i].location.lat, markers[i].location.lng), {
@@ -2248,7 +2230,7 @@ limitations under the License.
 					title: markers[i].title
 				});
 
-				marker.bindPopup(_this.template(markers[i]),{
+				marker.bindPopup(this.template(markers[i]),{
 					closeButton: false,
 					minWidth: 320
 				});
@@ -2260,14 +2242,9 @@ limitations under the License.
 				this.clusterGroup.addLayer(marker);
 			}
 
-			this.map.addLayer(this.clusterGroup);	
+			this.map.addLayer(this.clusterGroup);
 
-			setTimeout(function() {
-				_this.update();
-			}, 5000);
-		},
-		update: function(markers) {
-			this.map.removeLayer(this.clusterGroup)
+			this.map.fitBounds(this.clusterGroup.getBounds());
 		},
 		template: function(estate) {
 			var t = "<div class='estate estate--map'>"+
@@ -2327,7 +2304,15 @@ limitations under the License.
 
 			_utils.updateTexts(config);
 		},
-		render: function(config) {
+		renderMap: function(config) {
+			//Render map
+			_map.render({
+				mapClass: config.mapClass,
+				markers: config.data,
+				bounds: config.bounds || false
+			});
+		},
+		renderList: function(config) {
 			//Define the template
 			var template = paperclip.template(t);
 
@@ -2340,13 +2325,6 @@ limitations under the License.
 
 			//Render
 			document.querySelector(config.listClass).appendChild(this.view.render());
-
-			//Render map
-			_map.render({
-				mapClass: config.mapClass,
-				markers: config.data,
-				bounds: config.bounds || false
-			});
 
 			_utils.updateTexts({});
 		}
@@ -2496,6 +2474,46 @@ limitations under the License.
 
 				$('.js-result-stats').text(''+pages.from+' — '+pages.to+' de '+totalData+' imóveis');
 			}());
+		}
+	}
+});;Box.Application.addService('view.service', function(application) {
+	'use strict';
+
+	var _render  = application.getService('render.service'),
+		_estates = application.getService('estates.service'),
+		_storage = application.getService('storage.service');
+
+	return {
+		map: function() {
+
+			$('main').addClass('map-active');
+
+			_estates.get({
+				fields: 'cover,price,neighborhood,address,bathrooms,bedrooms,area,location,title'
+			}).then(function(data) {
+				_storage.set(data, 'private');
+				_render.renderMap({
+					data: data,
+					mapClass: 'map--big',
+					bounds: true
+				});
+			});
+		},
+		list: function() {
+
+			$('main').addClass('list-active');
+
+			_estates.get({
+				fields: 'cover,price,neighborhood,address,bathrooms,bedrooms,area,location,title'
+			}).then(function(data) {
+				_storage.set(data, 'private');
+				_render.renderList({
+					data: _.slice(data, 0, 12),
+					listClass: '.render-area',
+					mapClass: 'map--small',
+					bounds: true
+				});
+			});
 		}
 	}
 });

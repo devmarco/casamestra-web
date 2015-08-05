@@ -12,19 +12,25 @@ Box.Application.addService('map.service', function(application) {
 			//Private Key
 			L.mapbox.accessToken = 'pk.eyJ1IjoibWFya29za3QiLCJhIjoiOTVmMjE4NTdmNDJjNWVkNTA0MDZlNDE0MWI1ZTdiZDUifQ.DJCF768JpbwaSuT5Ye0Xwg';
 
-			this.map = L.mapbox.map('map-canvas', 'markoskt.n3860n3a', {
-				minZoom: 5
+			this.map = L.mapbox.map(config.mapClass, 'markoskt.n3860n3a', {
+				minZoom: 4
 			}).setView([40.73, -74.011], 5);
 
-			this.createMarkers(config);
+			this.createMarkers(config.markers);
 		},
-		createMarkers: function(config, callback) {
-			var markers,
-				marker,
-				_this,
+		update: function(markers) {
+			var marker,
 				i = 0;
 
-			_this = this;
+			//Remove markers
+			this.map.removeLayer(this.clusterGroup);
+
+			//Create the markers
+			this.createMarkers(markers);
+		},
+		createMarkers: function(markers) {
+			var marker,
+				i = 0;
 
 			this.clusterGroup = new L.MarkerClusterGroup({
 				polygonOptions: {
@@ -42,8 +48,6 @@ Box.Application.addService('map.service', function(application) {
 				}
 			});
 
-			markers = config.markers;
-
 			for (i; i < markers.length; i++) {
 		
 				marker = L.marker(new L.LatLng(markers[i].location.lat, markers[i].location.lng), {
@@ -54,7 +58,7 @@ Box.Application.addService('map.service', function(application) {
 					title: markers[i].title
 				});
 
-				marker.bindPopup(_this.template(markers[i]),{
+				marker.bindPopup(this.template(markers[i]),{
 					closeButton: false,
 					minWidth: 320
 				});
@@ -66,14 +70,9 @@ Box.Application.addService('map.service', function(application) {
 				this.clusterGroup.addLayer(marker);
 			}
 
-			this.map.addLayer(this.clusterGroup);	
+			this.map.addLayer(this.clusterGroup);
 
-			setTimeout(function() {
-				_this.update();
-			}, 5000);
-		},
-		update: function(markers) {
-			this.map.removeLayer(this.clusterGroup)
+			this.map.fitBounds(this.clusterGroup.getBounds());
 		},
 		template: function(estate) {
 			var t = "<div class='estate estate--map'>"+

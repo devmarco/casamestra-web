@@ -38,7 +38,15 @@ Box.Application.addService('render.service', function(application) {
 
 			_utils.updateTexts(config);
 		},
-		render: function(config) {
+		renderMap: function(config) {
+			//Render map
+			_map.render({
+				mapClass: config.mapClass,
+				markers: config.data,
+				bounds: config.bounds || false
+			});
+		},
+		renderList: function(config) {
 			//Define the template
 			var template = paperclip.template(t);
 
@@ -51,13 +59,6 @@ Box.Application.addService('render.service', function(application) {
 
 			//Render
 			document.querySelector(config.listClass).appendChild(this.view.render());
-
-			//Render map
-			_map.render({
-				mapClass: config.mapClass,
-				markers: config.data,
-				bounds: config.bounds || false
-			});
 
 			_utils.updateTexts({});
 		}
