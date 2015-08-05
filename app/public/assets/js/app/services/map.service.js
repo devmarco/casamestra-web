@@ -4,11 +4,14 @@ Box.Application.addService('map.service', function(application) {
 	var _util 	= application.getService('utils.service'),
 		L 		= application.getGlobal('L');
 
-	//Private Key
-	L.mapbox.accessToken = 'pk.eyJ1IjoibWFya29za3QiLCJhIjoiOTVmMjE4NTdmNDJjNWVkNTA0MDZlNDE0MWI1ZTdiZDUifQ.DJCF768JpbwaSuT5Ye0Xwg';
-
 	return {
 		render: function(config) {
+
+			if (!L) return false;
+
+			//Private Key
+			L.mapbox.accessToken = 'pk.eyJ1IjoibWFya29za3QiLCJhIjoiOTVmMjE4NTdmNDJjNWVkNTA0MDZlNDE0MWI1ZTdiZDUifQ.DJCF768JpbwaSuT5Ye0Xwg';
+
 			this.map = L.mapbox.map('map-canvas', 'markoskt.n3860n3a', {
 				minZoom: 5
 			}).setView([40.73, -74.011], 5);
@@ -16,15 +19,14 @@ Box.Application.addService('map.service', function(application) {
 			this.createMarkers(config);
 		},
 		createMarkers: function(config, callback) {
-			var clusterGroup,
-				markers,
+			var markers,
 				marker,
 				_this,
 				i = 0;
 
 			_this = this;
 
-			clusterGroup = new L.MarkerClusterGroup({
+			this.clusterGroup = new L.MarkerClusterGroup({
 				polygonOptions: {
 					fillColor: '#3887be',
 					color: '#3887be',
@@ -52,19 +54,26 @@ Box.Application.addService('map.service', function(application) {
 					title: markers[i].title
 				});
 
-				marker.bindPopup(_this.template(markers[i]));
+				marker.bindPopup(_this.template(markers[i]),{
+					closeButton: false,
+					minWidth: 320
+				});
 
-				marker.on('mouseover', function (e) {
+				marker.on('click', function (e) {
             		this.openPopup();
         		});
 
-				clusterGroup.addLayer(marker);
+				this.clusterGroup.addLayer(marker);
 			}
 
-			this.map.addLayer(clusterGroup);	
+			this.map.addLayer(this.clusterGroup);	
+
+			setTimeout(function() {
+				_this.update();
+			}, 5000);
 		},
 		update: function(markers) {
-		
+			this.map.removeLayer(this.clusterGroup)
 		},
 		template: function(estate) {
 			var t = "<div class='estate estate--map'>"+
