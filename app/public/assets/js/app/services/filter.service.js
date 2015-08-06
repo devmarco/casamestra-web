@@ -41,7 +41,7 @@ Box.Application.addService('filter.service', function(application) {
 			this.filter();
 		},
 		filter: function() {
-			var data = _storage.get('private'),
+			var data = _storage.get('private').data,
 				filteredObject = [];
 
 			if ($.isEmptyObject(filters)) {
@@ -95,21 +95,18 @@ Box.Application.addService('filter.service', function(application) {
 			}
 
 			function checkValues(filter, item) {
-				var b = 0,
-					isValid = false;
+				var isValid = false;
 
 				if (filter.indexOf(5) !== -1) {
-					for (b; b < filter.length; b++) {
-						if (filter[b] === 5 && item >= filter[b]) {
+					filter.forEach(function(value, index) {
+						if (value === 5 && item >= value) {
 							isValid = true;
-							break;
 						} else {
-							if (filter[b] === item) {
+							if (value === item) {
 								isValid = true;
-								break;
 							}
 						}
-					}
+					});
 
 					return isValid;
 				} else {

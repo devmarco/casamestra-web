@@ -8,24 +8,23 @@ Box.Application.addService('utils.service', function(context) {
 		formatMoney: function(number) {
 			return "R$ " + number.toFixed(2).replace('.', ',').replace(/(\d)(?=(\d{3})+\,)/g, "$1.");
 		},
-		updateTexts: function(config) {
-			var filters = config.filters || {},
+		updateTexts: function(f, pagination) {
+			var filters = f || {},
 				_this = this;
 
 			function createText(value) {
 				var items,
-					text = '',
-					i = 0;
+					text = '';
 
 				items = value.sort(function(a, b){return a-b});
 
-				for (i; i < value.length; i++) {
-					if (i === (value.length -1)) {
-						(text !== '') ? text+= ' e '+items[i]+'' : text+= ''+items[i]+'';
+				value.forEach(function(value, index) {
+					if (index === (value.length -1)) {
+						(text !== '') ? text+= ' e '+value+'' : text+= ''+value+'';
 					} else {
-						(text !== '') ? text+= ','+items[i]+'' : text+= ''+items[i]+'';
+						(text !== '') ? text+= ','+value+'' : text+= ''+value+'';
 					}
-				}
+				});
 
 				return text;
 			}
@@ -70,14 +69,13 @@ Box.Application.addService('utils.service', function(context) {
 			(function updateMore() {
 				var elMore 	= $('.js-selected-more'),
 					keys = Object.keys(filters),
-					count = 0,
-					m = 0;
+					count = 0;
 
-				for (m; m < keys.length; m++) {
-					if (keys[m] !== 'bedrooms' && keys[m] !== 'price') {
+				keys.forEach(function(value, index) {
+					if (value !== 'bedrooms' && value !== 'price') {
 						count++;
 					}
-				}
+				});
 
 				if (count !== 0) {
 					elMore.text('('+count+') Mais');
@@ -87,11 +85,11 @@ Box.Application.addService('utils.service', function(context) {
 			}());
 
 			(function updatePagination() {
-				var totalData = _storage.get().length,
+				var totalData = _storage.get().data.length,
 					pages = {};
 
-				if (config.pages) {
-					pages = config.pages;
+				if (pagination) {
+					pages = pagination;					
 				} else {
 					pages.from = 1;
 					pages.to = 12;

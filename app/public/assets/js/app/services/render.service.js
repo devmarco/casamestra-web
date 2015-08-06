@@ -1,14 +1,18 @@
 Box.Application.addService('render.service', function(application) {
 	'use strict';
 
+	//Globals
+	var paperclip = application.getGlobal('paperclip');
+
+	//Services
 	var _estates  = application.getService('estates.service'),
 		_storage  = application.getService('storage.service'),
 		_utils 	  = application.getService('utils.service'),
 		_map 	  = application.getService('map.service'),
-		t,
+		t;
 
-		//Globals
-		paperclip = application.getGlobal('paperclip');
+	//vars
+	var template;
 
 	/**
 	 * Estates Template
@@ -30,50 +34,51 @@ Box.Application.addService('render.service', function(application) {
 	"</div>"+
 	"</repeat>";
 
+	//Instance formatMoney to paperclip
+	paperclip.modifiers.formatMoney = _utils.formatMoney;
+
+	//Define the template
+	template = paperclip.template(t);
+
 	return {
 		update: function(config) {
-			//Update view
 			if (this.view) this.view.set('estates', config.data);
 
-			//Update map
 			_map.update(config.data);
 
-			_utils.updateTexts(config);
+			_utils.updateTexts(_storage.get().filters, config.pagination || null);
 		},
-		map: function(config) {
-			_estates.get({
-				fields: 'cover,price,neighborhood,address,bathrooms,bedrooms,area,location,title'
-			}).then(function(data) {
-				_storage.set(data, 'private');
-				_map.render({
-					mapClass: 'map--big',
-					markers: data,
-					bounds: true
-				});
+		map: function(data) {
+
+			if (this.view) this.view.remove();
+
+			_map.destroy();
+
+			_map.render({
+				mapClass: 'map--big',
+				markers: data,
+				bounds: true
 			});
+
+			_utils.updateTexts(_storage.get().filters);
 		},
-		list: function(config) {
-			//Define the template
-			var template = paperclip.template(t);
+		list: function(data) {
 
-			//Instance formatMoney to paperclip
-			paperclip.modifiers.formatMoney = _utils.formatMoney;
+			_map.destroy();
 
-			_estates.get({
-				fields: 'cover,price,neighborhood,address,bathrooms,bedrooms,area,location,title'
-			}).then(function(data) {
-				_storage.set(data, 'private');
-				
-				this.view = template.view({
-					estates: data
-				});
-
-				//Render
-				document.querySelector('.render-area').appendChild(this.view.render());
-
-				_utils.updateTexts({});
-
+			this.view = template.view({
+				estates: _.slice(data, 0, 12)
 			});
+
+			document.querySelector('.render-area').appendChild(this.view.render());
+
+			_map.render({
+				mapClass: 'map--small',
+				markers: _.slice(data, 0, 12),
+				bounds: true
+			});
+
+			_utils.updateTexts(_storage.get().filters);
 		}
 	}
 });

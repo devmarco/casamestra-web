@@ -6,7 +6,6 @@ Box.Application.addService('map.service', function(application) {
 
 	return {
 		render: function(config) {
-
 			if (!L) return false;
 
 			//Private Key
@@ -19,9 +18,6 @@ Box.Application.addService('map.service', function(application) {
 			this.createMarkers(config.markers);
 		},
 		update: function(markers) {
-			var marker,
-				i = 0;
-
 			//Remove markers
 			this.map.removeLayer(this.clusterGroup);
 
@@ -30,12 +26,12 @@ Box.Application.addService('map.service', function(application) {
 		},
 		createMarkers: function(markers) {
 			var marker,
-				i = 0;
+				_this = this;
 
 			this.clusterGroup = new L.MarkerClusterGroup({
 				polygonOptions: {
-					fillColor: '#3887be',
-					color: '#3887be',
+					fillColor: '#50E3C2',
+					color: '#50E3C2',
 					weight: 2,
 					opacity: 1,
 					fillOpacity: 0.5
@@ -48,17 +44,16 @@ Box.Application.addService('map.service', function(application) {
 				}
 			});
 
-			for (i; i < markers.length; i++) {
-		
-				marker = L.marker(new L.LatLng(markers[i].location.lat, markers[i].location.lng), {
+			markers.forEach(function(value, index) {
+				marker = L.marker(new L.LatLng(value.location.lat, value.location.lng), {
 					icon: L.icon({
 						iconUrl: 'public/assets/imgs/svg/marker-icon.svg',
 						iconSize:     [36, 50]
 					}),
-					title: markers[i].title
+					title: value.title
 				});
 
-				marker.bindPopup(this.template(markers[i]),{
+				marker.bindPopup(_this.template(value),{
 					closeButton: false,
 					minWidth: 320
 				});
@@ -67,8 +62,8 @@ Box.Application.addService('map.service', function(application) {
             		this.openPopup();
         		});
 
-				this.clusterGroup.addLayer(marker);
-			}
+				_this.clusterGroup.addLayer(marker);
+			});
 
 			this.map.addLayer(this.clusterGroup);
 
@@ -90,6 +85,9 @@ Box.Application.addService('map.service', function(application) {
 			"</div>";
 
 			return t;
+		},
+		destroy: function(map) {
+			if (this.map) this.map.remove();
 		}
 	}
 });

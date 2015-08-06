@@ -16,7 +16,7 @@ Box.Application.addBehavior('pagination', function(context) {
 			if (elementType === 'p-prev') prev();
 
 			function prev() {
-				var data = _storage.get();
+				var data = _storage.get().data;
 
 				if (_this.nextItem !== 0) {
 					
@@ -24,7 +24,7 @@ Box.Application.addBehavior('pagination', function(context) {
 					
 					_render.update({
 						data: _.slice(data, _this.prevItem, _this.nextItem),
-						pages: {
+						pagination: {
 							from: (_this.prevItem+1),
 							to: _this.nextItem
 						}
@@ -36,7 +36,7 @@ Box.Application.addBehavior('pagination', function(context) {
 			}
 
 			function next() {
-				var data = _storage.get(),
+				var data = _storage.get().data,
 					dataPagined;
 
 				if ((_this.nextItem+_this.itemsDisplay) > data.length) {
@@ -48,7 +48,7 @@ Box.Application.addBehavior('pagination', function(context) {
 
 				_render.update({
 					data: _.slice(data, (_this.nextItem), (_this.nextItem+_this.itemsDisplay)),
-					pages: {
+					pagination: {
 						from: _this.nextItem,
 						to: ((_this.nextItem+_this.itemsDisplay >= data.length) ? data.length : _this.nextItem+_this.itemsDisplay)
 					}

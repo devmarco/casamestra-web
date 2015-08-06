@@ -7,8 +7,12 @@
 		display: block;
 	}
 
+	.map-icon {
+		pointer-events: none;
+	}
+
 	.map-icon:before {
-		@include opacity(10);
+		@include opacity(3);
 	}
 }
 
@@ -17,8 +21,13 @@
 		display: block;
 	}
 
+	.list-icon {
+		pointer-events: none;
+	}
+
 	.list-icon:before {
-		@include opacity(10);
+		pointer-events: none;
+		@include opacity(3);
 	}
 }
 
@@ -63,6 +72,10 @@
 				color: $master;
 			}
 		}
+
+		.map-icon {
+			border-left: none;
+		}	
 	}
 
 	.filter-content {
@@ -79,6 +92,7 @@
 
 	.right {
 		float: right;
+		margin: 0;
 
 		button {
 			padding: 10px;
@@ -104,12 +118,13 @@
 
 .map-icon,
 .list-icon {
+	cursor: pointer;
 	text-indent: -999em;
 
 	&:before {
 		content: '';
 		float: right;
-		@include opacity(3);
+		@include opacity(10);
 	}
 }
 
@@ -156,9 +171,12 @@
 	right: 0;
 	overflow: hidden;
 	height: 100%;
+	z-index: 1;
 }
 
 .estates__bx__list__container {
+	position: relative;
+    z-index: 2;
 	background-color: #F5F6F6;
 	float: left;
     width: 75%;

@@ -1,28 +1,45 @@
-Box.Application.addModule('estates.map', function(context) {
+Box.Application.addModule('map', function(context) {
 	'use strict';
 
 	var _render  = context.getService('render.service'),
-		_storage = context.getService('storage.service');
+		_storage = context.getService('storage.service'),
+		_estates = context.getService('estates.service');
 
 	return {
-		behaviors: ['pagination'],
-		messages: ['newFilter'],
+		messages: ['newFilter', 'changeView'],
 		onmessage: function(name, value) {
+			if (name === 'newFilter') this.renderFilter(value);
+			if (name === 'changeView' && value === 'map') this.renderView();
+        },
+        renderFilter: function(value) {
+        	_storage.set('public', value.data, value.filters);
 
-			if (name === 'newFilter') filterEstates();
-			
-			function filterEstates() {
-				_storage.set(value.data);
+        	if (_storage.view.get() === 'map') {
 				_render.update({
-					data: value.data,
-					filters: value.filters
+					data: value.data
 				});
 			}
-        },
+		},
+		renderView: function() {
+			_storage.view.set('map');
+			_render.map(_storage.get().data);
+		},
 		init: function() {
 			if (_storage.userPreferences.map()) {
-				$('main').removeClass('list-active').addClass('map-active');
-				_render.map();
+
+				//Display the map
+				$('main').addClass('map-active');
+
+				//Set current view
+				_storage.view.set('map');
+
+				//Load data
+				_estates.get({
+					fields: 'cover,price,neighborhood,address,bathrooms,bedrooms,area,location,title'
+				}).then(function(data) {
+					_storage.set('private', data);
+					_render.map(data);
+				});
 			}
 		}
 	}

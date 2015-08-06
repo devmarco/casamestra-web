@@ -1794,7 +1794,7 @@ limitations under the License.
 			if (elementType === 'p-prev') prev();
 
 			function prev() {
-				var data = _storage.get();
+				var data = _storage.get().data;
 
 				if (_this.nextItem !== 0) {
 					
@@ -1802,7 +1802,7 @@ limitations under the License.
 					
 					_render.update({
 						data: _.slice(data, _this.prevItem, _this.nextItem),
-						pages: {
+						pagination: {
 							from: (_this.prevItem+1),
 							to: _this.nextItem
 						}
@@ -1814,7 +1814,7 @@ limitations under the License.
 			}
 
 			function next() {
-				var data = _storage.get(),
+				var data = _storage.get().data,
 					dataPagined;
 
 				if ((_this.nextItem+_this.itemsDisplay) > data.length) {
@@ -1826,7 +1826,7 @@ limitations under the License.
 
 				_render.update({
 					data: _.slice(data, (_this.nextItem), (_this.nextItem+_this.itemsDisplay)),
-					pages: {
+					pagination: {
 						from: _this.nextItem,
 						to: ((_this.nextItem+_this.itemsDisplay >= data.length) ? data.length : _this.nextItem+_this.itemsDisplay)
 					}
@@ -1836,7 +1836,7 @@ limitations under the License.
 			return false;			
 		}
 	};
-});;Box.Application.addModule('estates.filter', function(context) {
+});;Box.Application.addModule('filter', function(context) {
 	'use strict';
 
 	var $ 			= context.getGlobal('jQuery'),
@@ -1847,6 +1847,8 @@ limitations under the License.
 		onclick: function(event, element, elementType) {
 			if (elementType === 'f-bedrooms') filterByBedrooms(element);
 			if (elementType === 'f-bathrooms') filterByBathrooms(element);
+			if (elementType === 'f-map') renderMap();
+			if (elementType === 'f-list') renderList();
 		},
 		onchange: function(event, element, elementType) {
 			if (elementType === 'f-price') filterByPrice(element);
@@ -1902,105 +1904,105 @@ limitations under the License.
 			amount: amount
 		});
 	}
-});;Box.Application.addModule('estates.list', function(context) {
+
+	function renderMap() {
+		$('main').removeClass('list-active').addClass('map-active');
+		Box.Application.broadcast('changeView', 'map');
+	}
+
+	function renderList() {
+		$('main').removeClass('map-active').addClass('list-active');
+		Box.Application.broadcast('changeView', 'list');
+	}
+});;Box.Application.addModule('list', function(context) {
 	'use strict';
 
 	var _render  = context.getService('render.service'),
-		_storage = context.getService('storage.service');
+		_storage = context.getService('storage.service'),
+		_estates = context.getService('estates.service');
 
 	return {
 		behaviors: ['pagination'],
-		messages: ['newFilter', 'markerHover'],
+		messages: ['newFilter', 'changeView'],
 		onmessage: function(name, value) {
-			
-			if (name === 'newFilter') filterEstates();
-			
-			function filterEstates() {
-				_storage.set(value.data);
+			if (name === 'newFilter') this.renderFilter(value);
+			if (name === 'changeView' && value === 'list') this.renderView();
+		},
+		renderFilter: function(value) {
+			_storage.set('public', value.data, value.filters);
+
+			if (_storage.view.get() === 'list') {
 				_render.update({
-					data: _.slice(value.data, 0, 12),
-					filters: value.filters
+					data: _.slice(value.data, 0, 12)
 				});
 			}
-        },
+		},
+		renderView: function() {
+			_storage.view.set('list');
+			_render.list(_storage.get().data);
+		},	
 		init: function() {
 			if (_storage.userPreferences.list()) {
-				$('main').removeClass('map-active').addClass('list-active');
-				_render.list();
+
+				//Display the list
+				$('main').addClass('list-active');
+
+				//Set the current view
+				_storage.view.set('list');
+
+				//Load the data
+				_estates.get({
+					fields: 'cover,price,neighborhood,address,bathrooms,bedrooms,area,location,title'
+				}).then(function(data) {
+					_storage.set('private', data);
+					_render.list(_.slice(data, 0, 12));
+				});
 			}
 		}
 	}
-});;Box.Application.addModule('estates', function(context) {
-	'use strict';
-
-	var $ = context.getGlobal('jQuery');
-
-	return {
-		init: function() {
-			// var buttonMap 	= document.querySelector('#b-map'),
-			// 	buttonList 	= document.querySelector('#b-list'),
-			// 	mapModule 	= document.querySelector('.estates__bx__map'),
-			// 	listModule	= document.querySelector('.estates__bx__list');	
-
-			// if (window.localStorage.getItem('cmview')) {
-
-			// } else {
-			// 	$(buttonMap).closest('main').addClass('map-active');
-
-			// 	console.log(Box.Application);
-
-			// 	var a = Box.Application.start(mapModule);
-
-			// 	console.log(a);
-			// }
-		}
-	}
-});;Box.Application.addModule('estates.map', function(context) {
+});;Box.Application.addModule('map', function(context) {
 	'use strict';
 
 	var _render  = context.getService('render.service'),
-		_storage = context.getService('storage.service');
+		_storage = context.getService('storage.service'),
+		_estates = context.getService('estates.service');
 
 	return {
-		behaviors: ['pagination'],
-		messages: ['newFilter'],
+		messages: ['newFilter', 'changeView'],
 		onmessage: function(name, value) {
+			if (name === 'newFilter') this.renderFilter(value);
+			if (name === 'changeView' && value === 'map') this.renderView();
+        },
+        renderFilter: function(value) {
+        	_storage.set('public', value.data, value.filters);
 
-			if (name === 'newFilter') filterEstates();
-			
-			function filterEstates() {
-				_storage.set(value.data);
+        	if (_storage.view.get() === 'map') {
 				_render.update({
-					data: value.data,
-					filters: value.filters
+					data: value.data
 				});
 			}
-        },
+		},
+		renderView: function() {
+			_storage.view.set('map');
+			_render.map(_storage.get().data);
+		},
 		init: function() {
 			if (_storage.userPreferences.map()) {
-				$('main').removeClass('list-active').addClass('map-active');
-				_render.map();
+
+				//Display the map
+				$('main').addClass('map-active');
+
+				//Set current view
+				_storage.view.set('map');
+
+				//Load data
+				_estates.get({
+					fields: 'cover,price,neighborhood,address,bathrooms,bedrooms,area,location,title'
+				}).then(function(data) {
+					_storage.set('private', data);
+					_render.map(data);
+				});
 			}
-		}
-	}
-});;Box.Application.addModule('estates.view', function(context) {
-	'use strict';
-
-	var _render = context.getService('render.service');
-
-	return {
-		init: function() {
-			console.log('View initialized');
-		},
-		onclick: function(event, element, elementType) {
-			if (elementType === 'map') this.renderMap(element);
-			if (elementType === 'list') this.renderList(element);
-		},
-		renderMap: function(element) {
-			_render.map();
-		},
-		renderList: function(element) {
-			_render.list();
 		}
 	}
 });;Box.Application.addService('estates.service', function(application) {
@@ -2070,7 +2072,7 @@ limitations under the License.
 			this.filter();
 		},
 		filter: function() {
-			var data = _storage.get('private'),
+			var data = _storage.get('private').data,
 				filteredObject = [];
 
 			if ($.isEmptyObject(filters)) {
@@ -2124,21 +2126,18 @@ limitations under the License.
 			}
 
 			function checkValues(filter, item) {
-				var b = 0,
-					isValid = false;
+				var isValid = false;
 
 				if (filter.indexOf(5) !== -1) {
-					for (b; b < filter.length; b++) {
-						if (filter[b] === 5 && item >= filter[b]) {
+					filter.forEach(function(value, index) {
+						if (value === 5 && item >= value) {
 							isValid = true;
-							break;
 						} else {
-							if (filter[b] === item) {
+							if (value === item) {
 								isValid = true;
-								break;
 							}
 						}
-					}
+					});
 
 					return isValid;
 				} else {
@@ -2176,7 +2175,6 @@ limitations under the License.
 
 	return {
 		render: function(config) {
-
 			if (!L) return false;
 
 			//Private Key
@@ -2189,9 +2187,6 @@ limitations under the License.
 			this.createMarkers(config.markers);
 		},
 		update: function(markers) {
-			var marker,
-				i = 0;
-
 			//Remove markers
 			this.map.removeLayer(this.clusterGroup);
 
@@ -2200,12 +2195,12 @@ limitations under the License.
 		},
 		createMarkers: function(markers) {
 			var marker,
-				i = 0;
+				_this = this;
 
 			this.clusterGroup = new L.MarkerClusterGroup({
 				polygonOptions: {
-					fillColor: '#3887be',
-					color: '#3887be',
+					fillColor: '#50E3C2',
+					color: '#50E3C2',
 					weight: 2,
 					opacity: 1,
 					fillOpacity: 0.5
@@ -2218,17 +2213,16 @@ limitations under the License.
 				}
 			});
 
-			for (i; i < markers.length; i++) {
-		
-				marker = L.marker(new L.LatLng(markers[i].location.lat, markers[i].location.lng), {
+			markers.forEach(function(value, index) {
+				marker = L.marker(new L.LatLng(value.location.lat, value.location.lng), {
 					icon: L.icon({
 						iconUrl: 'public/assets/imgs/svg/marker-icon.svg',
 						iconSize:     [36, 50]
 					}),
-					title: markers[i].title
+					title: value.title
 				});
 
-				marker.bindPopup(this.template(markers[i]),{
+				marker.bindPopup(_this.template(value),{
 					closeButton: false,
 					minWidth: 320
 				});
@@ -2237,8 +2231,8 @@ limitations under the License.
             		this.openPopup();
         		});
 
-				this.clusterGroup.addLayer(marker);
-			}
+				_this.clusterGroup.addLayer(marker);
+			});
 
 			this.map.addLayer(this.clusterGroup);
 
@@ -2260,19 +2254,26 @@ limitations under the License.
 			"</div>";
 
 			return t;
+		},
+		destroy: function(map) {
+			if (this.map) this.map.remove();
 		}
 	}
 });;Box.Application.addService('render.service', function(application) {
 	'use strict';
 
+	//Globals
+	var paperclip = application.getGlobal('paperclip');
+
+	//Services
 	var _estates  = application.getService('estates.service'),
 		_storage  = application.getService('storage.service'),
 		_utils 	  = application.getService('utils.service'),
 		_map 	  = application.getService('map.service'),
-		t,
+		t;
 
-		//Globals
-		paperclip = application.getGlobal('paperclip');
+	//vars
+	var template;
 
 	/**
 	 * Estates Template
@@ -2294,73 +2295,91 @@ limitations under the License.
 	"</div>"+
 	"</repeat>";
 
+	//Instance formatMoney to paperclip
+	paperclip.modifiers.formatMoney = _utils.formatMoney;
+
+	//Define the template
+	template = paperclip.template(t);
+
 	return {
 		update: function(config) {
-			//Update view
 			if (this.view) this.view.set('estates', config.data);
 
-			//Update map
 			_map.update(config.data);
 
-			_utils.updateTexts(config);
+			_utils.updateTexts(_storage.get().filters, config.pagination || null);
 		},
-		map: function(config) {
-			_estates.get({
-				fields: 'cover,price,neighborhood,address,bathrooms,bedrooms,area,location,title'
-			}).then(function(data) {
-				_storage.set(data, 'private');
-				_map.render({
-					mapClass: 'map--big',
-					markers: data,
-					bounds: true
-				});
+		map: function(data) {
+
+			if (this.view) this.view.remove();
+
+			_map.destroy();
+
+			_map.render({
+				mapClass: 'map--big',
+				markers: data,
+				bounds: true
 			});
+
+			_utils.updateTexts(_storage.get().filters);
 		},
-		list: function(config) {
-			//Define the template
-			var template = paperclip.template(t);
+		list: function(data) {
 
-			//Instance formatMoney to paperclip
-			paperclip.modifiers.formatMoney = _utils.formatMoney;
+			_map.destroy();
 
-			_estates.get({
-				fields: 'cover,price,neighborhood,address,bathrooms,bedrooms,area,location,title'
-			}).then(function(data) {
-				_storage.set(data, 'private');
-				
-				this.view = template.view({
-					estates: data
-				});
-
-				//Render
-				document.querySelector('.render-area').appendChild(this.view.render());
-
-				_utils.updateTexts({});
-
+			this.view = template.view({
+				estates: _.slice(data, 0, 12)
 			});
+
+			document.querySelector('.render-area').appendChild(this.view.render());
+
+			_map.render({
+				mapClass: 'map--small',
+				markers: _.slice(data, 0, 12),
+				bounds: true
+			});
+
+			_utils.updateTexts(_storage.get().filters);
 		}
 	}
 });;Box.Application.addService('storage.service', function(application) {
 	'use strict';
 
 	var publicData,
-		privateData;
+		privateData,
+		publicFilters,
+		view;
 
 	return {
 		get: function(config) {
 			if (config === 'private') {
-				return privateData;
+				return {
+					data: privateData,
+					filters: publicFilters || {}
+				};
 			}
 
-			return publicData || privateData;
+			return {
+				data: publicData || privateData,
+				filters: publicFilters || {}
+			};
 		},
-		set: function(data, config) {
+		set: function(config, data, filters) {
 			if (config === 'private') {
 				privateData = data;
 				return false;
 			}
 
 			publicData = data;
+			if (filters) publicFilters = filters;
+		},
+		view: {
+			get: function() {
+				return view;
+			},
+			set: function(viewType) {
+				view = viewType;
+			}
 		},
 		userPreferences: {
 			map: function() {
@@ -2394,24 +2413,23 @@ limitations under the License.
 		formatMoney: function(number) {
 			return "R$ " + number.toFixed(2).replace('.', ',').replace(/(\d)(?=(\d{3})+\,)/g, "$1.");
 		},
-		updateTexts: function(config) {
-			var filters = config.filters || {},
+		updateTexts: function(f, pagination) {
+			var filters = f || {},
 				_this = this;
 
 			function createText(value) {
 				var items,
-					text = '',
-					i = 0;
+					text = '';
 
 				items = value.sort(function(a, b){return a-b});
 
-				for (i; i < value.length; i++) {
-					if (i === (value.length -1)) {
-						(text !== '') ? text+= ' e '+items[i]+'' : text+= ''+items[i]+'';
+				value.forEach(function(value, index) {
+					if (index === (value.length -1)) {
+						(text !== '') ? text+= ' e '+value+'' : text+= ''+value+'';
 					} else {
-						(text !== '') ? text+= ','+items[i]+'' : text+= ''+items[i]+'';
+						(text !== '') ? text+= ','+value+'' : text+= ''+value+'';
 					}
-				}
+				});
 
 				return text;
 			}
@@ -2456,14 +2474,13 @@ limitations under the License.
 			(function updateMore() {
 				var elMore 	= $('.js-selected-more'),
 					keys = Object.keys(filters),
-					count = 0,
-					m = 0;
+					count = 0;
 
-				for (m; m < keys.length; m++) {
-					if (keys[m] !== 'bedrooms' && keys[m] !== 'price') {
+				keys.forEach(function(value, index) {
+					if (value !== 'bedrooms' && value !== 'price') {
 						count++;
 					}
-				}
+				});
 
 				if (count !== 0) {
 					elMore.text('('+count+') Mais');
@@ -2473,11 +2490,11 @@ limitations under the License.
 			}());
 
 			(function updatePagination() {
-				var totalData = _storage.get().length,
+				var totalData = _storage.get().data.length,
 					pages = {};
 
-				if (config.pages) {
-					pages = config.pages;
+				if (pagination) {
+					pages = pagination;					
 				} else {
 					pages.from = 1;
 					pages.to = 12;

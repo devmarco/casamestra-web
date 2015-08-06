@@ -1,4 +1,4 @@
-Box.Application.addModule('estates.filter', function(context) {
+Box.Application.addModule('filter', function(context) {
 	'use strict';
 
 	var $ 			= context.getGlobal('jQuery'),
@@ -9,6 +9,8 @@ Box.Application.addModule('estates.filter', function(context) {
 		onclick: function(event, element, elementType) {
 			if (elementType === 'f-bedrooms') filterByBedrooms(element);
 			if (elementType === 'f-bathrooms') filterByBathrooms(element);
+			if (elementType === 'f-map') renderMap();
+			if (elementType === 'f-list') renderList();
 		},
 		onchange: function(event, element, elementType) {
 			if (elementType === 'f-price') filterByPrice(element);
@@ -63,5 +65,15 @@ Box.Application.addModule('estates.filter', function(context) {
 			value: value || 0,
 			amount: amount
 		});
+	}
+
+	function renderMap() {
+		$('main').removeClass('list-active').addClass('map-active');
+		Box.Application.broadcast('changeView', 'map');
+	}
+
+	function renderList() {
+		$('main').removeClass('map-active').addClass('list-active');
+		Box.Application.broadcast('changeView', 'list');
 	}
 });
