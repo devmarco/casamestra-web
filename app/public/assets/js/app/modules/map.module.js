@@ -2,12 +2,11 @@ Box.Application.addModule('estates.map', function(context) {
 	'use strict';
 
 	var _render  = context.getService('render.service'),
-		_storage = context.getService('storage.service'),
-		_view 	 = context.getService('view.service');
+		_storage = context.getService('storage.service');
 
 	return {
 		behaviors: ['pagination'],
-		messages: ['newFilter', 'markerHover'],
+		messages: ['newFilter'],
 		onmessage: function(name, value) {
 
 			if (name === 'newFilter') filterEstates();
@@ -22,7 +21,8 @@ Box.Application.addModule('estates.map', function(context) {
         },
 		init: function() {
 			if (_storage.userPreferences.map()) {
-				_view.map();
+				$('main').removeClass('list-active').addClass('map-active');
+				_render.map();
 			}
 		}
 	}

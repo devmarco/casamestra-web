@@ -2,8 +2,7 @@ Box.Application.addModule('estates.list', function(context) {
 	'use strict';
 
 	var _render  = context.getService('render.service'),
-		_storage = context.getService('storage.service'),
-		_view 	 = context.getService('view.service');
+		_storage = context.getService('storage.service');
 
 	return {
 		behaviors: ['pagination'],
@@ -22,7 +21,8 @@ Box.Application.addModule('estates.list', function(context) {
         },
 		init: function() {
 			if (_storage.userPreferences.list()) {
-				_view.list();
+				$('main').removeClass('map-active').addClass('list-active');
+				_render.list();
 			}
 		}
 	}

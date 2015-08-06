@@ -1906,8 +1906,7 @@ limitations under the License.
 	'use strict';
 
 	var _render  = context.getService('render.service'),
-		_storage = context.getService('storage.service'),
-		_view 	 = context.getService('view.service');
+		_storage = context.getService('storage.service');
 
 	return {
 		behaviors: ['pagination'],
@@ -1926,7 +1925,8 @@ limitations under the License.
         },
 		init: function() {
 			if (_storage.userPreferences.list()) {
-				_view.list();
+				$('main').removeClass('map-active').addClass('list-active');
+				_render.list();
 			}
 		}
 	}
@@ -1959,12 +1959,11 @@ limitations under the License.
 	'use strict';
 
 	var _render  = context.getService('render.service'),
-		_storage = context.getService('storage.service'),
-		_view 	 = context.getService('view.service');
+		_storage = context.getService('storage.service');
 
 	return {
 		behaviors: ['pagination'],
-		messages: ['newFilter', 'markerHover'],
+		messages: ['newFilter'],
 		onmessage: function(name, value) {
 
 			if (name === 'newFilter') filterEstates();
@@ -1979,14 +1978,15 @@ limitations under the License.
         },
 		init: function() {
 			if (_storage.userPreferences.map()) {
-				_view.map();
+				$('main').removeClass('list-active').addClass('map-active');
+				_render.map();
 			}
 		}
 	}
 });;Box.Application.addModule('estates.view', function(context) {
 	'use strict';
 
-	var _view = context.getService('view.service');
+	var _render = context.getService('render.service');
 
 	return {
 		init: function() {
@@ -1997,12 +1997,10 @@ limitations under the License.
 			if (elementType === 'list') this.renderList(element);
 		},
 		renderMap: function(element) {
-			$(element).closest('main').removeClass('list-active').addClass('map-active');
-			_view.map();
+			_render.map();
 		},
 		renderList: function(element) {
-			$(element).closest('main').removeClass('map-active').addClass('list-active');
-			_view.list();
+			_render.list();
 		}
 	}
 });;Box.Application.addService('estates.service', function(application) {
@@ -2267,7 +2265,9 @@ limitations under the License.
 });;Box.Application.addService('render.service', function(application) {
 	'use strict';
 
-	var _utils 	  = application.getService('utils.service'),
+	var _estates  = application.getService('estates.service'),
+		_storage  = application.getService('storage.service'),
+		_utils 	  = application.getService('utils.service'),
 		_map 	  = application.getService('map.service'),
 		t,
 
@@ -2297,36 +2297,47 @@ limitations under the License.
 	return {
 		update: function(config) {
 			//Update view
-			this.view.set('estates', config.data);
+			if (this.view) this.view.set('estates', config.data);
 
 			//Update map
 			_map.update(config.data);
 
 			_utils.updateTexts(config);
 		},
-		renderMap: function(config) {
-			//Render map
-			_map.render({
-				mapClass: config.mapClass,
-				markers: config.data,
-				bounds: config.bounds || false
+		map: function(config) {
+			_estates.get({
+				fields: 'cover,price,neighborhood,address,bathrooms,bedrooms,area,location,title'
+			}).then(function(data) {
+				_storage.set(data, 'private');
+				_map.render({
+					mapClass: 'map--big',
+					markers: data,
+					bounds: true
+				});
 			});
 		},
-		renderList: function(config) {
+		list: function(config) {
 			//Define the template
 			var template = paperclip.template(t);
 
 			//Instance formatMoney to paperclip
 			paperclip.modifiers.formatMoney = _utils.formatMoney;
 
-			this.view = template.view({
-				estates: config.data
+			_estates.get({
+				fields: 'cover,price,neighborhood,address,bathrooms,bedrooms,area,location,title'
+			}).then(function(data) {
+				_storage.set(data, 'private');
+				
+				this.view = template.view({
+					estates: data
+				});
+
+				//Render
+				document.querySelector('.render-area').appendChild(this.view.render());
+
+				_utils.updateTexts({});
+
 			});
-
-			//Render
-			document.querySelector(config.listClass).appendChild(this.view.render());
-
-			_utils.updateTexts({});
 		}
 	}
 });;Box.Application.addService('storage.service', function(application) {
@@ -2474,46 +2485,6 @@ limitations under the License.
 
 				$('.js-result-stats').text(''+pages.from+' — '+pages.to+' de '+totalData+' imóveis');
 			}());
-		}
-	}
-});;Box.Application.addService('view.service', function(application) {
-	'use strict';
-
-	var _render  = application.getService('render.service'),
-		_estates = application.getService('estates.service'),
-		_storage = application.getService('storage.service');
-
-	return {
-		map: function() {
-
-			$('main').addClass('map-active');
-
-			_estates.get({
-				fields: 'cover,price,neighborhood,address,bathrooms,bedrooms,area,location,title'
-			}).then(function(data) {
-				_storage.set(data, 'private');
-				_render.renderMap({
-					data: data,
-					mapClass: 'map--big',
-					bounds: true
-				});
-			});
-		},
-		list: function() {
-
-			$('main').addClass('list-active');
-
-			_estates.get({
-				fields: 'cover,price,neighborhood,address,bathrooms,bedrooms,area,location,title'
-			}).then(function(data) {
-				_storage.set(data, 'private');
-				_render.renderList({
-					data: _.slice(data, 0, 12),
-					listClass: '.render-area',
-					mapClass: 'map--small',
-					bounds: true
-				});
-			});
 		}
 	}
 });

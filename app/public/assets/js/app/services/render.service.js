@@ -1,7 +1,9 @@
 Box.Application.addService('render.service', function(application) {
 	'use strict';
 
-	var _utils 	  = application.getService('utils.service'),
+	var _estates  = application.getService('estates.service'),
+		_storage  = application.getService('storage.service'),
+		_utils 	  = application.getService('utils.service'),
 		_map 	  = application.getService('map.service'),
 		t,
 
@@ -31,36 +33,47 @@ Box.Application.addService('render.service', function(application) {
 	return {
 		update: function(config) {
 			//Update view
-			this.view.set('estates', config.data);
+			if (this.view) this.view.set('estates', config.data);
 
 			//Update map
 			_map.update(config.data);
 
 			_utils.updateTexts(config);
 		},
-		renderMap: function(config) {
-			//Render map
-			_map.render({
-				mapClass: config.mapClass,
-				markers: config.data,
-				bounds: config.bounds || false
+		map: function(config) {
+			_estates.get({
+				fields: 'cover,price,neighborhood,address,bathrooms,bedrooms,area,location,title'
+			}).then(function(data) {
+				_storage.set(data, 'private');
+				_map.render({
+					mapClass: 'map--big',
+					markers: data,
+					bounds: true
+				});
 			});
 		},
-		renderList: function(config) {
+		list: function(config) {
 			//Define the template
 			var template = paperclip.template(t);
 
 			//Instance formatMoney to paperclip
 			paperclip.modifiers.formatMoney = _utils.formatMoney;
 
-			this.view = template.view({
-				estates: config.data
+			_estates.get({
+				fields: 'cover,price,neighborhood,address,bathrooms,bedrooms,area,location,title'
+			}).then(function(data) {
+				_storage.set(data, 'private');
+				
+				this.view = template.view({
+					estates: data
+				});
+
+				//Render
+				document.querySelector('.render-area').appendChild(this.view.render());
+
+				_utils.updateTexts({});
+
 			});
-
-			//Render
-			document.querySelector(config.listClass).appendChild(this.view.render());
-
-			_utils.updateTexts({});
 		}
 	}
 });

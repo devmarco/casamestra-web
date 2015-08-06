@@ -1,7 +1,7 @@
 Box.Application.addModule('estates.view', function(context) {
 	'use strict';
 
-	var _view = context.getService('view.service');
+	var _render = context.getService('render.service');
 
 	return {
 		init: function() {
@@ -12,12 +12,10 @@ Box.Application.addModule('estates.view', function(context) {
 			if (elementType === 'list') this.renderList(element);
 		},
 		renderMap: function(element) {
-			$(element).closest('main').removeClass('list-active').addClass('map-active');
-			_view.map();
+			_render.map();
 		},
 		renderList: function(element) {
-			$(element).closest('main').removeClass('map-active').addClass('list-active');
-			_view.list();
+			_render.list();
 		}
 	}
 });
