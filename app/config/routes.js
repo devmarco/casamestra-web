@@ -5,12 +5,10 @@
 var routes = [
 	require('../../app/routes/files'),
 	require('../../app/routes/home'),
-	require('../../app/routes/estates')
-	//require('../../app/routes/agents/get-one'),
-	//require('../../app/routes/agents/create'),
-	//require('../../app/routes/agents/update'),
-	//require('../../app/routes/agents/delete'),
-	//require('../../app/routes/agents/upload'),
+	require('../../app/routes/search'),
+	require('../../app/routes/search-buy'),
+	require('../../app/routes/search-rent'),
+	require('../../app/routes/estate')
 ];
 
 module.exports = {

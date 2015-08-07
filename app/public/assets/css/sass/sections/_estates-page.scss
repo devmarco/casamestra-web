@@ -1,0 +1,52 @@
+.estate-details__bx {
+
+}
+
+.estate-details__bx__gallery {
+	height: 450px;
+}
+
+.gallery__presentation {
+	font-size: 0;
+    white-space: nowrap;
+    width: 100%;
+
+	@extend .clearfix;
+	img {
+		max-height: 450px;
+		margin-left: 1px;
+
+		&:first-child {
+			margin-left: 0;
+		}
+	}
+}
+
+.estate-details__bx__header {
+	padding: 1.5em;
+
+	@extend .clearfix;
+	@extend .row;
+
+	.header__title {
+		float: left;
+
+		h1, h2 {
+			margin: 0;
+		}
+
+		h1 {
+			@extend %f-regular;
+			@extend %f10;
+		}
+
+		h2 {
+			@extend %f-regular;
+			@extend %f20;
+		}
+	}
+
+	.header__actions {
+		float: right;
+	}
+}

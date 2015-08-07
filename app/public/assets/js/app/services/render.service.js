@@ -58,7 +58,8 @@ Box.Application.addService('render.service', function(application) {
 				mapClass: 'map--big',
 				markers: data,
 				bounds: true,
-				zoomControl: true
+				zoomControl: true,
+				cluster: true
 			});
 
 			_utils.updateTexts(_storage.get().filters);
@@ -77,7 +78,8 @@ Box.Application.addService('render.service', function(application) {
 				mapClass: 'map--small',
 				markers: _.slice(data, 0, 12),
 				bounds: true,
-				zoomControl: false
+				zoomControl: false,
+				cluster: false
 			});
 
 			_utils.updateTexts(_storage.get().filters);

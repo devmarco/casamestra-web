@@ -16,16 +16,22 @@ Box.Application.addService('map.service', function(application) {
 				zoomControl: config.zoomControl
 			}).setView([40.73, -74.011], 5);
 
-			this.createMarkers(config.markers);
+			if (config.cluster) {
+				this.createClusterMarkers(config.markers);
+			} else {
+				this.createMarkers(config.markers);
+			}
 		},
 		update: function(markers) {
-			//Remove markers
-			this.map.removeLayer(this.clusterGroup);
-
-			//Create the markers
-			this.createMarkers(markers);
+			if (this.clusterGroup) {
+				this.map.removeLayer(this.clusterGroup);
+				this.createClusterMarkers(markers);
+			} else {
+				this.map.removeLayer(this.markersGroup);
+				this.createMarkers(markers);
+			}
 		},
-		createMarkers: function(markers) {
+		createClusterMarkers: function(markers) {
 			var marker,
 				_this = this;
 
@@ -48,20 +54,12 @@ Box.Application.addService('map.service', function(application) {
 			markers.forEach(function(value, index) {
 				marker = L.marker(new L.LatLng(value.location.lat, value.location.lng), {
 					icon: L.icon({
-						iconUrl: 'public/assets/imgs/svg/marker-icon.svg',
-						iconSize:     [36, 50]
-					}),
-					title: value.title
+						iconUrl: '/public/assets/imgs/svg/marker-icon.svg',
+						iconSize: [36, 50]
+					})
 				});
 
-				marker.bindPopup(_this.template(value),{
-					closeButton: false,
-					minWidth: 320
-				});
-
-				marker.on('click', function (e) {
-            		this.openPopup();
-        		});
+				_this.bindMarkerClick(marker, value);
 
 				_this.clusterGroup.addLayer(marker);
 			});
@@ -69,6 +67,30 @@ Box.Application.addService('map.service', function(application) {
 			this.map.addLayer(this.clusterGroup);
 
 			this.map.fitBounds(this.clusterGroup.getBounds());
+		},
+		createMarkers: function(markers) {
+			var estates = $('.estate'),
+				marker,
+				_this = this;
+
+			this.markersGroup = new L.FeatureGroup();
+
+			markers.forEach(function(value, index) {
+				marker = L.marker(new L.LatLng(value.location.lat, value.location.lng), {
+					icon: L.icon({
+						iconUrl: '/public/assets/imgs/svg/marker-icon.svg',
+						iconSize: [36, 50]
+					})
+				});
+
+				_this.markersGroup.addLayer(marker);
+
+				_this.bindMarkerHover(marker, estates[index]);
+			});
+
+			this.map.addLayer(this.markersGroup);
+
+			this.map.fitBounds(this.markersGroup.getBounds());
 		},
 		template: function(estate) {
 			var t = "<div class='estate estate--map'>"+
@@ -89,6 +111,41 @@ Box.Application.addService('map.service', function(application) {
 		},
 		destroy: function(map) {
 			if (this.map) this.map.remove();
+
+			this.clusterGroup = null;
+			this.markersGroup = null;
+		},
+		bindMarkerHover: function(marker, estate) {
+			marker.on('mouseover', function (e) {
+				marker.setIcon(L.icon({
+					iconUrl: '/public/assets/imgs/svg/marker-icon-hover.svg'
+				}));
+
+				$(estate).addClass('estate--hover');
+    		});
+
+    		marker.on('mouseout', function (e) {
+				marker.setIcon(L.icon({
+					iconUrl: '/public/assets/imgs/svg/marker-icon.svg'
+				}));
+
+				$(estate).removeClass('estate--hover');
+    		});
+
+    		marker.on('click', function() {
+    			var distance = $(estate).offset().top;
+    			$('html,body').animate({scrollTop:distance-100}, 800);
+    		});
+		},
+		bindMarkerClick: function(marker, value) {
+			marker.bindPopup(this.template(value),{
+				closeButton: false,
+				minWidth: 320
+			});
+
+			marker.on('click', function (e) {
+        		this.openPopup();
+    		});
 		}
 	}
 });

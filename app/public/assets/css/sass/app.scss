@@ -1,17 +1,19 @@
 /*------------------------------------*\
+	[SETTINGS]
+\*------------------------------------*/
+
+@import 'settings/colors';
+@import 'settings/fonts';
+@import 'settings/gallery';
+
+/*------------------------------------*\
 	[BASE]
 \*------------------------------------*/
 
 @import 'base/normalize';
 @import 'base/foundation';
 @import 'base/page';
-
-/*------------------------------------*\
-	[COLORS]
-\*------------------------------------*/
-
-@import 'settings/colors';
-@import 'settings/fonts';
+@import 'base/gallery';
 
 /*------------------------------------*\
 	[TOOLS]
@@ -38,6 +40,7 @@
 @import 'objects/dropdown';
 @import 'objects/filters';
 @import 'objects/mapbox';
+@import 'objects/gallery';
 
 /*------------------------------------*\
 	[COMPONENTS]
@@ -55,4 +58,5 @@
 @import 'sections/about';
 @import 'sections/neighborhoods';
 @import 'sections/green-bar';
-@import 'sections/estates';
+@import 'sections/estates-page';
+@import 'sections/search-page';

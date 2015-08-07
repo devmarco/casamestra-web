@@ -7,9 +7,9 @@
 		nav
 			ul(class='nav')
 				li
-					a(href="/comprar") Comprar
+					a(href="/busca/comprar" class=(activePage === 'buy' ? 'active' : '')) Comprar
 				li 
-					a(href="/alugar") Alugar
+					a(href="/busca/alugar" class=(activePage === 'rent' ? 'active' : '')) Alugar
 				li
 					a(href="/vender") Vender
 				li

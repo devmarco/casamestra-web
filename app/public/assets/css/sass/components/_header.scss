@@ -4,11 +4,11 @@ header {
 	top: 0;
   	width: 100%;
   	z-index: 100;
-  	background-color: transparent;
 }
 
 header.absolute {
 	position: absolute;
+	background-color: transparent;
 }
 
 header.fixed {
@@ -83,8 +83,12 @@ header.transparent {
 		@extend %f-regular;
 
 		&:hover {
-			border-color: $green;
+			border-bottom-color: $green;
 		}
+	}
+
+	a.active {
+		border-top-color: $green;
 	}
 }
 

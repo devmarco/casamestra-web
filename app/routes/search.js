@@ -1,13 +1,13 @@
 /*------------------------------------ *\
-	[BUY]
+	[SEARCH]
 \*------------------------------------*/
 
-var buyView = {
+var search = {
 	method: 'GET',
-	path: '/comprar',
+	path: '/busca',
 	handler: function(req, reply) {
-		reply.view('estates');
+		reply.redirect('/busca/comprar');
 	}
-}	
+}
 
-module.exports = buyView;
+module.exports = search;

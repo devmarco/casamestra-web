@@ -27,10 +27,11 @@
   },
   "dependencies": {
     "getconfig": "^2.1.0",
+    "good": "^6.2.0",
+    "good-console": "^5.0.2",
     "hapi": "^8.8.0",
     "jade": "^1.11.0",
-    "good": "^6.2.0",
-    "good-console": "^5.0.2"
+    "rethinkdbdash": "^2.0.20"
   },
   "private": true,
   "devDependencies": {

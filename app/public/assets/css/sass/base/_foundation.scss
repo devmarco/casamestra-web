@@ -140,7 +140,7 @@ select {
     margin-left: 0;
     margin-right: 0; }
   .row .row {
-    margin: 0 -0.9375em;
+    margin: 0 -0.5375em;
     max-width: none;
     width: auto; }
     .row .row:before, .row .row:after {
@@ -160,8 +160,8 @@ select {
 
 .column,
 .columns {
-  padding-left: 0.9375em;
-  padding-right: 0.9375em;
+  padding-left: 0.5375em;
+  padding-right: 0.5375em;
   width: 100%;
   float: left; }
 
@@ -302,8 +302,8 @@ select {
   .column,
   .columns {
     position: relative;
-    padding-left: 0.9375em;
-    padding-right: 0.9375em;
+    padding-left: 0.5375em;
+    padding-right: 0.5375em;
     float: left; }
 
   .small-1 {
@@ -418,8 +418,8 @@ select {
     margin-right: 0; }
   .row.small-uncollapse > .column,
   .row.small-uncollapse > .columns {
-    padding-left: 0.9375em;
-    padding-right: 0.9375em;
+    padding-left: 0.5375em;
+    padding-right: 0.5375em;
     float: left; } }
 @media only screen and (min-width: 40.0625em) {
   .medium-push-0 {
@@ -545,8 +545,8 @@ select {
   .column,
   .columns {
     position: relative;
-    padding-left: 0.9375em;
-    padding-right: 0.9375em;
+    padding-left: 0.5375em;
+    padding-right: 0.5375em;
     float: left; }
 
   .medium-1 {
@@ -661,8 +661,8 @@ select {
     margin-right: 0; }
   .row.medium-uncollapse > .column,
   .row.medium-uncollapse > .columns {
-    padding-left: 0.9375em;
-    padding-right: 0.9375em;
+    padding-left: 0.5375em;
+    padding-right: 0.5375em;
     float: left; }
 
   .push-0 {
@@ -908,8 +908,8 @@ select {
   .column,
   .columns {
     position: relative;
-    padding-left: 0.9375em;
-    padding-right: 0.9375em;
+    padding-left: 0.5375em;
+    padding-right: 0.5375em;
     float: left; }
 
   .large-1 {
@@ -1024,8 +1024,8 @@ select {
     margin-right: 0; }
   .row.large-uncollapse > .column,
   .row.large-uncollapse > .columns {
-    padding-left: 0.9375em;
-    padding-right: 0.9375em;
+    padding-left: 0.5375em;
+    padding-right: 0.5375em;
     float: left; }
 
   .push-0 {
