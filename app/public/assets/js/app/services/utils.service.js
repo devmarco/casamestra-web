@@ -12,14 +12,11 @@ Box.Application.addService('utils.service', function(context) {
 			var filters = f || {},
 				_this = this;
 
-			function createText(value) {
-				var items,
-					text = '';
+			function formatBedrooms(values) {
+				var text = '';
 
-				items = value.sort(function(a, b){return a-b});
-
-				value.forEach(function(value, index) {
-					if (index === (value.length -1)) {
+				values.forEach(function(value, index) {
+					if (index === (values.length -1)) {
 						(text !== '') ? text+= ' e '+value+'' : text+= ''+value+'';
 					} else {
 						(text !== '') ? text+= ','+value+'' : text+= ''+value+'';
@@ -35,7 +32,7 @@ Box.Application.addService('utils.service', function(context) {
 				if (!filters['bedrooms']) {
 					elBeds.text('Quartos');
 				} else {
-					elBeds.text(createText(filters['bedrooms'])+' '+'Quartos')
+					elBeds.text(formatBedrooms(filters['bedrooms'])+' '+'Quartos')
 				}
 			}());
 

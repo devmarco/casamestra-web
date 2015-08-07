@@ -37,7 +37,7 @@
     z-index: 100;
 	padding: 1em 1em;
 	border-bottom: 1px solid #e1e1e1;
-	background: #fff;
+	background-color: #fff;
 	background-color: rgba(255, 255, 255, 0.95);
 	@extend .clearfix;
 
@@ -65,7 +65,6 @@
 			@extend %f9;
 
 			&:focus,
-			&:active,
 			&:hover {
 				outline: 0;
 				border-color: #AFAAAA;
@@ -155,7 +154,7 @@
 .estates__bx__map {
 	height: -webkit-calc(100% - 82px);
 	overflow: hidden;
-	background: #D3D3D3;
+	background-color: #D3D3D3;
 }
 
 .estates__bx__list {
@@ -170,7 +169,7 @@
 	bottom: 0;
 	right: 0;
 	overflow: hidden;
-	height: 100%;
+	height: -webkit-calc(100% - 80px);
 	z-index: 1;
 }
 

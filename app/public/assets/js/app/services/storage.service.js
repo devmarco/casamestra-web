@@ -3,8 +3,7 @@ Box.Application.addService('storage.service', function(application) {
 
 	var publicData,
 		privateData,
-		publicFilters,
-		view;
+		publicFilters;
 
 	return {
 		get: function(config) {
@@ -30,32 +29,27 @@ Box.Application.addService('storage.service', function(application) {
 			if (filters) publicFilters = filters;
 		},
 		view: {
-			get: function() {
-				return view;
-			},
-			set: function(viewType) {
-				view = viewType;
-			}
-		},
-		userPreferences: {
-			map: function() {
-				if (window.localStorage.getItem('cmview')) {
-					if (window.localStorage.getItem('cmview') === 'map') return true;
+			isMap: function() {
+				var view = window.localStorage.getItem('cmview');
+
+				if (view) {
+					if (view === 'map') return true;
 					return false;
 				} else {
 					return true;
 				}
 			},
-			list: function() {
-				if (window.localStorage.getItem('cmview') === 'list') return true;
+			isList: function() {
+				var view = window.localStorage.getItem('cmview');
+
+				if (view === 'list') return true;
+
 				return false;
 			},
 			set: function(option) {
 				if (option && option === 'map' || option === 'list') {
 					window.localStorage.setItem('cmview', option);
 				}
-
-				return false;
 			}
 		}
 	}

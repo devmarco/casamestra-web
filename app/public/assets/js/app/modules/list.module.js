@@ -15,7 +15,7 @@ Box.Application.addModule('list', function(context) {
 		renderFilter: function(value) {
 			_storage.set('public', value.data, value.filters);
 
-			if (_storage.view.get() === 'list') {
+			if (_storage.view.isList()) {
 				_render.update({
 					data: _.slice(value.data, 0, 12)
 				});
@@ -26,13 +26,10 @@ Box.Application.addModule('list', function(context) {
 			_render.list(_storage.get().data);
 		},	
 		init: function() {
-			if (_storage.userPreferences.list()) {
+			if (_storage.view.isList()) {
 
 				//Display the list
 				$('main').addClass('list-active');
-
-				//Set the current view
-				_storage.view.set('list');
 
 				//Load the data
 				_estates.get({

@@ -57,7 +57,8 @@ Box.Application.addService('render.service', function(application) {
 			_map.render({
 				mapClass: 'map--big',
 				markers: data,
-				bounds: true
+				bounds: true,
+				zoomControl: true
 			});
 
 			_utils.updateTexts(_storage.get().filters);
@@ -75,7 +76,8 @@ Box.Application.addService('render.service', function(application) {
 			_map.render({
 				mapClass: 'map--small',
 				markers: _.slice(data, 0, 12),
-				bounds: true
+				bounds: true,
+				zoomControl: false
 			});
 
 			_utils.updateTexts(_storage.get().filters);

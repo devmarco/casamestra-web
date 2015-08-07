@@ -1931,7 +1931,7 @@ limitations under the License.
 		renderFilter: function(value) {
 			_storage.set('public', value.data, value.filters);
 
-			if (_storage.view.get() === 'list') {
+			if (_storage.view.isList()) {
 				_render.update({
 					data: _.slice(value.data, 0, 12)
 				});
@@ -1942,13 +1942,10 @@ limitations under the License.
 			_render.list(_storage.get().data);
 		},	
 		init: function() {
-			if (_storage.userPreferences.list()) {
+			if (_storage.view.isList()) {
 
 				//Display the list
 				$('main').addClass('list-active');
-
-				//Set the current view
-				_storage.view.set('list');
 
 				//Load the data
 				_estates.get({
@@ -1976,7 +1973,7 @@ limitations under the License.
         renderFilter: function(value) {
         	_storage.set('public', value.data, value.filters);
 
-        	if (_storage.view.get() === 'map') {
+        	if (_storage.view.isMap()) {
 				_render.update({
 					data: value.data
 				});
@@ -1987,13 +1984,10 @@ limitations under the License.
 			_render.map(_storage.get().data);
 		},
 		init: function() {
-			if (_storage.userPreferences.map()) {
+			if (_storage.view.isMap()) {
 
 				//Display the map
 				$('main').addClass('map-active');
-
-				//Set current view
-				_storage.view.set('map');
 
 				//Load data
 				_estates.get({
@@ -2181,7 +2175,8 @@ limitations under the License.
 			L.mapbox.accessToken = 'pk.eyJ1IjoibWFya29za3QiLCJhIjoiOTVmMjE4NTdmNDJjNWVkNTA0MDZlNDE0MWI1ZTdiZDUifQ.DJCF768JpbwaSuT5Ye0Xwg';
 
 			this.map = L.mapbox.map(config.mapClass, 'markoskt.n3860n3a', {
-				minZoom: 4
+				minZoom: 4,
+				zoomControl: config.zoomControl
 			}).setView([40.73, -74.011], 5);
 
 			this.createMarkers(config.markers);
@@ -2318,7 +2313,8 @@ limitations under the License.
 			_map.render({
 				mapClass: 'map--big',
 				markers: data,
-				bounds: true
+				bounds: true,
+				zoomControl: true
 			});
 
 			_utils.updateTexts(_storage.get().filters);
@@ -2336,7 +2332,8 @@ limitations under the License.
 			_map.render({
 				mapClass: 'map--small',
 				markers: _.slice(data, 0, 12),
-				bounds: true
+				bounds: true,
+				zoomControl: false
 			});
 
 			_utils.updateTexts(_storage.get().filters);
@@ -2347,8 +2344,7 @@ limitations under the License.
 
 	var publicData,
 		privateData,
-		publicFilters,
-		view;
+		publicFilters;
 
 	return {
 		get: function(config) {
@@ -2374,32 +2370,27 @@ limitations under the License.
 			if (filters) publicFilters = filters;
 		},
 		view: {
-			get: function() {
-				return view;
-			},
-			set: function(viewType) {
-				view = viewType;
-			}
-		},
-		userPreferences: {
-			map: function() {
-				if (window.localStorage.getItem('cmview')) {
-					if (window.localStorage.getItem('cmview') === 'map') return true;
+			isMap: function() {
+				var view = window.localStorage.getItem('cmview');
+
+				if (view) {
+					if (view === 'map') return true;
 					return false;
 				} else {
 					return true;
 				}
 			},
-			list: function() {
-				if (window.localStorage.getItem('cmview') === 'list') return true;
+			isList: function() {
+				var view = window.localStorage.getItem('cmview');
+
+				if (view === 'list') return true;
+
 				return false;
 			},
 			set: function(option) {
 				if (option && option === 'map' || option === 'list') {
 					window.localStorage.setItem('cmview', option);
 				}
-
-				return false;
 			}
 		}
 	}
@@ -2417,14 +2408,11 @@ limitations under the License.
 			var filters = f || {},
 				_this = this;
 
-			function createText(value) {
-				var items,
-					text = '';
+			function formatBedrooms(values) {
+				var text = '';
 
-				items = value.sort(function(a, b){return a-b});
-
-				value.forEach(function(value, index) {
-					if (index === (value.length -1)) {
+				values.forEach(function(value, index) {
+					if (index === (values.length -1)) {
 						(text !== '') ? text+= ' e '+value+'' : text+= ''+value+'';
 					} else {
 						(text !== '') ? text+= ','+value+'' : text+= ''+value+'';
@@ -2440,7 +2428,7 @@ limitations under the License.
 				if (!filters['bedrooms']) {
 					elBeds.text('Quartos');
 				} else {
-					elBeds.text(createText(filters['bedrooms'])+' '+'Quartos')
+					elBeds.text(formatBedrooms(filters['bedrooms'])+' '+'Quartos')
 				}
 			}());
 

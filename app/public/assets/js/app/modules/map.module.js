@@ -14,7 +14,7 @@ Box.Application.addModule('map', function(context) {
         renderFilter: function(value) {
         	_storage.set('public', value.data, value.filters);
 
-        	if (_storage.view.get() === 'map') {
+        	if (_storage.view.isMap()) {
 				_render.update({
 					data: value.data
 				});
@@ -25,13 +25,10 @@ Box.Application.addModule('map', function(context) {
 			_render.map(_storage.get().data);
 		},
 		init: function() {
-			if (_storage.userPreferences.map()) {
+			if (_storage.view.isMap()) {
 
 				//Display the map
 				$('main').addClass('map-active');
-
-				//Set current view
-				_storage.view.set('map');
 
 				//Load data
 				_estates.get({

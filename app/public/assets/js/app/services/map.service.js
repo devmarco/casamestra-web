@@ -12,7 +12,8 @@ Box.Application.addService('map.service', function(application) {
 			L.mapbox.accessToken = 'pk.eyJ1IjoibWFya29za3QiLCJhIjoiOTVmMjE4NTdmNDJjNWVkNTA0MDZlNDE0MWI1ZTdiZDUifQ.DJCF768JpbwaSuT5Ye0Xwg';
 
 			this.map = L.mapbox.map(config.mapClass, 'markoskt.n3860n3a', {
-				minZoom: 4
+				minZoom: 4,
+				zoomControl: config.zoomControl
 			}).setView([40.73, -74.011], 5);
 
 			this.createMarkers(config.markers);
