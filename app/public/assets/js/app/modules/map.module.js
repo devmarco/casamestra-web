@@ -32,7 +32,7 @@ Box.Application.addModule('map', function(context) {
 
 				//Load data
 				_estates.get({
-					fields: 'cover,price,neighborhood,address,bathrooms,bedrooms,area,location,title'
+					fields: 'cover,price,neighborhood,address,bathrooms,bedrooms,area,location,title,cmid'
 				}).then(function(data) {
 					_storage.set('private', data);
 					_render.map(data);

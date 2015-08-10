@@ -443,7 +443,7 @@ limitations under the License.
 
 				//Load the data
 				_estates.get({
-					fields: 'cover,price,neighborhood,address,bathrooms,bedrooms,area,location,title'
+					fields: 'cover,price,neighborhood,address,bathrooms,bedrooms,area,location,title,cmid'
 				}).then(function(data) {
 					_storage.set('private', data);
 					_render.list(_.slice(data, 0, 12));
@@ -485,7 +485,7 @@ limitations under the License.
 
 				//Load data
 				_estates.get({
-					fields: 'cover,price,neighborhood,address,bathrooms,bedrooms,area,location,title'
+					fields: 'cover,price,neighborhood,address,bathrooms,bedrooms,area,location,title,cmid'
 				}).then(function(data) {
 					_storage.set('private', data);
 					_render.map(data);
@@ -834,7 +834,7 @@ limitations under the License.
 
 	t = "<repeat each='{{ estates }}' as='e'>"+
 	"<div class='estate estate--medium'>"+
-	"    <a style='background-image: url({{ e.cover }})'>"+
+	"    <a href='/imovel/{{ e.cmid }}' style='background-image: url({{ e.cover }})'>"+
 	"        <div class='estate__address'><span class='neighborhood'>{{ e.neighborhood }}</span><span class='address'>{{ e.address }}</span></div>"+
 	"        <div class='estate__info'>"+
 	"            <ul>"+

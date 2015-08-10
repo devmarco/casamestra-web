@@ -15,6 +15,7 @@
 	img {
 		max-height: 450px;
 		margin-left: 1px;
+		@include opacity(6);
 
 		&:first-child {
 			margin-left: 0;
@@ -23,30 +24,110 @@
 }
 
 .estate-details__bx__header {
-	padding: 1.5em;
+	position: absolute;
+    top: 300px;
+    width: 100%;
+    text-align: center;
+    padding: 0;
+    left: 0;
+    display: block;
 
 	@extend .clearfix;
-	@extend .row;
 
 	.header__title {
-		float: left;
-
 		h1, h2 {
 			margin: 0;
+			display: block;
 		}
 
 		h1 {
-			@extend %f-regular;
-			@extend %f10;
+			@extend %f-heading-semibold-italic;
+			@extend %f35;
 		}
 
 		h2 {
 			@extend %f-regular;
 			@extend %f20;
 		}
+
+		.estate__info {
+		    background-color: transparent;
+		    width: 326px;
+		    position: relative;
+		    margin: 20px auto auto auto;
+		    padding: 0;
+		}
 	}
 
 	.header__actions {
 		float: right;
+	}
+}
+
+.estate-details__bx__content {
+	padding-top: 150px;
+	@extend .row;
+}
+
+.details__bx {
+	border-bottom: 1px solid #F3EFEF;
+	margin-top: 50px;
+	padding-bottom: 50px;
+	@extend .clearfix;
+
+	&:first-child {
+		margin-top: 0;
+	}
+
+	.title {
+		color: $master;
+		text-align: left;
+		margin: 0 0 1em;
+		@extend %f-regular;
+		@extend %f20;
+
+		span {
+			color: #999;
+			display: inline-block;
+			margin-left: 10px;
+			@extend %f-light;
+		}
+	}
+	.content {
+		ul {
+			list-style: none;
+			padding: 0;
+			margin: 0;
+		}
+
+		span {
+			display: inline-block;
+			color: #999;
+			@extend %f-regular;
+			@extend %f11;
+
+			&:first-child {
+				color: $master;
+				margin-right: 15px;
+				text-align: left;
+				min-width: 115px;
+			}
+		}
+
+		li {
+			float: left;
+			width: 25%;
+			margin: 7px 0;
+		}
+
+		p {
+			margin-top: 15px;
+			@extend %f-regular;
+			@extend %f11;
+
+			&:first-child {
+				margin-top: 0;
+			}
+		}
 	}
 }
