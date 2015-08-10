@@ -1,7 +1,25 @@
-.btn-rounded {
+.btn {
 	border: 1px solid #fff;
 	padding: 10px 20px;
 	transition: background-color 0.3s ease 0s;
+	display: block;
+	color: #fff;
+	text-decoration: none;
+    text-align: center;
+}
+
+.btn-green {
+	@extend .btn;
+	background-color: $green;
+}
+
+.btn-dark {
+	@extend .btn;
+	background-color: $master;
+}
+
+.btn-rounded {
+	@extend .btn;
 
 	&:hover {
 		background-color: $green;

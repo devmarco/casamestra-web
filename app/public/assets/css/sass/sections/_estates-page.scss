@@ -14,40 +14,48 @@
 	@extend .clearfix;
 	img {
 		max-height: 450px;
-		margin-left: 1px;
+		margin-left: 10px;
 		@include opacity(6);
+		@include vendor(transition, opacity 0.5s ease-out);
 
 		&:first-child {
 			margin-left: 0;
+		}
+
+		&:hover {
+			@include opacity(10);
 		}
 	}
 }
 
 .estate-details__bx__header {
-	position: absolute;
-    top: 300px;
-    width: 100%;
-    text-align: center;
-    padding: 0;
-    left: 0;
-    display: block;
+	border-bottom: 2px solid $master;
+	padding: 2.5em 0;
+}
 
+.header__details {
+	@extend .row;
 	@extend .clearfix;
 
 	.header__title {
+		padding: 2.9em 0 1.8em;
+		float: left;
+
 		h1, h2 {
 			margin: 0;
 			display: block;
+			color: $master;
 		}
 
 		h1 {
-			@extend %f-heading-semibold-italic;
-			@extend %f35;
+			@extend %f-light;
+			@extend %f15;
+			line-height: 15px;
 		}
 
 		h2 {
 			@extend %f-regular;
-			@extend %f20;
+			@extend %f25;
 		}
 
 		.estate__info {
@@ -61,39 +69,74 @@
 
 	.header__actions {
 		float: right;
+		margin-top: 28px;
+	    max-width: 250px;
+
+		a {
+			text-decoration: none;
+			color: $master;
+			display: inline-block;
+		}
+
+		.btn-dark {
+			color: #fff;
+			padding: 15px 20px;
+			border: 1px solid rgba(5, 139, 144, 0.34);
+    		box-shadow: inset 0 0 1px #fff;
+    		width: 120px;
+
+    		+ .btn-dark {
+    			margin-left: 10px;
+    		}
+		}
+
+		.btn-green {
+			width: 250px;
+			padding: 15px 20px;
+			border: 1px solid rgba(5, 139, 144, 0.34);
+    		box-shadow: inset 0 0 1px #fff;
+    		color: #fff;
+    		margin-top: 10px;
+		}
 	}
 }
 
 .estate-details__bx__content {
-	padding-top: 150px;
+	padding: 2.5em 0;
 	@extend .row;
 }
 
 .details__bx {
-	border-bottom: 1px solid #F3EFEF;
+	border-top: 1px solid #E0DCDC;
+	padding-top: 50px;
 	margin-top: 50px;
-	padding-bottom: 50px;
 	@extend .clearfix;
 
 	&:first-child {
 		margin-top: 0;
+		padding-top: 0;
+		border: none;
 	}
 
 	.title {
 		color: $master;
 		text-align: left;
 		margin: 0 0 1em;
-		@extend %f-regular;
-		@extend %f20;
+		float: left;
+		@extend %f-semibold;
+		@extend %f13;
 
 		span {
 			color: #999;
 			display: inline-block;
 			margin-left: 10px;
 			@extend %f-light;
+			@extend %f8;
 		}
 	}
 	.content {
+		max-width: 65%;
+		float: right;
 		ul {
 			list-style: none;
 			padding: 0;
@@ -104,7 +147,7 @@
 			display: inline-block;
 			color: #999;
 			@extend %f-regular;
-			@extend %f11;
+			@extend %f10;
 
 			&:first-child {
 				color: $master;
@@ -118,12 +161,15 @@
 			float: left;
 			width: 25%;
 			margin: 7px 0;
+			color: #999;
+			@extend %f-regular;
+			@extend %f9;
 		}
 
 		p {
 			margin-top: 15px;
 			@extend %f-regular;
-			@extend %f11;
+			@extend %f9;
 
 			&:first-child {
 				margin-top: 0;
