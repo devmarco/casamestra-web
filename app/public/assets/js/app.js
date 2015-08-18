@@ -493,45 +493,46 @@ limitations under the License.
 			}
 		}
 	}
-});;Box.Application.addService('estates.service', function(application) {
+});;Box.Application.addService('estates.service', function addService(application) {
 	'use strict';
 
 	var $ = application.getGlobal('jQuery');
 
 	return {
-		get: function(config) {
-			var limit 	= (config.limit) ? 'limit='+config.limit || 10+'' : '',
-				fields 	= (config.fields) ? '&fields='+config.fields+'' : '',
-				isBuy = location.pathname.indexOf('comprar');
+		get: function get(config) {
+			var limit 	= (config.limit) ? 'limit='+config.limit || 10+'' : '';
+			var fields 	= (config.fields) ? '&fields='+config.fields+'' : '';
+			var isBuy 	= location.pathname.indexOf('comprar');
 
 			if (isBuy !== -1) {
 				return $.ajax({
-					url: 'http://0.0.0.0:8081/estates/buy?'+limit+fields+''
+					url: 'http://casamestraapi-env.elasticbeanstalk.com/estates/buy?'+ limit+fields +''
 				});
 			} else {
 				return $.ajax({
-					url: 'http://0.0.0.0:8081/estates/rent?'+limit+fields+''
+					url: 'http://casamestraapi-env.elasticbeanstalk.com/estates/rent?'+ limit+fields +''
 				});
 			}
 		},
-		create: function() {
+		create: function create() {
 
 		},
-		update: function() {
+		update: function update() {
 
 		},
-		delete: function() {
+		delete: function delet() {
 
-		}
-	}
-});;Box.Application.addService('filter.service', function(application) {
+		},
+	};
+});
+;Box.Application.addService('filter.service', function(application) {
 	'use strict';
 
 	var _storage = application.getService('storage.service'),
 		filters = {};
 
 	return {
-		set: function(filter) { 
+		set: function(filter) {
 			var index;
 
 			//Check if is price
@@ -548,7 +549,7 @@ limitations under the License.
 			}
 
 			function isGeneric() {
-				(!filters[filter.prop]) ? filters[filter.prop] = [] : false;	
+				(!filters[filter.prop]) ? filters[filter.prop] = [] : false;
 
 				index = filters[filter.prop].indexOf(filter.value);
 
@@ -610,7 +611,7 @@ limitations under the License.
 			}
 
 			function checkBathrooms(filter, item) {
-			
+
 				if (filter === 5 && item >= filter) {
 					return true;
 				} else if (item === filter) {
@@ -662,7 +663,8 @@ limitations under the License.
 			});
 		}
 	}
-});;Box.Application.addService('map.service', function(application) {
+});
+;Box.Application.addService('map.service', function(application) {
 	'use strict';
 
 	var _util 	= application.getService('utils.service'),

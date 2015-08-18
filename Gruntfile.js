@@ -1,5 +1,4 @@
-module.exports = function(grunt) {
-
+module.exports = function exports(grunt) {
 	// Project configuration.
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
@@ -9,9 +8,9 @@ module.exports = function(grunt) {
 			target: {
 				tasks: ['nodemon', 'watch'],
 				options: {
-					logConcurrentOutput: true
-				}
-			}
+					logConcurrentOutput: true,
+				},
+			},
 		},
 
 		nodemon: {
@@ -20,20 +19,20 @@ module.exports = function(grunt) {
 				options: {
 					ext: 'js,jade',
 					delay: 1000,
-					legacyWatch: true
-				}
-			}
+					legacyWatch: true,
+				},
+			},
 		},
 
 		sass: {
 			dist: {
 				options: {
-					style: 'compressed'
+					style: 'compressed',
 				},
 				files: {
-					'app/public/assets/css/compiled/app.css': 'app/public/assets/css/sass/app.scss'
-				}
-			}
+					'app/public/assets/css/compiled/app.css': 'app/public/assets/css/sass/app.scss',
+				},
+			},
 		},
 
 		concat: {
@@ -42,16 +41,16 @@ module.exports = function(grunt) {
 			},
 			dist: {
 				src: [
-					'app/public/assets/js/vendors/jquery-2.1.4.min.js', 
+					'app/public/assets/js/vendors/jquery-2.1.4.min.js',
 					'app/public/assets/js/vendors/*.js',
-					'app/public/assets/js/app/**/*.js'
+					'app/public/assets/js/app/**/*.js',
 				],
 				dest: 'app/public/assets/js/app.js',
 			},
 		},
 
 		'svg-sprites': {
-			all:{
+			all: {
 				options: {
 					spriteElementPath: './app/public/assets/imgs/sprites/svg/',
 					name: 'icons',
@@ -60,9 +59,9 @@ module.exports = function(grunt) {
 					prefix: 'sprite',
 					cssSuffix: 'scss',
 					cssPngPrefix: '.no-svg',
-					cssSvgPrefix: '.svg'
-				}
-			}
+					cssSvgPrefix: '.svg',
+				},
+			},
 		},
 
 		replace: {
@@ -71,9 +70,9 @@ module.exports = function(grunt) {
 				overwrite: true,
 				replacements: [{
 					from: '../../../',
-					to: '../../../assets/'
-				}]
-			}
+					to: '../../../assets/',
+				}],
+			},
 		},
 
 		uglify: {
@@ -86,12 +85,12 @@ module.exports = function(grunt) {
 					unused: false,
 					if_return: true,
 					join_vars: true,
-					drop_console: true
+					drop_console: true,
 				},
 				files: {
-					'app/public/assets/js/build/app.min.js': ['app/public/assets/js/app.js']
-				}
-			}
+					'app/public/assets/js/build/app.min.js': ['app/public/assets/js/app.js'],
+				},
+			},
 		},
 
 		watch: {
@@ -102,8 +101,7 @@ module.exports = function(grunt) {
 					spawn: false,
 				},
 			},
-		}
-
+		},
 	});
 
 	// Load the plugin that provides the "uglify" task.
