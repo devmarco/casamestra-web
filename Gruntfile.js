@@ -28,25 +28,11 @@ module.exports = function(grunt) {
 		sass: {
 			dist: {
 				options: {
-					style: 'compressed'
+					style: 'compressed',
 				},
 				files: {
-					'app/public/assets/css/compiled/app.css': 'app/public/assets/css/sass/app.scss'
-				}
-			}
-		},
-
-		concat: {
-			options: {
-				separator: ';',
-			},
-			dist: {
-				src: [
-					'app/public/assets/js/vendors/jquery-2.1.4.min.js', 
-					'app/public/assets/js/vendors/*.js',
-					'app/public/assets/js/app/**/*.js'
-				],
-				dest: 'app/public/assets/js/app.js',
+					'app/client/assets/css/compiled/app.css': 'app/client/assets/css/sass/app.scss',
+				},
 			},
 		},
 
@@ -76,6 +62,33 @@ module.exports = function(grunt) {
 			}
 		},
 
+		babel: {
+	        es6: {
+	            files: [
+	                {
+	                    expand: true,
+	                    src: ['app/client/app/**/*.es6'],
+	                    ext: '.js'
+	                }
+	            ]
+	        }
+	    },
+
+		concat: {
+			options: {
+				separator: ';',
+			},
+			dist: {
+				src: [
+					'app/client/assets/js/vendors/jquery-2.1.4.min.js',
+					'app/client/assets/js/vendors/*.js',
+					'app/client/app/**/*.js',
+					'app/client/app/**/**/*.js',
+				],
+				dest: 'app/client/assets/js/app.js',
+			},
+		},
+
 		uglify: {
 			my_target: {
 				options: {
@@ -96,13 +109,13 @@ module.exports = function(grunt) {
 
 		watch: {
 			scripts: {
-				files: ['app/public/assets/css/sass/**/*.scss', 'app/public/assets/js/app/**/*.js'],
-				tasks: ['svg-sprites', 'replace', 'sass', 'concat', 'uglify'],
+				files: ['app/client/assets/css/sass/**/*.scss', 'app/client/app/**/*.js'],
+				tasks: ['sass', 'concat', 'uglify'],
 				options: {
 					spawn: false,
 				},
 			},
-		}
+		},
 
 	});
 
@@ -115,6 +128,7 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-dr-svg-sprites');
 	grunt.loadNpmTasks('grunt-text-replace');
+	grunt.loadNpmTasks('grunt-babel');
 
 	// Default task(s).
 	grunt.registerTask('default', ['sass']);

@@ -1,0 +1,169 @@
+.estate-container {
+	@extend .row;
+}
+
+.estate__column {
+	@extend .columns;
+	@extend .small-4;
+}
+
+.estate {
+	width: 100%;
+	position: relative;
+	height: 250px;
+	overflow: hidden;
+
+	@extend .columns;
+
+	a {
+		position: relative;
+		display: block;
+		background-size: cover;
+		text-decoration: none;
+		height: 100%;
+		background-color: #fff;
+		padding-top: 85px;
+		text-align: center;
+
+		&:before {
+			content: '';
+			position: absolute;
+			width: 100%;
+			height: 100%;
+			background-color: #000;
+			background-color: rgba(0, 0, 0, 0.40);
+			top: 0;
+			left: 0;
+			z-index: 1;
+			visibility: hidden;
+		}
+
+		&:hover {
+			&:before {
+				visibility: visible;
+			}
+
+			.estate__address {
+				visibility: visible;
+			}
+		}
+	}
+}
+
+.estate--hover a {
+	&:before {
+		visibility: visible;
+	}
+
+	.estate__address {
+		visibility: visible;
+	}
+}
+
+.estate.estate--big {
+	height: 530px;
+	@extend .small-12;
+
+	.estate__address {
+		margin: -50px 0 0 -35%;
+	}
+}
+
+.estate.estate--medium {
+	@extend .small-4;
+}
+
+.estate.estate--map {
+	float: none;
+	width: 335px;
+	height: 280px;
+	padding: 0;
+
+	.estate__address {
+		.address {
+			@extend %f11;
+		}
+	}
+
+	.estate__info {
+		li {
+			span {
+				@extend %f10;
+			}
+		}
+	}
+}
+
+.estate__info {
+	position: absolute;
+	width: 100%;
+	bottom: 0;
+	left: 0;
+	background: #fff;
+	z-index: 2;
+	padding: 1em;
+
+	.address {
+		span {
+			display: block;
+			color: $master;
+			text-align: left;
+			@extend %f9;
+			@extend %f-bold;
+		}
+	}
+
+	ul {
+		padding: 0;
+		margin: 0;
+		list-style: none;
+		@extend .clearfix;
+	}
+
+	li {
+		position: relative;
+		float: right;
+		min-width: 40px;
+
+		span {
+			color: $master;
+			display: block;
+		}
+
+		span {
+			@extend %f8;
+			@extend %f-bold;
+		}
+
+		&:first-child {
+			float: left;
+			margin-top: 19px;
+
+			span {
+				@extend %f9;
+			}
+		}
+	}
+
+	.icon span:before {
+		content: '';
+		display: block;
+        margin: 0 auto 5px;
+		min-height: 15px;
+	}
+}
+
+.icon-area span:before {
+	@extend .sprite-square;
+}
+.icon-beds span:before {
+	margin-top: 3px;
+	@extend .sprite-bed;
+}
+.icon-bath span:before {
+	@extend .sprite-bath;
+}
+
+.icon-park span:before {
+	@extend .sprite-park;
+}

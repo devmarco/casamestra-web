@@ -1,3 +1,3 @@
 #!/bin/env node
 
-module.exports = require('./app/bin/www');
+module.exports = require('./app/server/bin/www');
