@@ -21,6 +21,6 @@ var estateView = {
 				reply.view('error');
 			});
 	}
-}	
+}
 
 module.exports = estateView;

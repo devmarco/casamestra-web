@@ -20,7 +20,7 @@ Box.Application.addService('render.service', function(application) {
 
 	t = "<repeat each='{{ estates }}' as='e'>"+
 	"<div class='estate estate--medium'>"+
-	"    <a href='/imovel/{{ e.cmid }}' style='background-image: url({{ e.images.cover }})'>"+
+	"    <a href='/imovel/{{ e.ecmid }}' style='background-image: url({{ e.images.cover }})'>"+
 	"        <div class='estate__info'>"+
 	"            <div class='address'>"+
 	"                <span>{{ e.keyDetails.neighborhood }}</span>"+

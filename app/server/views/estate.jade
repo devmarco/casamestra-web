@@ -4,11 +4,11 @@ block content
 	header
 		include includes/header
 	main
-		.estate-details__bx(data-module='estates')
+		section.estate-details__bx(data-module='estates')
 			.estate-details__bx__gallery
 				.gallery__presentation
-					img(src='https://urbancompass-image-index.s3.amazonaws.com/84ae677d730a6dec310c4c55e12e5ff25cb2885f.jpg', alt="" style='height: 450px;')
-					img(src='https://urbancompass-image-index.s3.amazonaws.com/96633bc05aa46e03fd7e127c6ce971b9b6753d4a.jpg', alt="" style='height: 450px;')
+					img(src='https://d2787ndpv5cwhz.cloudfront.net/690665e9d6faa83679d00ecd52aeb46a4f0c68a5/640x480.jpg', alt="" style='height: 450px;')
+					img(src='https://d2787ndpv5cwhz.cloudfront.net/328437446971ede38246b83efef9b6d8025442dd/640x480.jpg', alt="" style='height: 450px;')
 					img(src='https://urbancompass-image-index.s3.amazonaws.com/0d2ee1b2af2f9df581aeb4ebefb4f0fda4f2283a.jpg', alt="" style='height: 450px;')
 				.pswp(clas='pswp--svg' tabindex='-1', role='dialog', aria-hidden='true')
 					.pswp__bg
@@ -37,13 +37,25 @@ block content
 								.pswp__caption__center
 			.estate-details__bx__header
 				.header__details
-					.header__title
+					.header__about
+						h2 #{keyDetails.buildingType } em #{keyDetails.neighborhood } #{keyDetails.city } ,MG
 						h1= address
-						h2= title
+						.header__about__info
+							ul
+								li
+									span R$ 521.200.00
+								li(class="icon icon-area")
+									span= keyDetails.area
+								li(class="icon icon-park")
+									span= garages
+								li(class="icon icon-bath")
+									span= bathrooms
+								li(class="icon icon-beds") 
+									span= bedrooms
 					.header__actions
-						a(href='#' class='btn-dark') Ver Mapa
-						a(href='#' class='btn-dark') Agendar
-						a(href='#' class='btn-green') Contatar Corretor
+						a(href="#" class="btn-green") Agendar Visita
+						a(href="#") ou 
+							span Falar com um Corretor
 			.estate-details__bx__content
 				.details__bx
 					h3(class='title')
@@ -81,21 +93,12 @@ block content
 							li
 								span Edificios:
 								span 4
-
-				.details__bx
-					h3(class='title') Uma breve descrição
-					.content
-						p ONE-OF-A-KIND celebrity loft in the heart of NoLita, recently featured on the COVER of the February 2015 issue of ARCHITECTURAL DIGEST. This premier residence was thoughtfully updated to keep elements of the historic 19th century building, while incorporating the utmost in modern luxury, lifestyle and design.
-						p At approximately 2,000 square feet, the open and spacious plan allows for effortless entertaining or enjoying one’s privacy. Warm metallic finishes, reclaimed woods, cast iron columns and exposed brick, set the tone throughout the magnificent space.
-						p The main living area is surrounded by oversize windows, and features a gas fireplace and a large alcove that can be used as a library/office or convertible guest room.
-						p An adjacent chef’s kitchen has a large custom-built island, hand-laid mosaic tile back-splash, and top of the line appliances. A massive walk-in closet/pantry provides endless storage and doubles as a laundry room, with a full size washer/dryer.
-
 				.details__bx
 					h3(class='title')
 						| Características
 						span (20)
 					.content
-						ul
+						ul(class="styled")
 							li Piscina
 							li Churrasqueira
 							li Campo de Golf
@@ -112,4 +115,16 @@ block content
 							li Impostos:
 							li Edificios:
 
+				.details__bx
+					h3(class='title') Descrição
+					.content
+						p ONE-OF-A-KIND celebrity loft in the heart of NoLita, recently featured on the COVER of the February 2015 issue of ARCHITECTURAL DIGEST. This premier residence was thoughtfully updated to keep elements of the historic 19th century building, while incorporating the utmost in modern luxury, lifestyle and design.
+						p At approximately 2,000 square feet, the open and spacious plan allows for effortless entertaining or enjoying one’s privacy. Warm metallic finishes, reclaimed woods, cast iron columns and exposed brick, set the tone throughout the magnificent space.
+						p The main living area is surrounded by oversize windows, and features a gas fireplace and a large alcove that can be used as a library/office or convertible guest room.
+						p An adjacent chef’s kitchen has a large custom-built island, hand-laid mosaic tile back-splash, and top of the line appliances. A massive walk-in closet/pantry provides endless storage and doubles as a laundry room, with a full size washer/dryer.
+		section(class="agents__bx")
+			.row
+				.agents__bx__header
+					h1(class="title") Corretores representando esse imóvel
+					h2(class="subtitle") Os nossos corretores estarão com você durante a sua pesquisa em casa, oferecendo sua experiência e profundo conhecimento do mercado imobiliário de #{keyDetails.city} para ajudá-lo a encontrar a casa que você ame.
 	include includes/footer

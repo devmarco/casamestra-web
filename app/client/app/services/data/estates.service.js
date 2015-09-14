@@ -11,11 +11,11 @@ Box.Application.addService('estates.service', function addService(application) {
 
 			if (isBuy !== -1) {
 				return $.ajax({
-					url: 'http://casamestraapi-env.elasticbeanstalk.com/estates/buy?'+ limit+fields +''
+					url: 'http://127.0.0.1:8081/estates/buy?'+ limit+fields +''
 				});
 			} else {
 				return $.ajax({
-					url: 'http://casamestraapi-env.elasticbeanstalk.com/estates/rent?'+ limit+fields +''
+					url: 'http://127.0.0.1:8081/estates/rent?'+ limit+fields +''
 				});
 			}
 		},

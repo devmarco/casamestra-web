@@ -444,7 +444,7 @@ limitations under the License.
 
 				//Load the data
 				_estates.get({
-					fields: 'images,price,keyDetails,garages,address,bathrooms,bedrooms,location,title,cmid'
+					fields: 'images,price,keyDetails,garages,address,bathrooms,bedrooms,location,title,ecmid'
 				}).then(function(data) {
 					_storage.set('private', data);
 					_render.list(_.slice(data, 0, 12));
@@ -495,37 +495,37 @@ limitations under the License.
 			}
 		}
 	}
-});;Box.Application.addService('estates.service', function(application) {
+});;Box.Application.addService('estates.service', function addService(application) {
 	'use strict';
 
 	var $ = application.getGlobal('jQuery');
 
 	return {
-		get: function(config) {
-			var limit 	= (config.limit) ? 'limit='+config.limit || 10+'' : '',
-				fields 	= (config.fields) ? '&fields='+config.fields+'' : '',
-				isBuy = location.pathname.indexOf('comprar');
+		get: function get(config) {
+			var limit 	= (config.limit) ? 'limit='+config.limit || 10+'' : '';
+			var fields 	= (config.fields) ? '&fields='+config.fields+'' : '';
+			var isBuy 	= location.pathname.indexOf('comprar');
 
 			if (isBuy !== -1) {
 				return $.ajax({
-					url: 'http://0.0.0.0:8081/estates/buy?'+limit+fields+''
+					url: 'http://127.0.0.1:8081/estates/buy?'+ limit+fields +''
 				});
 			} else {
 				return $.ajax({
-					url: 'http://0.0.0.0:8081/estates/rent?'+limit+fields+''
+					url: 'http://127.0.0.1:8081/estates/rent?'+ limit+fields +''
 				});
 			}
 		},
-		create: function() {
+		create: function create() {
 
 		},
-		update: function() {
+		update: function update() {
 
 		},
-		delete: function() {
+		delete: function delet() {
 
-		}
-	}
+		},
+	};
 });
 ;Box.Application.addService('filter.service', function(application) {
 	'use strict';
@@ -534,7 +534,7 @@ limitations under the License.
 		filters = {};
 
 	return {
-		set: function(filter) { 
+		set: function(filter) {
 			var index;
 
 			//Check if is price
@@ -551,7 +551,7 @@ limitations under the License.
 			}
 
 			function isGeneric() {
-				(!filters[filter.prop]) ? filters[filter.prop] = [] : false;	
+				(!filters[filter.prop]) ? filters[filter.prop] = [] : false;
 
 				index = filters[filter.prop].indexOf(filter.value);
 
@@ -613,7 +613,7 @@ limitations under the License.
 			}
 
 			function checkBathrooms(filter, item) {
-			
+
 				if (filter === 5 && item >= filter) {
 					return true;
 				} else if (item === filter) {
@@ -665,7 +665,8 @@ limitations under the License.
 			});
 		}
 	}
-});;Box.Application.addService('map.service', function(application) {
+});
+;Box.Application.addService('map.service', function(application) {
 	'use strict';
 
 	var _util 	= application.getService('utils.service'),
@@ -837,7 +838,7 @@ limitations under the License.
 
 	t = "<repeat each='{{ estates }}' as='e'>"+
 	"<div class='estate estate--medium'>"+
-	"    <a href='/imovel/{{ e.cmid }}' style='background-image: url({{ e.images.cover }})'>"+
+	"    <a href='/imovel/{{ e.ecmid }}' style='background-image: url({{ e.images.cover }})'>"+
 	"        <div class='estate__info'>"+
 	"            <div class='address'>"+
 	"                <span>{{ e.keyDetails.neighborhood }}</span>"+

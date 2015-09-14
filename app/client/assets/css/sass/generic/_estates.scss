@@ -101,15 +101,20 @@
 	left: 0;
 	background: #fff;
 	z-index: 2;
-	padding: 1em;
+	padding: 10px;
 
 	.address {
+		margin-bottom: 10px;
 		span {
 			display: block;
 			color: $master;
 			text-align: left;
 			@extend %f9;
 			@extend %f-bold;
+		}
+
+		span + span {
+			@extend %f-regular;
 		}
 	}
 
@@ -123,7 +128,7 @@
 	li {
 		position: relative;
 		float: right;
-		min-width: 40px;
+		min-width: 30px;
 
 		span {
 			color: $master;
@@ -132,7 +137,7 @@
 
 		span {
 			@extend %f8;
-			@extend %f-bold;
+			@extend %f-regular;
 		}
 
 		&:first-child {
@@ -141,6 +146,7 @@
 
 			span {
 				@extend %f9;
+				@extend %f-bold;
 			}
 		}
 	}
@@ -148,7 +154,7 @@
 	.icon span:before {
 		content: '';
 		display: block;
-        margin: 0 auto 5px;
+		margin: 0 auto 5px;
 		min-height: 15px;
 	}
 }

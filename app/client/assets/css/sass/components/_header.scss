@@ -2,8 +2,8 @@ header {
 	position: relative;
 	background-color: $master;
 	top: 0;
-  	width: 100%;
-  	z-index: 100;
+	  width: 100%;
+	  z-index: 100;
 }
 
 header.fixed {
@@ -14,17 +14,21 @@ header.fixed {
 	padding: 0 1%;
 	border-bottom: 1px solid #fff;
 	border-bottom: 1px solid rgba(255, 255, 255, 0.15);
-	max-height: 110px;
+	max-height: 80px;
 	@extend .clearfix;
 }
 
 .header__logo {
 	float: left;
-	padding: 30px 0;
+	padding: 22px 0;
 
 	h1 {
 		margin: 0;
-  		font-size: 0;
+		  font-size: 0;
+	}
+
+	img {
+		max-width: 220px;
 	}
 }
 
@@ -38,8 +42,8 @@ header.fixed {
 	ul {
 		list-style: none;
 		padding: 0;
-  		margin: 0;
-  		float: left;
+		  margin: 0;
+		  float: left;
 		@extend .clearfix;
 	}
 }
@@ -63,7 +67,7 @@ header.fixed {
 		text-decoration: none;
 		letter-spacing: 1px;
 		display: block;
-		padding: 43px 1.5em;
+		padding: 28px 1.5em;
 		border-top: 2px solid transparent;
 		border-bottom: 2px solid transparent;
 		transition: border-color 0.5s ease;
@@ -84,7 +88,7 @@ header.fixed {
 
 ul.nav-signin {
 	margin-left: 2em;
-	margin-top: 33px;
+	margin-top: 18px;
 
 	li {
 		margin-left: 1em;
@@ -99,9 +103,9 @@ ul.nav-signin {
 		color: #fff;
 		text-decoration: none;
 		padding: 0.7em 0.7em;
-  		min-width: 110px;
-  		text-align: center;
-  		letter-spacing: 1px;
+		  min-width: 110px;
+		  text-align: center;
+		  letter-spacing: 1px;
 		display: block;
 		border-radius: 3px;
 		border-color: rgba(255, 255, 255, 0.40);

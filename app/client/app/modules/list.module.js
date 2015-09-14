@@ -33,7 +33,7 @@ Box.Application.addModule('list', function(context) {
 
 				//Load the data
 				_estates.get({
-					fields: 'images,price,keyDetails,garages,address,bathrooms,bedrooms,location,title,cmid'
+					fields: 'images,price,keyDetails,garages,address,bathrooms,bedrooms,location,title,ecmid'
 				}).then(function(data) {
 					_storage.set('private', data);
 					_render.list(_.slice(data, 0, 12));

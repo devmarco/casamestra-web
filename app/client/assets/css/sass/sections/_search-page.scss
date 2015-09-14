@@ -34,13 +34,13 @@
 .estates__bx__filter {
 	position: relative;
 	width: 100%;
-    z-index: 100;
+	z-index: 100;
 	padding: 1em 1em;
-	border-bottom: 1px solid #e1e1e1;
+	border-bottom: 1px solid #F3F1F1;
 	background-color: #fff;
 	background-color: rgba(255, 255, 255, 0.95);
 	@extend .clearfix;
-	@include vendor(box-shadow, 0 2px 10px #E8E6E6);
+	@include vendor(box-shadow, 0 5px 5px rgba(232, 230, 230, 0.2));
 
 	.filter {
 		float: left;
@@ -110,7 +110,7 @@
 				content: '▾';
 				float: right;
 				margin-left: 15px;
-				color: $green;
+				color: $master;
 			}
 		}
 	}
@@ -160,8 +160,8 @@
 
 .estates__bx__list {
 	position: absolute;
-    top: 81px;
-    width: 100%;
+	top: 81px;
+	width: 100%;
 	@extend .clearfix;
 }
 
@@ -176,45 +176,45 @@
 
 .estates__bx__list__container {
 	position: relative;
-    z-index: 2;
+	z-index: 2;
 	background-color: #FAFAFA;
 	float: left;
-    width: 70%;
-    max-width: 100%;
-    padding: 1em 0;
-    border-right: 1px solid #C3C3C3;
-    overflow-x: scroll;
+	width: 70%;
+	max-width: 100%;
+	padding: 1em 0;
+	overflow-x: scroll;
 
 	.estate {
 		margin-bottom: 30px;
-		height: 340px;
+		height: 300px;
 	}
 }
 
 .filter__container {
 	padding: 0 1em;
-    margin-top: 20px;
-    @extend .clearfix;
+	margin-top: 20px;
+	@extend .clearfix;
 
 	.filter {
 		float: left;
 	}
 
-    .filter + .filter {
-    	float: right;
-    }
+	.filter + .filter {
+		float: right;
+	}
 
-    &:first-child {
+	&:first-child {
 		margin: 0 0 20px 0;
-    }
+	}
 }
 
 .list__container {
 	min-height: 600px;
+	padding: 0 0.5em;
 	@extend .clearfix;
 }
 
 .estates__bx__list__map {
 	float: right;
-    width: 30%;
+	width: 30%;
 }

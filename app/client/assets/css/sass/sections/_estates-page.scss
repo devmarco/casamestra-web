@@ -1,21 +1,17 @@
-.estate-details__bx {
-
-}
-
 .estate-details__bx__gallery {
 	height: 420px;
 }
 
 .gallery__presentation {
 	font-size: 0;
-    white-space: nowrap;
-    width: 100%;
+	white-space: nowrap;
+	width: 100%;
 
 	@extend .clearfix;
 	img {
 		max-height: 420px;
-		margin-left: 10px;
-		@include opacity(6);
+		margin-left: 1px;
+		@include opacity(9);
 		@include vendor(transition, opacity 0.5s ease-out);
 
 		&:first-child {
@@ -29,16 +25,15 @@
 }
 
 .estate-details__bx__header {
-	border-bottom: 2px solid $master;
-	padding: 2.5em 0;
+	border-bottom: 2px solid #F3F3F3;
+	padding: 2em 0;
 }
 
 .header__details {
 	@extend .row;
 	@extend .clearfix;
 
-	.header__title {
-		padding: 2.9em 0 1.8em;
+	.header__about {
 		float: left;
 
 		h1, h2 {
@@ -47,56 +42,98 @@
 			color: $master;
 		}
 
-		h1 {
+		h2 {
+			text-transform: capitalize;
 			@extend %f-light;
-			@extend %f15;
-			line-height: 15px;
+			@extend %f11;
 		}
 
-		h2 {
-			@extend %f-regular;
-			@extend %f25;
+		h1 {
+			@extend %f-bold;
+			@extend %f20;
 		}
 
 		.estate__info {
-		    background-color: transparent;
-		    width: 326px;
-		    position: relative;
-		    margin: 20px auto auto auto;
-		    padding: 0;
+			background-color: transparent;
+			width: 326px;
+			position: relative;
+			margin: 20px auto auto auto;
+			padding: 0;
+		}
+	}
+
+	.header__about__info {
+		margin-top: 10px;
+		ul {
+			list-style: none;
+			margin: 0;
+			padding: 0;
+			@extend .clearfix;
+		}
+
+		li {
+			float: right;
+			margin-left: 20px;
+
+			@extend %f-regular;
+			@extend %f10;
+
+			span {
+				display: block;
+			}
+		}
+
+		li:first-child {
+			margin: 3px 20px 0 0;
+			float: left;
+			padding-right: 35px;
+			border-right: 1px solid #ccc;
+
+			@extend %f-regular;
+			@extend %f15;
+		}
+
+		.icon span:before {
+			content: '';
+			display: block;
+			margin: 0 auto 3px;
+			min-height: 15px;
 		}
 	}
 
 	.header__actions {
 		float: right;
-		margin-top: 28px;
-	    max-width: 250px;
+		margin-top: 23px;
 
 		a {
 			text-decoration: none;
+			display: block;
+			text-align: center;
+			width: 300px;
+			margin-bottom: 5px;
+			padding: 15px 20px;
+
+			@extend %f-regular;
+			@extend %f12;
+		}
+
+		a + a {
 			color: $master;
-			display: inline-block;
-		}
+			padding: 0;
 
-		.btn-dark {
-			color: #fff;
-			padding: 15px 20px;
-			border: 1px solid rgba(5, 139, 144, 0.34);
-    		box-shadow: inset 0 0 1px #fff;
-    		width: 120px;
+			@extend %f-regular;
+			@extend %f10;
 
-    		+ .btn-dark {
-    			margin-left: 10px;
-    		}
-		}
+			&:hover {
+				span {
+					text-decoration: underline;
+				}
+			}
 
-		.btn-green {
-			width: 250px;
-			padding: 15px 20px;
-			border: 1px solid rgba(5, 139, 144, 0.34);
-    		box-shadow: inset 0 0 1px #fff;
-    		color: #fff;
-    		margin-top: 10px;
+			span{
+				display: inline-block;
+				@extend %f-bold;
+			}
 		}
 	}
 }
@@ -107,7 +144,7 @@
 }
 
 .details__bx {
-	border-top: 1px solid #E0DCDC;
+	border-top: 1px solid #F3F3F3;
 	padding-top: 50px;
 	margin-top: 50px;
 	@extend .clearfix;
@@ -121,10 +158,9 @@
 	.title {
 		color: $master;
 		text-align: left;
-		margin: 0 0 1em;
-		float: left;
+		margin: 0 0 2em;
 		@extend %f-semibold;
-		@extend %f13;
+		@extend %f16;
 
 		span {
 			color: #999;
@@ -135,17 +171,21 @@
 		}
 	}
 	.content {
-		max-width: 65%;
-		float: right;
 		ul {
 			list-style: none;
 			padding: 0;
 			margin: 0;
+			@extend .clearfix;
+		}
+
+		.styled {
+			list-style: disc;
+			padding: 0 1em;
 		}
 
 		span {
 			display: inline-block;
-			color: #999;
+			color: #636363;
 			@extend %f-regular;
 			@extend %f10;
 
@@ -153,15 +193,16 @@
 				color: $master;
 				margin-right: 15px;
 				text-align: left;
-				min-width: 115px;
+				min-width: 90px;
+				@extend %f-bold;
 			}
 		}
 
 		li {
 			float: left;
-			width: 25%;
+			width: 30%;
 			margin: 7px 0;
-			color: #999;
+			color: #636363;
 			@extend %f-regular;
 			@extend %f9;
 		}
