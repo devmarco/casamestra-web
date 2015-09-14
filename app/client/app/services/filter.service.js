@@ -5,7 +5,7 @@ Box.Application.addService('filter.service', function(application) {
 		filters = {};
 
 	return {
-		set: function(filter) { 
+		set: function(filter) {
 			var index;
 
 			//Check if is price
@@ -22,7 +22,7 @@ Box.Application.addService('filter.service', function(application) {
 			}
 
 			function isGeneric() {
-				(!filters[filter.prop]) ? filters[filter.prop] = [] : false;	
+				(!filters[filter.prop]) ? filters[filter.prop] = [] : false;
 
 				index = filters[filter.prop].indexOf(filter.value);
 
@@ -84,7 +84,7 @@ Box.Application.addService('filter.service', function(application) {
 			}
 
 			function checkBathrooms(filter, item) {
-			
+
 				if (filter === 5 && item >= filter) {
 					return true;
 				} else if (item === filter) {

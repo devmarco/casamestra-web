@@ -1,6 +1,6 @@
-/*------------------------------------*\
+/* ------------------------------------ *\
 	[SETTINGS]
-\*------------------------------------*/
+\* ------------------------------------ */
 
 var config = {
 	url: {
@@ -10,7 +10,7 @@ var config = {
 		buy: '/search/buy',
 		sell: '/search/sell',
 		rent: '/search/rent',
-		investiments: '/investiments'
+		investiments: '/investiments',
 	},
 	db: {
 		host: '54.207.101.8',
@@ -18,6 +18,6 @@ var config = {
 		db: 'casamestra',
 		authKey: 'cminstance',
 	},
-}
+};
 
 module.exports = config;
