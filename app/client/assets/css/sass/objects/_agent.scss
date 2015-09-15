@@ -1,0 +1,26 @@
+.o-agent {}
+
+.o-agent__image {
+	max-height: 250px;
+	overflow: hidden;
+
+	img {
+		width: 100%;
+	}
+}
+
+.o-agent__about {
+	border: 1px solid #F1F1F1;
+	margin-top: -1px;
+	text-align: center;
+	padding: 1.5em;
+
+	h3 {
+		margin: 0 0 5px;
+	}
+
+	span {
+		display: block;
+		margin: 5px 0;
+	}
+}

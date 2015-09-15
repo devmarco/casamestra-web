@@ -1,0 +1,36 @@
+.c-agents {
+	padding: 3em 0;
+}
+
+.c-agents__header {
+	max-width: 70%;
+	margin: 0 auto 50px auto;
+
+	.title,
+	.subtitle {
+		margin: 0;
+		text-align: center;
+	}
+
+	.title {
+		margin-bottom: 30px;
+		color: $master;
+		line-height: 1em;
+		@extend %f20;
+		@extend %f-bold;
+	}
+
+	.subtitle {
+		color: $grey;
+		@extend %f10;
+		@extend %f-regular;
+	}
+}
+
+.c-agents__items {
+
+	.o-agent {
+		@extend .small-3;
+		@extend .columns;
+	}
+}

@@ -76,16 +76,20 @@ module.exports = function exports(grunt) {
 		},
 
 		babel: {
-	        es6: {
-	            files: [
-	                {
-	                    expand: true,
-	                    src: ['app/client/app/**/*.es6'],
-	                    ext: '.js'
-	                }
-	            ]
-	        }
-	    },
+			es6: {
+				files: [
+					{
+						expand: true,
+						blacklist: ['strict'],
+						src: [
+							'app/client/app/**/*.es6',
+							'app/client/app/**/**/*.es6',
+						],
+						ext: '.js',
+					},
+				],
+			},
+		},
 
 		concat: {
 			options: {
@@ -115,15 +119,15 @@ module.exports = function exports(grunt) {
 					drop_console: true,
 				},
 				files: {
-					'app/public/assets/js/build/app.min.js': ['app/public/assets/js/app.js'],
+					'app/client/assets/js/build/app.min.js': ['app/client/app/app.js'],
 				},
 			},
 		},
 
 		watch: {
 			scripts: {
-				files: ['app/client/assets/css/sass/**/*.scss', 'app/client/app/**/*.js'],
-				tasks: ['sass', 'concat', 'uglify'],
+				files: ['app/client/assets/css/sass/**/*.scss', 'app/client/app/**/*.es6', 'app/client/app/**/**/*.es6'],
+				tasks: ['sass', 'babel', 'concat', 'uglify'],
 				options: {
 					spawn: false,
 				},

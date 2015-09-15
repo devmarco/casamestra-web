@@ -1,13 +1,4 @@
-.estate-container {
-	@extend .row;
-}
-
-.estate__column {
-	@extend .columns;
-	@extend .small-4;
-}
-
-.estate {
+.o-estate {
 	width: 100%;
 	position: relative;
 	height: 250px;
@@ -50,51 +41,7 @@
 	}
 }
 
-.estate--hover a {
-	&:before {
-		visibility: visible;
-	}
-
-	.estate__address {
-		visibility: visible;
-	}
-}
-
-.estate.estate--big {
-	height: 530px;
-	@extend .small-12;
-
-	.estate__address {
-		margin: -50px 0 0 -35%;
-	}
-}
-
-.estate.estate--medium {
-	@extend .small-4;
-}
-
-.estate.estate--map {
-	float: none;
-	width: 335px;
-	height: 280px;
-	padding: 0;
-
-	.estate__address {
-		.address {
-			@extend %f11;
-		}
-	}
-
-	.estate__info {
-		li {
-			span {
-				@extend %f10;
-			}
-		}
-	}
-}
-
-.estate__info {
+.o-estate__about {
 	position: absolute;
 	width: 100%;
 	bottom: 0;
@@ -102,33 +49,34 @@
 	background: #fff;
 	z-index: 2;
 	padding: 10px;
+}
 
-	.address {
-		margin-bottom: 10px;
-		span {
-			display: block;
-			color: $master;
-			text-align: left;
-			@extend %f9;
-			@extend %f-bold;
-		}
-
-		span + span {
-			@extend %f-regular;
-		}
+.o-estate__about__address {
+	margin-bottom: 10px;
+	span {
+		display: block;
+		color: $master;
+		text-align: left;
+		@extend %f9;
+		@extend %f-bold;
 	}
 
-	ul {
-		padding: 0;
-		margin: 0;
-		list-style: none;
-		@extend .clearfix;
+	span + span {
+		@extend %f-regular;
 	}
+}
+
+.o-estate__about__info {
+
+	padding: 0;
+	margin: 0;
+	list-style: none;
+	@extend .clearfix;
 
 	li {
 		position: relative;
 		float: right;
-		min-width: 30px;
+		min-width: 35px;
 
 		span {
 			color: $master;

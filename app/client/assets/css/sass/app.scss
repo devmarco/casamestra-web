@@ -7,13 +7,18 @@
 @import 'settings/gallery';
 
 /*------------------------------------*\
+	[VENDORS]
+\*------------------------------------*/
+
+@import 'vendors/foundation';
+@import 'vendors/pswp-gallery';
+
+/*------------------------------------*\
 	[BASE]
 \*------------------------------------*/
 
 @import 'base/normalize';
-@import 'base/foundation';
 @import 'base/page';
-@import 'base/gallery';
 
 /*------------------------------------*\
 	[TOOLS]
@@ -28,8 +33,8 @@
 
 @import 'generic/icons';
 @import 'generic/divider';
-@import 'generic/estates';
 @import 'generic/sprite-all-sprite';
+@import 'generic/dots-background';
 
 /*------------------------------------*\
 	[OBJECTS]
@@ -40,7 +45,8 @@
 @import 'objects/dropdown';
 @import 'objects/filters';
 @import 'objects/mapbox';
-@import 'objects/gallery';
+@import 'objects/estate';
+@import 'objects/agent';
 
 /*------------------------------------*\
 	[COMPONENTS]
@@ -48,6 +54,10 @@
 
 @import 'components/header';
 @import 'components/footer';
+@import 'components/gallery';
+@import 'components/agents';
+@import 'components/neighborhood';
+
 
 /*------------------------------------*\
 	[SECTIONS]
@@ -58,6 +68,5 @@
 @import 'sections/about';
 @import 'sections/neighborhoods';
 @import 'sections/green-bar';
-@import 'sections/estates-page';
+@import 'sections/estates-about';
 @import 'sections/search-page';
-@import 'sections/agents';

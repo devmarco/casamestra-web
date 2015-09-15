@@ -6,11 +6,7 @@ header {
 	  z-index: 100;
 }
 
-header.fixed {
-	position: fixed;
-}
-
-.header {
+.c-header {
 	padding: 0 1%;
 	border-bottom: 1px solid #fff;
 	border-bottom: 1px solid rgba(255, 255, 255, 0.15);
@@ -18,7 +14,7 @@ header.fixed {
 	@extend .clearfix;
 }
 
-.header__logo {
+.c-header__logo {
 	float: left;
 	padding: 22px 0;
 
@@ -28,11 +24,11 @@ header.fixed {
 	}
 
 	img {
-		max-width: 220px;
+		max-width: 200px;
 	}
 }
 
-.header__nav {
+.c-header__nav {
 	float: right;
 
 	nav {
@@ -78,39 +74,39 @@ header.fixed {
 
 		&:hover {
 			border-bottom-color: $green;
+			@include opacity(8);
 		}
 	}
 
 	a.active {
-		border-top-color: $green;
+		border-bottom-color: $green;
 	}
 }
 
 ul.nav-signin {
-	margin-left: 2em;
-	margin-top: 18px;
+	margin: 20px 0 0 1em;
+	border-left: 1px solid rgba(255, 255, 255, 0.1);
+	padding: 6px 1em 6px 2em;
 
 	li {
-		margin-left: 1em;
 		display: inline-block;
-	}
-
-	li:first-child {
-		margin-left: 0;
 	}
 
 	a {
 		color: #fff;
 		text-decoration: none;
-		padding: 0.7em 0.7em;
-		  min-width: 110px;
-		  text-align: center;
-		  letter-spacing: 1px;
+		letter-spacing: 1px;
 		display: block;
-		border-radius: 3px;
-		border-color: rgba(255, 255, 255, 0.40);
+		border-top: 2px solid transparent;
+		border-bottom: 2px solid transparent;
+		transition: border-color 0.5s ease;
+		line-height: 1.4em;
 
 		@extend %f9;
-		@extend %f-bold;
+		@extend %f-regular;
+
+		&:hover {
+			@include opacity(8);
+		}
 	}
 }

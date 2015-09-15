@@ -1,12 +1,14 @@
-Box.Application.addService('storage.service', function(application) {
-	'use strict';
+/* global Box */
 
-	var publicData,
-		privateData,
-		publicFilters;
+'use strict';
+
+Box.Application.addService('storage.service', function () {
+	var publicData = undefined;
+	var privateData = undefined;
+	var publicFilters = undefined;
 
 	return {
-		get: function(config) {
+		get: function get(config) {
 			if (config === 'private') {
 				return {
 					data: privateData,
@@ -19,7 +21,7 @@ Box.Application.addService('storage.service', function(application) {
 				filters: publicFilters || {}
 			};
 		},
-		set: function(config, data, filters) {
+		set: function set(config, data, filters) {
 			if (config === 'private') {
 				privateData = data;
 				return false;
@@ -29,28 +31,27 @@ Box.Application.addService('storage.service', function(application) {
 			if (filters) publicFilters = filters;
 		},
 		view: {
-			isMap: function() {
+			isMap: function isMap() {
 				var view = window.localStorage.getItem('cmview');
 
-				if (view) {
-					if (view === 'map') return true;
-					return false;
-				} else {
-					return true;
-				}
+				if (view && view === 'map') return true;
+
+				if (view) return false;
+
+				return true;
 			},
-			isList: function() {
+			isList: function isList() {
 				var view = window.localStorage.getItem('cmview');
 
 				if (view === 'list') return true;
 
 				return false;
 			},
-			set: function(option) {
+			set: function set(option) {
 				if (option && option === 'map' || option === 'list') {
 					window.localStorage.setItem('cmview', option);
 				}
 			}
 		}
-	}
+	};
 });

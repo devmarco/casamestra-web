@@ -172,6 +172,12 @@
 	overflow: hidden;
 	height: -webkit-calc(100% - 80px);
 	z-index: 1;
+	float: right;
+	width: 30%;
+
+	@include breakpoint(xlarge) {
+		width:45%;
+	}
 }
 
 .estates__bx__list__container {
@@ -184,9 +190,16 @@
 	padding: 1em 0;
 	overflow-x: scroll;
 
-	.estate {
+	@include breakpoint(xlarge) {
+		width:55%;
+	}
+
+	.o-estate {
 		margin-bottom: 30px;
 		height: 300px;
+
+		@extend .small-4;
+		@extend .columns;
 	}
 }
 
@@ -212,9 +225,4 @@
 	min-height: 600px;
 	padding: 0 0.5em;
 	@extend .clearfix;
-}
-
-.estates__bx__list__map {
-	float: right;
-	width: 30%;
 }

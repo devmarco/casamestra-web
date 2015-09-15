@@ -1,44 +1,44 @@
-Box.Application.addModule('list', function(context) {
-	'use strict';
+/* global Box */
 
-	var _render  = context.getService('render.service'),
-		_storage = context.getService('storage.service'),
-		_estates = context.getService('estates.service');
+Box.Application.addModule('list', context => {
+	const _render  = context.getService('render.service');
+	const _storage = context.getService('storage.service');
+	const _estates = context.getService('estates.service');
+
+	const _ = context.getGlobal('_');
+	const $ = context.getGlobal('jQuery');
 
 	return {
 		behaviors: ['pagination'],
 		messages: ['newFilter', 'changeView'],
-		onmessage: function(name, value) {
+		onmessage: (name, value) => {
 			if (name === 'newFilter') this.renderFilter(value);
 			if (name === 'changeView' && value === 'list') this.renderView();
 		},
-		renderFilter: function(value) {
+		renderFilter: (value) => {
 			_storage.set('public', value.data, value.filters);
 
 			if (_storage.view.isList()) {
 				_render.update({
-					data: _.slice(value.data, 0, 12)
+					data: _.slice(value.data, 0, 12),
 				});
 			}
 		},
-		renderView: function() {
+		renderView: () => {
 			_storage.view.set('list');
 			_render.list(_storage.get().data);
 		},
-		init: function() {
+		init: () => {
 			if (_storage.view.isList()) {
-
-				//Display the list
 				$('main').addClass('list-active');
 
-				//Load the data
 				_estates.get({
-					fields: 'images,price,keyDetails,garages,address,bathrooms,bedrooms,location,title,ecmid'
-				}).then(function(data) {
+					fields: 'images,price,keyDetails,garages,address,bathrooms,bedrooms,location,title,ecmid',
+				}).then(data => {
 					_storage.set('private', data);
 					_render.list(_.slice(data, 0, 12));
 				});
 			}
-		}
-	}
+		},
+	};
 });

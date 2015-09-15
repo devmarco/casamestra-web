@@ -1,0 +1,67 @@
+.c-neighborhood {
+	padding-bottom: 3em;
+}
+
+.c-neighborhood__header {
+	max-width: 70%;
+	margin: 0 auto 50px auto;
+
+	.title,
+	.subtitle {
+		margin: 0;
+		text-align: center;
+	}
+
+	.title {
+		margin-bottom: 30px;
+		color: $master;
+		line-height: 1em;
+		@extend %f20;
+		@extend %f-bold;
+
+		span {
+			display: inline-block;
+			@extend %f7;
+			@extend %f-regular;
+		}
+	}
+
+	.subtitle {
+		color: $grey;
+		@extend %f10;
+		@extend %f-regular;
+	}
+}
+
+.c-neighborhood__area {
+	@extend .small-6;
+	@extend .columns;
+}
+
+.c-neighborhood__area__image {
+	height: 400px;
+	overflow: hidden;
+}
+
+.c-neighborhood__area__info {
+	padding: 2.5em 2em;
+	background: $master;
+
+	.title,
+	.subtitle {
+		display: block;
+		color: #fff;
+	}
+
+	.title {
+		margin-bottom: 10px;
+		letter-spacing: 1px;
+		@extend %f-bold;
+		@extend %f18;
+	}
+
+	.subtitle {
+		@extend %f-regular;
+		@extend %f12;
+	}
+}

@@ -1,5 +1,5 @@
 /*------------------------------------*\
-    $MIXINS
+	$MIXINS
 \*------------------------------------*/
 
 
@@ -11,11 +11,11 @@
  *
  */
 @mixin vendor($property, $value...){
-    -webkit-#{$property}:$value;
-       -moz-#{$property}:$value;
-        -ms-#{$property}:$value;
-         -o-#{$property}:$value;
-            #{$property}:$value;
+	-webkit-#{$property}:$value;
+	   -moz-#{$property}:$value;
+		-ms-#{$property}:$value;
+		 -o-#{$property}:$value;
+			#{$property}:$value;
 }
 
 /**
@@ -26,25 +26,59 @@
  */
 
 @mixin opacity($value) {
-    $calc: ($value*10);
-    zoom: 1;
-    filter: alpha(opacity=$calc);
-    opacity: ($value/10);
+	$calc: ($value*10);
+	zoom: 1;
+	filter: alpha(opacity=$calc);
+	opacity: ($value/10);
 }
 
 
 /**
  * Media query mixin.
 */
-@mixin breakpoint($size) {
+@mixin breakpoint($point) {
   //LG BREAKPOINT
-  @if $size == small {
-    @content;
+  @if $point == xxlarge {
+	@media (min-width: 1921px) { @content; }
   }
-  @else if $size == medium {
-    @media (min-width: 40.0625em) { @content; }
+  @else if $point == from-xxlarge {
+	@media (min-width: 1921px) { @content; }
   }
-  @else if $size == large {
-    @media (min-width: 64.0625em) { @content; }
+  @else if $point == up-to-xxlarge {
+	@media (max-width: 1921px) { @content; }
+  }
+  //MD BREAKPOINT
+  @else if $point == xlarge {
+	@media (min-width:1441px) and (max-width: 1920px) { @content; }
+  }
+  @else if $point == from-xlarge {
+	@media (min-width:1441px) { @content; }
+  }
+  @else if $point == up-to-xlarge {
+	@media (max-width: 1920px) { @content; }
+  }
+  //SM BREAKPOINT
+  @else if $point == large {
+	@media (min-width: 1025px) and (max-width: 1440px) { @content; }
+  }
+  @else if $point == from-large {
+	@media (min-width: 1025px) { @content; }
+  }
+  @else if $point == up-to-large {
+	@media (max-width: 1440px) { @content; }
+  }
+  //XS BREAKPOINT
+  @else if $point == medium {
+	@media (min-width: 641px) and (max-width: 1439px)  { @content; }
+  }
+  @else if $point == from-medium {
+	@media (min-width: 641px) { @content; }
+  }
+  @else if $point == up-to-medium {
+	@media (max-width: 1439px) { @content; }
+  }
+  //SXS BREAKPOINT
+  @else if $point == small {
+	@media (max-width: 640px)  { @content; }
   }
 }
