@@ -1,4 +1,4 @@
-var server = require('./casamestra');
+const server = require('./casamestra');
 
-//Initialize
+// Initialize
 server.init();

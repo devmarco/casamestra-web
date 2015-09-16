@@ -1,18 +1,21 @@
 /* global Box */
 
 Box.Application.addService('render.service', application => {
-	const _storage  = application.getService('storage.service');
+	const _storage 	= application.getService('storage.service');
 	const _utils 	= application.getService('utils.service');
 	const _map 	  	= application.getService('map.service');
 
 	const paperclip = application.getGlobal('paperclip');
-	const _ = application.getGlobal('_');
+	const _ 		= application.getGlobal('_');
+	let t;
+	let view;
+	let template;
 
 	/**
 	 * Estates Template
 	 */
 
-	const t = '<repeat each="{{ estates}}" as="e">' +
+	t = '<repeat each="{{ estates}}" as="e">' +
 	'<div class="o-estate">' +
 	'    <a href="/imovel/{{ e.ecmid }}" style="background-image: url({{ e.images.cover }})">' +
 	'        <div class="o-estate__about">' +
@@ -36,18 +39,18 @@ Box.Application.addService('render.service', application => {
 	paperclip.modifiers.formatMoney = _utils.formatMoney;
 
 	// Define the template
-	const template = paperclip.template(t);
+	template = paperclip.template(t);
 
 	return {
 		update: config => {
-			if (this.view) this.view.set('estates', config.data);
+			if (view) view.set('estates', config.data);
 
 			_map.update(config.data);
 
 			_utils.updateTexts(_storage.get().filters, config.pagination || null);
 		},
 		map: data => {
-			if (this.view) this.view.remove();
+			if (view) view.remove();
 
 			_map.destroy();
 
@@ -64,11 +67,11 @@ Box.Application.addService('render.service', application => {
 		list: data => {
 			_map.destroy();
 
-			this.view = template.view({
+			view = template.view({
 				estates: _.slice(data, 0, 12),
 			});
 
-			document.querySelector('.render-area').appendChild(this.view.render());
+			document.querySelector('.render-area').appendChild(view.render());
 
 			_map.render({
 				mapClass: 'map--small',

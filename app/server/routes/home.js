@@ -1,13 +1,11 @@
-/*------------------------------------ *\
+/* ------------------------------------ *\
 	[HOME]
-\*------------------------------------*/
+\* ------------------------------------ */
 
-var homeView = {
+const homeView = {
 	method: 'GET',
 	path: '/',
-	handler: function(req, reply) {
-		reply.view('index');
-	}
-}	
+	handler: (req, reply) => reply.view('index'),
+};
 
 module.exports = homeView;

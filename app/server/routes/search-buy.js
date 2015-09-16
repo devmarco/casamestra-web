@@ -1,15 +1,15 @@
-/*------------------------------------ *\
+/* ------------------------------------ *\
 	[SEARCH BUY]
-\*------------------------------------*/
+\* ------------------------------------ */
 
-var searchBuy = {
+const searchBuy = {
 	method: 'GET',
 	path: '/busca/comprar',
-	handler: function(req, reply) {
+	handler: (req, reply) => {
 		reply.view('search', {
-			activePage: 'buy'
+			activePage: 'buy',
 		});
-	}
-}
+	},
+};
 
 module.exports = searchBuy;

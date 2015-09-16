@@ -35,20 +35,6 @@ module.exports = function exports(grunt) {
 			},
 		},
 
-		concat: {
-			options: {
-				separator: ';',
-			},
-			dist: {
-				src: [
-					'app/public/assets/js/vendors/jquery-2.1.4.min.js',
-					'app/public/assets/js/vendors/*.js',
-					'app/public/assets/js/app/**/*.js',
-				],
-				dest: 'app/public/assets/js/app.js',
-			},
-		},
-
 		'svg-sprites': {
 			all: {
 				options: {
@@ -101,6 +87,7 @@ module.exports = function exports(grunt) {
 					'app/client/assets/js/vendors/*.js',
 					'app/client/app/**/*.js',
 					'app/client/app/**/**/*.js',
+					'app/client/app/**/**/**/*.js',
 				],
 				dest: 'app/client/assets/js/app.js',
 			},
@@ -119,7 +106,7 @@ module.exports = function exports(grunt) {
 					drop_console: true,
 				},
 				files: {
-					'app/client/assets/js/build/app.min.js': ['app/client/app/app.js'],
+					'app/client/assets/js/build/app.min.js': ['app/client/assets/js/app.js'],
 				},
 			},
 		},

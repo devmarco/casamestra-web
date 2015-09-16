@@ -1,10 +1,10 @@
-/*------------------------------------ *\
+/* ------------------------------------ *\
 	[PUBLIC FILES]
-\*------------------------------------*/
+\* ------------------------------------ */
 
-var Path = require('path');
+const Path = require('path');
 
-var files = {
+const files = {
 	method: 'GET',
 	path: '/public/{path*}',
 	handler: {
@@ -12,9 +12,9 @@ var files = {
 			path: Path.join(__dirname, '../../client', '/'),
 			listing: false,
             index: false,
-            redirectToSlash: false
-		}
-	}
-}
+            redirectToSlash: false,
+		},
+	},
+};
 
 module.exports = files;

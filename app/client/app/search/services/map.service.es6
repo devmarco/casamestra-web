@@ -5,7 +5,7 @@ Box.Application.addService('map.service', application => {
 	const $ 	= application.getGlobal('jQuery');
 
 	return {
-		render: config => {
+		render: render(config) {
 			if (!L) return false;
 
 			// Private Key
@@ -22,7 +22,7 @@ Box.Application.addService('map.service', application => {
 				this.createMarkers(config.markers);
 			}
 		},
-		update: markers => {
+		update: function(markers) {
 			if (this.clusterGroup) {
 				this.map.removeLayer(this.clusterGroup);
 				this.createClusterMarkers(markers);
@@ -31,7 +31,7 @@ Box.Application.addService('map.service', application => {
 				this.createMarkers(markers);
 			}
 		},
-		createClusterMarkers: markers => {
+		createClusterMarkers: function(markers) {
 			this.clusterGroup = new L.MarkerClusterGroup({
 				polygonOptions: {
 					fillColor: '#50E3C2',
@@ -65,7 +65,7 @@ Box.Application.addService('map.service', application => {
 
 			this.map.fitBounds(this.clusterGroup.getBounds());
 		},
-		createMarkers: markers => {
+		createMarkers: function(markers) {
 			const estates = $('.o-estate');
 
 			this.markersGroup = new L.FeatureGroup();
@@ -87,7 +87,7 @@ Box.Application.addService('map.service', application => {
 
 			this.map.fitBounds(this.markersGroup.getBounds());
 		},
-		template: estate => {
+		template: function(estate) {
 			const t = "<div class='estate estate--map'>" +
 			'    <a style="background-image: url(' + estate.cover + ')"">' +
 			'        <div class="estate__address"><span class="neighborhood">' + estate.neighborhood + '</span><span class="address">' + estate.address + '</span></div>' +
@@ -104,13 +104,13 @@ Box.Application.addService('map.service', application => {
 
 			return t;
 		},
-		destroy: () => {
+		destroy: function() {
 			if (this.map) this.map.remove();
 
 			this.clusterGroup = null;
 			this.markersGroup = null;
 		},
-		bindMarkerHover: (marker, estate) => {
+		bindMarkerHover: function(marker, estate) {
 			marker.on('mouseover', () => {
 				marker.setIcon(L.icon({
 					iconUrl: '/public/assets/imgs/svg/marker-icon-hover.svg',
@@ -132,7 +132,7 @@ Box.Application.addService('map.service', application => {
 				$('html,body').animate({ scrollTop: distance - 100 }, 800);
 			});
 		},
-		bindMarkerClick: (marker, value) => {
+		bindMarkerClick: function(marker, value) {
 			marker.bindPopup(this.template(value), {
 				closeButton: false,
 				minWidth: 320,

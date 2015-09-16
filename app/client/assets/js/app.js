@@ -672,28 +672,30 @@ Box.Application.addService('map.service', function (application) {
 			// Private Key
 			L.mapbox.accessToken = 'pk.eyJ1IjoibWFya29za3QiLCJhIjoiOTVmMjE4NTdmNDJjNWVkNTA0MDZlNDE0MWI1ZTdiZDUifQ.DJCF768JpbwaSuT5Ye0Xwg';
 
-			undefined.map = L.mapbox.map(config.mapClass, 'markoskt.n3860n3a', {
+			this.map = L.mapbox.map(config.mapClass, 'markoskt.n3860n3a', {
 				minZoom: 4,
 				zoomControl: config.zoomControl
 			}).setView([40.73, -74.011], 5);
 
 			if (config.cluster) {
-				undefined.createClusterMarkers(config.markers);
+				this.createClusterMarkers(config.markers);
 			} else {
-				undefined.createMarkers(config.markers);
+				this.createMarkers(config.markers);
 			}
 		},
 		update: function update(markers) {
-			if (undefined.clusterGroup) {
-				undefined.map.removeLayer(undefined.clusterGroup);
-				undefined.createClusterMarkers(markers);
+			if (this.clusterGroup) {
+				this.map.removeLayer(this.clusterGroup);
+				this.createClusterMarkers(markers);
 			} else {
-				undefined.map.removeLayer(undefined.markersGroup);
-				undefined.createMarkers(markers);
+				this.map.removeLayer(this.markersGroup);
+				this.createMarkers(markers);
 			}
 		},
 		createClusterMarkers: function createClusterMarkers(markers) {
-			undefined.clusterGroup = new L.MarkerClusterGroup({
+			var _this = this;
+
+			this.clusterGroup = new L.MarkerClusterGroup({
 				polygonOptions: {
 					fillColor: '#50E3C2',
 					color: '#50E3C2',
@@ -717,19 +719,21 @@ Box.Application.addService('map.service', function (application) {
 					})
 				});
 
-				undefined.bindMarkerClick(marker, value);
+				_this.bindMarkerClick(marker, value);
 
-				undefined.clusterGroup.addLayer(marker);
+				_this.clusterGroup.addLayer(marker);
 			});
 
-			undefined.map.addLayer(undefined.clusterGroup);
+			this.map.addLayer(this.clusterGroup);
 
-			undefined.map.fitBounds(undefined.clusterGroup.getBounds());
+			this.map.fitBounds(this.clusterGroup.getBounds());
 		},
 		createMarkers: function createMarkers(markers) {
+			var _this2 = this;
+
 			var estates = $('.o-estate');
 
-			undefined.markersGroup = new L.FeatureGroup();
+			this.markersGroup = new L.FeatureGroup();
 
 			markers.forEach(function (value, index) {
 				var marker = L.marker(new L.LatLng(value.location.lat, value.location.lng), {
@@ -739,14 +743,14 @@ Box.Application.addService('map.service', function (application) {
 					})
 				});
 
-				undefined.markersGroup.addLayer(marker);
+				_this2.markersGroup.addLayer(marker);
 
-				undefined.bindMarkerHover(marker, estates[index]);
+				_this2.bindMarkerHover(marker, estates[index]);
 			});
 
-			undefined.map.addLayer(undefined.markersGroup);
+			this.map.addLayer(this.markersGroup);
 
-			undefined.map.fitBounds(undefined.markersGroup.getBounds());
+			this.map.fitBounds(this.markersGroup.getBounds());
 		},
 		template: function template(estate) {
 			var t = "<div class='estate estate--map'>" + '    <a style="background-image: url(' + estate.cover + ')"">' + '        <div class="estate__address"><span class="neighborhood">' + estate.neighborhood + '</span><span class="address">' + estate.address + '</span></div>' + '        <div class="estate__info">' + '            <ul>' + '                <li class="icon icon-area"><span>' + estate.area + 'm² </span></li>' + '                <li class="icon icon-beds"><span>' + estate.bedrooms + '</span></li>' + '                <li class="icon icon-bath"><span>' + estate.bathrooms + '</span></li>' + '                <li><span>" + _util.formatMoney(estate.price) + "</span></li>' + '            </ul>' + '        </div>' + '    </a>' + '</div>';
@@ -754,10 +758,10 @@ Box.Application.addService('map.service', function (application) {
 			return t;
 		},
 		destroy: function destroy() {
-			if (undefined.map) undefined.map.remove();
+			if (this.map) this.map.remove();
 
-			undefined.clusterGroup = null;
-			undefined.markersGroup = null;
+			this.clusterGroup = null;
+			this.markersGroup = null;
 		},
 		bindMarkerHover: function bindMarkerHover(marker, estate) {
 			marker.on('mouseover', function () {
@@ -782,13 +786,15 @@ Box.Application.addService('map.service', function (application) {
 			});
 		},
 		bindMarkerClick: function bindMarkerClick(marker, value) {
-			marker.bindPopup(undefined.template(value), {
+			var _this3 = this;
+
+			marker.bindPopup(this.template(value), {
 				closeButton: false,
 				minWidth: 320
 			});
 
 			marker.on('click', function () {
-				return undefined.openPopup();
+				return _this3.openPopup();
 			});
 		}
 	};
@@ -804,29 +810,32 @@ Box.Application.addService('render.service', function (application) {
 
 	var paperclip = application.getGlobal('paperclip');
 	var _ = application.getGlobal('_');
+	var t = undefined;
+	var view = undefined;
+	var template = undefined;
 
 	/**
   * Estates Template
   */
 
-	var t = '<repeat each="{{ estates}}" as="e">' + '<div class="o-estate">' + '    <a href="/imovel/{{ e.ecmid }}" style="background-image: url({{ e.images.cover }})">' + '        <div class="o-estate__about">' + '            <div class="o-estate__about__address">' + '                <span>{{ e.keyDetails.neighborhood }}</span>' + '                <span>{{ e.address }}</span>' + '            </div>' + '            <ul class="o-estate__about__info">' + '                <li><span>{{ e.price | formatMoney(e.price) }}</span></li>' + '                <li class="icon icon-area"><span>{{ e.keyDetails.area }}m</span></li>' + '                <li class="icon icon-park"><span>{{ e.garages }}</span></li>' + '                <li class="icon icon-beds"><span>{{ e.bedrooms }}</span></li>' + '                <li class="icon icon-bath"><span>{{ e.bathrooms }}</span></li>' + '            </ul>' + '        </div>' + '    </a>' + '</div>' + '</repeat>';
+	t = '<repeat each="{{ estates}}" as="e">' + '<div class="o-estate">' + '    <a href="/imovel/{{ e.ecmid }}" style="background-image: url({{ e.images.cover }})">' + '        <div class="o-estate__about">' + '            <div class="o-estate__about__address">' + '                <span>{{ e.keyDetails.neighborhood }}</span>' + '                <span>{{ e.address }}</span>' + '            </div>' + '            <ul class="o-estate__about__info">' + '                <li><span>{{ e.price | formatMoney(e.price) }}</span></li>' + '                <li class="icon icon-area"><span>{{ e.keyDetails.area }}m</span></li>' + '                <li class="icon icon-park"><span>{{ e.garages }}</span></li>' + '                <li class="icon icon-beds"><span>{{ e.bedrooms }}</span></li>' + '                <li class="icon icon-bath"><span>{{ e.bathrooms }}</span></li>' + '            </ul>' + '        </div>' + '    </a>' + '</div>' + '</repeat>';
 
 	// Instance formatMoney to paperclip
 	paperclip.modifiers.formatMoney = _utils.formatMoney;
 
 	// Define the template
-	var template = paperclip.template(t);
+	template = paperclip.template(t);
 
 	return {
 		update: function update(config) {
-			if (undefined.view) undefined.view.set('estates', config.data);
+			if (view) view.set('estates', config.data);
 
 			_map.update(config.data);
 
 			_utils.updateTexts(_storage.get().filters, config.pagination || null);
 		},
 		map: function map(data) {
-			if (undefined.view) undefined.view.remove();
+			if (view) view.remove();
 
 			_map.destroy();
 
@@ -843,11 +852,11 @@ Box.Application.addService('render.service', function (application) {
 		list: function list(data) {
 			_map.destroy();
 
-			undefined.view = template.view({
+			view = template.view({
 				estates: _.slice(data, 0, 12)
 			});
 
-			document.querySelector('.render-area').appendChild(undefined.view.render());
+			document.querySelector('.render-area').appendChild(view.render());
 
 			_map.render({
 				mapClass: 'map--small',

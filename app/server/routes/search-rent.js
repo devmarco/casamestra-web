@@ -1,15 +1,15 @@
-/*------------------------------------ *\
+/* ------------------------------------ *\
 	[SEARCH RENT]
-\*------------------------------------*/
+\* ------------------------------------ */
 
-var searchRent = {
+const searchRent = {
 	method: 'GET',
 	path: '/busca/alugar',
-	handler: function(req, reply) {
+	handler: (req, reply) => {
 		reply.view('search', {
-			activePage: 'rent'
+			activePage: 'rent',
 		});
-	}
-}
+	},
+};
 
 module.exports = searchRent;
