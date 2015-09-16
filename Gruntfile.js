@@ -61,19 +61,22 @@ module.exports = function exports(grunt) {
 			},
 		},
 
-		babel: {
-			es6: {
-				files: [
-					{
-						expand: true,
-						blacklist: ['strict'],
-						src: [
-							'app/client/app/**/*.es6',
-							'app/client/app/**/**/*.es6',
-						],
-						ext: '.js',
-					},
-				],
+		browserify: {
+			dist: {
+				options: {
+					transform: [
+						['babelify', {
+							blacklist: ['strict'],
+						}],
+					],
+				},
+				files: {
+					'app/client/assets/js/app.js': [
+						'app/client/app/**/*.js',
+						'app/client/app/**/**/*.js',
+						'app/client/app/**/**/**/*.js',
+					],
+				},
 			},
 		},
 
@@ -85,36 +88,33 @@ module.exports = function exports(grunt) {
 				src: [
 					'app/client/assets/js/vendors/jquery-2.1.4.min.js',
 					'app/client/assets/js/vendors/*.js',
-					'app/client/app/**/*.js',
-					'app/client/app/**/**/*.js',
-					'app/client/app/**/**/**/*.js',
+					'app/client/assets/js/app.js',
 				],
 				dest: 'app/client/assets/js/app.js',
 			},
 		},
-
-		uglify: {
-			my_target: {
-				options: {
-					sequences: true,
-					dead_code: true,
-					conditionals: true,
-					booleans: true,
-					unused: false,
-					if_return: true,
-					join_vars: true,
-					drop_console: true,
-				},
-				files: {
-					'app/client/assets/js/build/app.min.js': ['app/client/assets/js/app.js'],
-				},
-			},
-		},
+		// uglify: {
+		// 	my_target: {
+		// 		options: {
+		// 			sequences: true,
+		// 			dead_code: true,
+		// 			conditionals: true,
+		// 			booleans: true,
+		// 			unused: false,
+		// 			if_return: true,
+		// 			join_vars: true,
+		// 			drop_console: true,
+		// 		},
+		// 		files: {
+		// 			'app/client/assets/js/build/app.min.js': ['app/client/assets/js/app.js'],
+		// 		},
+		// 	},
+		// },
 
 		watch: {
 			scripts: {
-				files: ['app/client/assets/css/sass/**/*.scss', 'app/client/app/**/*.es6', 'app/client/app/**/**/*.es6'],
-				tasks: ['sass', 'babel', 'concat', 'uglify'],
+				files: ['app/client/assets/css/sass/**/*.scss', 'app/client/app/**/*.js', 'app/client/app/**/**/*.js'],
+				tasks: ['sass', 'browserify', 'concat'],
 				options: {
 					spawn: false,
 				},
@@ -127,11 +127,10 @@ module.exports = function exports(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-concurrent');
 	grunt.loadNpmTasks('grunt-nodemon');
-	grunt.loadNpmTasks('grunt-contrib-concat');
-	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-dr-svg-sprites');
 	grunt.loadNpmTasks('grunt-text-replace');
-	grunt.loadNpmTasks('grunt-babel');
+	grunt.loadNpmTasks('grunt-browserify');
+	grunt.loadNpmTasks('grunt-contrib-concat');
 
 	// Default task(s).
 	grunt.registerTask('default', ['sass']);

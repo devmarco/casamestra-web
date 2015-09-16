@@ -9,11 +9,11 @@ Box.Application.addModule('map', context => {
 
 	return {
 		messages: ['newFilter', 'changeView'],
-		onmessage: (name, value) => {
+		onmessage: function(name, value) {
 			if (name === 'newFilter') this.renderFilter(value);
 			if (name === 'changeView' && value === 'map') this.renderView();
 		},
-		renderFilter: (value) => {
+		renderFilter: function(value) {
 			_storage.set('public', value.data, value.filters);
 
 			if (_storage.view.isMap()) {
@@ -22,11 +22,11 @@ Box.Application.addModule('map', context => {
 				});
 			}
 		},
-		renderView: () => {
+		renderView: function() {
 			_storage.view.set('map');
 			_render.map(_storage.get().data);
 		},
-		init: () => {
+		init: function() {
 			if (_storage.view.isMap()) {
 				$('main').addClass('map-active');
 

@@ -11,7 +11,7 @@ Box.Application.addModule('list', context => {
 	return {
 		behaviors: ['pagination'],
 		messages: ['newFilter', 'changeView'],
-		onmessage: (name, value) => {
+		onmessage: function(name, value) {
 			if (name === 'newFilter') this.renderFilter(value);
 			if (name === 'changeView' && value === 'list') this.renderView();
 		},
@@ -24,11 +24,11 @@ Box.Application.addModule('list', context => {
 				});
 			}
 		},
-		renderView: () => {
+		renderView: function() {
 			_storage.view.set('list');
 			_render.list(_storage.get().data);
 		},
-		init: () => {
+		init: function() {
 			if (_storage.view.isList()) {
 				$('main').addClass('list-active');
 

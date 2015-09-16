@@ -5,7 +5,7 @@ Box.Application.addService('map.service', application => {
 	const $ 	= application.getGlobal('jQuery');
 
 	return {
-		render: render(config) {
+		render: function render(config) {
 			if (!L) return false;
 
 			// Private Key
