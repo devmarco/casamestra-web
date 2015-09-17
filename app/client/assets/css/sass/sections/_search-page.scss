@@ -1,5 +1,10 @@
 .estates__bx {
 	height: -webkit-calc(100% - 80px);
+
+	.content {
+		height: 100%;
+		width: 100%;
+	}
 }
 
 .map-active {
@@ -143,7 +148,6 @@
 .estates__bx__map,
 .estates__bx__list {
 	position: relative;
-	display: none;
 }
 
 #map--big,

@@ -1,7 +1,7 @@
 /* global Box */
 
-const React = require('react');
-const Search = require('../components/search');
+const React 	= require('react');
+const Search 	= require('../components/search');
 
 Box.Application.addService('render.service', application => {
 	const _storage 		= application.getService('storage.service');
@@ -9,7 +9,7 @@ Box.Application.addService('render.service', application => {
 	const _map 	  		= application.getService('map.service');
 	const EstatesList 	= application.getService('estates.component');
 
-	const _ 		= application.getGlobal('_');
+	const _ = application.getGlobal('_');
 
 	let view;
 
