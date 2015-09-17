@@ -113,7 +113,7 @@ module.exports = function exports(grunt) {
 
 		watch: {
 			scripts: {
-				files: ['app/client/assets/css/sass/**/*.scss', 'app/client/app/**/*.js', 'app/client/app/**/**/*.js'],
+				files: ['app/client/assets/css/sass/**/*.scss', 'app/client/app/**/*.js', 'app/client/app/**/**/*.js', 'app/client/app/**/**/**/*.js'],
 				tasks: ['sass', 'browserify', 'concat'],
 				options: {
 					spawn: false,

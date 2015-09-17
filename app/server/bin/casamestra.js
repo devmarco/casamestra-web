@@ -1,4 +1,7 @@
-'use strict';
+require('babel/register')({
+	blacklist: ['strict'],
+	extensions: ['.js', '.jsx'],
+});
 
 const Hapi 		= require('hapi');
 const routes 	= require('../config/routes');
@@ -19,8 +22,8 @@ internals.config = () => {
 		routes: {
 			cors: true,
 			files: {
-                relativeTo: Path.join(__dirname, 'public')
-            }
+				relativeTo: Path.join(__dirname, 'public'),
+			},
 		},
 		router:	{
 			stripTrailingSlash: true,

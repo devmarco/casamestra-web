@@ -1,21 +1,38 @@
-var React = require('react');
+/* global L */
+
+const React = require('react');
+const FilterStore = require('../../stores/filter.store');
+
+function getStateFromStore() {
+	return FilterStore.get();
+}
 
 class MapBig extends React.Component {
 	constructor(props) {
 		super(props);
 	}
 
+	componentWillMount() {
+		FilterStore.addChangeListener(this.onStoreChange);
+	}
+
 	componentDidMount() {
 		this.createMap(this.props.data);
+	}
+
+	componentWillUnmount() {
+		FilterStore.removeChangeListener(this.onStoreChange);
+	}
+
+	onStoreChange() {
+		this.setState(getStateFromStore());
 	}
 
 	createMap(data) {
 		// Private Key
 		L.mapbox.accessToken = 'pk.eyJ1IjoibWFya29za3QiLCJhIjoiOTVmMjE4NTdmNDJjNWVkNTA0MDZlNDE0MWI1ZTdiZDUifQ.DJCF768JpbwaSuT5Ye0Xwg';
 
-		console.log(document.querySelector('#map--big'));
-
-		this.map = L.mapbox.map('map--big', 'markoskt.n3860n3a', {
+		this.map = L.mapbox.map('c-search__map__map', 'markoskt.n3860n3a', {
 			minZoom: 4,
 			zoomControl: true,
 		}).setView([40.73, -74.011], 5);
@@ -24,7 +41,7 @@ class MapBig extends React.Component {
 	}
 
 	createCluster(markers) {
-		let clusterGroup = new L.MarkerClusterGroup({
+		const clusterGroup = new L.MarkerClusterGroup({
 			polygonOptions: {
 				fillColor: '#50E3C2',
 				color: '#50E3C2',
@@ -41,7 +58,9 @@ class MapBig extends React.Component {
 		});
 
 		markers.forEach(value => {
-			const marker = L.marker(new L.LatLng(value.location.lat, value.location.lng), {
+			const location = new L.LatLng(value.location.lat, value.location.lng);
+
+			const marker = L.marker(location, {
 				icon: L.icon({
 					iconUrl: '/public/assets/imgs/svg/marker-icon.svg',
 					iconSize: [36, 50],
@@ -53,17 +72,21 @@ class MapBig extends React.Component {
 			clusterGroup.addLayer(marker);
 		});
 
-		this.map.addLayer(this.clusterGroup);
-		this.map.fitBounds(this.clusterGroup.getBounds());
+		this.map.addLayer(clusterGroup);
+		this.map.fitBounds(clusterGroup.getBounds());
 	}
 
 	render() {
 		return (
-			<div className="estates__bx__map">
-				<div id="map--big"></div>
+			<div className="c-search__map">
+				<div id="c-search__map__map"></div>
 			</div>
 		);
 	}
 }
+
+MapBig.propTypes = {
+	data: React.PropTypes.array.isRequired,
+};
 
 module.exports = MapBig;
