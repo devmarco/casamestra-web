@@ -1,5 +1,8 @@
-import React from 'react';
-import Estate from './estate';
+const React 		= require('react');
+const Estate		= require('./estate');
+const Ordering		= require('./order');
+const Pagination	= require('./pagination');
+
 
 class EstatesList extends React.Component {
 	constructor(props) {
@@ -13,8 +16,18 @@ class EstatesList extends React.Component {
 		const estates = this.state.data.map(e => <Estate data={e} />);
 
 		return (
-			<div>
-				{ estates }
+			<div className="c-search__list__list">
+				<div className="filter__container">
+					<Ordering />
+					<Pagination />
+				</div>
+				<div className="list__container">
+					{ estates }
+				</div>
+				<div className="filter__container">
+					<Ordering />
+					<Pagination />
+				</div>
 			</div>
 		);
 	}
@@ -24,4 +37,4 @@ EstatesList.propTypes = {
 	data: React.PropTypes.array.isRequired,
 };
 
-export { EstatesList };
+module.exports = EstatesList;

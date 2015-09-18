@@ -4,7 +4,7 @@
 
 const React 			= require('react/addons');
 const Search 			= React.createFactory(require('./../../client/app/search/components/search'));
-const searchRendered 	= React.renderToString(Search());
+const searchRendered 	= React.renderToString(Search({data: []}));
 
 const searchBuy = {
 	method: 'GET',

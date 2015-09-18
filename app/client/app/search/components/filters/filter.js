@@ -8,13 +8,27 @@ const $ 			= require('jquery');
 class Filters extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = {
-			e: this.props.data,
+	}
+
+	componentDidMount() {
+		const element = React.findDOMNode(this);
+		window.onscroll = (e) => {
+			if (e.target.scrollingElement.scrollTop >= 100) {
+				$(element).addClass('scroll-active');
+			} else {
+				$(element).removeClass('scroll-active');
+			}
 		};
+	}
+
+	redraw() {
+		window.mapList.invalidateSize();
+		window.mapBig.invalidateSize();
 	}
 
 	selectView() {
 		$('main').toggleClass('list-active');
+		this.redraw();
 	}
 
 	render() {
@@ -24,19 +38,15 @@ class Filters extends React.Component {
 				<Bedrooms />
 				<Price />
 				<More />
-				<div className="filter right">
-					<button className="map-icon" onClick={this.selectView}></button>
+				<div className="o-filter right">
+					<button className="map-icon" onClick={this.selectView.bind(this)}></button>
 				</div>
-				<div className="filter right">
-					<button className="list-icon" onClick={this.selectView}></button>
+				<div className="o-filter right">
+					<button className="list-icon" onClick={this.selectView.bind(this)}></button>
 				</div>
 			</div>
 		);
 	}
 }
-
-Filters.propTypes = {
-	data: React.PropTypes.object.isRequired,
-};
 
 module.exports = Filters;

@@ -2,17 +2,29 @@ const React 	= require('react');
 const Filter 	= require('../../actions/filter');
 
 class Price extends React.Component {
-	setFilter(value) {
-		Filter.price(value);
+	setMaxPrice(event) {
+		Filter.price({
+			type: 'price',
+			value: event.target.value,
+			amount: 'max',
+		});
+	}
+
+	setMinPrice(event) {
+		Filter.price({
+			type: 'price',
+			value: event.target.value,
+			amount: 'min',
+		});
 	}
 
 	render() {
 		return (
-			<div className="filter select dropdown">
-				<button data-type="dropdown" data-dropdown-content=".dropdown-content" onClick={this.setFilter.bind(this, 100)}>Preço</button>
-				<div className="dropdown-content filter-price">
-					<input type="text" placeholder="Mínimo" data-type="f-price" data-value="min" />
-					<input type="text" placeholder="Máximo" data-type="f-price" data-value="max" />
+			<div className="o-filter select dropdown">
+				<button data-type="dropdown" data-dropdown-content=".dropdown-content">Preço</button>
+				<div className="dropdown-content o-filter__price">
+					<input type="text" placeholder="Mínimo" onBlur={this.setMinPrice} />
+					<input type="text" placeholder="Máximo" onBlur={this.setMaxPrice} />
 				</div>
 			</div>
 		);

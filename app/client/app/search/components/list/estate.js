@@ -1,4 +1,4 @@
-import React from 'react';
+const React = require('react');
 
 class Estate extends React.Component {
 	constructor(props) {
@@ -55,4 +55,4 @@ Estate.propTypes = {
 	data: React.PropTypes.object.isRequired,
 };
 
-export { Estate };
+module.exports = Estate;

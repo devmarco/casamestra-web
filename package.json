@@ -54,6 +54,7 @@
     "grunt-spritesmith": "^4.7.1",
     "grunt-text-replace": "^0.4.0",
     "jquery": "^2.1.4",
+    "lodash": "^3.10.1",
     "object-assign": "^4.0.1",
     "react": "^0.13.3"
   }

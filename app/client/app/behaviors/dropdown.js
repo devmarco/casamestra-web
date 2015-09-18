@@ -2,26 +2,29 @@
 
 const $ = require('jQuery');
 
-Box.Application.addBehavior('dropdown', context => {
+Box.Application.addBehavior('dropdown', () => {
 	return {
 		init: function() {
 			$(document).on('click', function(e) {
 				if (!$(e.target).closest('.dropdown').length) {
 					$('.dropdown-content').hide();
 				}
-		    });
+			});
 		},
 		onclick: function(e, element, elementType) {
-			var el 		= $(element),
-				area 	= el.parent().find(el.data('dropdown-content'));
+			const el 	= $(element);
+			const area 	= el.parent().find(el.data('dropdown-content'));
 
 			if (elementType !== 'dropdown') return false;
 
-			$('.dropdown-content').hide();
-
-			area.toggle();
+			if (area.is(':visible')) {
+				area.toggle();
+			} else {
+				$('.dropdown-content').hide();
+				area.toggle();
+			}
 
 			return false;
-		}
+		},
 	};
 });

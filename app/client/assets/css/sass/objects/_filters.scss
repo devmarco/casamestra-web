@@ -1,4 +1,42 @@
-.filter-bedrooms {
+.o-filter {
+	float: left;
+	margin-left: 1em;
+
+	&:first-child {
+		margin-left: 0;
+	}
+
+	> input,
+	> select,
+	> button,
+	> a {
+		border: 1px solid #e1e1e1;
+		background-color: transparent;
+		display: block;
+		padding: 10px 1.5em;
+		color: $master;
+		min-height: 46px;
+		@include vendor(transition, border-color 0.2s linear);
+
+		@extend %f-regular;
+		@extend %f9;
+
+		&:focus,
+		&:hover {
+			outline: 0;
+			border-color: #AFAAAA;
+			color: $master;
+		}
+	}
+
+	.map-icon {
+		border-left: none;
+	}
+}
+
+.o-filter__bedrooms,
+.o-filter__bathrooms,
+.o-filter__garages {
 	min-width: 263px;
 
 	ul {
@@ -15,22 +53,22 @@
 
 	button {
 		background-color: transparent;
-    	border: none;
-    	padding: 6px 20px;
-    	border-left: 1px solid #EAEAEA;
-    	color: #C1C1C1;
+		border: none;
+		padding: 6px 20px;
+		border-left: 1px solid #EAEAEA;
+		color: #C1C1C1;
 
-    	&:focus,
-    	&:active {
-    		outline: 0;
-    	}
+		&:focus,
+		&:active {
+			outline: 0;
+		}
 
-    	&:hover {
-    		color: $master;
-    	}
+		&:hover {
+			color: $master;
+		}
 
-    	@extend %f-regular;
-    	@extend %f10;
+		@extend %f-regular;
+		@extend %f10;
 	}
 
 	button.active {
@@ -40,18 +78,18 @@
 	li:first-child {
 		button {
 			border-left: none;
-		}	
+		}
 	}
 }
 
-.filter-price {
+.o-filter__price {
 	padding: 0.5em;
 	@extend .clearfix;
 	input, span {
 		display: inline-block;
 		float: left;
 	}
-	
+
 	input {
 		width: 100px;
 		padding: 10px;
@@ -80,22 +118,22 @@
 	}
 }
 
-.filter-more {
-	min-width: 700px;
+.o-filter__more {
+	min-width: 750px;
 	left: -250px;
 
 	@extend .clearfix;
 
-	.filter__column {
+	.o-filter__column {
 		width: 50%;
 		float: left;
-	
+
 		&:first-child {
 			border-right: 1px solid #EAEAEA;
 		}
 	}
 
-	.filter__column__bx {
+	.o-filter__column__bx {
 		border-top: 1px solid #EAEAEA;
 		padding: 1em;
 
@@ -136,5 +174,5 @@
 				}
 			}
 		}
-	} 
+	}
 }

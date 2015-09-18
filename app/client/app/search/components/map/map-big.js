@@ -25,19 +25,20 @@ class MapBig extends React.Component {
 	}
 
 	onStoreChange() {
-		this.setState(getStateFromStore());
+		console.log(getStateFromStore());
+		// this.setState(getStateFromStore());
 	}
 
 	createMap(data) {
 		// Private Key
 		L.mapbox.accessToken = 'pk.eyJ1IjoibWFya29za3QiLCJhIjoiOTVmMjE4NTdmNDJjNWVkNTA0MDZlNDE0MWI1ZTdiZDUifQ.DJCF768JpbwaSuT5Ye0Xwg';
 
-		this.map = L.mapbox.map('c-search__map__map', 'markoskt.n3860n3a', {
+		window.mapBig = L.mapbox.map('c-search__map__map', 'markoskt.n3860n3a', {
 			minZoom: 4,
 			zoomControl: true,
 		}).setView([40.73, -74.011], 5);
 
-		// this.createCluster(data);
+		this.createCluster(data);
 	}
 
 	createCluster(markers) {
@@ -67,13 +68,13 @@ class MapBig extends React.Component {
 				}),
 			});
 
-			//this.bindMarkerClick(marker, value);
+			// this.bindMarkerClick(marker, value);
 
 			clusterGroup.addLayer(marker);
 		});
 
-		this.map.addLayer(clusterGroup);
-		this.map.fitBounds(clusterGroup.getBounds());
+		window.mapBig.addLayer(clusterGroup);
+		window.mapBig.fitBounds(clusterGroup.getBounds());
 	}
 
 	render() {

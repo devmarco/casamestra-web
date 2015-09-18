@@ -1,8 +1,116 @@
 .c-search {
-	height: -webkit-calc(100% - 80px);
+	height: -webkit-calc(100% - 100px);
 
 	.c-search__content {
 		width: 100%;
 		height: 100%;
+	}
+}
+
+.c-search__filter {
+	position: relative;
+	width: 100%;
+	z-index: 100;
+	padding: 1em 1em;
+	border-bottom: 1px solid #F3F1F1;
+	background-color: #fff;
+	background-color: rgba(255, 255, 255, 0.95);
+	@extend .clearfix;
+	@include vendor(box-shadow, 0 5px 5px rgba(232, 230, 230, 0.2));
+
+	.right {
+		float: right;
+		margin: 0;
+
+		button {
+			padding: 10px;
+		}
+	}
+
+	.select {
+		> input,
+		> select,
+		> button,
+		> a {
+			text-align: left;
+			min-width: 150px;
+			&:before {
+				content: '▾';
+				float: right;
+				margin-left: 15px;
+				color: $master;
+			}
+		}
+	}
+}
+
+.scroll-active {
+	position: fixed;
+	top: 0;
+}
+
+.c-search__map,
+.c-search__list {
+	position: relative;
+}
+
+.c-search__list {
+	display: none;
+}
+
+#c-search__map__map,
+#c-search__list__map__map {
+	width: 100%;
+	height: 100%;
+}
+
+.c-search__map {
+	height: -webkit-calc(100% - 82px);
+	overflow: hidden;
+	background-color: #D3D3D3;
+}
+
+.c-search__list {
+	position: absolute;
+	top: 81px;
+	width: 100%;
+	@extend .clearfix;
+}
+
+.c-search__list__map {
+	position: fixed;
+	bottom: 0;
+	right: 0;
+	overflow: hidden;
+	height: -webkit-calc(100% - 80px);
+	z-index: 1;
+	float: right;
+	width: 30%;
+
+	@include breakpoint(xlarge) {
+		width:45%;
+	}
+}
+
+.c-search__list__list {
+	position: relative;
+	z-index: 2;
+	background-color: #FAFAFA;
+	float: left;
+	width: 70%;
+	max-width: 100%;
+	padding: 1em 0;
+	overflow-x: scroll;
+
+	@include breakpoint(xlarge) {
+		width:55%;
+	}
+
+	.o-estate {
+		margin-bottom: 30px;
+		height: 300px;
+
+		@extend .small-4;
+		@extend .columns;
 	}
 }

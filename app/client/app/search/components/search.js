@@ -2,6 +2,7 @@ const React 	= require('react');
 const Filter 	= require('./filters/filter');
 const MapBig 	= require('./map/map-big');
 const List 		= require('./list/list');
+const _ 		= require('lodash');
 
 class Search extends React.Component {
 	constructor(props) {
@@ -10,10 +11,10 @@ class Search extends React.Component {
 
 	render() {
 		return (
-			<div className="c-search__content map-active">
+			<div className="c-search__content">
 				<Filter />
 				<MapBig data={this.props.data} />
-				<List />
+				<List data={_.slice(this.props.data, 0, 12)} />
 			</div>
 		);
 	}

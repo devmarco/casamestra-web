@@ -1,9 +1,9 @@
-import React from 'react';
+const React = require('react');
 
 class Ordering extends React.Component {
 	render() {
 		return (
-			<div className="filter select">
+			<div className="o-filter select">
 				<div className="select-button">
 					<select>
 						<option>Filtrar por data</option>
@@ -16,4 +16,4 @@ class Ordering extends React.Component {
 	}
 }
 
-export { Ordering };
+module.exports = Ordering;

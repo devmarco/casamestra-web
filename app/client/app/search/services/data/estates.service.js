@@ -1,8 +1,8 @@
 /* global Box */
 
-Box.Application.addService('estates.service', application => {
-	const $ = application.getGlobal('jQuery');
+const $ = require('jquery');
 
+Box.Application.addService('estates.service', () => {
 	return {
 		get: config => {
 			const limit = (config.limit) ? 'limit=' + config.limit || 10 + '' : '';
@@ -19,15 +19,6 @@ Box.Application.addService('estates.service', application => {
 			return $.ajax({
 				url: request,
 			});
-		},
-		create: () => {
-
-		},
-		update: () => {
-
-		},
-		remove: () => {
-
 		},
 	};
 });

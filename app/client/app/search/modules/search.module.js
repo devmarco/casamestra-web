@@ -4,10 +4,18 @@ const React 	= require('react');
 const Search 	= React.createFactory(require('../components/search'));
 
 Box.Application.addModule('search', context => {
+	const _estates = context.getService('estates.service');
+	const _storage = context.getService('storage.service');
+
 	return {
 		behaviors: ['dropdown'],
 		init: function() {
-			React.render(Search(), document.querySelector('main'));
-		}
-	}
+			_estates.get({
+				fields: 'images,price,keyDetails,garages,address,bathrooms,bedrooms,location,title,ecmid',
+			}).then(data => {
+				_storage.set('private', data);
+				React.render(Search({data: data}), document.querySelector('main'));
+			});
+		},
+	};
 });
