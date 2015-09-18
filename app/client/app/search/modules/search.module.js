@@ -1,12 +1,13 @@
 /* global Box */
 
 const React 	= require('react');
-const Search 	= require('../components/search');
+const Search 	= React.createFactory(require('../components/search'));
 
 Box.Application.addModule('search', context => {
 	return {
+		behaviors: ['dropdown'],
 		init: function() {
-			console.log('init');
+			React.render(Search(), document.querySelector('main'));
 		}
 	}
 });

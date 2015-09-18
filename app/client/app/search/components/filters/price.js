@@ -2,7 +2,6 @@ const React 	= require('react');
 const Filter 	= require('../../actions/filter');
 
 class Price extends React.Component {
-
 	setFilter(value) {
 		Filter.price(value);
 	}
@@ -10,7 +9,7 @@ class Price extends React.Component {
 	render() {
 		return (
 			<div className="filter select dropdown">
-				<button data-type="dropdown" dropdown-content=".dropdown-content" className="js-selected-price" onClick={this.setFilter.bind(this, 100)}>Preço</button>
+				<button data-type="dropdown" data-dropdown-content=".dropdown-content" onClick={this.setFilter.bind(this, 100)}>Preço</button>
 				<div className="dropdown-content filter-price">
 					<input type="text" placeholder="Mínimo" data-type="f-price" data-value="min" />
 					<input type="text" placeholder="Máximo" data-type="f-price" data-value="max" />

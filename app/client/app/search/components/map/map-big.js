@@ -37,7 +37,7 @@ class MapBig extends React.Component {
 			zoomControl: true,
 		}).setView([40.73, -74.011], 5);
 
-		this.createCluster(data);
+		// this.createCluster(data);
 	}
 
 	createCluster(markers) {

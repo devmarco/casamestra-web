@@ -86,7 +86,6 @@ module.exports = function exports(grunt) {
 			},
 			dist: {
 				src: [
-					'app/client/assets/js/vendors/jquery-2.1.4.min.js',
 					'app/client/assets/js/vendors/*.js',
 					'app/client/assets/js/app.js',
 				],

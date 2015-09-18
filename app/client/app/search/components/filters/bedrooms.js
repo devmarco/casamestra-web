@@ -4,7 +4,7 @@ class Bedrooms extends React.Component {
 	render() {
 		return (
 			<div className="filter select dropdown">
-				<button data-type="dropdown" dropdown-content=".dropdown-content" className="js-selected-beds">Quartos</button>
+				<button data-type="dropdown" data-dropdown-content=".dropdown-content">Quartos</button>
 				<div className="dropdown-content filter-bedrooms">
 					<ul>
 						<li>

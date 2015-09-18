@@ -4,7 +4,7 @@ class More extends React.Component {
 	render() {
 		return (
 			<div className="filter select dropdown">
-				<button dropdown-content=".dropdown-content" className="js-selected-more">Mais</button>
+				<button data-type="dropdown" data-dropdown-content=".dropdown-content">Mais</button>
 				<div className="dropdown-content filter-more">
 					<div className="filter__column">
 						<div className="filter__column__bx">

@@ -1,8 +1,8 @@
-Box.Application.addBehavior('dropdown', function(context) {
-	'use strict';
+/* global Box */
 
-	var $ = context.getGlobal('jQuery');
+const $ = require('jQuery');
 
+Box.Application.addBehavior('dropdown', context => {
 	return {
 		init: function() {
 			$(document).on('click', function(e) {
@@ -13,16 +13,15 @@ Box.Application.addBehavior('dropdown', function(context) {
 		},
 		onclick: function(e, element, elementType) {
 			var el 		= $(element),
-				area 	= el.parent().find(el.attr('dropdown-content')),
-				button 	= el;
+				area 	= el.parent().find(el.data('dropdown-content'));
 
 			if (elementType !== 'dropdown') return false;
 
 			$('.dropdown-content').hide();
-			
+
 			area.toggle();
 
-			return false;			
+			return false;
 		}
 	};
 });
