@@ -1,6 +1,10 @@
 /* global L */
 
-const React = require('react');
+const React 		= require('react');
+const _ 			= require('lodash');
+const FilterStore 	= require('../../stores/filter.store');
+
+
 
 class MapSmall extends React.Component {
 	constructor(props) {
@@ -8,7 +12,19 @@ class MapSmall extends React.Component {
 	}
 
 	componentDidMount() {
-		this.createMap(this.props.data);
+		if (this.props.data.length) this.createMap(_.slice(this.props.data, 0, 12));
+	}
+
+	componentWillMount() {
+		FilterStore.addChangeListener(this.onStoreChange.bind(this));
+	}
+
+	componentWillUnmount() {
+		FilterStore.removeChangeListener(this.onStoreChange);
+	}
+
+	onStoreChange() {
+		this.update(_.slice(FilterStore.get(), 0, 12));
 	}
 
 	createMap(data) {
@@ -20,11 +36,11 @@ class MapSmall extends React.Component {
 			zoomControl: true,
 		}).setView([40.73, -74.011], 5);
 
-		this.createMarkers(window.mapList, data);
+		this.createMarkers(data);
 	}
 
-	createMarkers(map, markers) {
-		const markersGroup = new L.FeatureGroup();
+	createMarkers(markers) {
+		this.markersGroup = new L.FeatureGroup();
 
 		markers.forEach((value) => {
 			const location = new L.LatLng(value.location.lat, value.location.lng);
@@ -36,14 +52,19 @@ class MapSmall extends React.Component {
 				}),
 			});
 
-			markersGroup.addLayer(marker);
+			this.markersGroup.addLayer(marker);
 
 			// this.bindMarkerHover(marker, estates[index]);
 		});
 
-		map.addLayer(markersGroup);
+		window.mapList.addLayer(this.markersGroup);
 
-		map.fitBounds(markersGroup.getBounds());
+		window.mapList.fitBounds(this.markersGroup.getBounds());
+	}
+
+	update(markers) {
+		window.mapList.removeLayer(this.markersGroup);
+		this.createMarkers(markers);
 	}
 
 	render() {

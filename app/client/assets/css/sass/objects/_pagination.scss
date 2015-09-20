@@ -5,13 +5,18 @@
 .pagination--text {
 	@extend .clearfix;
 
-	> span {
+	.pagination__titles {
 		color: $master;
 		display: inline-block;
 		float: left;
-		margin: 12px 35px 0 0;
+		margin: 12px 15px 0 0;
 		@extend %f-regular;
 		@extend %f10;
+
+		span {
+			display: inline-block;
+			margin: 0 5px;
+		}
 	}
 
 	.pagination__buttons {

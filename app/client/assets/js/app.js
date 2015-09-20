@@ -1501,69 +1501,6 @@ Box.Application.addBehavior('gallery', function (context) {
 });
 
 },{}],3:[function(require,module,exports){
-Box.Application.addBehavior('pagination', function (context) {
-
-	var _storage = context.getService('storage.service'),
-	    _render = context.getService('render.service');
-
-	return {
-		init: function init() {
-			this.nextItem = 0;
-			this.prevItem = 0;
-			this.itemsDisplay = 12;
-		},
-		onclick: function onclick(e, element, elementType) {
-			var _this = this;
-
-			if (elementType === 'p-next') next();
-			if (elementType === 'p-prev') prev();
-
-			function prev() {
-				var data = _storage.get().data;
-
-				if (_this.nextItem !== 0) {
-
-					if (_this.prevItem <= 0) _this.prevItem = 0;
-
-					_render.update({
-						data: _.slice(data, _this.prevItem, _this.nextItem),
-						pagination: {
-							from: _this.prevItem + 1,
-							to: _this.nextItem
-						}
-					});
-
-					_this.nextItem = _this.nextItem - _this.itemsDisplay;
-					_this.prevItem = _this.prevItem - _this.itemsDisplay;
-				}
-			}
-
-			function next() {
-				var data = _storage.get().data,
-				    dataPagined;
-
-				if (_this.nextItem + _this.itemsDisplay > data.length) {
-					return false;
-				}
-
-				_this.prevItem = _this.nextItem - 1 < 0 ? 0 : _this.nextItem - 1;
-				_this.nextItem = _this.nextItem + _this.itemsDisplay;
-
-				_render.update({
-					data: _.slice(data, _this.nextItem, _this.nextItem + _this.itemsDisplay),
-					pagination: {
-						from: _this.nextItem,
-						to: _this.nextItem + _this.itemsDisplay >= data.length ? data.length : _this.nextItem + _this.itemsDisplay
-					}
-				});
-			}
-
-			return false;
-		}
-	};
-});
-
-},{}],4:[function(require,module,exports){
 /* global Box */
 
 Box.Application.addModule('estates', function () {
@@ -1573,19 +1510,39 @@ Box.Application.addModule('estates', function () {
 	};
 });
 
-},{}],5:[function(require,module,exports){
+},{}],4:[function(require,module,exports){
 var Dispatcher = require('../dispatchers/search');
 
 var priceAction = {
-	price: function price(value) {
+	set: function set(value) {
 		Dispatcher.handleViewAction({
-			type: 'filterByPrice',
+			type: 'filter',
 			value: value
 		});
 	}
 };
 
 module.exports = priceAction;
+
+},{"../dispatchers/search":19}],5:[function(require,module,exports){
+var Dispatcher = require('../dispatchers/search');
+
+var paginationAction = {
+	next: function next(value) {
+		Dispatcher.handleViewAction({
+			type: 'next',
+			value: value
+		});
+	},
+	prev: function prev(value) {
+		Dispatcher.handleViewAction({
+			type: 'prev',
+			value: value
+		});
+	}
+};
+
+module.exports = paginationAction;
 
 },{"../dispatchers/search":19}],6:[function(require,module,exports){
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -1614,7 +1571,7 @@ var Bedrooms = (function (_React$Component) {
 		value: function setBedrooms(value, event) {
 			$(event.target).toggleClass('active');
 
-			Filter.price({
+			Filter.set({
 				type: 'bedrooms',
 				value: value
 			});
@@ -1692,7 +1649,7 @@ var Bedrooms = (function (_React$Component) {
 
 module.exports = Bedrooms;
 
-},{"../../actions/filter":5,"jquery":37,"react":194}],7:[function(require,module,exports){
+},{"../../actions/filter":4,"jquery":37,"react":194}],7:[function(require,module,exports){
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
 var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
@@ -2274,7 +2231,7 @@ var Price = (function (_React$Component) {
 	_createClass(Price, [{
 		key: 'setMaxPrice',
 		value: function setMaxPrice(event) {
-			Filter.price({
+			Filter.set({
 				type: 'price',
 				value: event.target.value,
 				amount: 'max'
@@ -2283,7 +2240,7 @@ var Price = (function (_React$Component) {
 	}, {
 		key: 'setMinPrice',
 		value: function setMinPrice(event) {
-			Filter.price({
+			Filter.set({
 				type: 'price',
 				value: event.target.value,
 				amount: 'min'
@@ -2315,7 +2272,7 @@ var Price = (function (_React$Component) {
 
 module.exports = Price;
 
-},{"../../actions/filter":5,"react":194}],11:[function(require,module,exports){
+},{"../../actions/filter":4,"react":194}],11:[function(require,module,exports){
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
 var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
@@ -2441,6 +2398,9 @@ var React = require('react');
 var Estate = require('./estate');
 var Ordering = require('./order');
 var Pagination = require('./pagination');
+var FilterStore = require('../../stores/filter.store');
+var PagesStore = require('../../stores/pages.store');
+var _ = require('lodash');
 
 var EstatesList = (function (_React$Component) {
 	_inherits(EstatesList, _React$Component);
@@ -2450,17 +2410,43 @@ var EstatesList = (function (_React$Component) {
 
 		_get(Object.getPrototypeOf(EstatesList.prototype), 'constructor', this).call(this, props);
 		this.state = {
-			data: this.props.data
+			data: _.slice(this.props.data, 0, 12)
 		};
 	}
 
 	_createClass(EstatesList, [{
+		key: 'componentWillMount',
+		value: function componentWillMount() {
+			FilterStore.addChangeListener(this.onFilterChange.bind(this));
+			PagesStore.addChangeListener(this.onPageChange.bind(this));
+		}
+	}, {
+		key: 'componentWillUnmount',
+		value: function componentWillUnmount() {
+			FilterStore.removeChangeListener(this.onFilterChange.bind(this));
+			PagesStore.removeChangeListener(this.onPageChange.bind(this));
+		}
+	}, {
+		key: 'onPageChange',
+		value: function onPageChange() {
+			var data = PagesStore.get().data;
+
+			this.setState({
+				data: data
+			});
+		}
+	}, {
+		key: 'onFilterChange',
+		value: function onFilterChange() {
+			var data = FilterStore.get();
+
+			this.setState({
+				data: _.slice(data, 0, 12)
+			});
+		}
+	}, {
 		key: 'render',
 		value: function render() {
-			var estates = this.state.data.map(function (e) {
-				return React.createElement(Estate, { data: e });
-			});
-
 			return React.createElement(
 				'div',
 				{ className: 'c-search__list__list' },
@@ -2473,7 +2459,10 @@ var EstatesList = (function (_React$Component) {
 				React.createElement(
 					'div',
 					{ className: 'list__container' },
-					estates
+					this.state.data.map(function (e) {
+						return React.createElement(Estate, { key: e.ecmid, data: e });
+					}),
+					';'
 				),
 				React.createElement(
 					'div',
@@ -2494,7 +2483,7 @@ EstatesList.propTypes = {
 
 module.exports = EstatesList;
 
-},{"./estate":11,"./order":15,"./pagination":16,"react":194}],13:[function(require,module,exports){
+},{"../../stores/filter.store":28,"../../stores/pages.store":29,"./estate":11,"./order":15,"./pagination":16,"lodash":38,"react":194}],13:[function(require,module,exports){
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
 var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
@@ -2549,6 +2538,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== 'function' 
 /* global L */
 
 var React = require('react');
+var _ = require('lodash');
+var FilterStore = require('../../stores/filter.store');
 
 var MapSmall = (function (_React$Component) {
 	_inherits(MapSmall, _React$Component);
@@ -2562,7 +2553,22 @@ var MapSmall = (function (_React$Component) {
 	_createClass(MapSmall, [{
 		key: 'componentDidMount',
 		value: function componentDidMount() {
-			this.createMap(this.props.data);
+			if (this.props.data.length) this.createMap(_.slice(this.props.data, 0, 12));
+		}
+	}, {
+		key: 'componentWillMount',
+		value: function componentWillMount() {
+			FilterStore.addChangeListener(this.onStoreChange.bind(this));
+		}
+	}, {
+		key: 'componentWillUnmount',
+		value: function componentWillUnmount() {
+			FilterStore.removeChangeListener(this.onStoreChange);
+		}
+	}, {
+		key: 'onStoreChange',
+		value: function onStoreChange() {
+			this.update(_.slice(FilterStore.get(), 0, 12));
 		}
 	}, {
 		key: 'createMap',
@@ -2575,12 +2581,14 @@ var MapSmall = (function (_React$Component) {
 				zoomControl: true
 			}).setView([40.73, -74.011], 5);
 
-			this.createMarkers(window.mapList, data);
+			this.createMarkers(data);
 		}
 	}, {
 		key: 'createMarkers',
-		value: function createMarkers(map, markers) {
-			var markersGroup = new L.FeatureGroup();
+		value: function createMarkers(markers) {
+			var _this = this;
+
+			this.markersGroup = new L.FeatureGroup();
 
 			markers.forEach(function (value) {
 				var location = new L.LatLng(value.location.lat, value.location.lng);
@@ -2592,14 +2600,20 @@ var MapSmall = (function (_React$Component) {
 					})
 				});
 
-				markersGroup.addLayer(marker);
+				_this.markersGroup.addLayer(marker);
 
 				// this.bindMarkerHover(marker, estates[index]);
 			});
 
-			map.addLayer(markersGroup);
+			window.mapList.addLayer(this.markersGroup);
 
-			map.fitBounds(markersGroup.getBounds());
+			window.mapList.fitBounds(this.markersGroup.getBounds());
+		}
+	}, {
+		key: 'update',
+		value: function update(markers) {
+			window.mapList.removeLayer(this.markersGroup);
+			this.createMarkers(markers);
 		}
 	}, {
 		key: 'render',
@@ -2621,7 +2635,7 @@ MapSmall.propTypes = {
 
 module.exports = MapSmall;
 
-},{"react":194}],15:[function(require,module,exports){
+},{"../../stores/filter.store":28,"lodash":38,"react":194}],15:[function(require,module,exports){
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
 var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
@@ -2680,41 +2694,125 @@ var Ordering = (function (_React$Component) {
 module.exports = Ordering;
 
 },{"react":194}],16:[function(require,module,exports){
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
-var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var React = require('react');
+var FilterStore = require('../../stores/filter.store');
+var PagesStore = require('../../stores/pages.store');
+var Pages = require('../../actions/pages');
+var storage = require('../../services/storage.service');
+var _ = require('lodash');
 
 var Pagination = (function (_React$Component) {
 	_inherits(Pagination, _React$Component);
 
-	function Pagination() {
+	function Pagination(props) {
 		_classCallCheck(this, Pagination);
 
-		_get(Object.getPrototypeOf(Pagination.prototype), "constructor", this).apply(this, arguments);
+		_get(Object.getPrototypeOf(Pagination.prototype), 'constructor', this).call(this, props);
+		this.state = {
+			size: FilterStore.get().length,
+			next: 12,
+			prev: 1
+		};
+
+		this.nextPage = 0;
+		this.prevPage = 0;
 	}
 
 	_createClass(Pagination, [{
-		key: "render",
+		key: 'componentWillMount',
+		value: function componentWillMount() {
+			FilterStore.addChangeListener(this.onFilterChange.bind(this));
+			PagesStore.addChangeListener(this.onPageChange.bind(this));
+		}
+	}, {
+		key: 'componentWillUnmount',
+		value: function componentWillUnmount() {
+			FilterStore.removeChangeListener(this.onFilterChange.bind(this));
+			PagesStore.removeChangeListener(this.onPageChange.bind(this));
+		}
+	}, {
+		key: 'onPageChange',
+		value: function onPageChange() {
+			var pagesData = PagesStore.get();
+			var filterData = FilterStore.get();
+
+			this.setState({
+				size: filterData.length,
+				next: pagesData.next > filterData.length ? filterData.length : pagesData.next,
+				prev: pagesData.prev > 0 ? pagesData.prev : 1
+			});
+		}
+	}, {
+		key: 'onFilterChange',
+		value: function onFilterChange() {
+			var data = FilterStore.get();
+
+			this.setState({
+				size: data.length,
+				next: 12,
+				prev: 1
+			});
+		}
+	}, {
+		key: 'next',
+		value: function next() {
+			var data = storage.get().data;
+
+			if (this.nextPage + 12 > data.length) return;
+
+			this.nextPage = this.nextPage + 12;
+
+			Pages.next({
+				data: _.slice(data, this.nextPage, this.nextPage + 12),
+				next: this.nextPage + 12,
+				prev: this.nextPage
+			});
+		}
+	}, {
+		key: 'prev',
+		value: function prev() {
+			var data = storage.get().data;
+
+			if (this.nextPage === 0) return;
+
+			this.nextPage = this.nextPage - 12;
+			this.prevPage = this.nextPage;
+
+			Pages.prev({
+				data: _.slice(data, this.prevPage, this.nextPage + 12),
+				next: this.nextPage + 12,
+				prev: this.prevPage
+			});
+		}
+	}, {
+		key: 'render',
 		value: function render() {
 			return React.createElement(
-				"div",
-				{ className: "o-filter pagination pagination--text" },
+				'div',
+				{ className: 'o-filter pagination pagination--text' },
 				React.createElement(
-					"span",
-					{ className: "js-result-stats" },
-					"1 — 12 de 461 imóveis"
+					'div',
+					{ className: 'pagination__titles' },
+					this.state.prev,
+					' — ',
+					this.state.next,
+					' de ',
+					this.state.size,
+					' imóveis'
 				),
 				React.createElement(
-					"div",
-					{ className: "pagination__buttons" },
-					React.createElement("button", { "data-type": "p-prev", className: "prev" }),
-					React.createElement("button", { "data-type": "p-next", className: "next" })
+					'div',
+					{ className: 'pagination__buttons' },
+					React.createElement('button', { className: 'prev', onClick: this.prev.bind(this) }),
+					React.createElement('button', { className: 'next', onClick: this.next.bind(this) })
 				)
 			);
 		}
@@ -2723,9 +2821,13 @@ var Pagination = (function (_React$Component) {
 	return Pagination;
 })(React.Component);
 
+Pagination.propType = {
+	size: React.PropTypes.array.isRequired
+};
+
 module.exports = Pagination;
 
-},{"react":194}],17:[function(require,module,exports){
+},{"../../actions/pages":5,"../../services/storage.service":27,"../../stores/filter.store":28,"../../stores/pages.store":29,"lodash":38,"react":194}],17:[function(require,module,exports){
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
 var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
@@ -2739,10 +2841,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== 'function' 
 var React = require('react');
 var FilterStore = require('../../stores/filter.store');
 
-function getStateFromStore() {
-	return FilterStore.get();
-}
-
 var MapBig = (function (_React$Component) {
 	_inherits(MapBig, _React$Component);
 
@@ -2755,12 +2853,12 @@ var MapBig = (function (_React$Component) {
 	_createClass(MapBig, [{
 		key: 'componentWillMount',
 		value: function componentWillMount() {
-			FilterStore.addChangeListener(this.onStoreChange);
+			FilterStore.addChangeListener(this.onStoreChange.bind(this));
 		}
 	}, {
 		key: 'componentDidMount',
 		value: function componentDidMount() {
-			this.createMap(this.props.data);
+			if (this.props.data.length) this.createMap(this.props.data);
 		}
 	}, {
 		key: 'componentWillUnmount',
@@ -2770,8 +2868,7 @@ var MapBig = (function (_React$Component) {
 	}, {
 		key: 'onStoreChange',
 		value: function onStoreChange() {
-			console.log(getStateFromStore());
-			// this.setState(getStateFromStore());
+			this.update(FilterStore.get());
 		}
 	}, {
 		key: 'createMap',
@@ -2789,7 +2886,9 @@ var MapBig = (function (_React$Component) {
 	}, {
 		key: 'createCluster',
 		value: function createCluster(markers) {
-			var clusterGroup = new L.MarkerClusterGroup({
+			var _this = this;
+
+			this.clusterGroup = new L.MarkerClusterGroup({
 				polygonOptions: {
 					fillColor: '#50E3C2',
 					color: '#50E3C2',
@@ -2817,11 +2916,17 @@ var MapBig = (function (_React$Component) {
 
 				// this.bindMarkerClick(marker, value);
 
-				clusterGroup.addLayer(marker);
+				_this.clusterGroup.addLayer(marker);
 			});
 
-			window.mapBig.addLayer(clusterGroup);
-			window.mapBig.fitBounds(clusterGroup.getBounds());
+			window.mapBig.addLayer(this.clusterGroup);
+			window.mapBig.fitBounds(this.clusterGroup.getBounds());
+		}
+	}, {
+		key: 'update',
+		value: function update(markers) {
+			window.mapBig.removeLayer(this.clusterGroup);
+			this.createCluster(markers);
 		}
 	}, {
 		key: 'render',
@@ -2843,7 +2948,7 @@ MapBig.propTypes = {
 
 module.exports = MapBig;
 
-},{"../../stores/filter.store":29,"react":194}],18:[function(require,module,exports){
+},{"../../stores/filter.store":28,"react":194}],18:[function(require,module,exports){
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
 var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
@@ -2856,7 +2961,6 @@ var React = require('react');
 var Filter = require('./filters/filter');
 var MapBig = require('./map/map-big');
 var List = require('./list/list');
-var _ = require('lodash');
 
 var Search = (function (_React$Component) {
 	_inherits(Search, _React$Component);
@@ -2875,7 +2979,7 @@ var Search = (function (_React$Component) {
 				{ className: 'c-search__content' },
 				React.createElement(Filter, null),
 				React.createElement(MapBig, { data: this.props.data }),
-				React.createElement(List, { data: _.slice(this.props.data, 0, 12) })
+				React.createElement(List, { data: this.props.data })
 			);
 		}
 	}]);
@@ -2889,7 +2993,7 @@ Search.propTypes = {
 
 module.exports = Search;
 
-},{"./filters/filter":7,"./list/list":13,"./map/map-big":17,"lodash":38,"react":194}],19:[function(require,module,exports){
+},{"./filters/filter":7,"./list/list":13,"./map/map-big":17,"react":194}],19:[function(require,module,exports){
 var Dispatcher = require('flux').Dispatcher;
 var assign = require('object-assign');
 
@@ -3077,6 +3181,7 @@ Box.Application.addModule('map', function (context) {
 /* global Box */
 
 var React = require('react');
+var storage = require('../services/storage.service');
 var Search = React.createFactory(require('../components/search'));
 
 Box.Application.addModule('search', function (context) {
@@ -3089,14 +3194,14 @@ Box.Application.addModule('search', function (context) {
 			_estates.get({
 				fields: 'images,price,keyDetails,garages,address,bathrooms,bedrooms,location,title,ecmid'
 			}).then(function (data) {
-				_storage.set('private', data);
+				storage.set('private', data);
 				React.render(Search({ data: data }), document.querySelector('main'));
 			});
 		}
 	};
 });
 
-},{"../components/search":18,"react":194}],24:[function(require,module,exports){
+},{"../components/search":18,"../services/storage.service":27,"react":194}],24:[function(require,module,exports){
 /* global Box */
 
 var $ = require('jquery');
@@ -3123,142 +3228,96 @@ Box.Application.addService('estates.service', function () {
 });
 
 },{"jquery":37}],25:[function(require,module,exports){
-var _this = this;
+var _ = require('lodash');
+var storage = require('./storage.service');
 
-/* global Box */
+var get = function get(filters) {
+	var data = storage.get('private').data;
+	var filteredObject = [];
 
-Box.Application.addService('filter.service', function (application) {
-	var _storage = application.getService('storage.service');
-	var filters = {};
+	if (_.isEmpty(filters)) {
+		filteredObject = data;
+		return { filteredObject: filteredObject, filters: filters };
+	}
 
-	var $ = application.getGlobal('jQuery');
-	var _ = application.getGlobal('_');
+	// function checkBathrooms(filter, item) {
+	//
+	// 	if (filter === 5 && item >= filter) {
+	// 		return true;
+	// 	} else if (item === filter) {
+	// 		return true;
+	// 	}
+	//
+	// 	return false;
+	// }
 
-	return {
-		set: function set(filter) {
-			function isPrice() {
-				if (!filters[filter.prop]) filters[filter.prop] = { min: '', max: '' };
+	var checkValues = function checkValues(filter, item) {
+		var isValid = false;
 
-				if (filter.amount === 'min') filters[filter.prop].min = filter.value;
-				if (filter.amount === 'max') filters[filter.prop].max = filter.value;
-
-				if (filters[filter.prop].min === 0 && filters[filter.prop].max === 0) {
-					delete filters[filter.prop];
-				}
-			}
-
-			function isGeneric() {
-				!filters[filter.prop] ? filters[filter.prop] = [] : false;
-
-				var index = filters[filter.prop].indexOf(filter.value);
-
-				if (index === -1) {
-					filters[filter.prop].push(filter.value);
+		if (filter.indexOf(5) !== -1) {
+			filter.forEach(function (value) {
+				if (value === 5 && item >= value) {
+					isValid = true;
 				} else {
-					filters[filter.prop].splice(index, 1);
-				}
-
-				!filters[filter.prop].length ? delete filters[filter.prop] : false;
-			}
-
-			filter.amount ? isPrice() : isGeneric();
-
-			_this.filter();
-		},
-		filter: function filter() {
-			var data = _storage.get('private').data;
-			var filteredObject = [];
-
-			if ($.isEmptyObject(filters)) {
-				Box.Application.broadcast('newFilter', {
-					data: data,
-					filters: null
-				});
-
-				return false;
-			}
-
-			// function checkBathrooms(filter, item) {
-			//
-			// 	if (filter === 5 && item >= filter) {
-			// 		return true;
-			// 	} else if (item === filter) {
-			// 		return true;
-			// 	}
-			//
-			// 	return false;
-			// }
-
-			function checkValues(filter, item) {
-				var isValid = false;
-
-				if (filter.indexOf(5) !== -1) {
-					filter.forEach(function (value) {
-						if (value === 5 && item >= value) {
-							isValid = true;
-						} else {
-							if (value === item) {
-								isValid = true;
-							}
-						}
-					});
-				} else {
-					if (_.includes(filter, item)) isValid = true;
-				}
-
-				return isValid;
-			}
-
-			function checkPrice(filter, price) {
-				var min = filter.min || 0;
-				var max = filter.max || 100000000;
-
-				if (price >= min && price <= max) return true;
-				return false;
-			}
-
-			function checkFilterValue(item) {
-				var i = undefined;
-
-				var filterCount = 0;
-				var isAble = 0;
-
-				for (i in filters) {
-					if (i) return;
-
-					var currentItem = item[i];
-					var currentFilter = filters[i];
-
-					filterCount++;
-
-					switch (i) {
-						case 'price':
-							checkPrice(currentFilter, currentItem) ? isAble++ : false;
-							break;
-						default:
-							checkValues(currentFilter, currentItem) ? isAble++ : false;
-							break;
+					if (value === item) {
+						isValid = true;
 					}
 				}
+			});
+		} else {
+			if (_.includes(filter, item)) isValid = true;
+		}
 
-				if (isAble === filterCount) {
-					filteredObject.push(item);
-				}
+		return isValid;
+	};
+
+	var checkPrice = function checkPrice(filter, price) {
+		var min = filter.min || 0;
+		var max = filter.max || 100000000;
+
+		if (price >= min && price <= max) return true;
+		return false;
+	};
+
+	var checkFilterValue = function checkFilterValue(item) {
+		var i = undefined;
+
+		var filterCount = 0;
+		var isAble = 0;
+
+		for (i in filters) {
+			var currentItem = item[i];
+			var currentFilter = filters[i];
+
+			filterCount++;
+
+			switch (i) {
+				case 'price':
+					checkPrice(currentFilter, currentItem) ? isAble++ : false;
+					break;
+				default:
+					checkValues(currentFilter, currentItem) ? isAble++ : false;
+					break;
 			}
+		}
 
-			_.filter(data, function (item) {
-				return checkFilterValue(item);
-			});
-
-			Box.Application.broadcast('newFilter', {
-				data: filteredObject,
-				filters: filters
-			});
+		if (isAble === filterCount) {
+			filteredObject.push(item);
 		}
 	};
-});
 
-},{}],26:[function(require,module,exports){
+	_.filter(data, function (item) {
+		return checkFilterValue(item);
+	});
+
+	storage.set('public', filteredObject, filters);
+
+	return { filteredObject: filteredObject, filters: filters };
+};
+
+module.exports = { get: get };
+
+},{"./storage.service":27,"lodash":38}],26:[function(require,module,exports){
 /* global Box */
 
 Box.Application.addService('map.service', function (application) {
@@ -3401,125 +3460,67 @@ Box.Application.addService('map.service', function (application) {
 });
 
 },{}],27:[function(require,module,exports){
-/* global Box */
+var publicData = undefined;
+var privateData = undefined;
+var publicFilters = undefined;
 
-var React = require('react');
-var Search = require('../components/search');
-
-Box.Application.addService('render.service', function (application) {
-	var _storage = application.getService('storage.service');
-	var _utils = application.getService('utils.service');
-	var _map = application.getService('map.service');
-	var EstatesList = application.getService('estates.component');
-
-	var _ = application.getGlobal('_');
-
-	var view = undefined;
+var get = function get(config) {
+	if (config === 'private') {
+		return {
+			data: privateData,
+			filters: publicFilters || {}
+		};
+	}
 
 	return {
-		update: function update(config) {
-			EstatesList.render(document.querySelector('.render-area'), config.data);
-
-			_map.update(config.data);
-
-			_utils.updateTexts(_storage.get().filters, config.pagination || null);
-		},
-		map: function map(data) {
-			if (view) view.remove();
-
-			_map.destroy();
-
-			_map.render({
-				mapClass: 'map--big',
-				markers: data,
-				bounds: true,
-				zoomControl: true,
-				cluster: true
-			});
-
-			_utils.updateTexts(_storage.get().filters);
-		},
-		list: function list(data) {
-			_map.destroy();
-
-			React.render(React.createElement(Search, null), document.querySelector('main'));
-
-			_map.render({
-				mapClass: 'map--small',
-				markers: _.slice(data, 0, 12),
-				bounds: true,
-				zoomControl: false,
-				cluster: false
-			});
-
-			_utils.updateTexts(_storage.get().filters);
-		}
+		data: publicData || privateData,
+		filters: publicFilters || {}
 	};
-});
+};
 
-},{"../components/search":18,"react":194}],28:[function(require,module,exports){
-/* global Box */
+var set = function set(config, data, filters) {
+	if (config === 'private') {
+		privateData = data;
+		return false;
+	}
 
-Box.Application.addService('storage.service', function () {
-	var publicData = undefined;
-	var privateData = undefined;
-	var publicFilters = undefined;
+	publicData = data;
+	if (filters) publicFilters = filters;
+};
 
-	return {
-		get: function get(config) {
-			if (config === 'private') {
-				return {
-					data: privateData,
-					filters: publicFilters || {}
-				};
-			}
+var view = {
+	isMap: function isMap() {
+		var view = window.localStorage.getItem('cmview');
 
-			return {
-				data: publicData || privateData,
-				filters: publicFilters || {}
-			};
-		},
-		set: function set(config, data, filters) {
-			if (config === 'private') {
-				privateData = data;
-				return false;
-			}
+		if (view && view === 'map') return true;
 
-			publicData = data;
-			if (filters) publicFilters = filters;
-		},
-		view: {
-			isMap: function isMap() {
-				var view = window.localStorage.getItem('cmview');
+		if (view) return false;
 
-				if (view && view === 'map') return true;
+		return true;
+	},
+	isList: function isList() {
+		var view = window.localStorage.getItem('cmview');
 
-				if (view) return false;
+		if (view === 'list') return true;
 
-				return true;
-			},
-			isList: function isList() {
-				var view = window.localStorage.getItem('cmview');
-
-				if (view === 'list') return true;
-
-				return false;
-			},
-			set: function set(option) {
-				if (option && option === 'map' || option === 'list') {
-					window.localStorage.setItem('cmview', option);
-				}
-			}
+		return false;
+	},
+	set: function set(option) {
+		if (option && option === 'map' || option === 'list') {
+			window.localStorage.setItem('cmview', option);
 		}
-	};
-});
+	}
+};
 
-},{}],29:[function(require,module,exports){
+module.exports = { get: get, set: set, view: view };
+
+},{}],28:[function(require,module,exports){
 /* globals $ */
 
 var Dispatcher = require('../dispatchers/search');
 var EventEmitter = require('events').EventEmitter;
 var assign = require('object-assign');
+var Filter = require('../services/filter.service');
 
 var filters = {};
 
@@ -3543,7 +3544,7 @@ var filterGeneric = function filterGeneric(filter, type) {
 	if (!filters[type].length) delete filters[type];
 };
 
-var filterVlaue = function filterVlaue(filter) {
+var setFilter = function setFilter(filter) {
 	var type = filter.type;
 
 	if (!filters[type]) filters[type] = [];
@@ -3559,14 +3560,14 @@ var filterStore = assign({}, EventEmitter.prototype, {
 		this.off('change', callback);
 	},
 	get: function get() {
-		return filters;
+		return Filter.get(filters).filteredObject;
 	}
 });
 
 filterStore.dispatchToken = Dispatcher.register(function (dispatcherPayload) {
 	var actions = {
-		filterByPrice: function filterByPrice(payload) {
-			filterVlaue(payload.action.value);
+		filter: function filter(payload) {
+			setFilter(payload.action.value);
 			filterStore.emit('change');
 		}
 	};
@@ -3575,6 +3576,46 @@ filterStore.dispatchToken = Dispatcher.register(function (dispatcherPayload) {
 });
 
 module.exports = filterStore;
+
+},{"../dispatchers/search":19,"../services/filter.service":25,"events":34,"object-assign":39}],29:[function(require,module,exports){
+var Dispatcher = require('../dispatchers/search');
+var EventEmitter = require('events').EventEmitter;
+var assign = require('object-assign');
+
+var paginatedData = undefined;
+
+var getDataBasedOnPage = function getDataBasedOnPage(value) {
+	paginatedData = value;
+};
+
+var pagesStore = assign({}, EventEmitter.prototype, {
+	addChangeListener: function addChangeListener(callback) {
+		this.on('change', callback);
+	},
+	removeChangeListener: function removeChangeListener(callback) {
+		this.off('change', callback);
+	},
+	get: function get() {
+		return paginatedData;
+	}
+});
+
+pagesStore.dispatchToken = Dispatcher.register(function (dispatcherPayload) {
+	var actions = {
+		next: function next(payload) {
+			getDataBasedOnPage(payload.action.value);
+			pagesStore.emit('change');
+		},
+		prev: function prev(payload) {
+			getDataBasedOnPage(payload.action.value);
+			pagesStore.emit('change');
+		}
+	};
+
+	actions[dispatcherPayload.action.type] && actions[dispatcherPayload.action.type](dispatcherPayload);
+});
+
+module.exports = pagesStore;
 
 },{"../dispatchers/search":19,"events":34,"object-assign":39}],30:[function(require,module,exports){
 Box.Application.addService('utils.service', function (context) {

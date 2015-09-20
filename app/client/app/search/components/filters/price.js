@@ -3,7 +3,7 @@ const Filter 	= require('../../actions/filter');
 
 class Price extends React.Component {
 	setMaxPrice(event) {
-		Filter.price({
+		Filter.set({
 			type: 'price',
 			value: event.target.value,
 			amount: 'max',
@@ -11,7 +11,7 @@ class Price extends React.Component {
 	}
 
 	setMinPrice(event) {
-		Filter.price({
+		Filter.set({
 			type: 'price',
 			value: event.target.value,
 			amount: 'min',

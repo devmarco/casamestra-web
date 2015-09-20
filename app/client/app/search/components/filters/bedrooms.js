@@ -6,7 +6,7 @@ class Bedrooms extends React.Component {
 	setBedrooms(value, event) {
 		$(event.target).toggleClass('active');
 
-		Filter.price({
+		Filter.set({
 			type: 'bedrooms',
 			value: value,
 		});

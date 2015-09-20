@@ -1,12 +1,12 @@
 const  Dispatcher = require('../dispatchers/search');
 
 const priceAction = {
-	price: (value) => {
+	set: (value) => {
 		Dispatcher.handleViewAction({
-			type: 'filterByPrice',
+			type: 'filter',
 			value: value,
 		});
-	},
+	}
 };
 
 module.exports = priceAction;

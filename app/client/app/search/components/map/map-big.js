@@ -3,21 +3,17 @@
 const React = require('react');
 const FilterStore = require('../../stores/filter.store');
 
-function getStateFromStore() {
-	return FilterStore.get();
-}
-
 class MapBig extends React.Component {
 	constructor(props) {
 		super(props);
 	}
 
 	componentWillMount() {
-		FilterStore.addChangeListener(this.onStoreChange);
+		FilterStore.addChangeListener(this.onStoreChange.bind(this));
 	}
 
 	componentDidMount() {
-		this.createMap(this.props.data);
+		if (this.props.data.length) this.createMap(this.props.data);
 	}
 
 	componentWillUnmount() {
@@ -25,8 +21,7 @@ class MapBig extends React.Component {
 	}
 
 	onStoreChange() {
-		console.log(getStateFromStore());
-		// this.setState(getStateFromStore());
+		this.update(FilterStore.get());
 	}
 
 	createMap(data) {
@@ -42,7 +37,7 @@ class MapBig extends React.Component {
 	}
 
 	createCluster(markers) {
-		const clusterGroup = new L.MarkerClusterGroup({
+		this.clusterGroup = new L.MarkerClusterGroup({
 			polygonOptions: {
 				fillColor: '#50E3C2',
 				color: '#50E3C2',
@@ -70,11 +65,16 @@ class MapBig extends React.Component {
 
 			// this.bindMarkerClick(marker, value);
 
-			clusterGroup.addLayer(marker);
+			this.clusterGroup.addLayer(marker);
 		});
 
-		window.mapBig.addLayer(clusterGroup);
-		window.mapBig.fitBounds(clusterGroup.getBounds());
+		window.mapBig.addLayer(this.clusterGroup);
+		window.mapBig.fitBounds(this.clusterGroup.getBounds());
+	}
+
+	update(markers) {
+		window.mapBig.removeLayer(this.clusterGroup);
+		this.createCluster(markers);
 	}
 
 	render() {

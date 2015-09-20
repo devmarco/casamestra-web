@@ -3,6 +3,7 @@
 const Dispatcher    = require('../dispatchers/search');
 const EventEmitter  = require('events').EventEmitter;
 const assign        = require('object-assign');
+const Filter 		= require('../services/filter.service');
 
 const filters = {};
 
@@ -26,7 +27,7 @@ const filterGeneric = (filter, type) => {
 	if (!filters[type].length) delete filters[type];
 };
 
-const filterVlaue = (filter) => {
+const setFilter = (filter) => {
 	const type = filter.type;
 
 	if (!filters[type]) filters[type] = [];
@@ -42,14 +43,14 @@ const filterStore = assign({}, EventEmitter.prototype, {
 		this.off('change', callback);
 	},
 	get: function() {
-		return filters;
+		return Filter.get(filters).filteredObject;
 	},
 });
 
 filterStore.dispatchToken = Dispatcher.register(function(dispatcherPayload) {
 	const actions = {
-		filterByPrice: (payload) => {
-			filterVlaue(payload.action.value);
+		filter: (payload) => {
+			setFilter(payload.action.value);
 			filterStore.emit('change');
 		},
 	};

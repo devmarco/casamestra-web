@@ -1,6 +1,7 @@
 /* global Box */
 
 const React 	= require('react');
+const storage 	= require('../services/storage.service');
 const Search 	= React.createFactory(require('../components/search'));
 
 Box.Application.addModule('search', context => {
@@ -13,7 +14,7 @@ Box.Application.addModule('search', context => {
 			_estates.get({
 				fields: 'images,price,keyDetails,garages,address,bathrooms,bedrooms,location,title,ecmid',
 			}).then(data => {
-				_storage.set('private', data);
+				storage.set('private', data);
 				React.render(Search({data: data}), document.querySelector('main'));
 			});
 		},
