@@ -88,7 +88,7 @@
 	width: 30%;
 
 	@include breakpoint(xlarge) {
-		width:45%;
+		width:35%;
 	}
 }
 
@@ -103,12 +103,11 @@
 	overflow-x: scroll;
 
 	@include breakpoint(xlarge) {
-		width:55%;
+		width:65%;
 	}
 
 	.o-estate {
 		margin-bottom: 30px;
-		height: 300px;
 
 		@extend .small-4;
 		@extend .columns;

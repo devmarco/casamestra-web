@@ -2273,13 +2273,13 @@ var Price = (function (_React$Component) {
 module.exports = Price;
 
 },{"../../actions/filter":4,"react":194}],11:[function(require,module,exports){
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
-var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var React = require('react');
 
@@ -2289,84 +2289,88 @@ var Estate = (function (_React$Component) {
 	function Estate(props) {
 		_classCallCheck(this, Estate);
 
-		_get(Object.getPrototypeOf(Estate.prototype), 'constructor', this).call(this, props);
+		_get(Object.getPrototypeOf(Estate.prototype), "constructor", this).call(this, props);
 		this.state = {
 			e: this.props.data
 		};
 	}
 
 	_createClass(Estate, [{
-		key: 'render',
+		key: "render",
 		value: function render() {
 			return React.createElement(
-				'div',
-				{ className: 'o-estate' },
+				"div",
+				{ className: "o-estate" },
 				React.createElement(
-					'a',
-					{ href: '/imovel/' + this.state.e.ecmid, style: { backgroundImage: 'url(' + this.state.e.images.cover + ')' } },
+					"div",
+					{ className: "o-estate__wrap" },
 					React.createElement(
-						'div',
-						{ className: 'o-estate__about' },
+						"a",
+						{ href: '/imovel/' + this.state.e.ecmid, style: { backgroundImage: 'url(' + this.state.e.images.cover + ')' } },
 						React.createElement(
-							'div',
-							{ className: 'o-estate__about__address' },
+							"div",
+							{ className: "o-estate__about" },
 							React.createElement(
-								'span',
-								null,
-								this.state.e.keyDetails.neighborhood
-							),
-							React.createElement(
-								'span',
-								null,
-								this.state.e.address
-							)
-						),
-						React.createElement(
-							'ul',
-							{ className: 'o-estate__about__info' },
-							React.createElement(
-								'li',
-								null,
+								"div",
+								{ className: "o-estate__about__address" },
 								React.createElement(
-									'span',
+									"span",
 									null,
-									this.state.e.price
+									this.state.e.keyDetails.neighborhood
+								),
+								React.createElement(
+									"span",
+									null,
+									this.state.e.address
 								)
 							),
 							React.createElement(
-								'li',
-								{ className: 'icon icon-area' },
+								"ul",
+								{ className: "o-estate__about__info" },
 								React.createElement(
-									'span',
+									"li",
 									null,
-									this.state.e.keyDetails.area
-								)
-							),
-							React.createElement(
-								'li',
-								{ className: 'icon icon-park' },
+									React.createElement(
+										"span",
+										null,
+										this.state.e.price
+									)
+								),
 								React.createElement(
-									'span',
-									null,
-									this.state.e.garages
-								)
-							),
-							React.createElement(
-								'li',
-								{ className: 'icon icon-beds' },
+									"li",
+									{ className: "icon icon-area" },
+									React.createElement(
+										"span",
+										null,
+										this.state.e.keyDetails.area
+									)
+								),
 								React.createElement(
-									'span',
-									null,
-									this.state.e.bedrooms
-								)
-							),
-							React.createElement(
-								'li',
-								{ className: 'icon icon-bath' },
+									"li",
+									{ className: "icon icon-park" },
+									React.createElement(
+										"span",
+										null,
+										this.state.e.garages
+									)
+								),
 								React.createElement(
-									'span',
-									null,
-									this.state.e.bathrooms
+									"li",
+									{ className: "icon icon-beds" },
+									React.createElement(
+										"span",
+										null,
+										this.state.e.bedrooms
+									)
+								),
+								React.createElement(
+									"li",
+									{ className: "icon icon-bath" },
+									React.createElement(
+										"span",
+										null,
+										this.state.e.bathrooms
+									)
 								)
 							)
 						)
@@ -2717,7 +2721,7 @@ var Pagination = (function (_React$Component) {
 
 		_get(Object.getPrototypeOf(Pagination.prototype), 'constructor', this).call(this, props);
 		this.state = {
-			size: FilterStore.get().length,
+			size: storage.get().length,
 			next: 12,
 			prev: 1
 		};

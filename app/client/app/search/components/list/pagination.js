@@ -9,7 +9,7 @@ class Pagination extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			size: FilterStore.get().length,
+			size: storage.get().length,
 			next: 12,
 			prev: 1,
 		}
