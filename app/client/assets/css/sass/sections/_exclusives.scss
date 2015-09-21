@@ -1,12 +1,12 @@
 .exclusives {
-	background-color: #F5F6F6;
-	padding: 4% 0;
+	background-color: #F8F9F9;
+	padding: 4% 0 3% 0;
 }
 
 .exclusives__header {
 	max-width: 60%;
 	margin: 0 auto 60px auto;
-	
+
 	.title,
 	.subtitle {
 		margin: 0;
@@ -17,11 +17,11 @@
 		margin-bottom: 10px;
 		color: $master;
 		@extend %f25;
-		@extend %f-bold;
+		@extend %f-light;
 	}
 
 	.subtitle {
-		color: $grey;
+		color: #8E8D8D;
 		@extend %f10;
 		@extend %f-light;
 	}
@@ -30,5 +30,28 @@
 .exclusives__estates {
 	.estate + .estate {
 		margin-top: 30px;
+	}
+}
+
+.exclusives__estates {
+	.estate__column {
+		@extend .small-4;
+		@extend .columns;
+
+		.o-estate {
+			.o-estate__wrap {
+				padding-top: 300px;
+			}
+		}
+
+		.o-estate--big {
+			.o-estate__wrap {
+				padding-top: 630px;
+			}
+		}
+
+		.o-estate + .o-estate {
+			margin-top: 30px;
+		}
 	}
 }

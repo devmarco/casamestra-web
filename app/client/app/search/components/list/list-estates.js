@@ -33,7 +33,7 @@ class EstatesList extends React.Component {
 	}
 
 	onFilterChange() {
-		const data = FilterStore.get();
+		const data = FilterStore.get().data;
 
 		this.setState({
 			data: _.slice(data, 0, 12),

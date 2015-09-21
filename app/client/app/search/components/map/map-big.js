@@ -1,11 +1,13 @@
 /* global L */
 
-const React = require('react');
-const FilterStore = require('../../stores/filter.store');
+const React 		= require('react');
+const FilterStore 	= require('../../stores/filter.store');
+const estate 		= React.createFactory(require('../list/estate'));
 
 class MapBig extends React.Component {
 	constructor(props) {
 		super(props);
+		this.state = {empty: 'none'};
 	}
 
 	componentWillMount() {
@@ -21,7 +23,7 @@ class MapBig extends React.Component {
 	}
 
 	onStoreChange() {
-		this.update(FilterStore.get());
+		this.update(FilterStore.get().data);
 	}
 
 	createMap(data) {
@@ -53,6 +55,9 @@ class MapBig extends React.Component {
 			},
 		});
 
+		// Prevent empty markers
+		if (!markers.length) return false;
+
 		markers.forEach(value => {
 			const location = new L.LatLng(value.location.lat, value.location.lng);
 
@@ -63,7 +68,10 @@ class MapBig extends React.Component {
 				}),
 			});
 
-			// this.bindMarkerClick(marker, value);
+			marker.bindPopup(React.renderToString(estate({data: value})), {
+				closeButton: false,
+				minWidth: 300,
+			});
 
 			this.clusterGroup.addLayer(marker);
 		});
@@ -72,15 +80,34 @@ class MapBig extends React.Component {
 		window.mapBig.fitBounds(this.clusterGroup.getBounds());
 	}
 
+	showEmptyMessage() {
+		this.setState({ empty: 'block' });
+	}
+
+	hideEmptyMessage() {
+		this.setState({ empty: 'none' });
+	}
+
 	update(markers) {
 		window.mapBig.removeLayer(this.clusterGroup);
+
 		this.createCluster(markers);
+
+		if (markers.length) {
+			this.hideEmptyMessage();
+		} else {
+			this.showEmptyMessage();
+		}
 	}
 
 	render() {
 		return (
 			<div className="c-search__map">
 				<div id="c-search__map__map"></div>
+				<div className="c-search__map__empty" style={{display: this.state.empty}}>
+					<p>Não encontramos nenhum imóvel com os detalhes especificados.</p>
+					<p>Tente remover alguns filtros, trocar o valor ou selecionar uma nova vizinhança.</p>
+				</div>
 			</div>
 		);
 	}

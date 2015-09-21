@@ -1,6 +1,6 @@
-.search {
+.o-search {
 	position: relative;
-	padding: 15% 0;
+	padding: 220px 0 120px 0;
 	background-color: #131212;
 
 	&:before {
@@ -18,16 +18,34 @@
 	}
 }
 
-.search__bx {
+.o-search__container {
 	position: relative;
 	width: 60%;
 	margin: 0 auto;
+	padding: 3.5em;
+
+	&:before {
+		content: '';
+		width: 100%;
+		height: 100%;
+		position: absolute;
+		top: 0;
+		left: 0;
+		background-color: rgba(#fff, 0.6);
+		z-index: 1;
+	}
+
+	h1, form {
+		position: relative;
+		z-index: 2;
+	}
 
 	h1 {
-		color: $green;
+		color: $master;
 		line-height: 0.8em;
 		text-align: center;
 		text-transform: uppercase;
+		margin: 0 0 1em 0;
 		@extend %f-bold;
 		@extend %f30;
 
@@ -50,11 +68,10 @@
 		padding: 1.5em 4.5em 1.5em 1.5em;
 		border: none;
 		color: #fff;
-		background-color: #2A3038;
-  		background-color: rgba(42, 48, 56, 0.8);
-  		border: 1px solid #515356;
-  		text-align: center;
-	
+		background-color: #fff;
+		border: 1px solid #515356;
+		text-align: center;
+
 		@extend %f-light;
 		@extend %f11;
 
@@ -69,7 +86,7 @@
 		position: absolute;
 		top: 21px;
 		right: 37px;
-		@include sprite($search-white);
+		@include sprite($search);
 
 		&:focus {
 			outline: 0;

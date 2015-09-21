@@ -1,12 +1,11 @@
 .neighborhoods {
-	padding: 4% 0;
-	background-color: #F5F6F6;
+	padding: 3% 0;
 }
 
 .neighborhoods__header {
 	max-width: 60%;
 	margin: 0 auto 50px auto;
-	
+
 	.title,
 	.subtitle {
 		margin: 0;
@@ -17,7 +16,7 @@
 		margin-bottom: 10px;
 		color: $master;
 		@extend %f25;
-		@extend %f-bold;
+		@extend %f-light;
 	}
 
 	.subtitle {

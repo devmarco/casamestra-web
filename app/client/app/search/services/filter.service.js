@@ -3,11 +3,11 @@ const storage 	= require('./storage.service');
 
 const get = (filters) => {
 	const data = storage.get('private').data;
-	let filteredObject = [];
+	const filteredObject = [];
 
 	if (_.isEmpty(filters)) {
-		filteredObject = data;
-		return { filteredObject, filters };
+		storage.set('public', data, filters);
+		return { data: data, filters };
 	}
 
 	// function checkBathrooms(filter, item) {
@@ -39,7 +39,7 @@ const get = (filters) => {
 		}
 
 		return isValid;
-	}
+	};
 
 	const checkPrice = (filter, price) => {
 		const min = filter.min || 0;
@@ -47,7 +47,7 @@ const get = (filters) => {
 
 		if (price >= min && price <= max) return true;
 		return false;
-	}
+	};
 
 	const checkFilterValue = item => {
 		let i;
@@ -56,6 +56,8 @@ const get = (filters) => {
 		let isAble = 0;
 
 		for (i in filters) {
+			if (!i) break;
+
 			const currentItem = item[i];
 			const currentFilter = filters[i];
 
@@ -74,13 +76,13 @@ const get = (filters) => {
 		if (isAble === filterCount) {
 			filteredObject.push(item);
 		}
-	}
+	};
 
 	_.filter(data, item => checkFilterValue(item));
 
 	storage.set('public', filteredObject, filters);
 
-	return { filteredObject, filters }
-}
+	return { data: filteredObject, filters };
+};
 
 module.exports = { get };

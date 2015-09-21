@@ -1,0 +1,57 @@
+.c-about {
+	padding: 3% 0;
+}
+
+.c-about__header {
+	max-width: 80%;
+	margin: 0 auto 50px auto;
+
+	.title,
+	.subtitle {
+		margin: 0;
+		text-align: center;
+	}
+
+	.title {
+		margin-bottom: 30px;
+		color: $master;
+		line-height: 1em;
+		@extend %f25;
+		@extend %f-light;
+	}
+
+	.subtitle {
+		color: $grey;
+		@extend %f10;
+		@extend %f-regular;
+	}
+}
+
+.c-about__actions {
+	margin-top: 25px;
+	text-align: center;
+
+	@extend .clearfix;
+
+	button {
+		display: inline-block;
+		border: 1px solid #ccc;
+		text-align: center;
+		color: $master;
+		background-color: transparent;
+		min-width: 350px;
+		padding: 0.7em;
+
+		@extend %f-light;
+		@extend %f14;
+
+		+ button {
+			margin-left: -1px;
+		}
+	}
+
+	.active {
+		background-color: $master;
+		color: #fff;
+	}
+}

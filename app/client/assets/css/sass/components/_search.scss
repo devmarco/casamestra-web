@@ -92,6 +92,28 @@
 	}
 }
 
+.c-search__map__empty {
+	position: absolute;
+	width: 100%;
+	bottom: 0;
+	background: $green;
+	padding: 2em;
+	z-index: 1000;
+
+	p {
+		color: #fff;
+		margin: 0 0 20px 0;
+		@extend %f12;
+		@extend %f-bold;
+
+		+ p {
+			margin: 0;
+			@extend %f9;
+			@extend %f-regular;
+		}
+	}
+}
+
 .c-search__list__list {
 	position: relative;
 	z-index: 2;

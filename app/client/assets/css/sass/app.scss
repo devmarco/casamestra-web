@@ -47,6 +47,7 @@
 @import 'objects/mapbox';
 @import 'objects/estate';
 @import 'objects/agent';
+@import 'objects/search';
 
 /*------------------------------------*\
 	[COMPONENTS]
@@ -58,15 +59,14 @@
 @import 'components/agents';
 @import 'components/neighborhood';
 @import 'components/search';
+@import 'components/about';
 
 
 /*------------------------------------*\
 	[SECTIONS]
 \*------------------------------------*/
 
-@import 'sections/search';
 @import 'sections/exclusives';
-@import 'sections/about';
 @import 'sections/neighborhoods';
 @import 'sections/green-bar';
 @import 'sections/estates-about';

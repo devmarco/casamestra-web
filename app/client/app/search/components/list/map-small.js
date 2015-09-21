@@ -4,19 +4,17 @@ const React 		= require('react');
 const _ 			= require('lodash');
 const FilterStore 	= require('../../stores/filter.store');
 
-
-
 class MapSmall extends React.Component {
 	constructor(props) {
 		super(props);
 	}
 
-	componentDidMount() {
-		if (this.props.data.length) this.createMap(_.slice(this.props.data, 0, 12));
-	}
-
 	componentWillMount() {
 		FilterStore.addChangeListener(this.onStoreChange.bind(this));
+	}
+
+	componentDidMount() {
+		if (this.props.data.length) this.createMap(_.slice(this.props.data, 0, 12));
 	}
 
 	componentWillUnmount() {
@@ -24,7 +22,7 @@ class MapSmall extends React.Component {
 	}
 
 	onStoreChange() {
-		this.update(_.slice(FilterStore.get(), 0, 12));
+		this.update(_.slice(FilterStore.get().data, 0, 12));
 	}
 
 	createMap(data) {
@@ -41,6 +39,9 @@ class MapSmall extends React.Component {
 
 	createMarkers(markers) {
 		this.markersGroup = new L.FeatureGroup();
+
+		// Prevent empty markers
+		if (!markers.length) return false;
 
 		markers.forEach((value) => {
 			const location = new L.LatLng(value.location.lat, value.location.lng);

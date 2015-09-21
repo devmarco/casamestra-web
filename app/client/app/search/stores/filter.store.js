@@ -30,7 +30,8 @@ const filterGeneric = (filter, type) => {
 const setFilter = (filter) => {
 	const type = filter.type;
 
-	if (!filters[type]) filters[type] = [];
+	if (!filters[type] && type !== 'price') filters[type] = [];
+	if (!filters[type] && type === 'price') filters[type] = {};
 
 	(filter.amount) ? filterForPrice(filter, type) : filterGeneric(filter, type);
 };
@@ -43,7 +44,7 @@ const filterStore = assign({}, EventEmitter.prototype, {
 		this.off('change', callback);
 	},
 	get: function() {
-		return Filter.get(filters).filteredObject;
+		return Filter.get(filters);
 	},
 });
 

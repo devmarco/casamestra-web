@@ -8,11 +8,12 @@ const _ 			= require('lodash');
 class Pagination extends React.Component {
 	constructor(props) {
 		super(props);
+
 		this.state = {
-			size: storage.get().length,
+			size: 0,
 			next: 12,
 			prev: 1,
-		}
+		};
 
 		this.nextPage = 0;
 		this.prevPage = 0;
@@ -23,6 +24,10 @@ class Pagination extends React.Component {
 		PagesStore.addChangeListener(this.onPageChange.bind(this));
 	}
 
+	componentDidMount() {
+		this.setState({size: storage.get().data.length});
+	}
+
 	componentWillUnmount() {
 		FilterStore.removeChangeListener(this.onFilterChange.bind(this));
 		PagesStore.removeChangeListener(this.onPageChange.bind(this));
@@ -30,7 +35,7 @@ class Pagination extends React.Component {
 
 	onPageChange() {
 		const pagesData = PagesStore.get();
-		const filterData = FilterStore.get();
+		const filterData = FilterStore.get().data;
 
 		this.setState({
 			size: filterData.length,
@@ -40,7 +45,7 @@ class Pagination extends React.Component {
 	}
 
 	onFilterChange() {
-		const data = FilterStore.get();
+		const data = FilterStore.get().data;
 
 		this.setState({
 			size: data.length,
@@ -66,7 +71,7 @@ class Pagination extends React.Component {
 	prev() {
 		const data = storage.get().data;
 
-		if (this.nextPage === 0) return
+		if (this.nextPage === 0) return;
 
 		this.nextPage = this.nextPage - 12;
 		this.prevPage = this.nextPage;
@@ -93,6 +98,6 @@ class Pagination extends React.Component {
 
 Pagination.propType = {
 	size: React.PropTypes.array.isRequired,
-}
+};
 
 module.exports = Pagination;

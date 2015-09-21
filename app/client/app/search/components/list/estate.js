@@ -8,6 +8,10 @@ class Estate extends React.Component {
 		};
 	}
 
+	formatMoney(number) {
+		return 'R$ ' + number.toFixed(2).replace('.', ',').replace(/(\d)(?=(\d{3})+\,)/g, '$1.');
+	}
+
 	render() {
 		return (
 			<div className="o-estate">
@@ -21,7 +25,7 @@ class Estate extends React.Component {
 							<ul className="o-estate__about__info">
 								<li>
 									<span>
-										{this.state.e.price}
+										{this.formatMoney(this.state.e.price)}
 									</span>
 								</li>
 								<li className="icon icon-area">
