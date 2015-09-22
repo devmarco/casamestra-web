@@ -1,4 +1,4 @@
-.btn {
+.o-btn {
 	border: 1px solid #fff;
 	padding: 10px 20px;
 	transition: background-color 0.3s ease 0s;
@@ -32,21 +32,28 @@
 	}
 }
 
-.btn-green {
-	@extend .btn;
+.o-btn--green {
 	background-color: $green;
 }
 
-.btn-dark {
-	@extend .btn;
+.o-btn--dark {
 	background-color: $master;
 }
 
-.btn-rounded {
-	@extend .btn;
-
+.o-btn--rounded {
 	&:hover {
 		background-color: $green;
+		color: #fff;
+	}
+}
+
+.o-btn--clean {
+	background-color: transparent;
+    border: 1px solid $master;
+    color: $master;
+
+	&:hover {
+		background-color: $master;
 		color: #fff;
 	}
 }

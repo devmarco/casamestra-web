@@ -40,7 +40,7 @@
 		color: $master;
 		background-color: transparent;
 		min-width: 350px;
-		padding: 0.7em;
+		padding: 1em 0;
 
 		@extend %f-light;
 		@extend %f14;
@@ -53,5 +53,107 @@
 	.active {
 		background-color: $master;
 		color: #fff;
+	}
+}
+
+.c-about__buyer,
+.c-about__seller {
+	display: none;
+
+	&.active {
+		display: block;
+	}
+}
+
+.c-about__buyer__app {
+	max-height: 650px;
+	overflow: hidden;
+	border-bottom: 1px solid #E4E4E4;
+	@extend .clearfix;
+
+	.c-about__buyer__app__content,
+	.c-about__buyer__app__media {
+		@extend .small-6;
+		@extend .columns;
+	}
+
+	.c-about__buyer__app__content {
+		text-align: center;
+		margin-top: 15%;
+
+		.title,
+		.subtitle {
+			text-align: center;
+		}
+		.title {
+			color: $master;
+			@extend %f-light;
+			@extend %f20;
+		}
+		.text {
+			color: #989A9A;
+			@extend %f-regular;
+			@extend %f10;
+		}
+
+		a, button {
+			padding: 1.2em 0;
+			display: inline-block;
+			min-width: 400px;
+			margin: 20px;
+
+			@extend %f12;
+		}
+	}
+
+	.c-about__buyer__app__media {
+		img {
+			margin-top: -65px;
+		}
+	}
+}
+
+.c-about__buyer__agent {
+	padding: 3em 0;
+	@extend .clearfix;
+	@extend .row;
+
+	.c-about__buyer__agent__content {
+		padding: 1em 2em 0 2em;
+
+		@extend .small-6;
+		@extend .columns;
+	}
+	.c-about__buyer__agent__media {
+		@extend .small-6;
+		@extend .columns;
+	}
+
+	.c-about__buyer__agent__content {
+		text-align: center;
+
+		.title,
+		.subtitle {
+			text-align: center;
+		}
+		.title {
+			color: $master;
+			@extend %f-light;
+			@extend %f20;
+		}
+		.text {
+			color: #989A9A;
+			@extend %f-regular;
+			@extend %f10;
+		}
+
+		a, button {
+			padding: 1.2em 0;
+			display: inline-block;
+			min-width: 320px;
+			margin: 20px;
+
+			@extend %f12;
+		}
 	}
 }
