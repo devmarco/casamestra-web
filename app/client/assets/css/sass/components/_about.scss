@@ -3,7 +3,7 @@
 }
 
 .c-about__header {
-	max-width: 80%;
+	max-width: 60%;
 	margin: 0 auto 50px auto;
 
 	.title,
@@ -28,7 +28,7 @@
 }
 
 .c-about__actions {
-	margin-top: 25px;
+	margin: 40px 0 5px;
 	text-align: center;
 
 	@extend .clearfix;
@@ -108,13 +108,13 @@
 
 	.c-about__buyer__app__media {
 		img {
-			margin-top: -65px;
+			margin: -65px 0 0 145px;
 		}
 	}
 }
 
 .c-about__buyer__agent {
-	padding: 3em 0;
+	padding: 3em 0 0;
 	@extend .clearfix;
 	@extend .row;
 
@@ -125,6 +125,8 @@
 		@extend .columns;
 	}
 	.c-about__buyer__agent__media {
+		padding-left: 0;
+
 		@extend .small-6;
 		@extend .columns;
 	}

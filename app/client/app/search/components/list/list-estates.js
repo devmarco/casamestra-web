@@ -49,8 +49,8 @@ class EstatesList extends React.Component {
 				</div>
 				<div className="list__container">
 					{this.state.data.map(e => {
-						return <Estate key={e.ecmid} data={e} />
-					})};
+						return <Estate key={e.ecmid} data={e} />;
+					})}
 				</div>
 				<div className="filter__container">
 					<Ordering />

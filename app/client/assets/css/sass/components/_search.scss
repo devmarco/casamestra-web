@@ -10,7 +10,7 @@
 .c-search__filter {
 	position: relative;
 	width: 100%;
-	z-index: 100;
+	z-index: 1100;
 	padding: 1em 1em;
 	border-bottom: 1px solid #F3F1F1;
 	background-color: #fff;
@@ -35,10 +35,13 @@
 			text-align: left;
 			min-width: 150px;
 			&:before {
-				content: '▾';
+				content: '';
 				float: right;
-				margin-left: 15px;
+				margin: 6px 0 0 15px;
 				color: $master;
+				border-color: $master transparent transparent;
+				border-style: solid;
+				border-width: 4px 4px 0;
 			}
 		}
 	}
@@ -65,14 +68,14 @@
 }
 
 .c-search__map {
-	height: -webkit-calc(100% - 82px);
+	height: -webkit-calc(100% - 77px);
 	overflow: hidden;
 	background-color: #D3D3D3;
 }
 
 .c-search__list {
 	position: absolute;
-	top: 81px;
+	top: 77px;
 	width: 100%;
 	@extend .clearfix;
 }
@@ -82,7 +85,7 @@
 	bottom: 0;
 	right: 0;
 	overflow: hidden;
-	height: -webkit-calc(100% - 80px);
+	height: -webkit-calc(100% - 77px);
 	z-index: 1;
 	float: right;
 	width: 30%;

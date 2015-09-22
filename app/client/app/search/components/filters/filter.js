@@ -27,7 +27,7 @@ class Filters extends React.Component {
 	}
 
 	selectView() {
-		$('main').toggleClass('list-active');
+		$('.c-search__content').toggleClass('list-active');
 		this.redraw();
 	}
 

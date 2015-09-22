@@ -27,27 +27,22 @@ const set = (config, data, filters) => {
 };
 
 const view = {
-	isMap: () => {
-		const view = window.localStorage.getItem('cmview');
+	get: () => {
+		if (window.localStorage) {
+			console.log('Enter');
+			const viewOption = window.localStorage.getItem('cmview');
+			if (viewOption) return viewOption;
+		}
 
-		if (view && view === 'map') return true;
-
-		if (view) return false;
-
-		return true;
-	},
-	isList: () => {
-		const view = window.localStorage.getItem('cmview');
-
-		if (view === 'list') return true;
-
-		return false;
+		return 'map';
 	},
 	set: option => {
-		if (option && option === 'map' || option === 'list') {
-			window.localStorage.setItem('cmview', option);
+		if (window.localStorage) {
+			if (option && option === 'map' || option === 'list') {
+				window.localStorage.setItem('cmview', option);
+			}
 		}
 	},
 };
 
-module.exports = { get, set , view};
+module.exports = { get, set, view };

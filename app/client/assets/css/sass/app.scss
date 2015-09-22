@@ -7,11 +7,19 @@
 @import 'settings/gallery';
 
 /*------------------------------------*\
+	[TOOLS]
+\*------------------------------------*/
+
+@import 'tools/truncate';
+@import 'tools/mixins';
+
+/*------------------------------------*\
 	[VENDORS]
 \*------------------------------------*/
 
 @import 'vendors/foundation';
 @import 'vendors/pswp-gallery';
+@import 'vendors/react-select';
 
 /*------------------------------------*\
 	[BASE]
@@ -19,13 +27,6 @@
 
 @import 'base/normalize';
 @import 'base/page';
-
-/*------------------------------------*\
-	[TOOLS]
-\*------------------------------------*/
-
-@import 'tools/truncate';
-@import 'tools/mixins';
 
 /*------------------------------------*\
 	[GENERIC]

@@ -33,7 +33,7 @@
 
 .neighborhoods__bx__city {
 	@extend .columns;
-	@extend .small-7;
+	@extend .small-6;
 }
 
 .neighborhoods__bx__city__container {
@@ -70,14 +70,4 @@
 		@extend %f9;
 		@extend %f-regular;
 	}
-}
-
-.neighborhoods__bx__map {
-	@extend .columns;
-	@extend .small-5;
-}
-
-.neighborhoods__bx__map__container {
-	height: 400px;
-	background: url('../../imgs/neighborhoods/map.jpg') no-repeat center;
 }
