@@ -2769,9 +2769,13 @@ var Ordering = (function (_React$Component) {
 		key: 'onChange',
 		value: function onChange() {
 			var data = storage.get().data;
+			var values = undefined;
 
-			var values = _.map(_.sortByAll(data, 'price'), _.values);
-			console.log(values);
+			// Low to Higher
+			//values = _.map(_.sortByOrder(data, 'price', 'asc'), _.values);
+
+			// Higher to low
+			//values = _.map(_.sortByAll(data, 'price', 'desc'), _.values);
 		}
 	}, {
 		key: 'render',
