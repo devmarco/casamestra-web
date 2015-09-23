@@ -12,6 +12,7 @@ class Filters extends React.Component {
 
 	componentDidMount() {
 		const element = React.findDOMNode(this);
+
 		window.onscroll = (e) => {
 			if (e.target.scrollingElement.scrollTop >= 100) {
 				$(element).addClass('scroll-active');

@@ -12,7 +12,7 @@ Box.Application.addModule('search', context => {
 		behaviors: ['dropdown'],
 		init: function() {
 			_estates.get({
-				fields: 'images,price,keyDetails,garages,address,bathrooms,bedrooms,location,title,ecmid',
+				fields: 'images,price,keyDetails,garages,address,bathrooms,bedrooms,location,title,ecmid,createdAt',
 			}).then(data => {
 				storage.set('private', data);
 				React.render(Search({data: data}), document.querySelector('main'));

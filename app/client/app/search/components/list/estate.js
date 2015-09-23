@@ -9,14 +9,17 @@ class Estate extends React.Component {
 	}
 
 	formatMoney(number) {
-		return 'R$ ' + number.toFixed(2).replace('.', ',').replace(/(\d)(?=(\d{3})+\,)/g, '$1.');
+		return 'R$ ' + parseInt(number, 10).toFixed(2).replace('.', ',').replace(/(\d)(?=(\d{3})+\,)/g, '$1.');
 	}
 
 	render() {
 		return (
 			<div className="o-estate">
 				<div className="o-estate__wrap">
-					<a href={'/imovel/' + this.state.e.ecmid} style={{backgroundImage: 'url(' + this.state.e.images.cover + ')'}}>
+					<a href={'/imovel/' + this.state.e.ecmid}>
+						<div className="o-estate__image" style={{backgroundImage: `url(${this.state.e.images.cover})`}}>
+							<img src={this.state.e.images.cover} alt={this.state.e.address} />
+						</div>
 						<div className="o-estate__about">
 							<div className="o-estate__about__address">
 								<span>{this.state.e.keyDetails.neighborhood}</span>

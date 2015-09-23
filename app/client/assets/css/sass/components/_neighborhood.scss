@@ -3,8 +3,12 @@
 }
 
 .c-neighborhood__header {
-	max-width: 70%;
+	max-width: 60%;
 	margin: 0 auto 50px auto;
+
+	@include breakpoint(xlarge) {
+		max-width: 40%;
+	}
 
 	.title,
 	.subtitle {
@@ -17,7 +21,7 @@
 		color: $master;
 		line-height: 1em;
 		@extend %f20;
-		@extend %f-bold;
+		@extend %f-light;
 
 		span {
 			display: inline-block;
@@ -28,6 +32,7 @@
 
 	.subtitle {
 		color: $grey;
+		line-height: 25px;
 		@extend %f10;
 		@extend %f-regular;
 	}
@@ -39,7 +44,7 @@
 }
 
 .c-neighborhood__area__image {
-	height: 400px;
+	height: 350px;
 	overflow: hidden;
 }
 

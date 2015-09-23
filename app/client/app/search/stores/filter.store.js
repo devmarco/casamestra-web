@@ -6,6 +6,7 @@ const assign        = require('object-assign');
 const Filter 		= require('../services/filter.service');
 
 const filters = {};
+let filteredData;
 
 const filterForPrice = (filter, type) => {
 	// Set the filter for price property
@@ -34,6 +35,8 @@ const setFilter = (filter) => {
 	if (!filters[type] && type === 'price') filters[type] = {};
 
 	(filter.amount) ? filterForPrice(filter, type) : filterGeneric(filter, type);
+
+	filteredData = Filter.get(filters);
 };
 
 const filterStore = assign({}, EventEmitter.prototype, {
@@ -44,7 +47,7 @@ const filterStore = assign({}, EventEmitter.prototype, {
 		this.off('change', callback);
 	},
 	get: function() {
-		return Filter.get(filters);
+		return filteredData;
 	},
 });
 

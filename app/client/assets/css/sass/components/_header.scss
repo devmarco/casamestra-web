@@ -57,25 +57,18 @@ header {
 		display: inline-block;
 	}
 
-	.no-grafism {
-		&:before,
-		&:after {
-			display: none;
-		}
-	}
-
 	a {
 		color: #fff;
 		text-decoration: none;
 		letter-spacing: 1px;
 		display: block;
-		padding: 40px 1.5em 39px;
+		padding: 38px 1.5em 39px;
 		border-top: 2px solid transparent;
 		border-bottom: 2px solid transparent;
 		transition: border-color 0.5s ease;
 		line-height: 1.4em;
 
-		@extend %f9;
+		@extend %f10;
 		@extend %f-regular;
 
 		&:hover {
@@ -90,7 +83,7 @@ header {
 }
 
 ul.nav-signin {
-	margin: 32px 0 0 1em;
+	margin: 34px 0 0 1em;
 	border-left: 1px solid rgba(255, 255, 255, 0.1);
 	padding: 6px 1em 6px 2em;
 
@@ -108,7 +101,7 @@ ul.nav-signin {
 		transition: border-color 0.5s ease;
 		line-height: 1.4em;
 
-		@extend %f9;
+		@extend %f10;
 		@extend %f-regular;
 
 		&:hover {

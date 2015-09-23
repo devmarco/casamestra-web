@@ -6,6 +6,10 @@
 	max-width: 60%;
 	margin: 0 auto 50px auto;
 
+	@include breakpoint(xlarge) {
+		max-width: 40%;
+	}
+
 	.title,
 	.subtitle {
 		margin: 0;
@@ -22,6 +26,7 @@
 
 	.subtitle {
 		color: $grey;
+		line-height: 25px;
 		@extend %f10;
 		@extend %f-regular;
 	}
@@ -66,8 +71,6 @@
 }
 
 .c-about__buyer__app {
-	max-height: 650px;
-	overflow: hidden;
 	border-bottom: 1px solid #E4E4E4;
 	@extend .clearfix;
 
@@ -79,7 +82,7 @@
 
 	.c-about__buyer__app__content {
 		text-align: center;
-		margin-top: 15%;
+		margin-top: 20%;
 
 		.title,
 		.subtitle {
@@ -92,6 +95,7 @@
 		}
 		.text {
 			color: #989A9A;
+			line-height: 25px;
 			@extend %f-regular;
 			@extend %f10;
 		}
@@ -107,8 +111,10 @@
 	}
 
 	.c-about__buyer__app__media {
+		max-height: 650px;
+		overflow: hidden;
 		img {
-			margin: -65px 0 0 145px;
+			margin: -65px 0 0 80px;
 		}
 	}
 }
@@ -119,7 +125,7 @@
 	@extend .row;
 
 	.c-about__buyer__agent__content {
-		padding: 1em 2em 0 2em;
+		padding: 3em 2em 0 2em;
 
 		@extend .small-6;
 		@extend .columns;
@@ -145,6 +151,7 @@
 		}
 		.text {
 			color: #989A9A;
+			line-height: 25px;
 			@extend %f-regular;
 			@extend %f10;
 		}

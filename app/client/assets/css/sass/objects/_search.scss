@@ -1,7 +1,11 @@
 .o-search {
 	position: relative;
-	padding: 270px 0 170px 0;
+	padding: 250px 0 150px 0;
 	background-color: #131212;
+
+	@include breakpoint(xlarge) {
+		padding: 300px 0 200px 0;
+	}
 
 	&:before {
 		content: '';

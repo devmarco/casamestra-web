@@ -1711,6 +1711,7 @@ var Filters = (function (_React$Component) {
 		key: 'componentDidMount',
 		value: function componentDidMount() {
 			var element = React.findDOMNode(this);
+
 			window.onscroll = function (e) {
 				if (e.target.scrollingElement.scrollTop >= 100) {
 					$(element).addClass('scroll-active');
@@ -2395,7 +2396,7 @@ var Estate = (function (_React$Component) {
 	_createClass(Estate, [{
 		key: 'formatMoney',
 		value: function formatMoney(number) {
-			return 'R$ ' + number.toFixed(2).replace('.', ',').replace(/(\d)(?=(\d{3})+\,)/g, '$1.');
+			return 'R$ ' + parseInt(number, 10).toFixed(2).replace('.', ',').replace(/(\d)(?=(\d{3})+\,)/g, '$1.');
 		}
 	}, {
 		key: 'render',
@@ -2408,7 +2409,12 @@ var Estate = (function (_React$Component) {
 					{ className: 'o-estate__wrap' },
 					React.createElement(
 						'a',
-						{ href: '/imovel/' + this.state.e.ecmid, style: { backgroundImage: 'url(' + this.state.e.images.cover + ')' } },
+						{ href: '/imovel/' + this.state.e.ecmid },
+						React.createElement(
+							'div',
+							{ className: 'o-estate__image', style: { backgroundImage: 'url(' + this.state.e.images.cover + ')' } },
+							React.createElement('img', { src: this.state.e.images.cover, alt: this.state.e.address })
+						),
 						React.createElement(
 							'div',
 							{ className: 'o-estate__about' },
@@ -2767,15 +2773,43 @@ var Ordering = (function (_React$Component) {
 
 	_createClass(Ordering, [{
 		key: 'onChange',
-		value: function onChange() {
+		value: function onChange(e) {
 			var data = storage.get().data;
-			var values = undefined;
+			var value = e.target.value;
 
-			// Low to Higher
-			//values = _.map(_.sortByOrder(data, 'price', 'asc'), _.values);
-
-			// Higher to low
-			//values = _.map(_.sortByAll(data, 'price', 'desc'), _.values);
+			// switch (value) {
+			// 	case 2:
+			//
+			// 		break;
+			// 	case 3:
+			//
+			// 		break;
+			// 	case 4:
+			//
+			// 		break;
+			// 	default
+			// }
+		}
+	}, {
+		key: 'byDate',
+		value: function byDate(data) {
+			return _.map(_.sortByOrder(data, 'createdAt', 'asc'), function (estate) {
+				return estate;
+			});
+		}
+	}, {
+		key: 'lowToHigh',
+		value: function lowToHigh(data) {
+			return _.map(_.sortByOrder(data, 'price', 'asc'), function (estate) {
+				return estate;
+			});
+		}
+	}, {
+		key: 'highToLow',
+		value: function highToLow(data) {
+			return _.map(_.sortByOrder(data, 'price', 'desc'), function (estate) {
+				return estate;
+			});
 		}
 	}, {
 		key: 'render',
@@ -2788,20 +2822,25 @@ var Ordering = (function (_React$Component) {
 					{ className: 'select-button' },
 					React.createElement(
 						'select',
-						{ onChange: this.onChange.bind(this) },
+						{ value: '1', onChange: this.onChange.bind(this) },
 						React.createElement(
 							'option',
-							null,
+							{ value: '1' },
+							'Ordenar por:'
+						),
+						React.createElement(
+							'option',
+							{ value: '2' },
 							'Filtrar por data'
 						),
 						React.createElement(
 							'option',
-							null,
+							{ value: '3' },
 							'Filtrar por preço - Menor para Maior'
 						),
 						React.createElement(
 							'option',
-							null,
+							{ value: '4' },
 							'Filtrar por preço - Maior para Menor'
 						)
 					)
@@ -3204,7 +3243,7 @@ Box.Application.addModule('search', function (context) {
 		behaviors: ['dropdown'],
 		init: function init() {
 			_estates.get({
-				fields: 'images,price,keyDetails,garages,address,bathrooms,bedrooms,location,title,ecmid'
+				fields: 'images,price,keyDetails,garages,address,bathrooms,bedrooms,location,title,ecmid,createdAt'
 			}).then(function (data) {
 				storage.set('private', data);
 				React.render(Search({ data: data }), document.querySelector('main'));
@@ -3223,17 +3262,10 @@ Box.Application.addService('estates.service', function () {
 		get: function get(config) {
 			var limit = config.limit ? 'limit=' + config.limit || 10 + '' : '';
 			var fields = config.fields ? '&fields=' + config.fields + '' : '';
-			var isBuy = location.pathname.indexOf('comprar');
-			var request = undefined;
-
-			if (isBuy !== -1) {
-				request = 'http://127.0.0.1:8081/estates/buy?' + limit + fields + '';
-			} else {
-				request = 'http://127.0.0.1:8081/estates/rent?' + limit + fields + '';
-			}
+			var action = location.pathname.indexOf('comprar') !== -1 ? 'buy' : 'rent';
 
 			return $.ajax({
-				url: request
+				url: 'http://127.0.0.1:8085/estates/' + action + '?' + limit + fields
 			});
 		}
 	};
@@ -3536,6 +3568,7 @@ var assign = require('object-assign');
 var Filter = require('../services/filter.service');
 
 var filters = {};
+var filteredData = undefined;
 
 var filterForPrice = function filterForPrice(filter, type) {
 	// Set the filter for price property
@@ -3564,6 +3597,8 @@ var setFilter = function setFilter(filter) {
 	if (!filters[type] && type === 'price') filters[type] = {};
 
 	filter.amount ? filterForPrice(filter, type) : filterGeneric(filter, type);
+
+	filteredData = Filter.get(filters);
 };
 
 var filterStore = assign({}, EventEmitter.prototype, {
@@ -3574,7 +3609,7 @@ var filterStore = assign({}, EventEmitter.prototype, {
 		this.off('change', callback);
 	},
 	get: function get() {
-		return Filter.get(filters);
+		return filteredData;
 	}
 });
 

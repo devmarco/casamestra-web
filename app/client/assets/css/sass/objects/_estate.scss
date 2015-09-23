@@ -46,6 +46,16 @@
 	}
 }
 
+.o-estate__image {
+	height: 75%;
+	overflow: hidden;
+	background-size: cover;
+
+	img {
+		display: none;
+	}
+}
+
 .o-estate__about {
 	position: absolute;
 	width: 100%;

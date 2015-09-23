@@ -7,6 +7,10 @@
 	max-width: 60%;
 	margin: 0 auto 60px auto;
 
+	@include breakpoint(xlarge) {
+		max-width: 40%;
+	}
+
 	.title,
 	.subtitle {
 		margin: 0;
@@ -22,6 +26,7 @@
 
 	.subtitle {
 		color: #8E8D8D;
+		line-height: 25px;
 		@extend %f10;
 		@extend %f-light;
 	}
