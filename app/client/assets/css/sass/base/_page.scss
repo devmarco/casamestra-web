@@ -19,3 +19,9 @@ html, body {
 .wrapper {
 	height: 100%;
 }
+
+.row {
+	@include breakpoint(from-xlarge) {
+		max-width: 100em;
+	}
+}

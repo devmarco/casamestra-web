@@ -1,14 +1,11 @@
 .c-neighborhood {
-	padding-bottom: 3em;
+	padding: 3% 0 4%;
+	background-color: #F8F9F9;
 }
 
 .c-neighborhood__header {
 	max-width: 60%;
-	margin: 0 auto 50px auto;
-
-	@include breakpoint(xlarge) {
-		max-width: 40%;
-	}
+	margin: 0 auto 60px auto;
 
 	.title,
 	.subtitle {
@@ -17,56 +14,119 @@
 	}
 
 	.title {
-		margin-bottom: 30px;
+		margin-bottom: 20px;
 		color: $master;
-		line-height: 1em;
-		@extend %f20;
+		@extend %f35;
 		@extend %f-light;
-
-		span {
-			display: inline-block;
-			@extend %f7;
-			@extend %f-regular;
-		}
 	}
 
 	.subtitle {
-		color: $grey;
-		line-height: 25px;
-		@extend %f10;
-		@extend %f-regular;
+		color: #A7A5A5;
+		line-height: 30px;
+		@extend %f15;
+		@extend %f-light;
 	}
 }
 
 .c-neighborhood__area {
+	position: relative;
+
 	@extend .small-6;
 	@extend .columns;
+
+	a {
+		position: relative;
+		display: block;
+		width: 100%;
+
+		&:hover {
+			.c-neighborhood__area__action {
+				height: 50px;
+
+				&:before {
+					left: 20px;
+				}
+
+				&:after {
+					left: 69px;
+				}
+			}
+		}
+	}
 }
 
 .c-neighborhood__area__image {
-	height: 350px;
+	height: 450px;
 	overflow: hidden;
+
+	@include vendor(filter, brightness(0.8));
+
+	img {
+		width: 100%;
+	}
 }
 
 .c-neighborhood__area__info {
-	padding: 2.5em 2em;
-	background: $master;
+	position: absolute;
+	top: 0;
+	padding: 3em;
 
-	.title,
-	.subtitle {
-		display: block;
+	span, .title {
 		color: #fff;
 	}
 
-	.title {
-		margin-bottom: 10px;
-		letter-spacing: 1px;
-		@extend %f-bold;
+	span {
+		display: block;
+		@extend %f-regular;
 		@extend %f18;
 	}
 
-	.subtitle {
+	.title {
+    	margin: 95px 0 0;
+		line-height: 52px;
+
 		@extend %f-regular;
-		@extend %f12;
+		@extend %f30;
+	}
+}
+
+.c-neighborhood__area__action {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	height: 0;
+	background: $green;
+	overflow: hidden;
+
+	@include vendor(transition, all 0.3s ease-in-out);
+
+	&:before {
+		content: '';
+		width: 60px;
+		height: 2px;
+		background: #fff;
+		position: absolute;
+		bottom: 23px;
+		left: -20px;
+
+		@include vendor(transition, all 0.3s ease-in-out);
+	}
+
+	&:after {
+		position: absolute;
+		display: inline-block;
+		content: "";
+		width: 12px;
+		height: 12px;
+		color: #ffffff;
+		border-top: 2px solid;
+		border-left: 2px solid;
+		@include vendor(transform, rotate(135deg));
+		bottom: 2px;
+		left: -20px;
+		margin-bottom: 16px;
+		z-index: 10;
+
+		@include vendor(transition, all 0.2s ease-in-out);
 	}
 }

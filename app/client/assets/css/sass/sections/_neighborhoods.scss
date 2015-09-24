@@ -1,73 +1,73 @@
-.neighborhoods {
-	padding: 3% 0;
-	background-color: #F8F9F9;
-}
-
-.neighborhoods__header {
-	max-width: 60%;
-	margin: 0 auto 50px auto;
-
-	.title,
-	.subtitle {
-		margin: 0;
-		text-align: center;
-	}
-
-	.title {
-		margin-bottom: 10px;
-		color: $master;
-		@extend %f25;
-		@extend %f-light;
-	}
-
-	.subtitle {
-		color: $grey;
-		@extend %f10;
-		@extend %f-regular;
-	}
-}
-
-.neighborhoods__bx {
-	@extend .row;
-}
-
-.neighborhoods__bx__city {
-	@extend .columns;
-	@extend .small-6;
-}
-
-.neighborhoods__bx__city__container {
-	background: url('../../imgs/neighborhoods/neighborhoods.jpg') no-repeat center;
-	background-size: cover;
-	height: 400px;
-	position: relative;
-}
-
-.neighborhoods__name {
-	width: 100%;
-	background: $master;
-	background: rgba(42, 48, 56, 0.96);
-	padding: 2.5% 5%;
-	position: absolute;
-	bottom: 0;
-	left: 0;
-
-	span, a {
-		display: block;
-		text-decoration: none;
-	}
-
-	.name {
-		color: #fff;
-		text-transform: uppercase;
-		@extend %f15;
-		@extend %f-regular;
-	}
-
-	.link {
-		color: $green;
-		letter-spacing: 1px;
-		@extend %f9;
-		@extend %f-regular;
-	}
-}
+// .neighborhoods {
+// 	padding: 3% 0;
+// 	background-color: #F8F9F9;
+// }
+//
+// .neighborhoods__header {
+// 	max-width: 60%;
+// 	margin: 0 auto 50px auto;
+//
+// 	.title,
+// 	.subtitle {
+// 		margin: 0;
+// 		text-align: center;
+// 	}
+//
+// 	.title {
+// 		margin-bottom: 10px;
+// 		color: $master;
+// 		@extend %f25;
+// 		@extend %f-light;
+// 	}
+//
+// 	.subtitle {
+// 		color: $grey;
+// 		@extend %f10;
+// 		@extend %f-regular;
+// 	}
+// }
+//
+// .neighborhoods__bx {
+// 	@extend .row;
+// }
+//
+// .neighborhoods__bx__city {
+// 	@extend .columns;
+// 	@extend .small-6;
+// }
+//
+// .neighborhoods__bx__city__container {
+// 	background: url('../../imgs/neighborhoods/neighborhoods.jpg') no-repeat center;
+// 	background-size: cover;
+// 	height: 400px;
+// 	position: relative;
+// }
+//
+// .neighborhoods__name {
+// 	width: 100%;
+// 	background: $master;
+// 	background: rgba(42, 48, 56, 0.96);
+// 	padding: 2.5% 5%;
+// 	position: absolute;
+// 	bottom: 0;
+// 	left: 0;
+//
+// 	span, a {
+// 		display: block;
+// 		text-decoration: none;
+// 	}
+//
+// 	.name {
+// 		color: #fff;
+// 		text-transform: uppercase;
+// 		@extend %f15;
+// 		@extend %f-regular;
+// 	}
+//
+// 	.link {
+// 		color: $green;
+// 		letter-spacing: 1px;
+// 		@extend %f9;
+// 		@extend %f-regular;
+// 	}
+// }

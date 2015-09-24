@@ -4,11 +4,7 @@
 
 .c-about__header {
 	max-width: 60%;
-	margin: 0 auto 50px auto;
-
-	@include breakpoint(xlarge) {
-		max-width: 40%;
-	}
+	margin: 0 auto 60px auto;
 
 	.title,
 	.subtitle {
@@ -17,18 +13,17 @@
 	}
 
 	.title {
-		margin-bottom: 30px;
+		margin-bottom: 20px;
 		color: $master;
-		line-height: 1em;
-		@extend %f25;
+		@extend %f35;
 		@extend %f-light;
 	}
 
 	.subtitle {
-		color: $grey;
-		line-height: 25px;
-		@extend %f10;
-		@extend %f-regular;
+		color: #A7A5A5;
+		line-height: 30px;
+		@extend %f15;
+		@extend %f-light;
 	}
 }
 
@@ -82,7 +77,7 @@
 
 	.c-about__buyer__app__content {
 		text-align: center;
-		margin-top: 20%;
+		margin-top: 17%;
 
 		.title,
 		.subtitle {
@@ -90,14 +85,16 @@
 		}
 		.title {
 			color: $master;
+			line-height: 40px;
+
 			@extend %f-light;
-			@extend %f20;
+			@extend %f25;
 		}
 		.text {
 			color: #989A9A;
 			line-height: 25px;
 			@extend %f-regular;
-			@extend %f10;
+			@extend %f13;
 		}
 
 		a, button {
@@ -125,7 +122,7 @@
 	@extend .row;
 
 	.c-about__buyer__agent__content {
-		padding: 3em 2em 0 2em;
+		padding: 6em 2em 0 2em;
 
 		@extend .small-6;
 		@extend .columns;
@@ -146,14 +143,16 @@
 		}
 		.title {
 			color: $master;
+			line-height: 40px;
+
 			@extend %f-light;
-			@extend %f20;
+			@extend %f25;
 		}
 		.text {
 			color: #989A9A;
 			line-height: 25px;
 			@extend %f-regular;
-			@extend %f10;
+			@extend %f13;
 		}
 
 		a, button {

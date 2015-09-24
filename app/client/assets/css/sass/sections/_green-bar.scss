@@ -1,13 +1,15 @@
 .bar__bx {
 	background: $green;
-	padding: 2em 0;
+	padding: 2% 0;
 	text-align: center;
 
 	a {
 		display: inline-block;
 		color: #fff;
 		text-decoration: none;
+		border: 1px solid #fff;
+		padding: 1em 2em;
 		@extend %f-regular;
-		@extend %f10;
+		@extend %f15;
 	}
 }
