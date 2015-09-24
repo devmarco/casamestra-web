@@ -19,11 +19,6 @@ class EstatesList extends React.Component {
 		PagesStore.addChangeListener(this.onPageChange.bind(this));
 	}
 
-	componentWillUnmount() {
-		FilterStore.removeChangeListener(this.onFilterChange.bind(this));
-		PagesStore.removeChangeListener(this.onPageChange.bind(this));
-	}
-
 	onPageChange() {
 		const data = PagesStore.get().data;
 

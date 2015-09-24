@@ -2,9 +2,7 @@
 	[SEARCH RENT]
 \* ------------------------------------ */
 
-const React 			= require('react/addons');
-const Search 			= React.createFactory(require('./../../client/app/search/components/search'));
-const searchRendered 	= React.renderToString(Search({data: []}));
+const components = require('../config/components');
 
 const searchRent = {
 	method: 'GET',
@@ -12,7 +10,7 @@ const searchRent = {
 	handler: (req, reply) => {
 		reply.view('search', {
 			activePage: 'rent',
-			reactRender: searchRendered,
+			reactRender: components.search.get([]),
 		});
 	},
 };

@@ -5,7 +5,7 @@
 
 .c-neighborhood__header {
 	max-width: 60%;
-	margin: 0 auto 60px auto;
+	margin: 0 auto 30px auto;
 
 	.title,
 	.subtitle {
@@ -16,15 +16,23 @@
 	.title {
 		margin-bottom: 20px;
 		color: $master;
-		@extend %f35;
+		@extend %f30;
 		@extend %f-light;
+
+		@include breakpoint(from-xlarge) {
+			font-size: 3.5em;
+		}
 	}
 
 	.subtitle {
 		color: #A7A5A5;
 		line-height: 30px;
-		@extend %f15;
+		@extend %f12;
 		@extend %f-light;
+
+		@include breakpoint(from-xlarge) {
+			font-size: 1.5em;
+		}
 	}
 }
 
@@ -38,6 +46,13 @@
 		position: relative;
 		display: block;
 		width: 100%;
+		background-size: cover;
+		height: 350px;
+		overflow: hidden;
+
+		@include breakpoint(from-xlarge) {
+			height: 450px;
+		}
 
 		&:hover {
 			.c-neighborhood__area__action {
@@ -55,21 +70,17 @@
 	}
 }
 
-.c-neighborhood__area__image {
-	height: 450px;
-	overflow: hidden;
-
-	@include vendor(filter, brightness(0.8));
-
-	img {
-		width: 100%;
-	}
-}
-
 .c-neighborhood__area__info {
 	position: absolute;
 	top: 0;
 	padding: 3em;
+	height: 100%;
+	width: 100%;
+	background-color: rgba(0, 0, 0, 0.2);
+
+	&:hover {
+		background-color: rgba(0, 0, 0, 0.5);
+	}
 
 	span, .title {
 		color: #fff;
@@ -78,15 +89,25 @@
 	span {
 		display: block;
 		@extend %f-regular;
-		@extend %f18;
+		@extend %f15;
+
+		@include breakpoint(from-xlarge) {
+			font-size: 1.8em;
+		}
 	}
 
 	.title {
-    	margin: 95px 0 0;
-		line-height: 52px;
+		margin-top: 52px;
+		line-height: 42px;
 
 		@extend %f-regular;
-		@extend %f30;
+		@extend %f25;
+
+		@include breakpoint(from-xlarge) {
+			margin-top: 95px;
+			font-size: 3em;
+			line-height: 52px;
+		}
 	}
 }
 

@@ -10,18 +10,14 @@ class MapSmall extends React.Component {
 	}
 
 	componentWillMount() {
-		FilterStore.addChangeListener(this.onStoreChange.bind(this));
+		FilterStore.addChangeListener(this.onFilterChangeMAP.bind(this));
 	}
 
 	componentDidMount() {
 		if (this.props.data.length) this.createMap(_.slice(this.props.data, 0, 12));
 	}
 
-	componentWillUnmount() {
-		FilterStore.removeChangeListener(this.onStoreChange);
-	}
-
-	onStoreChange() {
+	onFilterChangeMAP() {
 		this.update(_.slice(FilterStore.get().data, 0, 12));
 	}
 

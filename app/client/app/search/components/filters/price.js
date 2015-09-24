@@ -1,6 +1,7 @@
 const React 		= require('react');
 const Filter 		= require('../../actions/filter');
 const FilterStore 	= require('../../stores/filter.store');
+const utils			= require('../../../utils/utils.service');
 
 
 class Price extends React.Component {
@@ -28,35 +29,11 @@ class Price extends React.Component {
 		this.applyText();
 	}
 
-	formatMoney(number) {
-		return 'R$ ' + number.toFixed(2).replace('.', ',').replace(/(\d)(?=(\d{3})+\,)/g, '$1.');
-	}
-
 	applyText() {
 		const filters = FilterStore.get().filters;
+		const text = utils.price.applyText(filters);
 
-		let formatedMin;
-		let formatedMax;
-
-		if (!filters.price) {
-			this.setState({ text: 'Preço' });
-		} else {
-			const min = filters.price.min || 0;
-			const max = filters.price.max || 0;
-
-			if (min) formatedMin = this.formatMoney(parseInt(min, 10));
-			if (max) formatedMax = this.formatMoney(parseInt(max, 10));
-
-			if (min && max) {
-				this.setState({ text: (formatedMin + ' até ' + formatedMax) });
-			} else if (min) {
-				this.setState({ text: ('Acima de: ' + formatedMin) });
-			} else if (max) {
-				this.setState({ text: ('Até: ' + formatedMax) });
-			} else {
-				this.setState({ text: 'Preço' });
-			}
-		}
+		this.setState({ text: text });
 	}
 
 	render() {

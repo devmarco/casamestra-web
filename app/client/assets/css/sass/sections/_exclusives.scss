@@ -5,7 +5,7 @@
 
 .exclusives__header {
 	max-width: 60%;
-	margin: 0 auto 60px auto;
+	margin: 0 auto 30px auto;
 
 	.title,
 	.subtitle {
@@ -16,15 +16,23 @@
 	.title {
 		margin-bottom: 20px;
 		color: $master;
-		@extend %f35;
+		@extend %f30;
 		@extend %f-light;
+
+		@include breakpoint(from-xlarge) {
+			font-size: 3.5em;
+		}
 	}
 
 	.subtitle {
 		color: #A7A5A5;
 		line-height: 30px;
-		@extend %f15;
+		@extend %f12;
 		@extend %f-light;
+
+		@include breakpoint(from-xlarge) {
+			font-size: 1.5em;
+		}
 	}
 }
 
@@ -41,18 +49,30 @@
 
 		.o-estate {
 			.o-estate__wrap {
-				padding-top: 300px;
+				padding-top: 320px;
+
+				@include breakpoint(from-xlarge) {
+					padding-top: 340px;
+				}
 			}
 		}
 
 		.o-estate--big {
 			.o-estate__wrap {
-				padding-top: 630px;
+				padding-top: 670px;
+
+				@include breakpoint(from-xlarge) {
+					padding-top: 710px;
+				}
 			}
 		}
 
 		.o-estate + .o-estate {
 			margin-top: 30px;
+		}
+
+		.o-estate__image {
+			height: 86%;
 		}
 	}
 }

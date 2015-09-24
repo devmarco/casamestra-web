@@ -5,8 +5,8 @@ const assign        = require('object-assign');
 let paginatedData;
 
 const getDataBasedOnPage = value => {
-    paginatedData = value;
-}
+	paginatedData = value;
+};
 
 const pagesStore = assign({}, EventEmitter.prototype, {
 	addChangeListener: function(callback) {
@@ -23,13 +23,13 @@ const pagesStore = assign({}, EventEmitter.prototype, {
 pagesStore.dispatchToken = Dispatcher.register(function(dispatcherPayload) {
 	const actions = {
 		next: (payload) => {
-            getDataBasedOnPage(payload.action.value);
+			getDataBasedOnPage(payload.action.value);
 			pagesStore.emit('change');
 		},
-        prev: (payload) => {
-            getDataBasedOnPage(payload.action.value);
+		prev: (payload) => {
+			getDataBasedOnPage(payload.action.value);
 			pagesStore.emit('change');
-		}
+		},
 	};
 
 	actions[dispatcherPayload.action.type] && actions[dispatcherPayload.action.type](dispatcherPayload);

@@ -37,12 +37,14 @@
 .map-icon,
 .list-icon {
 	cursor: pointer;
-	text-indent: -999em;
+
+	@extend %font-config;
 
 	&:before {
-		content: '';
-		float: right;
+		line-height: 25px;
+		display: block;
 		@include opacity(10);
+		@extend %f24;
 	}
 }
 
@@ -51,12 +53,12 @@
 }
 
 .map-icon:before {
-	@extend .sprite-map-icon;
 	@include opacity(3);
+	@extend .pe-7s-map;
 }
 
 .list-icon:before {
-	@extend .sprite-list-icon;
+	@extend .pe-7s-menu;
 }
 
 .estates__bx__filter.scroll-active {

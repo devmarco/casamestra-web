@@ -11,18 +11,14 @@ class MapBig extends React.Component {
 	}
 
 	componentWillMount() {
-		FilterStore.addChangeListener(this.onStoreChange.bind(this));
+		FilterStore.addChangeListener(this.onFilterChange.bind(this));
 	}
 
 	componentDidMount() {
 		if (this.props.data.length) this.createMap(this.props.data);
 	}
 
-	componentWillUnmount() {
-		FilterStore.removeChangeListener(this.onStoreChange);
-	}
-
-	onStoreChange() {
+	onFilterChange() {
 		this.update(FilterStore.get().data);
 	}
 

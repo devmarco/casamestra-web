@@ -2,6 +2,7 @@ const React 		= require('react');
 const Filter 		= require('../../actions/filter');
 const FilterStore 	= require('../../stores/filter.store');
 const $ 			= require('jquery');
+const utils			= require('../../../utils/utils.service');
 
 class Bedrooms extends React.Component {
 	constructor(props) {
@@ -22,29 +23,9 @@ class Bedrooms extends React.Component {
 
 	applyTexts() {
 		const filters = FilterStore.get().filters;
-		let text;
-
-		if (filters.bedrooms) {
-			text = `${this.formatText(filters.bedrooms)} Quartos`;
-		} else {
-			text = 'Quartos';
-		}
+		const text = utils.bedrooms.applyText(filters);
 
 		this.setState({ text: text });
-	}
-
-	formatText(values) {
-		let text = '';
-
-		values.forEach(function(value, index) {
-			if (index === (values.length - 1)) {
-				(text !== '') ? text += ' e ' + value + '' : text += '' + value + '';
-			} else {
-				(text !== '') ? text += ',' + value + '' : text += '' + value + '';
-			}
-		});
-
-		return text;
 	}
 
 	render() {

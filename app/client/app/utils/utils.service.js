@@ -1,99 +1,62 @@
-Box.Application.addService('utils.service', function(context) {
-	'use strict';
+const utils = {
+	price: {
+		applyText: function(filters) {
+			let formatedMin;
+			let formatedMax;
+			let text;
 
-	var $ 		 = context.getGlobal('jQuery'),
-		_storage = context.getService('storage.service');
+			if (!filters.price) {
+				text = 'Preço';
+			} else {
+				const min = filters.price.min || 0;
+				const max = filters.price.max || 0;
 
-	return {
-		formatMoney: function(number) {
-			return "R$ " + number.toFixed(2).replace('.', ',').replace(/(\d)(?=(\d{3})+\,)/g, "$1.");
-		},
-		updateTexts: function(f, pagination) {
-			var filters = f || {},
-				_this = this;
+				if (min) formatedMin = this.formatMoney(parseInt(min, 10));
+				if (max) formatedMax = this.formatMoney(parseInt(max, 10));
 
-			function formatBedrooms(values) {
-				var text = '';
-
-				values.forEach(function(value, index) {
-					if (index === (values.length -1)) {
-						(text !== '') ? text+= ' e '+value+'' : text+= ''+value+'';
-					} else {
-						(text !== '') ? text+= ','+value+'' : text+= ''+value+'';
-					}
-				});
-
-				return text;
+				if (min && max) {
+					text = `${formatedMin} até ${formatedMax}`;
+				} else if (min) {
+					text = `Acima de: ${formatedMin}`;
+				} else if (max) {
+					text = `Até: ${formatedMax}`;
+				} else {
+					text = 'Preço';
+				}
 			}
 
-			(function updateBedrooms() {
-				var elBeds 	= $('.js-selected-beds');
+			return text;
+		},
+		formatMoney: function(number) {
+			return 'R$ ' + number.toFixed(2).replace('.', ',').replace(/(\d)(?=(\d{3})+\,)/g, '$1.');
+		},
+	},
+	bedrooms: {
+		applyText: function(filters) {
+			let text;
 
-				if (!filters['bedrooms']) {
-					elBeds.text('Quartos');
+			if (filters.bedrooms) {
+				text = `${this.format(filters.bedrooms)} Quartos`;
+			} else {
+				text = 'Quartos';
+			}
+
+			return text;
+		},
+		format: function(values) {
+			let text = '';
+
+			values.forEach(function(value, index) {
+				if (index === (values.length - 1)) {
+					(text !== '') ? text += ' e ' + value + '' : text += '' + value + '';
 				} else {
-					elBeds.text(formatBedrooms(filters['bedrooms'])+' '+'Quartos')
+					(text !== '') ? text += ',' + value + '' : text += '' + value + '';
 				}
-			}());
+			});
 
-			(function updatePrice() {
-				var elPrice = $('.js-selected-price'),
-					formatMin,
-					formatMax;
+			return text;
+		},
+	},
+};
 
-
-				if (!filters['price']) {
-					elPrice.text('Preço');
-				} else {
-
-					var min = filters['price'].min || 0,
-						max = filters['price'].max || 0,
-						str = '';
-
-					formatMin = _this.formatMoney(parseInt(min));
-					formatMax = _this.formatMoney(parseInt(max));
-
-					if (min && max) {
-						elPrice.text(formatMin+' até '+formatMax);
-					} else if (min) {
-						elPrice.text('Acima de: '+formatMin);
-					} else {
-						elPrice.text('Até: '+formatMax);
-					}
-				}
-			}());
-
-			(function updateMore() {
-				var elMore 	= $('.js-selected-more'),
-					keys = Object.keys(filters),
-					count = 0;
-
-				keys.forEach(function(value, index) {
-					if (value !== 'bedrooms' && value !== 'price') {
-						count++;
-					}
-				});
-
-				if (count !== 0) {
-					elMore.text('('+count+') Mais');
-				} else {
-					elMore.text('Mais');
-				}
-			}());
-
-			(function updatePagination() {
-				var totalData = _storage.get().data.length,
-					pages = {};
-
-				if (pagination) {
-					pages = pagination;					
-				} else {
-					pages.from = 1;
-					pages.to = 12;
-				}
-
-				$('.js-result-stats').text(''+pages.from+' — '+pages.to+' de '+totalData+' imóveis');
-			}());
-		}
-	}
-});
+module.exports = utils;

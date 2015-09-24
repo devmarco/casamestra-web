@@ -28,11 +28,6 @@ class Pagination extends React.Component {
 		this.setState({size: storage.get().data.length});
 	}
 
-	componentWillUnmount() {
-		FilterStore.removeChangeListener(this.onFilterChange.bind(this));
-		PagesStore.removeChangeListener(this.onPageChange.bind(this));
-	}
-
 	onPageChange() {
 		const pagesData = PagesStore.get();
 		const filterData = FilterStore.get().data;

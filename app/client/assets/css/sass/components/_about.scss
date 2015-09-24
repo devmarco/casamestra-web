@@ -4,7 +4,7 @@
 
 .c-about__header {
 	max-width: 60%;
-	margin: 0 auto 60px auto;
+	margin: 0 auto 30px auto;
 
 	.title,
 	.subtitle {
@@ -15,15 +15,23 @@
 	.title {
 		margin-bottom: 20px;
 		color: $master;
-		@extend %f35;
+		@extend %f30;
 		@extend %f-light;
+
+		@include breakpoint(from-xlarge) {
+			font-size: 3.5em;
+		}
 	}
 
 	.subtitle {
 		color: #A7A5A5;
 		line-height: 30px;
-		@extend %f15;
+		@extend %f12;
 		@extend %f-light;
+
+		@include breakpoint(from-xlarge) {
+			font-size: 1.5em;
+		}
 	}
 }
 
@@ -89,12 +97,20 @@
 
 			@extend %f-light;
 			@extend %f25;
+
+			@include breakpoint(large) {
+				font-size: 2em;
+			}
 		}
 		.text {
 			color: #989A9A;
 			line-height: 25px;
 			@extend %f-regular;
 			@extend %f13;
+
+			@include breakpoint(large) {
+				font-size: 1em;
+			}
 		}
 
 		a, button {
@@ -126,6 +142,10 @@
 
 		@extend .small-6;
 		@extend .columns;
+
+		@include breakpoint(large) {
+			padding: 2em 2em 0 2em;
+		}
 	}
 	.c-about__buyer__agent__media {
 		padding-left: 0;
@@ -147,12 +167,20 @@
 
 			@extend %f-light;
 			@extend %f25;
+
+			@include breakpoint(large) {
+				font-size: 2em;
+			}
 		}
 		.text {
 			color: #989A9A;
 			line-height: 25px;
 			@extend %f-regular;
 			@extend %f13;
+
+			@include breakpoint(large) {
+				font-size: 1em;
+			}
 		}
 
 		a, button {
