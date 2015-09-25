@@ -21,6 +21,8 @@ html, body {
 }
 
 .row {
+	max-width: 85em;
+
 	@include breakpoint(from-xlarge) {
 		max-width: 100em;
 	}

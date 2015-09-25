@@ -28,19 +28,23 @@
   "dependencies": {
     "babel": "^5.8.23",
     "babelify": "^6.3.0",
+    "flux": "^2.1.1",
     "getconfig": "^2.1.0",
     "good": "^6.2.0",
     "good-console": "^5.0.3",
     "hapi": "^10.0.0",
     "inert": "^3.0.1",
     "jade": "^1.11.0",
+    "jquery": "^2.1.4",
+    "lodash": "^3.10.1",
+    "object-assign": "^4.0.1",
+    "react": "^0.13.3",
+    "react-select": "^0.6.9",
     "rethinkdbdash": "^2.1.8",
     "vision": "^3.0.0"
   },
-  "private": true,
   "devDependencies": {
     "eslint-plugin-react": "^3.3.2",
-    "flux": "^2.1.1",
     "grunt": "^0.4.5",
     "grunt-babel": "^5.0.1",
     "grunt-browserify": "^4.0.1",
@@ -52,11 +56,7 @@
     "grunt-dr-svg-sprites": "^0.9.30",
     "grunt-nodemon": "^0.4.0",
     "grunt-spritesmith": "^4.7.1",
-    "grunt-text-replace": "^0.4.0",
-    "jquery": "^2.1.4",
-    "lodash": "^3.10.1",
-    "object-assign": "^4.0.1",
-    "react": "^0.13.3",
-    "react-select": "^0.6.9"
-  }
+    "grunt-text-replace": "^0.4.0"
+  },
+  "private": true
 }

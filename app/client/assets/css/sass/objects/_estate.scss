@@ -5,9 +5,22 @@
 
 	.o-estate__wrap {
 		position: relative;
-		padding-top: 100%;
+		padding-top: 115%;
 		width: 100%;
-		border: 1px solid #ECECEC;
+
+		&:hover {
+			a:before {
+				visibility: visible;
+			}
+
+			.estate__address {
+				visibility: visible;
+			}
+
+			.o-estate__like {
+				display: block;
+			}
+		}
 	}
 
 	a {
@@ -25,29 +38,19 @@
 			content: '';
 			position: absolute;
 			width: 100%;
-			height: 100%;
+			height: 67%;
 			background-color: #000;
 			background-color: rgba(0, 0, 0, 0.40);
 			top: 0;
 			left: 0;
-			z-index: 1;
+			z-index: 3;
 			visibility: hidden;
-		}
-
-		&:hover {
-			&:before {
-				visibility: visible;
-			}
-
-			.estate__address {
-				visibility: visible;
-			}
 		}
 	}
 }
 
 .o-estate__image {
-	height: 75%;
+	height: 67%;
 	overflow: hidden;
 	background-size: cover;
 
@@ -63,7 +66,8 @@
 	left: 0;
 	background: #fff;
 	z-index: 2;
-	padding: 10px;
+	padding: 6%;
+	height: 33%;
 }
 
 .o-estate__about__address {
@@ -72,7 +76,8 @@
 		display: block;
 		color: $master;
 		text-align: left;
-		@extend %f9;
+		margin-bottom: 1px;
+		@extend %f10;
 		@extend %f-bold;
 	}
 
@@ -105,10 +110,10 @@
 
 		&:first-child {
 			float: left;
-			margin-top: 19px;
+			margin-top: 17px;
 
 			span {
-				@extend %f9;
+				@extend %f10;
 				@extend %f-bold;
 			}
 		}
@@ -119,6 +124,48 @@
 		display: block;
 		margin: 0 auto 5px;
 		min-height: 15px;
+	}
+}
+
+.o-estate__like {
+	display: none;
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	z-index: 4;
+
+	button {
+		border: none;
+		background-color: transparent;
+		color: #fff;
+		margin: 0;
+		padding: 0;
+		@extend %f20;
+		@include opacity(7);
+
+		&:hover {
+			@include opacity(10);
+
+			.like--fill {
+				fill: $green;
+			}
+
+			.like--stroke {
+				fill: #fff;
+			}
+		}
+	}
+
+	svg {
+		width: 30px;
+	}
+
+	.like--fill {
+		fill: #fff;
+	}
+
+	.like--stroke {
+		fill: $master;
 	}
 }
 

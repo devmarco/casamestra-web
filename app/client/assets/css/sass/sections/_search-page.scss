@@ -67,12 +67,8 @@
 }
 
 .filter__container {
-	padding: 0 1em;
+	padding: 1.5em 1em;
 	@extend .clearfix;
-
-	&:first-child {
-		margin: 0 0 20px 0;
-	}
 
 	.o-filter {
 		float: left;
@@ -85,6 +81,6 @@
 
 .list__container {
 	min-height: 600px;
-	padding: 0 0.5em;
+	padding: 0 1em;
 	@extend .clearfix;
 }

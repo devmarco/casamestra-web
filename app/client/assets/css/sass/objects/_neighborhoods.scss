@@ -1,0 +1,115 @@
+.o-neighborhood__area {
+	position: relative;
+
+	@extend .small-6;
+	@extend .columns;
+
+	a {
+		position: relative;
+		display: block;
+		width: 100%;
+		background-size: cover;
+		height: 350px;
+		overflow: hidden;
+
+		@include breakpoint(from-xlarge) {
+			height: 450px;
+		}
+
+		&:hover {
+			.c-neighborhood__area__action {
+				height: 50px;
+
+				&:before {
+					left: 20px;
+				}
+
+				&:after {
+					left: 69px;
+				}
+			}
+		}
+	}
+}
+
+.o-neighborhood__area__info {
+	position: absolute;
+	top: 0;
+	padding: 3em;
+	height: 100%;
+	width: 100%;
+	background-color: rgba(0, 0, 0, 0.2);
+
+	&:hover {
+		background-color: rgba(0, 0, 0, 0.5);
+	}
+
+	span, .title {
+		color: #fff;
+	}
+
+	span {
+		display: block;
+		@extend %f-regular;
+		@extend %f15;
+
+		@include breakpoint(from-xlarge) {
+			font-size: 1.8em;
+		}
+	}
+
+	.title {
+		margin-top: 52px;
+		line-height: 42px;
+
+		@extend %f-regular;
+		@extend %f25;
+
+		@include breakpoint(from-xlarge) {
+			margin-top: 95px;
+			font-size: 3em;
+			line-height: 52px;
+		}
+	}
+}
+
+.o-neighborhood__area__action {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	height: 0;
+	background: $green;
+	overflow: hidden;
+
+	@include vendor(transition, all 0.3s ease-in-out);
+
+	&:before {
+		content: '';
+		width: 60px;
+		height: 2px;
+		background: #fff;
+		position: absolute;
+		bottom: 23px;
+		left: -20px;
+
+		@include vendor(transition, all 0.3s ease-in-out);
+	}
+
+	&:after {
+		position: absolute;
+		display: inline-block;
+		content: "";
+		width: 12px;
+		height: 12px;
+		color: #ffffff;
+		border-top: 2px solid;
+		border-left: 2px solid;
+		@include vendor(transform, rotate(135deg));
+		bottom: 2px;
+		left: -20px;
+		margin-bottom: 16px;
+		z-index: 10;
+
+		@include vendor(transition, all 0.2s ease-in-out);
+	}
+}

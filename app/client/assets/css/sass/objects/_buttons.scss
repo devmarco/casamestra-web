@@ -26,6 +26,7 @@
 	}
 
 	&:hover {
+		text-decoration: none;
 		&:before {
 			@include vendor(transform, scale(2));
 		}
