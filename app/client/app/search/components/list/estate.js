@@ -6,16 +6,16 @@ class Estate extends React.Component {
 		super(props);
 		this.state = {
 			e: this.props.data,
-			modalIsOpen: false,
+			modalOpen: false,
 		};
 	}
 
 	openModal() {
-		this.setState({modalIsOpen: true});
+		this.setState({modalOpen: true});
 	}
 
 	closeModal() {
-		this.setState({modalIsOpen: false});
+		this.setState({modalOpen: false});
 	}
 
 	formatMoney(number) {
@@ -23,6 +23,8 @@ class Estate extends React.Component {
 	}
 
 	render() {
+		const { modalOpen } = this.state;
+
 		return (
 			<div className="o-estate">
 				<div className="o-estate__wrap">
@@ -78,6 +80,7 @@ class Estate extends React.Component {
 								</g>
 							</svg>
 						</button>
+						{modalOpen ? <Modal closeModal={this.closeModal.bind(this)} /> : ''}
 					</div>
 				</div>
 			</div>

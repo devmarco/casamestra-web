@@ -1,6 +1,4 @@
 const React 		= require('react');
-const FilterStore 	= require('../../stores/filter.store');
-const PagesStore 	= require('../../stores/pages.store');
 const Pages 		= require('../../actions/pages');
 const storage		= require('../../services/storage.service');
 const _ 			= require('lodash');
@@ -10,42 +8,24 @@ class Pagination extends React.Component {
 		super(props);
 
 		this.state = {
-			size: 0,
-			next: 12,
-			prev: 1,
+			size: this.props.size,
+			next: this.props.next,
+			prev: this.props.prev,
 		};
 
 		this.nextPage = 0;
 		this.prevPage = 0;
 	}
 
-	componentWillMount() {
-		FilterStore.addChangeListener(this.onFilterChange.bind(this));
-		PagesStore.addChangeListener(this.onPageChange.bind(this));
-	}
-
 	componentDidMount() {
 		this.setState({size: storage.get().data.length});
 	}
 
-	onPageChange() {
-		const pagesData = PagesStore.get();
-		const filterData = FilterStore.get().data;
-
+	componentWillReceiveProps(newProps) {
 		this.setState({
-			size: filterData.length,
-			next: (pagesData.next > filterData.length) ? filterData.length : pagesData.next,
-			prev: (pagesData.prev > 0) ? pagesData.prev : 1,
-		});
-	}
-
-	onFilterChange() {
-		const data = FilterStore.get().data;
-
-		this.setState({
-			size: data.length,
-			next: 12,
-			prev: 1,
+			size: newProps.size,
+			next: newProps.next,
+			prev: newProps.prev,
 		});
 	}
 
@@ -92,7 +72,10 @@ class Pagination extends React.Component {
 }
 
 Pagination.propType = {
-	size: React.PropTypes.array.isRequired,
+	data: React.PropTypes.array.isRequired,
+	size: React.PropTypes.number.isRequired,
+	next: React.PropTypes.number.isRequired,
+	prev: React.PropTypes.number.isRequired,
 };
 
 module.exports = Pagination;

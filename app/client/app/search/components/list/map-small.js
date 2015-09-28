@@ -9,16 +9,12 @@ class MapSmall extends React.Component {
 		super(props);
 	}
 
-	componentWillMount() {
-		FilterStore.addChangeListener(this.onFilterChangeMAP.bind(this));
-	}
-
 	componentDidMount() {
 		if (this.props.data.length) this.createMap(_.slice(this.props.data, 0, 12));
 	}
 
-	onFilterChangeMAP() {
-		this.update(_.slice(FilterStore.get().data, 0, 12));
+	componentWillReceiveProps(newProps) {
+		this.update(_.slice(newProps.data, 0, 12));
 	}
 
 	createMap(data) {

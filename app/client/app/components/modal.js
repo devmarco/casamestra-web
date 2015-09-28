@@ -1,4 +1,4 @@
-const React = require('react/addons');
+const React = require('react');
 
 class Modal extends React.Component {
 	constructor(props) {
@@ -6,15 +6,10 @@ class Modal extends React.Component {
 	}
 
 	render() {
-		const cx = React.addons.classSet;
-
-		const classes = cx({
-			'o-modal': true,
-			'o-modal--show': true,
-		});
+		const { closeModal } = this.props;
 
 		return (
-			<div className={classes}>
+			<div className="o-modal o-modal--show">
 				<div className="o-modal__content">
 					{this.props.children}
 				</div>

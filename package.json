@@ -39,8 +39,11 @@
     "lodash": "^3.10.1",
     "object-assign": "^4.0.1",
     "react": "^0.13.3",
+    "react-redux": "^3.0.1",
     "react-select": "^0.6.9",
+    "redux": "^3.0.2",
     "rethinkdbdash": "^2.1.8",
+    "simple-react-modal": "^0.4.7",
     "vision": "^3.0.0"
   },
   "devDependencies": {

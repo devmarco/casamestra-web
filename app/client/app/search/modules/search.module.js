@@ -6,7 +6,6 @@ const Search 	= React.createFactory(require('../components/search'));
 
 Box.Application.addModule('search', context => {
 	const _estates = context.getService('estates.service');
-	const _storage = context.getService('storage.service');
 
 	return {
 		behaviors: ['dropdown'],

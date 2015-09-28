@@ -1,26 +1,34 @@
-const React 	= require('react');
-const Filter 	= require('./filters/filter');
-const MapBig 	= require('./map/map-big');
-const List 		= require('./list/list');
-const storage	= require('../services/storage.service');
-const $ 		= require('jquery');
+const React 		= require('react');
+const Filter 		= require('./filters/filter');
+const MapBig 		= require('./map/map-big');
+const List 			= require('./list/list');
+const FilterStore 	= require('../stores/filter.store');
+
 
 class Search extends React.Component {
 	constructor(props) {
 		super(props);
+		this.state = {
+			data: this.props.data,
+		};
 	}
 
-	componentDidMount() {
-		// const option = storage.view.get();
-		// if (option === 'list') $('.c-search__content').toggleClass('list-active');
+	componentWillMount() {
+		FilterStore.addChangeListener(this.onFilterChange.bind(this));
+	}
+
+	onFilterChange() {
+		this.setState({
+			data: FilterStore.get().data,
+		});
 	}
 
 	render() {
 		return (
 			<div className="c-search__content">
 				<Filter />
-				<MapBig data={this.props.data} />
-				<List data={this.props.data} />
+				<MapBig data={this.state.data} />
+				<List data={this.state.data} />
 			</div>
 		);
 	}

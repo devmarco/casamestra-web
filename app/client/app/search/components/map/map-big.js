@@ -1,8 +1,8 @@
 /* global L */
 
 const React 		= require('react');
-const FilterStore 	= require('../../stores/filter.store');
 const estate 		= React.createFactory(require('../list/estate'));
+const FilterStore 	= require('../../stores/filter.store');
 
 class MapBig extends React.Component {
 	constructor(props) {
@@ -10,16 +10,12 @@ class MapBig extends React.Component {
 		this.state = {empty: 'none'};
 	}
 
-	componentWillMount() {
-		FilterStore.addChangeListener(this.onFilterChange.bind(this));
-	}
-
 	componentDidMount() {
 		if (this.props.data.length) this.createMap(this.props.data);
 	}
 
-	onFilterChange() {
-		this.update(FilterStore.get().data);
+	componentWillReceiveProps(newProps) {
+		this.update(newProps.data);
 	}
 
 	createMap(data) {
