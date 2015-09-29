@@ -2,7 +2,7 @@ const React 		= require('react');
 const Filter 		= require('../../actions/filter');
 const FilterStore 	= require('../../stores/filter.store');
 const $ 			= require('jquery');
-const utils			= require('../../../utils/utils.service');
+const utils			= require('../../../services/utils.service');
 
 class Bedrooms extends React.Component {
 	constructor(props) {

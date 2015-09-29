@@ -1,21 +1,22 @@
-const React = require('react');
-const Modal = require('../../../components/modal');
+const React 	= require('react');
+const Modal 	= require('../../../components/modal');
+const Portal	= require('../../../components/portal');
 
 class Estate extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			e: this.props.data,
-			modalOpen: false,
+			modalIsOpen: false,
 		};
 	}
 
 	openModal() {
-		this.setState({modalOpen: true});
+		this.setState({modalIsOpen: true});
 	}
 
 	closeModal() {
-		this.setState({modalOpen: false});
+		this.setState({modalIsOpen: false});
 	}
 
 	formatMoney(number) {
@@ -80,7 +81,20 @@ class Estate extends React.Component {
 								</g>
 							</svg>
 						</button>
-						{modalOpen ? <Modal closeModal={this.closeModal.bind(this)} /> : ''}
+						<Portal id={this.state.e.ecmid}>
+							<Modal closeModal={this.closeModal.bind(this)} show={this.state.modalIsOpen}>
+								<h3>Modal Dialog estate price {this.state.e.price}</h3>
+								<div>
+									<p>This is a modal window. You can do the following things with it:</p>
+									<ul>
+										<li><strong>Read:</strong> Modal windows will probably tell you something important so don't forget to read what it says.</li>
+										<li><strong>Look:</strong> modal windows enjoy a certain kind of attention; just look at it and appreciate its presence.</li>
+										<li><strong>Close:</strong> click on the button below to close the modal.</li>
+									</ul>
+									<button className="md-close" onClick={this.closeModal.bind(this)}>Close me!</button>
+								</div>
+							</Modal>
+						</Portal>
 					</div>
 				</div>
 			</div>

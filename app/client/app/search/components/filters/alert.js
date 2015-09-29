@@ -1,6 +1,6 @@
 const React         = require('react');
 const FilterStore   = require('../../stores/filter.store');
-const utils			= require('../../../utils/utils.service');
+const utils			= require('../../../services/utils.service');
 
 class Alert extends React.Component {
 	constructor() {

@@ -24,11 +24,7 @@ class Neighborhood extends React.Component {
 		const element = React.findDOMNode(this);
 		const values = val.split(',');
 
-		if (values.length > 3) {
-			$(element).addClass('max-limit');
-		} else {
-			$(element).removeClass('max-limit');
-		}
+		(values.length > 3) ? $(element).addClass('max-limit') : $(element).removeClass('max-limit');
 	}
 
 	render() {

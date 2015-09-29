@@ -2,12 +2,15 @@
 
 const React 		= require('react');
 const estate 		= React.createFactory(require('../list/estate'));
-const FilterStore 	= require('../../stores/filter.store');
 
 class MapBig extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {empty: 'none'};
+		this.fullLayer = {
+			layer: null,
+			size: null,
+		};
 	}
 
 	componentDidMount() {
@@ -70,6 +73,11 @@ class MapBig extends React.Component {
 
 		window.mapBig.addLayer(this.clusterGroup);
 		window.mapBig.fitBounds(this.clusterGroup.getBounds());
+
+		// Cache full layer for improve performance for lots of data
+		if (!this.fullLayer.layer) {
+			this.cacheAllMarkers(this.clusterGroup, markers.length);
+		}
 	}
 
 	showEmptyMessage() {
@@ -83,13 +91,24 @@ class MapBig extends React.Component {
 	update(markers) {
 		window.mapBig.removeLayer(this.clusterGroup);
 
-		this.createCluster(markers);
-
 		if (markers.length) {
 			this.hideEmptyMessage();
 		} else {
 			this.showEmptyMessage();
+			return false;
 		}
+
+		if (markers.length === this.fullLayer.size) {
+			window.mapBig.addLayer(this.fullLayer.layer);
+			window.mapBig.fitBounds(this.fullLayer.layer.getBounds());
+		} else {
+			this.createCluster(markers);
+		}
+	}
+
+	cacheAllMarkers(layer, size) {
+		this.fullLayer.layer = layer;
+		this.fullLayer.size = size;
 	}
 
 	render() {
