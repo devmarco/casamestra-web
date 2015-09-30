@@ -1,28 +1,27 @@
 extends base
 
 block content
-	header
-		include components/header
+	header !{headerRender}
 	main
 		include components/gallery
 		section(class="estates-about")
 			.estates-about__header
 				.row
 					.header__about
-						h2 #{keyDetails.buildingType } em #{keyDetails.neighborhood } #{keyDetails.city } ,MG
-						h1= address
+						h2 #{estate.keyDetails.buildingType } em #{estate.keyDetails.neighborhood } #{estate.keyDetails.city } ,MG
+						h1= estate.address
 						.header__about__info
 							ul
 								li
 									span R$ 521.200.00
-								li(class="icon icon-area")
-									span= keyDetails.area
+								li(class "icon icon-area")
+									span= estate.keyDetails.area
 								li(class="icon icon-park")
-									span= garages
+									span= estate.garages
 								li(class="icon icon-bath")
-									span= bathrooms
+									span= estate.bathrooms
 								li(class="icon icon-beds") 
-									span= bedrooms
+									span= estate.bedrooms
 					.header__actions
 						a(href="#" class="btn-green") Agendar Visita
 						a(href="#") ou 

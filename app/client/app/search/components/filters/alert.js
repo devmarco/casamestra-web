@@ -10,6 +10,7 @@ class Alert extends React.Component {
 			onHover: 'none',
 			bedrooms: 'Sem opção de quartos',
 			price: 'Qualquer valor',
+			more: 'Sem filtro'
 		};
 	}
 
@@ -44,6 +45,7 @@ class Alert extends React.Component {
 					<ul>
 						<li>Quartos: <b>{this.state.bedrooms}</b></li>
 						<li>Preço: <b>{this.state.price}</b></li>
+						<li>Mais: <b>{this.state.more}</b></li>
 					</ul>
 					<div className="o-filter__alert__action">
 						<button className="o-btn o-btn--green">Criar Alerta</button>

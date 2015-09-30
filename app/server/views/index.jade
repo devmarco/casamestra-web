@@ -1,8 +1,7 @@
 extends base
 
 block content
-	header(class='header--transparent')
-		include components/header
+	header(class='header--transparent') !{headerRender}
 	main
 		include sections/search
 		include sections/exclusives

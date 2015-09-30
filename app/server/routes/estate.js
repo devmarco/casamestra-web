@@ -2,7 +2,8 @@
 	[ESTATE]
 \* ------------------------------------ */
 
-const Estates = require('../config/tables').estates;
+const components 	= require('../config/components');
+const Estates 		= require('../config/tables').estates;
 
 const estateView = {
 	method: 'GET',
@@ -13,7 +14,10 @@ const estateView = {
 			.run()
 			.then(result => {
 				if (result) {
-					reply.view('estate', result);
+					reply.view('estate', {
+						headerRender: components.header.get(),
+						estate: result,
+					});
 				} else {
 					reply.view('error');
 				}

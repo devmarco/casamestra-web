@@ -10,7 +10,8 @@ const searchBuy = {
 	handler: (req, reply) => {
 		reply.view('search', {
 			activePage: 'buy',
-			reactRender: components.search.get([]),
+			searchRender: components.search.get([]),
+			headerRender: components.header.get(),
 		});
 	},
 };

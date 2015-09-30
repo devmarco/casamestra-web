@@ -1,5 +1,7 @@
 .estates__bx {
 	height: -webkit-calc(100% - 80px);
+	height: -moz-calc(100% - 80px);
+	height: -o-calc(100% - 80px);
 
 	.content {
 		height: 100%;

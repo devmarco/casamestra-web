@@ -1,5 +1,7 @@
 .c-search {
 	height: -webkit-calc(100% - 100px);
+	height: -moz-calc(100% - 100px);
+	height: -o-calc(100% - 100px);
 
 	.c-search__content {
 		width: 100%;
@@ -58,8 +60,14 @@
 	height: 100%;
 }
 
-.c-search__map {
+.c-search__map,
+.c-search__list__map {
 	height: -webkit-calc(100% - 75px);
+	height: -moz-calc(100% - 75px);
+	height: -o-calc(100% - 75px);
+}
+
+.c-search__map {
 	overflow: hidden;
 	background-color: #D3D3D3;
 }
@@ -76,7 +84,6 @@
 	bottom: 0;
 	right: 0;
 	overflow: hidden;
-	height: -webkit-calc(100% - 75px);
 	z-index: 1;
 	float: right;
 	width: 30%;

@@ -10,7 +10,8 @@ const searchRent = {
 	handler: (req, reply) => {
 		reply.view('search', {
 			activePage: 'rent',
-			reactRender: components.search.get([]),
+			searchRender: components.search.get([]),
+			headerRender: components.header.get(),
 		});
 	},
 };

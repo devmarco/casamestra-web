@@ -1,9 +1,8 @@
 extends base
 
 block content
-	header
-		include components/header
-	main(data-module="search" class="c-search") !{reactRender}
+	header !{headerRender}
+	main(data-module="search" class="c-search") !{searchRender}
 		//- .estates__bx__filter(data-module='filter')
 		//- 	.filter
 		//- 		input(type="text" placeholder='Selecione a vizinhança')
