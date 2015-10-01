@@ -10,12 +10,17 @@ const Jade 		= require('jade');
 const Vision 	= require('vision');
 const Path 		= require('path');
 const Inert 	= require('inert');
+const Cookie	= require('hapi-auth-cookie');
 const internals = {};
 
 // Create the server instance
 internals.config = () => {
 	const server = new Hapi.Server();
-	// //Set the connection
+	const cache = server.cache({ segment: 'sessions', expiresIn: 3 * 24 * 60 * 60 * 1000 });
+
+	server.app.cache = cache;
+
+	// Set the connection
 	server.connection({
 		host: '127.0.0.1',
 		port: process.env.PORT || 3000,
@@ -30,7 +35,7 @@ internals.config = () => {
 		},
 	});
 
-	server.register([Vision, Inert], err => {
+	server.register([Vision, Inert, Cookie], err => {
 		if (err) {
 			throw err;
 		}
@@ -41,6 +46,28 @@ internals.config = () => {
 			},
 			path: Path.join(__dirname, '../views'),
 		});
+
+		server.auth.strategy('session', 'cookie', {
+			cookie: 'sid-example',
+			password: 'secret',
+			redirectTo: '/login',
+			isSecure: false,
+			validateFunc: (req, session, callback) => {
+				cache.get(session.sid, (error, cached) => {
+					if (error) return callback(err, false);
+
+					if (!cached) return callback(null, false);
+
+					return callback(null, true, cached.account);
+				});
+			},
+		});
+
+		// Bootstrap Hapi Server Plugins, passes the server object to the plugins
+		plugins.init(server);
+
+		// Expose routes
+		routes.create(server);
 	});
 
 	server.ext('onPreResponse', (request, reply) => {
@@ -50,12 +77,6 @@ internals.config = () => {
 
 		reply.view('error', request.response).code(request.response.output.statusCode);
 	});
-
-	// Bootstrap Hapi Server Plugins, passes the server object to the plugins
-	plugins.init(server);
-
-	// Expose routes
-	routes.create(server);
 
 	return {
 		server: server,

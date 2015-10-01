@@ -9,6 +9,7 @@ const routes = [
 	require('../routes/search-buy'),
 	require('../routes/search-rent'),
 	require('../routes/estate'),
+	require('../routes/user'),
 ];
 
 const create = server => {

@@ -1,7 +1,7 @@
 extends base
 
 block content
-	header !{headerRender}
+	header(data-module="header") !{headerRender}
 	main(data-module="search" class="c-search") !{searchRender}
 		//- .estates__bx__filter(data-module='filter')
 		//- 	.filter

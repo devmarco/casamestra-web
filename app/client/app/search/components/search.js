@@ -4,8 +4,6 @@ const MapBig 		= require('./map/map-big');
 const List 			= require('./list/list');
 const FilterStore 	= require('../stores/filter.store');
 
-let delay;
-
 class Search extends React.Component {
 	constructor(props) {
 		super(props);

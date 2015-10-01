@@ -1,8 +1,8 @@
 /* global Box */
 
 const React 	= require('react');
-const storage 	= require('../services/storage.service');
-const Search 	= React.createFactory(require('../components/search'));
+const storage 	= require('../search/services/storage.service');
+const Search 	= React.createFactory(require('../search/components/search'));
 
 Box.Application.addModule('search', context => {
 	const _estates = context.getService('estates.service');
