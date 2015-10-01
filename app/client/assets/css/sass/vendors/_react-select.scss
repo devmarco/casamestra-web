@@ -17,8 +17,7 @@
 
 .Select-control {
 	position: relative;
-	border: 1px solid $master;
-	border: 1px solid rgba(42, 48, 56, 0.11);
+	border: 1px solid transparent;
 	background-color: transparent;
 	display: block;
 	padding: 10px 3.5em 10px 1.5em;
@@ -29,8 +28,8 @@
 	@include vendor(transition, border-color 0.2s linear);
 	@include vendor(appearance, none);
 	@include vendor(border-radius, 0);
-	@extend %f-regular;
-	@extend %f9;
+	@extend %f-bold;
+	@extend %f10;
 
 
 
@@ -68,7 +67,7 @@
 }
 .Select-placeholder {
   color: $master;
-  padding: 13px 52px 13px 10px;
+  padding: 13px 52px 13px 1.5em;
   position: absolute;
   top: 0;
   left: 0;

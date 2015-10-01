@@ -6,7 +6,7 @@
 // SIZE
 
 @for $i from 1 through 100 {
-  %f#{$i} { 
+  %f#{$i} {
 	font-size: ($i/10)+em;
   };
 }
@@ -15,8 +15,8 @@
 
 %f-heading-light {
 	font-family: 'Josefin Slab';
-  	font-style: normal;
-  	font-weight: 300;	
+	  font-style: normal;
+	  font-weight: 300;
 }
 
 %f-heading-regular {
@@ -45,8 +45,8 @@
 
 %f-heading-light-italic {
 	font-family: 'Josefin Slab';
-  	font-style: italic;
-  	font-weight: 300;	
+	  font-style: italic;
+	  font-weight: 300;
 }
 
 %f-heading-bold {
@@ -56,25 +56,25 @@
 }
 
 %f-regular {
-	font-family: 'Open Sans', sans-serif;
+	font-family: "HelveticaNeue-Regular", "Helvetica Neue Regular", "Helvetica Neue", Helvetica, 'Open Sans', sans-serif;
 	font-style: normal;
 	font-weight: 400;
 }
 
 %f-bold {
-	font-family: 'Open Sans', sans-serif;
+	font-family: "HelveticaNeue-Bold", "Helvetica Neue Bold", "Helvetica Neue", Helvetica, 'Open Sans', sans-serif;
 	font-style: normal;
 	font-weight: 700;
 }
 
 %f-semibold {
-	font-family: 'Open Sans', sans-serif;
+	font-family: "HelveticaNeue-Regular", "Helvetica Neue Regular", "Helvetica Neue", Helvetica, 'Open Sans', sans-serif;
 	font-style: normal;
 	font-weight: 600;
 }
 
 %f-light {
-	font-family: 'Open Sans', sans-serif;
+	font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, 'Open Sans', sans-serif;
 	font-style: normal;
 	font-weight: 300;
 }

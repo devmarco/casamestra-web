@@ -1512,99 +1512,99 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var React = require('react');
 
 var Header = (function (_React$Component) {
-    _inherits(Header, _React$Component);
+	_inherits(Header, _React$Component);
 
-    function Header() {
-        _classCallCheck(this, Header);
+	function Header() {
+		_classCallCheck(this, Header);
 
-        _get(Object.getPrototypeOf(Header.prototype), "constructor", this).apply(this, arguments);
-    }
+		_get(Object.getPrototypeOf(Header.prototype), "constructor", this).apply(this, arguments);
+	}
 
-    _createClass(Header, [{
-        key: "render",
-        value: function render() {
-            return React.createElement(
-                "div",
-                { className: "c-header" },
-                React.createElement(
-                    "div",
-                    { className: "c-header__logo" },
-                    React.createElement(
-                        "h1",
-                        null,
-                        React.createElement(
-                            "a",
-                            { href: "/" },
-                            React.createElement("img", { src: "/public/assets/imgs/logo/casamestra-white.svg" })
-                        )
-                    )
-                ),
-                React.createElement(
-                    "div",
-                    { className: "c-header__nav" },
-                    React.createElement(
-                        "nav",
-                        null,
-                        React.createElement(
-                            "ul",
-                            { className: "nav" },
-                            React.createElement(
-                                "li",
-                                null,
-                                React.createElement(
-                                    "a",
-                                    { href: "/busca/comprar", className: "active" },
-                                    "Comprar"
-                                )
-                            ),
-                            React.createElement(
-                                "li",
-                                null,
-                                React.createElement(
-                                    "a",
-                                    { href: "/busca/alugar" },
-                                    "Alugar"
-                                )
-                            ),
-                            React.createElement(
-                                "li",
-                                null,
-                                React.createElement(
-                                    "a",
-                                    { href: "/vender" },
-                                    "Vender"
-                                )
-                            ),
-                            React.createElement(
-                                "li",
-                                null,
-                                React.createElement(
-                                    "a",
-                                    { href: "/vizinhanca" },
-                                    "Vizinhança"
-                                )
-                            )
-                        ),
-                        React.createElement(
-                            "ul",
-                            { className: "nav-signin" },
-                            React.createElement(
-                                "li",
-                                null,
-                                React.createElement(
-                                    "a",
-                                    { href: "#" },
-                                    "Entrar"
-                                )
-                            )
-                        )
-                    )
-                )
-            );
-        }
-    }]);
+	_createClass(Header, [{
+		key: "render",
+		value: function render() {
+			return React.createElement(
+				"div",
+				{ className: "c-header" },
+				React.createElement(
+					"div",
+					{ className: "c-header__logo" },
+					React.createElement(
+						"h1",
+						null,
+						React.createElement(
+							"a",
+							{ href: "/" },
+							React.createElement("img", { src: "/public/assets/imgs/logo/casamestra.svg" })
+						)
+					)
+				),
+				React.createElement(
+					"div",
+					{ className: "c-header__nav" },
+					React.createElement(
+						"nav",
+						null,
+						React.createElement(
+							"ul",
+							{ className: "nav" },
+							React.createElement(
+								"li",
+								null,
+								React.createElement(
+									"a",
+									{ href: "/busca/comprar", className: "active" },
+									"Comprar"
+								)
+							),
+							React.createElement(
+								"li",
+								null,
+								React.createElement(
+									"a",
+									{ href: "/busca/alugar" },
+									"Alugar"
+								)
+							),
+							React.createElement(
+								"li",
+								null,
+								React.createElement(
+									"a",
+									{ href: "/vender" },
+									"Vender"
+								)
+							),
+							React.createElement(
+								"li",
+								null,
+								React.createElement(
+									"a",
+									{ href: "/vizinhanca" },
+									"Vizinhança"
+								)
+							)
+						),
+						React.createElement(
+							"ul",
+							{ className: "nav-signin" },
+							React.createElement(
+								"li",
+								null,
+								React.createElement(
+									"a",
+									{ href: "#" },
+									"Entrar"
+								)
+							)
+						)
+					)
+				)
+			);
+		}
+	}]);
 
-    return Header;
+	return Header;
 })(React.Component);
 
 module.exports = Header;
@@ -2051,19 +2051,6 @@ var Filters = (function (_React$Component) {
 	}
 
 	_createClass(Filters, [{
-		key: 'componentDidMount',
-		value: function componentDidMount() {
-			var element = React.findDOMNode(this);
-
-			window.onscroll = function (e) {
-				if (e.target.scrollingElement.scrollTop >= 100) {
-					$(element).addClass('scroll-active');
-				} else {
-					$(element).removeClass('scroll-active');
-				}
-			};
-		}
-	}, {
 		key: 'redraw',
 		value: function redraw() {
 			window.mapList.invalidateSize();
@@ -2081,21 +2068,25 @@ var Filters = (function (_React$Component) {
 			return React.createElement(
 				'div',
 				{ className: 'c-search__filter' },
-				React.createElement(Neighborhood, null),
-				React.createElement(Bedrooms, null),
-				React.createElement(Price, null),
-				React.createElement(More, null),
 				React.createElement(
 					'div',
-					{ className: 'o-filter o-filter--right' },
-					React.createElement('button', { className: 'map-icon', onClick: this.selectView.bind(this) })
-				),
-				React.createElement(
-					'div',
-					{ className: 'o-filter o-filter--right' },
-					React.createElement('button', { className: 'list-icon', onClick: this.selectView.bind(this) })
-				),
-				React.createElement(Alert, null)
+					{ className: 'c-search__filter__item' },
+					React.createElement(Neighborhood, null),
+					React.createElement(Bedrooms, null),
+					React.createElement(Price, null),
+					React.createElement(More, null),
+					React.createElement(
+						'div',
+						{ className: 'o-filter o-filter--right' },
+						React.createElement('button', { className: 'map-icon', onClick: this.selectView.bind(this) })
+					),
+					React.createElement(
+						'div',
+						{ className: 'o-filter o-filter--right' },
+						React.createElement('button', { className: 'list-icon', onClick: this.selectView.bind(this) })
+					),
+					React.createElement(Alert, null)
+				)
 			);
 		}
 	}]);
@@ -3595,6 +3586,7 @@ var Filter = require('./filters/filter');
 var MapBig = require('./map/map-big');
 var List = require('./list/list');
 var FilterStore = require('../stores/filter.store');
+var $ = require('jquery');
 
 var delay = undefined;
 
@@ -3623,11 +3615,31 @@ var Search = (function (_React$Component) {
 			});
 		}
 	}, {
+		key: 'showFilter',
+		value: function showFilter() {
+			var element = React.findDOMNode(this);
+
+			$(element).toggleClass('active');
+		}
+	}, {
 		key: 'render',
 		value: function render() {
 			return React.createElement(
 				'div',
 				{ className: 'c-search__content' },
+				React.createElement(
+					'div',
+					{ className: 'c-search__content__action' },
+					React.createElement(
+						'button',
+						{ className: 'o-filter-button', onClick: this.showFilter.bind(this) },
+						React.createElement(
+							'span',
+							{ 'data-letters': 'Filtrar' },
+							'Filtrar'
+						)
+					)
+				),
 				React.createElement(Filter, null),
 				React.createElement(MapBig, { data: this.state.data }),
 				React.createElement(List, { data: this.state.data })
@@ -3644,7 +3656,7 @@ Search.propTypes = {
 
 module.exports = Search;
 
-},{"../stores/filter.store":29,"./filters/filter":11,"./list/list":17,"./map/map-big":21,"react":202}],23:[function(require,module,exports){
+},{"../stores/filter.store":29,"./filters/filter":11,"./list/list":17,"./map/map-big":21,"jquery":39,"react":202}],23:[function(require,module,exports){
 var Dispatcher = require('flux').Dispatcher;
 var assign = require('object-assign');
 

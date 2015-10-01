@@ -1,9 +1,11 @@
 header {
-	position: relative;
-	background-color: $master;
+	position: fixed;
 	top: 0;
-	  width: 100%;
-	  z-index: 100;
+	left: 0;
+	width: 100%;
+	padding: 0 3%;
+	background-color: #fff;
+	z-index: 100;
 }
 
 .header--transparent {
@@ -13,15 +15,17 @@ header {
 }
 
 .c-header {
-	padding: 0 1%;
+	position: relative;
 	border-bottom: 1px solid #fff;
 	border-bottom: 1px solid rgba(255, 255, 255, 0.15);
 	max-height: 100px;
+	text-align: center;
 	@extend .clearfix;
 }
 
 .c-header__logo {
-	float: left;
+	position: absolute;
+	left: 0;
 	padding: 34px 0;
 
 	h1 {
@@ -35,7 +39,7 @@ header {
 }
 
 .c-header__nav {
-	float: right;
+	display: inline-block;
 
 	nav {
 		@extend .clearfix;
@@ -58,7 +62,7 @@ header {
 	}
 
 	a {
-		color: #fff;
+		color: $master;
 		text-decoration: none;
 		letter-spacing: 1px;
 		display: block;
@@ -69,7 +73,7 @@ header {
 		line-height: 1.4em;
 
 		@extend %f10;
-		@extend %f-regular;
+		@extend %f-bold;
 
 		&:hover {
 			border-bottom-color: $green;
@@ -92,7 +96,7 @@ ul.nav-signin {
 	}
 
 	a {
-		color: #fff;
+		color: $master;
 		text-decoration: none;
 		letter-spacing: 1px;
 		display: block;
@@ -102,7 +106,7 @@ ul.nav-signin {
 		line-height: 1.4em;
 
 		@extend %f10;
-		@extend %f-regular;
+		@extend %f-bold;
 
 		&:hover {
 			@include opacity(8);
