@@ -30,7 +30,7 @@ class Bedrooms extends React.Component {
 
 	render() {
 		return (
-			<div className="o-filter select dropdown">
+			<div className="o-filter">
 				<span className="title">Quartos</span>
 				<span className="title--result">{this.state.text}</span>
 				<div className="o-filter__bedrooms">

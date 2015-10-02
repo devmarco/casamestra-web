@@ -15,7 +15,7 @@ const estateView = {
 			.then(result => {
 				if (result) {
 					reply.view('estate', {
-						headerRender: components.header.get(),
+						headerRender: components.header.getHome(),
 						estate: result,
 					});
 				} else {

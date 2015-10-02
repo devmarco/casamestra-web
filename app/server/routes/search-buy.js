@@ -11,7 +11,7 @@ const searchBuy = {
 		reply.view('search', {
 			activePage: 'buy',
 			searchRender: components.search.get([]),
-			headerRender: components.header.get(),
+			headerRender: components.header.getBuy(),
 		});
 	},
 };

@@ -1,10 +1,11 @@
 extends base
 
 block content
-	header !{headerRender}
-	main
-		include sections/search
-		include sections/exclusives
-		include sections/about
-		include sections/neighborhoods
-	include components/footer
+	.wrapper
+		header !{headerRender}
+		main
+			include sections/search
+			include sections/exclusives
+			include sections/about
+			include sections/neighborhoods
+		include components/footer

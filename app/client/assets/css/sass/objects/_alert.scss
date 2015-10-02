@@ -1,46 +1,80 @@
 .o-alert {
-    position: relative;
-    margin-right: 2em;
+	position: relative;
+	margin-right: 2em;
 
-    &:hover {
-        overflow: visible;
+	&:hover {
+		overflow: visible;
 
-        p {
-            @include opacity(10);
-        }
-    }
+		p {
+			@include opacity(10);
+		}
+	}
 
-    > button {
-        color: $master;
-        padding: 5px 10px;
-        line-height: 20px;
-        min-width: 147px;
-        border: none;
-        background-color: transparent;
+	> button {
+		color: $master;
+		padding: 5px 10px;
+		line-height: 20px;
+		min-width: 130px;
+		border: none;
+		background-color: transparent;
 
-        @extend %f-regular;
-        @extend %f10;
-        @extend %font-config;
+		@extend %f-regular;
+		@extend %f10;
+		@extend %font-config;
 
-        &:hover {
-            background: $green;
-            color: #fff;
-            border-color: #06AEB5;
-            @extend %f-bold;
-        }
+		&:hover {
+			@extend %f-bold;
 
-        &:before {
-            display: block;
-            float: left;
-            font-size: 1.3em;
-            margin: 1px 5px 0 0;
-            @extend .pe-7s-bell;
-        }
-    }
+			&:before {
+				@include vendor(animation, shake 1s ease);
+			}
+		}
+
+		&:focus,
+		&:active {
+			outline: 0;
+		}
+
+		&:before {
+			display: block;
+			float: left;
+			font-size: 1.3em;
+			margin: 1px 5px 0 0;
+			@extend .pe-7s-bell;
+		}
+	}
+}
+
+@-webkit-keyframes shake {
+  from, to {
+	transform: translate3d(0, 0, 0);
+  }
+
+  10%, 30%, 50%, 70%, 90% {
+	transform: translate3d(-3px, 0, 0);
+  }
+
+  20%, 40%, 60%, 80% {
+	transform: translate3d(3px, 0, 0);
+  }
+}
+
+@-moz-keyframes shake {
+  from, to {
+	transform: translate3d(0, 0, 0);
+  }
+
+  10%, 30%, 50%, 70%, 90% {
+	transform: translate3d(-3px, 0, 0);
+  }
+
+  20%, 40%, 60%, 80% {
+	transform: translate3d(3px, 0, 0);
+  }
 }
 
 .o-alert__content {
-    padding: 1em;
+	padding: 1em;
 	right: 0;
 
 	.title {
@@ -88,12 +122,12 @@
 }
 
 .o-alert__action {
-    margin-top: 30px;
+	margin-top: 30px;
 
-    button {
-        width: 100%;
+	button {
+		width: 100%;
 
-        @extend %f12;
-        @extend %f-regular;
-    }
+		@extend %f12;
+		@extend %f-regular;
+	}
 }

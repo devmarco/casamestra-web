@@ -9,7 +9,7 @@ const homeView = {
 	path: '/',
 	handler: (req, reply) => {
 		reply.view('index', {
-			headerRender: components.header.get(),
+			headerRender: components.header.getHome(),
 		});
 	},
 };

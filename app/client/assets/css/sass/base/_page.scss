@@ -17,7 +17,10 @@ html, body {
 }
 
 .wrapper {
-	height: 100%;
+	main {
+		padding-left: 3%;
+		padding-right: 3%;
+	}
 }
 
 .row {
@@ -26,4 +29,8 @@ html, body {
 	@include breakpoint(from-xlarge) {
 		max-width: 100em;
 	}
+}
+
+.wrapper--search {
+	height: 100%;
 }

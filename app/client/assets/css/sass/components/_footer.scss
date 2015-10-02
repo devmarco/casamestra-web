@@ -1,5 +1,5 @@
 .c-footer {
-	background: $master;
+	background: #fff;
 	padding: 5% 0.9375em;
 }
 
@@ -20,7 +20,7 @@
 		}
 	}
 	a {
-		color: #fff;
+		color: $master;
 		text-decoration: none;
 		letter-spacing: 1px;
 		@extend %f-regular;

@@ -18,7 +18,7 @@
 		@include vendor(transition, border-color 0.2s linear);
 
 		@extend %f-bold;
-		@extend %f10;
+		@extend %f15;
 	}
 
 	.title--result {
@@ -112,64 +112,8 @@
 	}
 }
 
-.o-filter__more {
-	min-width: 750px;
-	left: -95px;
-
+.o-filter__content {
 	@extend .clearfix;
-
-	.o-filter__column {
-		width: 50%;
-		float: left;
-
-		&:first-child {
-			border-right: 1px solid #EAEAEA;
-		}
-	}
-
-	.o-filter__column__bx {
-		border-top: 1px solid #EAEAEA;
-		padding: 1em;
-
-		&:first-child {
-			border-top: none;
-		}
-
-		.title {
-			color: $master;
-			display: block;
-			margin-bottom: 10px;
-
-			@extend %f-bold;
-			@extend %f9;
-		}
-
-		.check-list {
-			list-style: none;
-			margin: 0;
-			padding: 0;
-			@extend .clearfix;
-
-			li {
-				width: 50%;
-				display: block;
-				float: left;
-				margin: 3px 0;
-
-				input {
-					display: inline-block;
-					margin-right: 10px;
-				}
-
-				label {
-					color: $master;
-
-					@extend %f-regular;
-					@extend %f9;
-				}
-			}
-		}
-	}
 }
 
 .o-filter--right {
@@ -178,5 +122,58 @@
 
 	button {
 		padding: 10px 5px;
+	}
+}
+
+.o-filter__column {
+	width: 50%;
+	float: left;
+
+	&:first-child {
+		border-right: 1px solid #EAEAEA;
+	}
+}
+
+.o-filter__column__bx {
+	border-top: 1px solid #EAEAEA;
+	padding: 1em;
+
+	&:first-child {
+		border-top: none;
+	}
+
+	.title {
+		color: $master;
+		display: block;
+		margin-bottom: 10px;
+
+		@extend %f-bold;
+		@extend %f9;
+	}
+
+	.check-list {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		@extend .clearfix;
+
+		li {
+			width: 50%;
+			display: block;
+			float: left;
+			margin: 3px 0;
+
+			input {
+				display: inline-block;
+				margin-right: 10px;
+			}
+
+			label {
+				color: $master;
+
+				@extend %f-regular;
+				@extend %f9;
+			}
+		}
 	}
 }

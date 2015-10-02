@@ -11,7 +11,7 @@ const searchRent = {
 		reply.view('search', {
 			activePage: 'rent',
 			searchRender: components.search.get([]),
-			headerRender: components.header.get(),
+			headerRender: components.header.getRent(),
 		});
 	},
 };

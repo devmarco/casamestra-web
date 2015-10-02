@@ -1,9 +1,12 @@
 const React 		= require('react');
-const More 			= require('./more');
 const Price 		= require('./price');
 const Bedrooms 		= require('./bedrooms');
+const Features 		= require('./features');
+const Bathrooms 	= require('./bathrooms');
+const BuildingType 	= require('./building-type');
+const Garages 		= require('./garages');
+const Animals 		= require('./animals');
 const Neighborhood 	= require('./neighborhood');
-const $ 			= require('jquery');
 
 class Filters extends React.Component {
 	constructor(props) {
@@ -14,10 +17,36 @@ class Filters extends React.Component {
 		return (
 			<div className="c-search__filter">
 				<div className="c-search__filter__item">
-					<Neighborhood />
-					<Bedrooms />
-					<Price />
-					<More />
+					<div className="o-filter__content">
+						<div className="o-filter__column">
+							<div className="o-filter__column__bx">
+								<Neighborhood />
+							</div>
+							<div className="o-filter__column__bx">
+								<Bedrooms />
+							</div>
+							<div className="o-filter__column__bx">
+								<Price />
+							</div>
+							<div className="o-filter__column__bx">
+								<BuildingType />
+							</div>
+						</div>
+						<div className="o-filter__column">
+							<div className="o-filter__column__bx">
+								<Features />
+							</div>
+							<div className="o-filter__column__bx">
+								<Garages />
+							</div>
+							<div className="o-filter__column__bx">
+								<Bathrooms />
+							</div>
+							<div className="o-filter__column__bx">
+								<Animals />
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		);

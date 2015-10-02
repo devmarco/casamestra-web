@@ -29,44 +29,45 @@ class Estate extends React.Component {
 		return (
 			<div className="o-estate">
 				<div className="o-estate__wrap">
-					<a href={'/imovel/' + this.state.e.ecmid}>
-						<div className="o-estate__image" style={{backgroundImage: `url(${this.state.e.images.cover})`}}>
-							<img src={this.state.e.images.cover} alt={this.state.e.address} />
+					<div className="o-estate__image" style={{backgroundImage: `url(${this.state.e.images.cover})`}}>
+						<img src={this.state.e.images.cover} alt={this.state.e.address} />
+					</div>
+					<div className="o-estate__about">
+						<div className="o-estate__about__address">
+							<span>{this.state.e.keyDetails.neighborhood}</span>
+							<span>{this.state.e.address}</span>
 						</div>
-						<div className="o-estate__about">
-							<div className="o-estate__about__address">
-								<span>{this.state.e.keyDetails.neighborhood}</span>
-								<span>{this.state.e.address}</span>
-							</div>
-							<ul className="o-estate__about__info">
-								<li>
-									<span>
-										{this.formatMoney(this.state.e.price)}
-									</span>
-								</li>
-								<li className="icon icon-area">
-									<span>
-										{this.state.e.keyDetails.area}
-									</span>
-								</li>
-								<li className="icon icon-park">
-									<span>
-										{this.state.e.garages}
-									</span>
-								</li>
-								<li className="icon icon-beds">
-									<span>
-										{this.state.e.bedrooms}
-									</span>
-								</li>
-								<li className="icon icon-bath">
-									<span>
-										{this.state.e.bathrooms}
-									</span>
-								</li>
-							</ul>
-						</div>
-					</a>
+						<ul className="o-estate__about__info">
+							<li>
+								<span>
+									{this.formatMoney(this.state.e.price)}
+								</span>
+							</li>
+							<li className="icon icon-area">
+								<span>
+									{this.state.e.keyDetails.area}
+								</span>
+							</li>
+							<li className="icon icon-park">
+								<span>
+									{this.state.e.garages}
+								</span>
+							</li>
+							<li className="icon icon-beds">
+								<span>
+									{this.state.e.bedrooms}
+								</span>
+							</li>
+							<li className="icon icon-bath">
+								<span>
+									{this.state.e.bathrooms}
+								</span>
+							</li>
+						</ul>
+					</div>
+					<div className="o-estate__action">
+						<a href={'/imovel/' + this.state.e.ecmid}>Ver Detalhes</a>
+					</div>
 					<div className="o-estate__like">
 						<button data-tip="hello world" onClick={this.openModal.bind(this)}>
 							<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="-10 0 100 80" enable-background="new 0 0 80 80" xmlSpace="preserve">
