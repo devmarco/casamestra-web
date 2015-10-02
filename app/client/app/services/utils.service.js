@@ -6,7 +6,7 @@ const utils = {
 			let text;
 
 			if (!filters.price) {
-				text = 'Preço';
+				text = 'Qual valor você procura?';
 			} else {
 				const min = filters.price.min || 0;
 				const max = filters.price.max || 0;
@@ -38,7 +38,7 @@ const utils = {
 			if (filters.bedrooms) {
 				text = `${this.format(filters.bedrooms)} Quartos`;
 			} else {
-				text = 'Quartos';
+				text = 'Quantos quartos você quer?';
 			}
 
 			return text;

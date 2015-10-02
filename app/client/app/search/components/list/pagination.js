@@ -60,9 +60,9 @@ class Pagination extends React.Component {
 
 	render() {
 		return (
-			<div className="o-filter pagination pagination--text">
-				<div className="pagination__titles">{this.state.prev} — {this.state.next} de {this.state.size} imóveis</div>
-				<div className="pagination__buttons">
+			<div className="o-pagination o-pagination--text">
+				<div className="o-pagination__titles">{this.state.prev} — {this.state.next} de {this.state.size} imóveis</div>
+				<div className="o-pagination__buttons">
 					<button className="prev" onClick={this.prev.bind(this)}></button>
 					<button className="next" onClick={this.next.bind(this)}></button>
 				</div>

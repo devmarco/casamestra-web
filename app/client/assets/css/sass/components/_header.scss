@@ -8,12 +8,6 @@ header {
 	z-index: 100;
 }
 
-.header--transparent {
-	position: absolute;
-	top: 0;
-	background-color: transparent;
-}
-
 .c-header {
 	position: relative;
 	border-bottom: 1px solid #fff;
@@ -62,13 +56,12 @@ header {
 	}
 
 	a {
+		position: relative;
 		color: $master;
 		text-decoration: none;
 		letter-spacing: 1px;
 		display: block;
 		padding: 38px 1.5em 39px;
-		border-top: 2px solid transparent;
-		border-bottom: 2px solid transparent;
 		transition: border-color 0.5s ease;
 		line-height: 1.4em;
 
@@ -76,13 +69,28 @@ header {
 		@extend %f-bold;
 
 		&:hover {
-			border-bottom-color: $green;
 			@include opacity(8);
+			&:before {
+				background-color: $green;
+			}
+		}
+
+		&:before {
+			content: '';
+			width: 70%;
+			height: 1px;
+			background: transparent;
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			margin: -0.5px 0 0 -35%;
 		}
 	}
 
 	a.active {
-		border-bottom-color: $green;
+		&:before {
+			background-color: $green;
+		}
 	}
 }
 

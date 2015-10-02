@@ -7,7 +7,7 @@ const utils			= require('../../../services/utils.service');
 class Price extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = { text: 'Preço' };
+		this.state = { text: 'Qual valor você procura?' };
 	}
 	setMaxPrice(event) {
 		Filter.set({
@@ -59,8 +59,9 @@ class Price extends React.Component {
 	render() {
 		return (
 			<div className="o-filter select dropdown">
-				<button data-type="dropdown" data-dropdown-content=".dropdown-content">{this.state.text}</button>
-				<div className="dropdown-content o-filter__price">
+				<span className="title">Preço</span>
+				<span className="title--result">{this.state.text}</span>
+				<div className="o-filter__price">
 					<input type="text" pattern="[-+]?[0-9]*[.,]?[0-9]+"placeholder="Mínimo" onChange={this.setPreviewText.bind(this, 'min')} onBlur={this.setMinPrice.bind(this)} />
 					<input type="text" pattern="[-+]?[0-9]*[.,]?[0-9]+"placeholder="Máximo" onChange={this.setPreviewText.bind(this, 'max')} onBlur={this.setMaxPrice.bind(this)} />
 				</div>

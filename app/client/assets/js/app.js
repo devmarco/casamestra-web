@@ -1829,7 +1829,7 @@ var Alert = (function (_React$Component) {
 		value: function render() {
 			return React.createElement(
 				'div',
-				{ className: 'o-filter o-filter--right o-filter--alert dropdown' },
+				{ className: 'o-alert dropdown' },
 				React.createElement(
 					'button',
 					{ 'data-type': 'dropdown', 'data-dropdown-content': '.dropdown-content' },
@@ -1842,7 +1842,7 @@ var Alert = (function (_React$Component) {
 				),
 				React.createElement(
 					'div',
-					{ className: 'dropdown-content o-filter__alert' },
+					{ className: 'dropdown-content o-alert__content' },
 					React.createElement(
 						'span',
 						{ className: 'title' },
@@ -1889,7 +1889,7 @@ var Alert = (function (_React$Component) {
 					),
 					React.createElement(
 						'div',
-						{ className: 'o-filter__alert__action' },
+						{ className: 'o-alert__action' },
 						React.createElement(
 							'button',
 							{ className: 'o-btn o-btn--green' },
@@ -1928,7 +1928,7 @@ var Bedrooms = (function (_React$Component) {
 		_classCallCheck(this, Bedrooms);
 
 		_get(Object.getPrototypeOf(Bedrooms.prototype), 'constructor', this).call(this, props);
-		this.state = { text: 'Quartos' };
+		this.state = { text: 'Quantos quartos você quer?' };
 	}
 
 	_createClass(Bedrooms, [{
@@ -1958,13 +1958,18 @@ var Bedrooms = (function (_React$Component) {
 				'div',
 				{ className: 'o-filter select dropdown' },
 				React.createElement(
-					'button',
-					{ 'data-type': 'dropdown', 'data-dropdown-content': '.dropdown-content' },
+					'span',
+					{ className: 'title' },
+					'Quartos'
+				),
+				React.createElement(
+					'span',
+					{ className: 'title--result' },
 					this.state.text
 				),
 				React.createElement(
 					'div',
-					{ className: 'dropdown-content o-filter__bedrooms' },
+					{ className: 'o-filter__bedrooms' },
 					React.createElement(
 						'ul',
 						null,
@@ -2038,7 +2043,6 @@ var More = require('./more');
 var Price = require('./price');
 var Bedrooms = require('./bedrooms');
 var Neighborhood = require('./neighborhood');
-var Alert = require('./alert');
 var $ = require('jquery');
 
 var Filters = (function (_React$Component) {
@@ -2051,18 +2055,6 @@ var Filters = (function (_React$Component) {
 	}
 
 	_createClass(Filters, [{
-		key: 'redraw',
-		value: function redraw() {
-			window.mapList.invalidateSize();
-			window.mapBig.invalidateSize();
-		}
-	}, {
-		key: 'selectView',
-		value: function selectView() {
-			$('.c-search__content').toggleClass('list-active');
-			this.redraw();
-		}
-	}, {
 		key: 'render',
 		value: function render() {
 			return React.createElement(
@@ -2074,18 +2066,7 @@ var Filters = (function (_React$Component) {
 					React.createElement(Neighborhood, null),
 					React.createElement(Bedrooms, null),
 					React.createElement(Price, null),
-					React.createElement(More, null),
-					React.createElement(
-						'div',
-						{ className: 'o-filter o-filter--right' },
-						React.createElement('button', { className: 'map-icon', onClick: this.selectView.bind(this) })
-					),
-					React.createElement(
-						'div',
-						{ className: 'o-filter o-filter--right' },
-						React.createElement('button', { className: 'list-icon', onClick: this.selectView.bind(this) })
-					),
-					React.createElement(Alert, null)
+					React.createElement(More, null)
 				)
 			);
 		}
@@ -2096,7 +2077,7 @@ var Filters = (function (_React$Component) {
 
 module.exports = Filters;
 
-},{"./alert":9,"./bedrooms":10,"./more":12,"./neighborhood":13,"./price":14,"jquery":39,"react":202}],12:[function(require,module,exports){
+},{"./bedrooms":10,"./more":12,"./neighborhood":13,"./price":14,"jquery":39,"react":202}],12:[function(require,module,exports){
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
 var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
@@ -2129,13 +2110,13 @@ var More = (function (_React$Component) {
 				"div",
 				{ className: "o-filter select dropdown" },
 				React.createElement(
-					"button",
-					{ "data-type": "dropdown", "data-dropdown-content": ".dropdown-content" },
-					"Mais"
+					"span",
+					{ className: "title" },
+					"Mais filtros"
 				),
 				React.createElement(
 					"div",
-					{ className: "dropdown-content o-filter__more" },
+					{ className: "o-filter__more" },
 					React.createElement(
 						"div",
 						{ className: "o-filter__column" },
@@ -2580,6 +2561,11 @@ var Neighborhood = (function (_React$Component) {
 			return React.createElement(
 				'div',
 				{ className: 'o-filter' },
+				React.createElement(
+					'span',
+					{ className: 'title' },
+					'Vizinhança'
+				),
 				React.createElement(Select, {
 					name: 'form-field-name',
 					placeholder: 'Selecione uma vizinhança',
@@ -2618,7 +2604,7 @@ var Price = (function (_React$Component) {
 		_classCallCheck(this, Price);
 
 		_get(Object.getPrototypeOf(Price.prototype), 'constructor', this).call(this, props);
-		this.state = { text: 'Preço' };
+		this.state = { text: 'Qual valor você procura?' };
 	}
 
 	_createClass(Price, [{
@@ -2679,13 +2665,18 @@ var Price = (function (_React$Component) {
 				'div',
 				{ className: 'o-filter select dropdown' },
 				React.createElement(
-					'button',
-					{ 'data-type': 'dropdown', 'data-dropdown-content': '.dropdown-content' },
+					'span',
+					{ className: 'title' },
+					'Preço'
+				),
+				React.createElement(
+					'span',
+					{ className: 'title--result' },
 					this.state.text
 				),
 				React.createElement(
 					'div',
-					{ className: 'dropdown-content o-filter__price' },
+					{ className: 'o-filter__price' },
 					React.createElement('input', { type: 'text', pattern: '[-+]?[0-9]*[.,]?[0-9]+', placeholder: 'Mínimo', onChange: this.setPreviewText.bind(this, 'min'), onBlur: this.setMinPrice.bind(this) }),
 					React.createElement('input', { type: 'text', pattern: '[-+]?[0-9]*[.,]?[0-9]+', placeholder: 'Máximo', onChange: this.setPreviewText.bind(this, 'max'), onBlur: this.setMaxPrice.bind(this) })
 				)
@@ -2931,8 +2922,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== 'function' 
 
 var React = require('react');
 var Estate = require('./estate');
-var Ordering = require('./order');
-var Pagination = require('./pagination');
 
 var EstatesList = (function (_React$Component) {
 	_inherits(EstatesList, _React$Component);
@@ -2943,10 +2932,7 @@ var EstatesList = (function (_React$Component) {
 		_get(Object.getPrototypeOf(EstatesList.prototype), 'constructor', this).call(this, props);
 
 		this.state = {
-			data: this.props.data,
-			size: this.props.size,
-			next: this.props.next,
-			prev: this.props.prev
+			data: this.props.data
 		};
 	}
 
@@ -2954,10 +2940,7 @@ var EstatesList = (function (_React$Component) {
 		key: 'componentWillReceiveProps',
 		value: function componentWillReceiveProps(newProps) {
 			this.setState({
-				data: newProps.data,
-				size: newProps.size,
-				next: newProps.next,
-				prev: newProps.prev
+				data: newProps.data
 			});
 		}
 	}, {
@@ -2968,23 +2951,11 @@ var EstatesList = (function (_React$Component) {
 				{ className: 'c-search__list__list' },
 				React.createElement(
 					'div',
-					{ className: 'filter__container' },
-					React.createElement(Ordering, null),
-					React.createElement(Pagination, { size: this.state.size, next: this.state.next, prev: this.state.prev })
-				),
-				React.createElement(
-					'div',
 					{ className: 'list__container' },
 					this.state.data.map(function (e) {
 						return React.createElement(Estate, { key: e.ecmid, data: e });
 					}),
 					';'
-				),
-				React.createElement(
-					'div',
-					{ className: 'filter__container' },
-					React.createElement(Ordering, null),
-					React.createElement(Pagination, { size: this.state.size, next: this.state.next, prev: this.state.prev })
 				)
 			);
 		}
@@ -2994,15 +2965,12 @@ var EstatesList = (function (_React$Component) {
 })(React.Component);
 
 EstatesList.propTypes = {
-	data: React.PropTypes.array.isRequired,
-	size: React.PropTypes.number.isRequired,
-	next: React.PropTypes.number.isRequired,
-	prev: React.PropTypes.number.isRequired
+	data: React.PropTypes.array.isRequired
 };
 
 module.exports = EstatesList;
 
-},{"./estate":15,"./order":19,"./pagination":20,"react":202}],17:[function(require,module,exports){
+},{"./estate":15,"react":202}],17:[function(require,module,exports){
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
 var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
@@ -3014,7 +2982,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== 'function' 
 var React = require('react');
 var ListEstates = require('./list-estates');
 var MapSmall = require('./map-small');
-var PagesStore = require('../../stores/pages.store');
 var FilterStore = require('../../stores/filter.store');
 var _ = require('lodash');
 
@@ -3026,37 +2993,15 @@ var List = (function (_React$Component) {
 
 		_get(Object.getPrototypeOf(List.prototype), 'constructor', this).call(this, props);
 		this.state = {
-			data: _.slice(this.props.data, 0, 12),
-			size: this.props.data.length,
-			next: 12,
-			prev: 1
+			data: _.slice(this.props.data, 0, 12)
 		};
 	}
 
 	_createClass(List, [{
-		key: 'componentWillMount',
-		value: function componentWillMount() {
-			PagesStore.addChangeListener(this.onPageChange.bind(this));
-		}
-	}, {
 		key: 'componentWillReceiveProps',
 		value: function componentWillReceiveProps(newProps) {
 			this.setState({
-				data: _.slice(newProps.data, 0, 12),
-				size: newProps.data.length
-			});
-		}
-	}, {
-		key: 'onPageChange',
-		value: function onPageChange() {
-			var pagesData = PagesStore.get();
-			var filterData = FilterStore.get().data;
-
-			this.setState({
-				data: pagesData.data,
-				size: filterData.length,
-				next: pagesData.next > filterData.length ? filterData.length : pagesData.next,
-				prev: pagesData.prev > 0 ? pagesData.prev : 1
+				data: _.slice(newProps.data, 0, 12)
 			});
 		}
 	}, {
@@ -3065,7 +3010,7 @@ var List = (function (_React$Component) {
 			return React.createElement(
 				'div',
 				{ className: 'c-search__list' },
-				React.createElement(ListEstates, { data: this.state.data, size: this.state.size, next: this.state.next, prev: this.state.prev }),
+				React.createElement(ListEstates, { data: this.state.data }),
 				React.createElement(MapSmall, { data: this.state.data })
 			);
 		}
@@ -3080,7 +3025,7 @@ List.propTypes = {
 
 module.exports = List;
 
-},{"../../stores/filter.store":29,"../../stores/pages.store":30,"./list-estates":16,"./map-small":18,"lodash":40,"react":202}],18:[function(require,module,exports){
+},{"../../stores/filter.store":29,"./list-estates":16,"./map-small":18,"lodash":40,"react":202}],18:[function(require,module,exports){
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
 var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
@@ -3369,10 +3314,10 @@ var Pagination = (function (_React$Component) {
 		value: function render() {
 			return React.createElement(
 				'div',
-				{ className: 'o-filter pagination pagination--text' },
+				{ className: 'o-pagination o-pagination--text' },
 				React.createElement(
 					'div',
-					{ className: 'pagination__titles' },
+					{ className: 'o-pagination__titles' },
 					this.state.prev,
 					' — ',
 					this.state.next,
@@ -3382,7 +3327,7 @@ var Pagination = (function (_React$Component) {
 				),
 				React.createElement(
 					'div',
-					{ className: 'pagination__buttons' },
+					{ className: 'o-pagination__buttons' },
 					React.createElement('button', { className: 'prev', onClick: this.prev.bind(this) }),
 					React.createElement('button', { className: 'next', onClick: this.next.bind(this) })
 				)
@@ -3585,7 +3530,10 @@ var React = require('react');
 var Filter = require('./filters/filter');
 var MapBig = require('./map/map-big');
 var List = require('./list/list');
+var Pagination = require('./list/pagination');
+var Alert = require('./filters/alert');
 var FilterStore = require('../stores/filter.store');
+var PagesStore = require('../stores/pages.store');
 var $ = require('jquery');
 
 var delay = undefined;
@@ -3598,7 +3546,10 @@ var Search = (function (_React$Component) {
 
 		_get(Object.getPrototypeOf(Search.prototype), 'constructor', this).call(this, props);
 		this.state = {
-			data: this.props.data
+			data: this.props.data,
+			size: this.props.data.length,
+			next: 12,
+			prev: 1
 		};
 	}
 
@@ -3606,12 +3557,26 @@ var Search = (function (_React$Component) {
 		key: 'componentWillMount',
 		value: function componentWillMount() {
 			FilterStore.addChangeListener(this.onFilterChange.bind(this));
+			PagesStore.addChangeListener(this.onPageChange.bind(this));
 		}
 	}, {
 		key: 'onFilterChange',
 		value: function onFilterChange() {
 			this.setState({
 				data: FilterStore.get().data
+			});
+		}
+	}, {
+		key: 'onPageChange',
+		value: function onPageChange() {
+			var pagesData = PagesStore.get();
+			var filterData = FilterStore.get().data;
+
+			this.setState({
+				data: pagesData.data,
+				size: filterData.length,
+				next: pagesData.next > filterData.length ? filterData.length : pagesData.next,
+				prev: pagesData.prev > 0 ? pagesData.prev : 1
 			});
 		}
 	}, {
@@ -3622,6 +3587,18 @@ var Search = (function (_React$Component) {
 			$(element).toggleClass('active');
 		}
 	}, {
+		key: 'selectView',
+		value: function selectView() {
+			$('.c-search__content').toggleClass('list-active');
+			this.redraw();
+		}
+	}, {
+		key: 'redraw',
+		value: function redraw() {
+			window.mapList.invalidateSize();
+			window.mapBig.invalidateSize();
+		}
+	}, {
 		key: 'render',
 		value: function render() {
 			return React.createElement(
@@ -3629,7 +3606,7 @@ var Search = (function (_React$Component) {
 				{ className: 'c-search__content' },
 				React.createElement(
 					'div',
-					{ className: 'c-search__content__action' },
+					{ className: 'c-search__content__filter' },
 					React.createElement(
 						'button',
 						{ className: 'o-filter-button', onClick: this.showFilter.bind(this) },
@@ -3639,6 +3616,22 @@ var Search = (function (_React$Component) {
 							'Filtrar'
 						)
 					)
+				),
+				React.createElement(
+					'div',
+					{ className: 'c-search__content__view' },
+					React.createElement(
+						'div',
+						{ className: 'o-view' },
+						React.createElement('button', { className: 'map-icon', onClick: this.selectView.bind(this) })
+					),
+					React.createElement(
+						'div',
+						{ className: 'o-view' },
+						React.createElement('button', { className: 'list-icon', onClick: this.selectView.bind(this) })
+					),
+					React.createElement(Alert, null),
+					React.createElement(Pagination, { size: this.state.size, next: this.state.next, prev: this.state.prev })
 				),
 				React.createElement(Filter, null),
 				React.createElement(MapBig, { data: this.state.data }),
@@ -3656,7 +3649,7 @@ Search.propTypes = {
 
 module.exports = Search;
 
-},{"../stores/filter.store":29,"./filters/filter":11,"./list/list":17,"./map/map-big":21,"jquery":39,"react":202}],23:[function(require,module,exports){
+},{"../stores/filter.store":29,"../stores/pages.store":30,"./filters/alert":9,"./filters/filter":11,"./list/list":17,"./list/pagination":20,"./map/map-big":21,"jquery":39,"react":202}],23:[function(require,module,exports){
 var Dispatcher = require('flux').Dispatcher;
 var assign = require('object-assign');
 
@@ -4125,7 +4118,7 @@ var utils = {
 			var text = undefined;
 
 			if (!filters.price) {
-				text = 'Preço';
+				text = 'Qual valor você procura?';
 			} else {
 				var min = filters.price.min || 0;
 				var max = filters.price.max || 0;
@@ -4157,7 +4150,7 @@ var utils = {
 			if (filters.bedrooms) {
 				text = this.format(filters.bedrooms) + ' Quartos';
 			} else {
-				text = 'Quartos';
+				text = 'Quantos quartos você quer?';
 			}
 
 			return text;

@@ -13,8 +13,8 @@ class More extends React.Component {
 	render() {
 		return (
 			<div className="o-filter select dropdown">
-				<button data-type="dropdown" data-dropdown-content=".dropdown-content">Mais</button>
-				<div className="dropdown-content o-filter__more">
+				<span className="title">Mais filtros</span>
+				<div className="o-filter__more">
 					<div className="o-filter__column">
 						<div className="o-filter__column__bx">
 							<span className="title">Tipo do Imóvel</span>

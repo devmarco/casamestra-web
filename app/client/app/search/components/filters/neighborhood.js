@@ -30,6 +30,7 @@ class Neighborhood extends React.Component {
 	render() {
 		return (
 			<div className="o-filter">
+				<span className="title">Vizinhança</span>
 				<Select
 					name="form-field-name"
 					placeholder="Selecione uma vizinhança"

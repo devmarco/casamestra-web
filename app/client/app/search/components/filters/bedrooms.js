@@ -7,7 +7,7 @@ const utils			= require('../../../services/utils.service');
 class Bedrooms extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = { text: 'Quartos' };
+		this.state = { text: 'Quantos quartos você quer?' };
 	}
 
 	setBedrooms(value, event) {
@@ -31,8 +31,9 @@ class Bedrooms extends React.Component {
 	render() {
 		return (
 			<div className="o-filter select dropdown">
-				<button data-type="dropdown" data-dropdown-content=".dropdown-content">{this.state.text}</button>
-				<div className="dropdown-content o-filter__bedrooms">
+				<span className="title">Quartos</span>
+				<span className="title--result">{this.state.text}</span>
+				<div className="o-filter__bedrooms">
 					<ul>
 						<li>
 							<button onClick={this.setBedrooms.bind(this, 1)}>1</button>

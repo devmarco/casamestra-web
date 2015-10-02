@@ -36,10 +36,10 @@ class Alert extends React.Component {
 
 	render() {
 		return (
-			<div className="o-filter o-filter--right o-filter--alert dropdown">
+			<div className="o-alert dropdown">
 				<button data-type="dropdown" data-dropdown-content=".dropdown-content">Criar Alerta</button>
 				<p style={{display: this.state.onHover}}>Crie um alerta, que iremos notifica-lo quando novos imóveis que atende aos seus critérios forem adicionados</p>
-				<div className="dropdown-content o-filter__alert">
+				<div className="dropdown-content o-alert__content">
 					<span className="title">Alerta para:</span>
 					<span className="neighborhoods">Savassi ou Funcionarios</span>
 					<ul>
@@ -47,7 +47,7 @@ class Alert extends React.Component {
 						<li>Preço: <b>{this.state.price}</b></li>
 						<li>Mais: <b>{this.state.more}</b></li>
 					</ul>
-					<div className="o-filter__alert__action">
+					<div className="o-alert__action">
 						<button className="o-btn o-btn--green">Criar Alerta</button>
 					</div>
 				</div>

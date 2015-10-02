@@ -34,6 +34,10 @@
 	.map-icon:before {
 		@include opacity(10);
 	}
+
+	.o-pagination {
+		@include opacity(10);
+	}
 }
 
 .map-icon,
@@ -69,11 +73,12 @@
 }
 
 .filter__container {
-	padding: 1.5em 1em;
+	padding: 1.5em 0;
 	@extend .clearfix;
 
 	.o-filter {
 		float: left;
+		margin: 0;
 
 		+ .o-filter {
 			float: right;
@@ -83,6 +88,5 @@
 
 .list__container {
 	min-height: 600px;
-	padding: 0 1em;
 	@extend .clearfix;
 }
